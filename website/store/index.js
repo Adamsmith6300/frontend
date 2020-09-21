@@ -1,7 +1,8 @@
-// store.ts
-
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
+
+import middleware from "./middleware";
 import actionTypes from "./actions";
 
 const initialState = { tick: "init", val: "" };
@@ -19,7 +20,8 @@ const reducer = (state = initialState, action) => {
 };
 
 // create a makeStore function
-const makeStore = (context) => createStore(reducer);
+const makeStore = (context) =>
+  createStore(reducer, compose(applyMiddleware(thunk, ...middleware)));
 
 // export an assembled wrapper
 export const wrapper = createWrapper(makeStore, { debug: true });

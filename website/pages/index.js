@@ -5,7 +5,6 @@ import actions from "../store/actions";
 import { Button } from "semantic-ui-react";
 
 const Page = (props) => {
-  console.log(props);
   return (
     <Layout>
       <h1 className="text-3xl text-center">LOMA</h1>
