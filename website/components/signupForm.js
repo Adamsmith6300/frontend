@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 
-const SignupForm = ({ submitSignup }) => {
+const SignupForm = ({ submitSignup, formError, successfulSignup }) => {
   let isValidEmail = true
     ? null
     : {
@@ -21,34 +21,32 @@ const SignupForm = ({ submitSignup }) => {
 
   const handleLoadingChange = (e) => setLoading(e.target.value);
 
+  const handleSubmit = () => {
+    submitSignup(formData);
+  };
+
   return (
     <Form
       loading={isLoading}
+      error={formError != undefined}
       onSubmit={(e) => {
+        setLoading(true);
         e.preventDefault();
-        submitSignup(formData);
+        handleSubmit();
+        setLoading(false);
       }}
     >
       <Form.Input
-        label="First Name"
+        label="Username"
         onChange={handleChange}
-        name="FirstName"
+        name="username"
         required
-        placeholder="First Name"
+        placeholder="Username"
       />
-
-      <Form.Input
-        label="Last Name"
-        onChange={handleChange}
-        name="LastName"
-        required
-        placeholder="Last Name"
-      />
-
       <Form.Input
         label="Email"
         onChange={handleChange}
-        name="Email"
+        name="email"
         required
         placeholder="adam@email.com"
         type="email"
@@ -57,7 +55,7 @@ const SignupForm = ({ submitSignup }) => {
         label="Enter Password"
         type="password"
         onChange={handleChange}
-        name="Password"
+        name="password"
         required
       />
       <Form.Input
@@ -73,6 +71,12 @@ const SignupForm = ({ submitSignup }) => {
           label="I agree to the Terms and Conditions"
         />
       </Form.Field>
+      {formError != undefined ? (
+        <div className="ui error message">
+          <div className="header">{formError}</div>
+          <p>Please choose another username.</p>
+        </div>
+      ) : null}
       <Button type="submit">Submit</Button>
     </Form>
   );

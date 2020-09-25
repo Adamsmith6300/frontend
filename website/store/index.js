@@ -14,6 +14,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, ...action.payload };
     case actionTypes.TEST:
       return { ...state, val: action.payload };
+    case actionTypes.ERROR_SUBMIT_FORM_DATA:
+      return { ...state, formError: action.payload };
+    case actionTypes.SUBMIT_FORM_DATA:
+      return { ...state, successfulSignup: true };
     default:
       return state;
   }
