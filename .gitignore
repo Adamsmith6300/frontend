@@ -1,0 +1,7 @@
+build
+node_modules
+out
+
+deploy.sh
+package.json
+yarn.lock

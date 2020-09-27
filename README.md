@@ -1,1 +1,1 @@
-LEMA frontend
+LOMA frontend
