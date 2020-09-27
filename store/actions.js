@@ -1,0 +1,85 @@
+import axios from "axios";
+
+const actionTypes = {
+  TEST: "TEST",
+  SIGNUP_SUCCESS: "SIGNUP_SUCCESS",
+  VERIFY_SUCCESS: "VERIFY_SUCCESS",
+  LOGIN_SUCCESS: "LOGIN_SUCCESS",
+  ERROR_SUBMIT_FORM_DATA: "ERROR_SUBMIT_FORM_DATA",
+};
+
+const actions = {
+  setTest: (val) => {
+    return {
+      type: actionTypes.TEST,
+      payload: val,
+    };
+  },
+  submitSignup: (formData) => {
+    delete formData["RePassword"];
+
+    return async (dispatch) => {
+      let resp = await axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup`, formData)
+        .then(function (response) {
+          console.log(response);
+          dispatch({ type: actionTypes.SIGNUP_SUCCESS });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error.response.data.includes("UsernameExistsException")) {
+            dispatch({
+              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
+              payload: "Username exists!",
+            });
+          }
+        });
+    };
+  },
+  verifyUser: (data) => {
+    console.log(data)
+    return async (dispatch) => {
+      let resp = await axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/verify`, data)
+        .then(function (response) {
+          console.log(response);
+          dispatch({ type: actionTypes.VERIFY_SUCCESS });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error) {
+            dispatch({
+              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
+              payload: "Failed to verify!",
+            });
+          }
+        });
+    };
+  },
+  submitLogin: (formData) => {
+    return async (dispatch) => {
+      let resp = await axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, formData)
+        .then(function (response) {
+          console.log(response);
+          dispatch({ type: actionTypes.LOGIN_SUCCESS });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error) {
+            dispatch({
+              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
+              payload: "Email or password are invalid!",
+            });
+          }
+        });
+    };
+  },
+};
+
+export default {
+  // TYPES
+  ...actionTypes,
+  // ACTIONS
+  ...actions,
+};
