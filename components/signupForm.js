@@ -37,11 +37,18 @@ const SignupForm = ({ submitSignup, formError, successfulSignup }) => {
       }}
     >
       <Form.Input
-        label="Username"
+        label="First Name"
         onChange={handleChange}
-        name="username"
+        name="firstname"
         required
-        placeholder="Username"
+        placeholder="First Name"
+      />
+      <Form.Input
+        label="Last Name"
+        onChange={handleChange}
+        name="lastname"
+        required
+        placeholder="Last Name"
       />
       <Form.Input
         label="Email"
