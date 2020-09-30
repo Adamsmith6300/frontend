@@ -4,6 +4,7 @@ const actionTypes = {
   TEST: "TEST",
   SIGNUP_SUCCESS: "SIGNUP_SUCCESS",
   VERIFY_SUCCESS: "VERIFY_SUCCESS",
+  VERIFY_FAILED:"VERIFY_FAILED",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   ERROR_SUBMIT_FORM_DATA: "ERROR_SUBMIT_FORM_DATA",
 };
@@ -17,7 +18,6 @@ const actions = {
   },
   submitSignup: (formData) => {
     delete formData["RePassword"];
-
     return async (dispatch) => {
       let resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup`, formData)
@@ -39,7 +39,7 @@ const actions = {
   verifyUser: (data) => {
     console.log(data)
     return async (dispatch) => {
-      let resp = await axios
+      const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/verify`, data)
         .then(function (response) {
           console.log(response);
@@ -47,11 +47,13 @@ const actions = {
         })
         .catch(function (error) {
           console.log(error.response);
-          if (error) {
+          if (error.response.data == "Account already verified!" || error.response.data == "Account already exists for this alias!") {
             dispatch({
-              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
-              payload: "Failed to verify!",
+              type: actionTypes.VERIFY_FAILED,
+              payload: error.response.data,
             });
+          } else {
+            dispatch({ type: actionTypes.VERIFY_FAILED, payload: "Failed to verify!" });
           }
         });
     };

@@ -5,16 +5,20 @@ import actions from "../store/actions";
 import LoginForm from "../components/loginForm";
 
 const Page = (
-  { submitLogin, formError, successfulLogin }
+  { verifiedUser, submitLogin, formError, successfulLogin }
 ) => {
 
 
   return (
     <Layout>
       <h1 className="text-3xl text-center">Login</h1>
+      {verifiedUser != undefined ?
+        <p className="text-green-500 text-2xl mb-3">Successfully Verified User!</p>
+        : null}
       <LoginForm
-        props={ submitLogin, formError, successfulLogin }
+      props={ submitLogin, formError, successfulLogin }
       />
+      
     </Layout>
   );
 

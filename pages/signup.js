@@ -2,13 +2,10 @@ import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 import actions from "../store/actions";
 // import { useRouter } from "next/router";
-import SignupForm from "../components/signupForm";
+import SignupForm from "../components/signupForm/index";
 
 const Page = ({ submitSignup, formError, successfulSignup }) => {
-  // const router = useRouter();
-  // if (successfulSignup) {
-  //   router.push("/");
-  // }
+  
   return (
     <Layout>
       <h1 className="text-3xl text-center">Signup</h1>
