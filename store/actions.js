@@ -9,6 +9,7 @@ const actionTypes = {
   VERIFY_FAILED:"VERIFY_FAILED",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   ERROR_SUBMIT_FORM_DATA: "ERROR_SUBMIT_FORM_DATA",
+  RESEND_SUCCESS: "RESEND_SUCCESS"
 };
 
 const actions = {
@@ -80,6 +81,25 @@ const actions = {
         });
     };
   },
+  submitResend: (formData) => {
+    return async (dispatch) => {
+      const resp = await axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/resend`, formData)
+        .then(function (response) {
+          console.log(response);
+          dispatch({ type: actionTypes.RESEND_SUCCESS });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error) {
+            dispatch({
+              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
+              payload: "Invalid email!",
+            });
+          }
+        });
+    };
+  }, 
 };
 
 export default {

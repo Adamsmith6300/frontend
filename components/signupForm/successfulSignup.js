@@ -7,9 +7,12 @@ const index = (props) => {
     return (
         <div className="text-center mt-6">
             <p className="text-2xl">Successfully signed up!</p>
-            <p className="mb-4">Please check your email.</p>
+            <p className="mb-4">Please check your email for a verification link.</p>
             <Link href='/login'>
                 <Button>Login</Button>
+            </Link>
+            <Link href='/resend'>
+                <Button>Resend Email</Button>
             </Link>
         </div>
     )

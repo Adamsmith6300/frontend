@@ -22,6 +22,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, verifiedUser: true };
     case actionTypes.VERIFY_FAILED:
       return { ...state, error: action.payload };
+    case actionTypes.RESEND_SUCCESS:
+      return { ...state, successfulResend: true };
     default:
       return state;
   }
