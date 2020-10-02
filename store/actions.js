@@ -1,4 +1,6 @@
 import axios from "axios";
+import { saveLoginSession } from "./helpers"
+
 
 const actionTypes = {
   TEST: "TEST",
@@ -60,10 +62,11 @@ const actions = {
   },
   submitLogin: (formData) => {
     return async (dispatch) => {
-      let resp = await axios
+      const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, formData)
         .then(function (response) {
           console.log(response);
+          saveLoginSession(response);
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })
         .catch(function (error) {

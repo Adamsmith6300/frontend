@@ -47,4 +47,4 @@ const mapDispatchToProps = (dispatch) => {
   return {verifyUser: (data) => dispatch(actions.verifyUser(data)),};
 };
 
-export default  connect((state) => state, mapDispatchToProps)(withRouter(Page));
+export default connect((state) => state, mapDispatchToProps)(withRouter(Page));
