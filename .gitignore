@@ -4,3 +4,4 @@ out
 
 deploy.sh
 yarn.lock
+tokens.json
