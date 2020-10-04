@@ -6,15 +6,7 @@ import actions from "../store/actions";
 
 import { Button } from "semantic-ui-react";
 
-const Page = ({
-  getProducts,
-  products,
-  toggleCart,
-  showCart,
-  cartData,
-  addToCart,
-  removeFromCart,
-}) => {
+const Page = ({ getProducts, products, addToCart, cartData }) => {
   if (products != undefined && products.length > 0) {
     products = products.map((product, index) => {
       let mainImageUrl = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${
@@ -42,13 +34,7 @@ const Page = ({
   }, []);
 
   return (
-    <Layout
-      toggleCart={toggleCart}
-      showCart={showCart}
-      cartData={cartData}
-      addToCart={addToCart}
-      removeFromCart={removeFromCart}
-    >
+    <Layout>
       <h1 className="text-3xl text-center">Products</h1>
       <div className="w-4/5 mx-auto">{products}</div>
     </Layout>
@@ -57,12 +43,9 @@ const Page = ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleCart: (showCart) => dispatch(actions.toggleCart(showCart)),
     getProducts: () => dispatch(actions.getProducts()),
     addToCart: (product, oldCart) =>
       dispatch(actions.addToCart(product, oldCart)),
-    removeFromCart: (product, oldcart, qty) =>
-      dispatch(actions.removeFromCart(product, oldcart, qty)),
   };
 };
 

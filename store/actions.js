@@ -128,13 +128,14 @@ const actions = {
   },
   addToCart: (product, oldCart) => {
     let newCart = { ...oldCart };
-    if (newCart.items[product.title]) {
-      newCart.items[product.title].qty++;
+    if (newCart.items[product.ProductId]) {
+      newCart.items[product.ProductId].qty++;
     } else {
-      newCart.items[product.title] = { ...product, qty: 1 };
+      newCart.items[product.ProductId] = { ...product, qty: 1 };
     }
     newCart.total += product.price;
     //save cart to local storage
+    localStorage.setItem("cart", JSON.stringify(newCart));
     return {
       type: actionTypes.UPDATE_CART,
       payload: newCart,
@@ -142,20 +143,27 @@ const actions = {
   },
   removeFromCart: (product, oldCart, qty) => {
     let newCart = { ...oldCart };
-    if (newCart.items[product.title]) {
+    if (newCart.items[product.ProductId]) {
       if (qty < 0) {
-        qty = newCart.items[product.title].qty;
+        qty = newCart.items[product.ProductId].qty;
       }
-      newCart.items[product.title].qty -= qty;
+      newCart.items[product.ProductId].qty -= qty;
       newCart.total -= product.price * qty;
-      if (newCart.items[product.title].qty <= 0) {
-        delete newCart.items[product.title];
+      if (newCart.items[product.ProductId].qty <= 0) {
+        delete newCart.items[product.ProductId];
       }
       //save cart to local storage
+      localStorage.setItem("cart", JSON.stringify(newCart));
     }
     return {
       type: actionTypes.UPDATE_CART,
       payload: newCart,
+    };
+  },
+  setCart: (cart) => {
+    return {
+      type: actionTypes.UPDATE_CART,
+      payload: cart,
     };
   },
 };
