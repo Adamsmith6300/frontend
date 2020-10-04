@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const saveLoginSession = response => {\n  if (response.data) {\n    sessionStorage.setItem('AuthResults', JSON.stringify(response.data['AuthenticationResult']));\n  }\n};","map":null,"metadata":{},"sourceType":"module"}

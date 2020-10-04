@@ -1,30 +1,44 @@
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
-import actions from "../store/actions";
-
+import { wrapper } from "../store";
 import { Button } from "semantic-ui-react";
 
+import actions from "../store/actions";
+import axios from "axios";
+
 const Page = (props) => {
+  // if (products != undefined && products.length > 0) {
+  //   products = products.map((product, index) => {
+  //     return (<li key={product.ProductId}>{product.title}</li>)
+  //   })
+  // }
+  console.log("SERVER SIDE PROPS:", props);
+
   return (
     <Layout>
       <h1 className="text-3xl text-center">LOMA</h1>
-      <Button
-        onClick={() => {
-          props.setTest(Math.random());
-        }}
-      >
-        TEST
-      </Button>
-      <div>Prop from Redux {props.val}</div>
+      <ul>{/* {products} */}</ul>
     </Layout>
   );
 };
-// No need to wrap pages if App was wrapped
-// Page.getInitialProps = ({ store, pathname, query }) => {
-//   // console.log(store);
-//   store.dispatch({ type: "FOO", payload: "waaa" }); // The component can read from the store's state when rendered
-//   return { custom: "we" }; // You can pass some custom props to the component from here
-// };
+
+export const getStaticProps = wrapper.getStaticProps(({ store, preview }) => {
+  axios
+    .get(`${process.env.NEXT_PUBLIC_API_URL}/market/products`)
+    .then(function (response) {
+      store.dispatch({
+        type: actions.GET_PRODUCTS,
+        payload: response.data,
+      });
+    })
+    .catch(function (error) {
+      store.dispatch({
+        type: actions.ERROR,
+        payload: "FAILED TO GET PRODUCTS",
+      });
+    });
+});
+
 const mapDispatchToProps = (dispatch) => {
   return { setTest: (val) => dispatch(actions.setTest(val)) };
 };

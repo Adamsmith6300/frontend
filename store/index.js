@@ -5,7 +5,7 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import middleware from "./middleware";
 import actionTypes from "./actions";
 
-const initialState = { val: "" };
+const initialState = {};
 
 // create your reducer
 const reducer = (state = initialState, action) => {
@@ -22,8 +22,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, verifiedUser: true };
     case actionTypes.VERIFY_FAILED:
       return { ...state, error: action.payload };
-    case actionTypes.RESEND_SUCCESS:
-      return { ...state, successfulResend: true };
+    case actionTypes.ERROR:
+      return { ...state, error: action.payload };
+    case actionTypes.GET_PRODUCTS:
+      return { ...state, products: action.payload };
     default:
       return state;
   }

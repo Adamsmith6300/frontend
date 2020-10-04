@@ -1,0 +1,1 @@
+{"ast":null,"code":"import actions from \"./actions\";\nvar imports = [];\nvar middleware = [// Log\nfunction (store) {\n  return function (next) {\n    return function (action) {\n      var result = next(action);\n      return result;\n    };\n  };\n}];\nexport default [].concat(middleware, imports);","map":null,"metadata":{},"sourceType":"module"}

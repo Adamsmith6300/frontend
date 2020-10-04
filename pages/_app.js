@@ -5,15 +5,11 @@ import { wrapper } from "../store";
 import "../styles/index.css";
 
 class MyApp extends App {
-  getInitialProps = async ({ Component, ctx }) => {
+  getStaticProps = async ({ Component, ctx }) => {
     // ctx.store.dispatch({ type: "TOE", payload: "was set in _app" });
     return {
       pageProps: {
-        // Call page-level getInitialProps
-        ...(Component.getInitialProps
-          ? await Component.getInitialProps(ctx)
-          : {}),
-        // Some custom thing for all pages
+        ...(Component.getStaticProps ? await Component.getStaticProps() : {}),
         pathname: ctx.pathname,
       },
     };

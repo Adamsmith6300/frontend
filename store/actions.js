@@ -3,22 +3,17 @@ import { saveLoginSession } from "./helpers"
 
 
 const actionTypes = {
-  TEST: "TEST",
+  ERROR:"ERROR",
   SIGNUP_SUCCESS: "SIGNUP_SUCCESS",
   VERIFY_SUCCESS: "VERIFY_SUCCESS",
   VERIFY_FAILED:"VERIFY_FAILED",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   ERROR_SUBMIT_FORM_DATA: "ERROR_SUBMIT_FORM_DATA",
-  RESEND_SUCCESS: "RESEND_SUCCESS"
+  RESEND_SUCCESS: "RESEND_SUCCESS",
+  GET_PRODUCTS:"GET_PRODUCTS"
 };
 
 const actions = {
-  setTest: (val) => {
-    return {
-      type: actionTypes.TEST,
-      payload: val,
-    };
-  },
   submitSignup: (formData) => {
     delete formData["RePassword"];
     return async (dispatch) => {
@@ -99,7 +94,22 @@ const actions = {
           }
         });
     };
-  }, 
+  },
+  getProducts: () => {
+    return async (dispatch) => {
+      const resp = await axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/market/products`)
+        .then(function (response) {
+          dispatch({ type: actionTypes.GET_PRODUCTS, payload: response.data });
+        })
+        .catch(function (error) {
+          dispatch({
+            type: actionTypes.ERROR,
+            payload: "FAILED TO GET PRODUCTS",
+          });
+        });
+    };
+  }
 };
 
 export default {
