@@ -1,1 +1,0 @@
-{"ast":null,"code":"import actions from \"./actions\";\nconst imports = [];\nconst middleware = [// Log\nstore => {\n  return next => {\n    return action => {\n      const result = next(action);\n      return result;\n    };\n  };\n}];\nexport default [...middleware, ...imports];","map":null,"metadata":{},"sourceType":"module"}

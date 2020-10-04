@@ -1,6 +1,7 @@
 build
 node_modules
 out
+.next 
 
 deploy.sh
 yarn.lock
