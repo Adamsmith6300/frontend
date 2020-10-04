@@ -1,16 +1,17 @@
 import axios from "axios";
-import { saveLoginSession } from "./helpers"
-
+import { saveLoginSession } from "./helpers";
 
 const actionTypes = {
-  ERROR:"ERROR",
+  ERROR: "ERROR",
   SIGNUP_SUCCESS: "SIGNUP_SUCCESS",
   VERIFY_SUCCESS: "VERIFY_SUCCESS",
-  VERIFY_FAILED:"VERIFY_FAILED",
+  VERIFY_FAILED: "VERIFY_FAILED",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   ERROR_SUBMIT_FORM_DATA: "ERROR_SUBMIT_FORM_DATA",
   RESEND_SUCCESS: "RESEND_SUCCESS",
-  GET_PRODUCTS:"GET_PRODUCTS"
+  GET_PRODUCTS: "GET_PRODUCTS",
+  TOGGLE_CART: "TOGGLE_CART",
+  UPDATE_CART: "UPDATE_CART",
 };
 
 const actions = {
@@ -35,7 +36,7 @@ const actions = {
     };
   },
   verifyUser: (data) => {
-    console.log(data)
+    console.log(data);
     return async (dispatch) => {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/verify`, data)
@@ -45,13 +46,19 @@ const actions = {
         })
         .catch(function (error) {
           console.log(error.response);
-          if (error.response.data == "Account already verified!" || error.response.data == "Account already exists for this alias!") {
+          if (
+            error.response.data == "Account already verified!" ||
+            error.response.data == "Account already exists for this alias!"
+          ) {
             dispatch({
               type: actionTypes.VERIFY_FAILED,
               payload: error.response.data,
             });
           } else {
-            dispatch({ type: actionTypes.VERIFY_FAILED, payload: "Failed to verify!" });
+            dispatch({
+              type: actionTypes.VERIFY_FAILED,
+              payload: "Failed to verify!",
+            });
           }
         });
     };
@@ -79,7 +86,10 @@ const actions = {
   submitResend: (formData) => {
     return async (dispatch) => {
       const resp = await axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/resend`, formData)
+        .post(
+          `${process.env.NEXT_PUBLIC_API_URL}/people/signup/resend`,
+          formData
+        )
         .then(function (response) {
           console.log(response);
           dispatch({ type: actionTypes.RESEND_SUCCESS });
@@ -109,7 +119,45 @@ const actions = {
           });
         });
     };
-  }
+  },
+  toggleCart: (showCart) => {
+    return {
+      type: actionTypes.TOGGLE_CART,
+      payload: showCart,
+    };
+  },
+  addToCart: (product, oldCart) => {
+    let newCart = { ...oldCart };
+    if (newCart.items[product.title]) {
+      newCart.items[product.title].qty++;
+    } else {
+      newCart.items[product.title] = { ...product, qty: 1 };
+    }
+    newCart.total += product.price;
+    //save cart to local storage
+    return {
+      type: actionTypes.UPDATE_CART,
+      payload: newCart,
+    };
+  },
+  removeFromCart: (product, oldCart, qty) => {
+    let newCart = { ...oldCart };
+    if (newCart.items[product.title]) {
+      if (qty < 0) {
+        qty = newCart.items[product.title].qty;
+      }
+      newCart.items[product.title].qty -= qty;
+      newCart.total -= product.price * qty;
+      if (newCart.items[product.title].qty <= 0) {
+        delete newCart.items[product.title];
+      }
+      //save cart to local storage
+    }
+    return {
+      type: actionTypes.UPDATE_CART,
+      payload: newCart,
+    };
+  },
 };
 
 export default {

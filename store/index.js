@@ -5,7 +5,7 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import middleware from "./middleware";
 import actionTypes from "./actions";
 
-const initialState = {};
+const initialState = { cartData: { items: {}, total: 0 } };
 
 // create your reducer
 const reducer = (state = initialState, action) => {
@@ -26,6 +26,10 @@ const reducer = (state = initialState, action) => {
       return { ...state, error: action.payload };
     case actionTypes.GET_PRODUCTS:
       return { ...state, products: action.payload };
+    case actionTypes.TOGGLE_CART:
+      return { ...state, showCart: action.payload };
+    case actionTypes.UPDATE_CART:
+      return { ...state, cartData: action.payload };
     default:
       return state;
   }

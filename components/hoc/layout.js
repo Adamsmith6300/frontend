@@ -1,11 +1,17 @@
-//lib
 import React, { Component } from "react";
 import Head from "next/head";
+import Nav from "./nav";
+import Cart from "./cart";
 
-
-import Nav from "../nav";
-
-const Layout = props => {
+const Layout = ({
+  children,
+  toggleCart,
+  showCart,
+  cartData,
+  addToCart,
+  removeFromCart,
+}) => {
+  //use effect-->get cart from local storage
 
   return (
     <div className="ui container">
@@ -13,11 +19,19 @@ const Layout = props => {
         <title>LOMA</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Nav />
-      {props.children}
+      <Nav toggleCart={toggleCart} showCart={showCart} />
+      {children}
+      {showCart ? (
+        <Cart
+          toggleCart={toggleCart}
+          showCart={showCart}
+          cartData={cartData}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+        />
+      ) : null}
     </div>
   );
-
-}
+};
 
 export default Layout;
