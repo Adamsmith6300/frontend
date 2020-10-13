@@ -1,16 +1,30 @@
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import InjectedCheckoutForm from "./injectedCheckoutForm";
+import Email from "./email";
+import DeliveryDetails from "./deliveryDetails";
+import Payment from "./payment";
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY);
-
-const index = () => {
+const index = ({
+  activeCheckoutStep,
+  setActiveCheckout,
+  postNewOrder,
+  cartData,
+}) => {
   return (
-    <Elements stripe={stripePromise}>
-      <InjectedCheckoutForm />
-    </Elements>
+    <div className="w-1/2 mx-auto text-center pt-12">
+      <Email
+        activeCheckoutStep={activeCheckoutStep}
+        setActiveCheckout={setActiveCheckout}
+      />
+      <DeliveryDetails
+        activeCheckoutStep={activeCheckoutStep}
+        setActiveCheckout={setActiveCheckout}
+      />
+      <Payment
+        activeCheckoutStep={activeCheckoutStep}
+        setActiveCheckout={setActiveCheckout}
+        postNewOrder={postNewOrder}
+        cartData={cartData}
+      />
+    </div>
   );
 };
 

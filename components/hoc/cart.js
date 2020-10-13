@@ -46,7 +46,7 @@ const index = ({
       {items.length > 0 ? (
         <>
           <div className="w-1/3 sm:w-4/5 text-center mx-auto">{items}</div>
-          <CartSummary cartData={cartData} />
+          <CartSummary cartData={cartData} toggleCart={toggleCart} />
         </>
       ) : (
         <p className="text-xl font-bold text-center">Your cart is empty!</p>

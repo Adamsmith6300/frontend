@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 
-const LoginForm = ({ submitLogin, formError, successfulLogin } ) => {
-
+const LoginForm = ({ submitLogin, formError, successfulLogin }) => {
   let isLoading = false;
   let isValidEmail = true
     ? null
     : {
         content: "Please enter a valid email address",
         pointing: "below",
-    };
-   const [formData, updateFormData] = useState({});
+      };
+  const [formData, updateFormData] = useState({});
 
   const handleChange = (e) => {
     updateFormData({
@@ -22,20 +21,29 @@ const LoginForm = ({ submitLogin, formError, successfulLogin } ) => {
   const handleSubmit = () => {
     submitLogin(formData);
   };
-  
+
   return (
-    <Form loading={isLoading}
+    <Form
+      loading={isLoading}
       onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
-      }}>
-      <Form.Input 
+      }}
+    >
+      <Form.Input
         label="Email"
         placeholder="adam@email.com"
         error={isValidEmail}
-        name="email" type="email" onChange={handleChange} 
+        name="email"
+        type="email"
+        onChange={handleChange}
       />
-      <Form.Input label="Enter Password" name="password" type="password" onChange={handleChange} />
+      <Form.Input
+        label="Enter Password"
+        name="password"
+        type="password"
+        onChange={handleChange}
+      />
       <Button type="submit">Login</Button>
     </Form>
   );

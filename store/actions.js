@@ -12,6 +12,8 @@ const actionTypes = {
   GET_PRODUCTS: "GET_PRODUCTS",
   TOGGLE_CART: "TOGGLE_CART",
   UPDATE_CART: "UPDATE_CART",
+  SET_ACTIVE_CHECKOUT: "SET_ACTIVE_CHECKOUT",
+  POST_NEW_ORDER: "POST_NEW_ORDER",
 };
 
 const actions = {
@@ -164,6 +166,35 @@ const actions = {
     return {
       type: actionTypes.UPDATE_CART,
       payload: cart,
+    };
+  },
+  setActiveCheckout: (stepNo) => {
+    return {
+      type: actionTypes.SET_ACTIVE_CHECKOUT,
+      payload: stepNo,
+    };
+  },
+  postNewOrder: (OrderId) => {
+    return async (dispatch) => {
+      const resp = await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_URL}/market/order/${OrderId}/update`
+        )
+        .then(function (response) {
+          console.log(response);
+          dispatch({
+            type: actionTypes.POST_NEW_ORDER,
+          });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error) {
+            dispatch({
+              type: actionTypes.ERROR,
+              payload: error.response,
+            });
+          }
+        });
     };
   },
 };

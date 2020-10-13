@@ -1,51 +1,53 @@
+import React, { useState } from "react";
 import { CardElement } from "@stripe/react-stripe-js";
+import { Button, Form } from "semantic-ui-react";
+import axios from "axios";
 
-const index = (props) => {
-  const { stripe } = props;
-
+const index = ({ stripe, elements, postNewOrder, cartData }) => {
+  const [isLoading, updateIsLoading] = useState(false);
   const handleSubmit = async (event) => {
-    // Block native form submission.
     event.preventDefault();
-
-    const { stripe, elements } = props;
-
+    updateIsLoading(true);
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
       return;
     }
-
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
-    const cardElement = elements.getElement(CardElement);
-
-    const result = await stripe.confirmCardPayment("{CLIENT_SECRET}", {
-      payment_method: {
-        card: cardElement,
-        billing_details: {
-          name: "Jenny Rosen",
-        },
-      },
+    const payload = { customer: "" };
+    payload.items = Object.values(cartData.items).map((item, index) => {
+      return {
+        ProductId: item.ProductId,
+        MerchantId: item.MerchantId,
+        qty: item.qty,
+      };
     });
-
-    if (result.error) {
-      // Show error to your customer (e.g., insufficient funds)
-      console.log(result.error.message);
-    } else {
-      // The payment has been processed!
-      if (result.paymentIntent.status === "succeeded") {
-        // Show a success message to your customer
-        // There's a risk of the customer closing the window before callback
-        // execution. Set up a webhook or plugin to listen for the
-        // payment_intent.succeeded event that handles any business critical
-        // post-payment actions.
+    const resp = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/market/order`,
+      payload
+    );
+    if (resp.status == 200) {
+      const cardElement = elements.getElement(CardElement);
+      const result = await stripe.confirmCardPayment(resp.data.client_secret, {
+        payment_method: {
+          card: cardElement,
+        },
+      });
+      if (result.error) {
+        console.log(result.error.message);
+      } else {
+        // The payment has been processed!
+        if (result.paymentIntent.status === "succeeded") {
+          await postNewOrder(resp.data.OrderId);
+          console.log("Successfully processed!!!");
+          localStorage.removeItem("cart");
+        }
       }
+    } else {
+      console.log("Failed to make payment intent!", resp);
     }
+    updateIsLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-1/3 mx-auto">
+    <Form loading={isLoading} onSubmit={handleSubmit} className="w-3/4 mx-auto">
       <CardElement
         options={{
           style: {
@@ -62,10 +64,11 @@ const index = (props) => {
           },
         }}
       />
-      <button type="submit" disabled={!stripe}>
+      <label>Billing same as delivery?</label>
+      <Button type="submit" disabled={!stripe}>
         Pay
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 };
 

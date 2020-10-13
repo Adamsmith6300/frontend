@@ -5,7 +5,10 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import middleware from "./middleware";
 import actionTypes from "./actions";
 
-const initialState = { cartData: { items: {}, total: 0 } };
+const initialState = {
+  cartData: { items: {}, total: 0 },
+  checkout: { activeStep: 1, pi_client_secret: null },
+};
 
 // create your reducer
 const reducer = (state = initialState, action) => {
@@ -30,6 +33,19 @@ const reducer = (state = initialState, action) => {
       return { ...state, showCart: action.payload };
     case actionTypes.UPDATE_CART:
       return { ...state, cartData: action.payload };
+    case actionTypes.SET_ACTIVE_CHECKOUT:
+      return {
+        ...state,
+        checkout: { ...state.checkout, activeStep: action.payload },
+      };
+    case actionTypes.POST_NEW_ORDER:
+      return {
+        ...state,
+        checkout: {
+          ...state.checkout,
+          postNewOrderSuccess: true,
+        },
+      };
     default:
       return state;
   }
