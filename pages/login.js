@@ -4,34 +4,32 @@ import actions from "../store/actions";
 import { withRouter } from "next/router";
 import LoginForm from "../components/loginForm";
 
-const Page = (
-  { verifiedUser, submitLogin, formError, router, successfulLogin }
-) => {
-
-
-  if (successfulLogin) {
-    router.push("/");
-  }
-
+const Page = ({
+  verifiedUser,
+  submitLogin,
+  formError,
+  router,
+  successfulLogin,
+}) => {
   return (
     <Layout>
       <h1 className="text-3xl text-center">Login</h1>
-      {verifiedUser != undefined ?
-        <p className="text-green-500 text-2xl mb-3">Successfully Verified User!</p>
-        : null}
+      {verifiedUser != undefined ? (
+        <p className="text-green-500 text-2xl mb-3">
+          Successfully Verified User!
+        </p>
+      ) : null}
       <LoginForm
-        submitLogin={submitLogin} formError={formError} successfulLogin={successfulLogin}
+        submitLogin={submitLogin}
+        formError={formError}
+        successfulLogin={successfulLogin}
       />
-      
     </Layout>
   );
-
 };
-
-
 
 const mapDispatchToProps = (dispatch) => {
-  return {submitLogin: (formData) => dispatch(actions.submitLogin(formData)),};
+  return { submitLogin: (formData) => dispatch(actions.submitLogin(formData)) };
 };
 
-export default  connect((state) => state, mapDispatchToProps)(withRouter(Page));
+export default connect((state) => state, mapDispatchToProps)(withRouter(Page));

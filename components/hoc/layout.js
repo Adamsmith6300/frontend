@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Head from "next/head";
+import Link from "next/link";
+import { Button } from "semantic-ui-react";
 import actions from "../../store/actions";
 
 import Nav from "./nav";
@@ -32,6 +34,15 @@ const Layout = ({
       </Head>
       <Nav toggleCart={toggleCart} showCart={showCart} />
       {children}
+      <div className="w-full bottom-0 left-0 absolute py-12">
+        <ul className="flex justify-center">
+          <li className="text-xl">
+            <Link href="/merchant-application">
+              <Button color="black">Become a Merchant</Button>
+            </Link>
+          </li>
+        </ul>
+      </div>
       {showCart ? (
         <Cart
           toggleCart={toggleCart}

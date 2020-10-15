@@ -70,7 +70,6 @@ const actions = {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, formData)
         .then(function (response) {
-          console.log(response);
           saveLoginSession(response);
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })
