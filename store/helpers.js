@@ -14,9 +14,16 @@ export const saveLoginSession = (response) => {
 export const isLoggedIn = () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const nowUnix = Math.floor(Date.now() / 1000);
-  console.log(nowUnix);
-  console.log(authRes["IdExp"]);
   return (
     authRes !== undefined && authRes !== null && authRes["IdExp"] > nowUnix
   );
+};
+
+export const logoutSession = () => {
+  localStorage.removeItem("AuthResults");
+};
+
+export const getAuth = () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  return authRes["IdToken"];
 };

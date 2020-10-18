@@ -4,6 +4,7 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 
 import middleware from "./middleware";
 import actionTypes from "./actions";
+import { Placeholder } from "semantic-ui-react";
 
 const initialState = {
   cartData: { items: {}, total: 0 },
@@ -46,6 +47,11 @@ const reducer = (state = initialState, action) => {
           postNewOrderSuccess: true,
         },
       };
+    case actionTypes.CLEAR_FLAG:
+      const flag = action.payload;
+      return { ...state, [flag]: false };
+    case actionTypes.MERCHANT_APPLICATION_SUCCESS:
+      return { ...state, successfulMerchantApplication: true };
     default:
       return state;
   }

@@ -7,7 +7,12 @@ import Link from "next/link";
 import { Button, Checkbox, Form, Input, TextArea } from "semantic-ui-react";
 import { isLoggedIn } from "../store/helpers";
 
-const Page = ({ router }) => {
+const Page = ({
+  clearFlag,
+  router,
+  submitMerchantApplication,
+  successfulMerchantApplication,
+}) => {
   const loggedIn = isLoggedIn();
 
   const [isLoading, setLoading] = useState(false);
@@ -20,8 +25,11 @@ const Page = ({ router }) => {
     });
   };
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const handleSubmit = async () => {
+    if (loggedIn) {
+      await submitMerchantApplication(formData);
+      router.push("/");
+    }
   };
 
   return (
@@ -127,7 +135,11 @@ const Page = ({ router }) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    submitMerchantApplication: (formData) =>
+      dispatch(actions.submitMerchantApplication(formData)),
+  };
 };
 
 export default connect((state) => state, mapDispatchToProps)(withRouter(Page));

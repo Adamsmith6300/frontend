@@ -1,11 +1,23 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { logoutSession } from "../../store/helpers";
 
-const nav = ({ toggleCart, showCart }) => {
+const nav = ({ toggleCart, showCart, clearFlag }) => {
+  const router = useRouter();
+
   const navItems = [
     { title: "home", link: "/" },
     { title: "signup", link: "/signup" },
     { title: "login", link: "/login" },
-    { title: "cart" },
+    {
+      title: "logout",
+      action: () => {
+        logoutSession();
+        clearFlag("successfulLogin");
+        router.push("/");
+      },
+    },
+    { title: "cart", action: () => toggleCart(!showCart) },
   ].map((item, index) => {
     if (item.link != undefined) {
       return (
@@ -19,7 +31,7 @@ const nav = ({ toggleCart, showCart }) => {
       return (
         <span
           key={index}
-          onClick={() => toggleCart(!showCart)}
+          onClick={item.action}
           className="cursor-pointer px-4 mx-3 py-4 shadow-md text-gray-600 hover:text-gray-800"
         >
           {item.title}

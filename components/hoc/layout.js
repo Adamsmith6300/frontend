@@ -16,6 +16,7 @@ const Layout = ({
   addToCart,
   removeFromCart,
   setCart,
+  clearFlag,
 }) => {
   //use effect-->get cart from local storage
   useEffect(() => {
@@ -32,7 +33,7 @@ const Layout = ({
         <title>LOMA</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Nav toggleCart={toggleCart} showCart={showCart} />
+      <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} />
       {children}
       <div className="w-full bottom-0 left-0 absolute py-12">
         <ul className="flex justify-center">
@@ -64,6 +65,7 @@ const mapDispatchToProps = (dispatch) => {
     removeFromCart: (product, oldcart, qty) =>
       dispatch(actions.removeFromCart(product, oldcart, qty)),
     setCart: (cart) => dispatch(actions.setCart(cart)),
+    clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
   };
 };
 

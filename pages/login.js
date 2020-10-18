@@ -10,7 +10,12 @@ const Page = ({
   formError,
   router,
   successfulLogin,
+  clearFlag,
 }) => {
+  if (successfulLogin) {
+    router.push("/");
+    clearFlag("successfulLogin");
+  }
   return (
     <Layout>
       <h1 className="text-3xl text-center">Login</h1>
@@ -29,7 +34,10 @@ const Page = ({
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { submitLogin: (formData) => dispatch(actions.submitLogin(formData)) };
+  return {
+    submitLogin: (formData) => dispatch(actions.submitLogin(formData)),
+    clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+  };
 };
 
 export default connect((state) => state, mapDispatchToProps)(withRouter(Page));

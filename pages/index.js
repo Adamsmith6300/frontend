@@ -3,10 +3,9 @@ import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 // import { wrapper } from "../store";
 import actions from "../store/actions";
-
 import { Button } from "semantic-ui-react";
 
-const Page = ({ getProducts, products, addToCart, cartData }) => {
+const Page = ({ getProducts, products, addToCart, cartData, clearFlag }) => {
   if (products != undefined && products.length > 0) {
     products = products.map((product, index) => {
       let mainImageUrl = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${
@@ -46,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
     getProducts: () => dispatch(actions.getProducts()),
     addToCart: (product, oldCart) =>
       dispatch(actions.addToCart(product, oldCart)),
+    clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
   };
 };
 

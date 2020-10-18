@@ -1,5 +1,6 @@
 import axios from "axios";
-import { saveLoginSession } from "./helpers";
+import { useRouter } from "next/router";
+import { saveLoginSession, getAuth } from "./helpers";
 
 const actionTypes = {
   ERROR: "ERROR",
@@ -14,6 +15,8 @@ const actionTypes = {
   UPDATE_CART: "UPDATE_CART",
   SET_ACTIVE_CHECKOUT: "SET_ACTIVE_CHECKOUT",
   POST_NEW_ORDER: "POST_NEW_ORDER",
+  CLEAR_FLAG: "CLEAR_FLAG",
+  MERCHANT_APPLICATION_SUCCESS: "MERCHANT_APPLICATION_SUCCESS",
 };
 
 const actions = {
@@ -191,6 +194,35 @@ const actions = {
             dispatch({
               type: actionTypes.ERROR,
               payload: error.response,
+            });
+          }
+        });
+    };
+  },
+  clearFlag: (flag) => {
+    return {
+      type: actionTypes.CLEAR_FLAG,
+      payload: flag,
+    };
+  },
+  submitMerchantApplication: (formData) => {
+    const authorization = getAuth();
+    return async (dispatch) => {
+      const resp = await axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/merchant/`, formData, {
+          headers: {
+            Authorization: authorization,
+          },
+        })
+        .then(function (response) {
+          dispatch({ type: actionTypes.MERCHANT_APPLICATION_SUCCESS });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error) {
+            dispatch({
+              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
+              payload: "Failed to submit merchant application!",
             });
           }
         });
