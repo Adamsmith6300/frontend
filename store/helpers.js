@@ -1,4 +1,5 @@
 import jwt from "jwt-decode";
+import axios from "axios";
 
 export const saveLoginSession = (response) => {
   if (response.data) {
@@ -26,4 +27,27 @@ export const logoutSession = () => {
 export const getAuth = () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   return authRes["IdToken"];
+};
+
+export const checkMerchant = () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  if (authRes != null) {
+    const user = jwt(authRes["IdToken"]);
+    return user["cognito:groups"].includes("merchant-group");
+  }
+  return false;
+};
+
+export const fetchMerchantData = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
 };

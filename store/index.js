@@ -9,6 +9,7 @@ import { Placeholder } from "semantic-ui-react";
 const initialState = {
   cartData: { items: {}, total: 0 },
   checkout: { activeStep: 1, pi_client_secret: null },
+  myShop: {},
 };
 
 // create your reducer

@@ -1,24 +1,41 @@
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { logoutSession } from "../../store/helpers";
+import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
 
 const nav = ({ toggleCart, showCart, clearFlag }) => {
   const router = useRouter();
 
-  const navItems = [
-    { title: "home", link: "/" },
-    { title: "signup", link: "/signup" },
-    { title: "login", link: "/login" },
-    {
+  const [isMerchant, updateIsMerchant] = useState(false);
+  const [loggedIn, updateLoggedIn] = useState(false);
+
+  useEffect(() => {
+    updateLoggedIn(isLoggedIn());
+    updateIsMerchant(checkMerchant());
+  }, []);
+
+  let navItems = [{ title: "cart", action: () => toggleCart(!showCart) }];
+
+  if (loggedIn) {
+    navItems.unshift({ title: "my account", link: "/my-account" });
+    navItems.push({
       title: "logout",
       action: () => {
         logoutSession();
         clearFlag("successfulLogin");
         router.push("/");
       },
-    },
-    { title: "cart", action: () => toggleCart(!showCart) },
-  ].map((item, index) => {
+    });
+  } else {
+    navItems.unshift({ title: "signup", link: "/signup" });
+    navItems.unshift({ title: "login", link: "/login" });
+  }
+  if (isMerchant && loggedIn) {
+    navItems.unshift({ title: "my shop", link: "/my-shop" });
+  }
+
+  navItems.unshift({ title: "home", link: "/" });
+  navItems = navItems.map((item, index) => {
     if (item.link != undefined) {
       return (
         <Link href={item.link} key={index}>

@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Head from "next/head";
 import Link from "next/link";
 import { Button } from "semantic-ui-react";
 import actions from "../../store/actions";
+
+import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
 
 import Nav from "./nav";
 import Cart from "./cart";
@@ -18,6 +20,8 @@ const Layout = ({
   setCart,
   clearFlag,
 }) => {
+  const [isMerchant, updateIsMerchant] = useState(false);
+
   //use effect-->get cart from local storage
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
@@ -25,6 +29,7 @@ const Layout = ({
       const cart = JSON.parse(cartString);
       setCart(cart);
     }
+    updateIsMerchant(checkMerchant());
   }, []);
 
   return (
@@ -35,15 +40,17 @@ const Layout = ({
       </Head>
       <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} />
       {children}
-      <div className="w-full bottom-0 left-0 absolute py-12">
-        <ul className="flex justify-center">
-          <li className="text-xl">
-            <Link href="/merchant-application">
-              <Button color="black">Become a Merchant</Button>
-            </Link>
-          </li>
-        </ul>
-      </div>
+      {!isMerchant ? (
+        <div className="w-full bottom-0 left-0 absolute py-12">
+          <ul className="flex justify-center">
+            <li className="text-xl">
+              <Link href="/merchant-application">
+                <Button color="black">Become a Merchant</Button>
+              </Link>
+            </li>
+          </ul>
+        </div>
+      ) : null}
       {showCart ? (
         <Cart
           toggleCart={toggleCart}
