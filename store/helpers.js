@@ -51,3 +51,18 @@ export const fetchMerchantData = async () => {
   );
   return resp;
 };
+
+export const getAccountLink = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  console.log(authRes);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/account-link`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};

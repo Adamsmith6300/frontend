@@ -1,6 +1,7 @@
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 import actions from "../store/actions";
+import { checkMerchant } from "../store/helpers";
 import { withRouter } from "next/router";
 import LoginForm from "../components/loginForm";
 
@@ -13,9 +14,15 @@ const Page = ({
   clearFlag,
 }) => {
   if (successfulLogin) {
-    router.push("/");
-    clearFlag("successfulLogin");
+    if (checkMerchant()) {
+      router.push("/my-shop");
+      clearFlag("successfulLogin");
+    } else {
+      router.push("/");
+      clearFlag("successfulLogin");
+    }
   }
+
   return (
     <Layout>
       <h1 className="text-3xl text-center">Login</h1>

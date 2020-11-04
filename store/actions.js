@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { saveLoginSession, getAuth } from "./helpers";
+import { saveLoginSession, getAuth, checkMerchant } from "./helpers";
 
 const actionTypes = {
   ERROR: "ERROR",
@@ -77,7 +77,7 @@ const actions = {
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })
         .catch(function (error) {
-          console.log(error.response);
+          console.log(error);
           if (error) {
             dispatch({
               type: actionTypes.ERROR_SUBMIT_FORM_DATA,

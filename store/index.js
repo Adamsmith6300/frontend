@@ -22,7 +22,10 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SIGNUP_SUCCESS:
       return { ...state, successfulSignup: true };
     case actionTypes.LOGIN_SUCCESS:
-      return { ...state, successfulLogin: true };
+      return {
+        ...state,
+        successfulLogin: true,
+      };
     case actionTypes.VERIFY_SUCCESS:
       return { ...state, verifiedUser: true };
     case actionTypes.VERIFY_FAILED:

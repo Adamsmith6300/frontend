@@ -13,12 +13,10 @@ const Page = ({ router, myShop }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
   const [checkedAuth, updateCheckedAuth] = useState(false);
-  const [activeSection, updateActiveSection] = useState(0);
+  const [activeSection, updateActiveSection] = useState(3);
   const [merchantDataExists, setMerchantDataExists] = useState(
     Object.keys(myShop).length > 0
   );
-
-  console.log("MyShop", myShop);
 
   useEffect(() => {
     updateLoggedIn(isLoggedIn());
@@ -27,8 +25,8 @@ const Page = ({ router, myShop }) => {
 
     async function callFetchMerchData() {
       try {
-        let resp = await fetchMerchantData();
-        console.log("resp", resp);
+        // let resp = await fetchMerchantData();
+        // console.log("resp", resp);
         setMerchantDataExists(true);
       } catch (err) {
         console.log(err);
@@ -48,7 +46,7 @@ const Page = ({ router, myShop }) => {
 
   return (
     <Layout>
-      <h1 className="text-3xl text-center">My Shop</h1>
+      <h1 className="text-3xl text-center">Welcome, (firstname here)</h1>
       <div className="flex">
         <ShopMenu
           activeSection={activeSection}
