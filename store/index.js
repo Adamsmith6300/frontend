@@ -56,6 +56,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, [flag]: false };
     case actionTypes.MERCHANT_APPLICATION_SUCCESS:
       return { ...state, successfulMerchantApplication: true };
+    case actionTypes.SET_MERCHANT_DATA:
+      return { ...state, myShop: action.payload };
     default:
       return state;
   }

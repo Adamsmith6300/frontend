@@ -9,15 +9,14 @@ import { isLoggedIn, checkMerchant, fetchMerchantData } from "../store/helpers";
 import ShopMenu from "../components/myShop/shopMenu";
 import { Orders, Products, StoreDetails, Payments } from "../components/myShop";
 
-const Page = ({ router, myShop }) => {
+const Page = ({ router, myShop, setMerchantData }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
   const [checkedAuth, updateCheckedAuth] = useState(false);
-  const [activeSection, updateActiveSection] = useState(3);
+  const [activeSection, updateActiveSection] = useState(2);
   const [merchantDataExists, setMerchantDataExists] = useState(
     Object.keys(myShop).length > 0
   );
-
   useEffect(() => {
     updateLoggedIn(isLoggedIn());
     updateIsMerchant(checkMerchant());
@@ -25,8 +24,8 @@ const Page = ({ router, myShop }) => {
 
     async function callFetchMerchData() {
       try {
-        // let resp = await fetchMerchantData();
-        // console.log("resp", resp);
+        let resp = await fetchMerchantData();
+        setMerchantData(resp.data);
         setMerchantDataExists(true);
       } catch (err) {
         console.log(err);
@@ -42,11 +41,18 @@ const Page = ({ router, myShop }) => {
     router.push("/");
   }
 
-  let sections = [<Orders />, <Products />, <StoreDetails />, <Payments />];
+  let sections = [
+    <Orders orders={myShop.orders} />,
+    <Products products={myShop.products} />,
+    <StoreDetails info={myShop.info} />,
+    <Payments />,
+  ];
 
   return (
     <Layout>
-      <h1 className="text-3xl text-center">Welcome, (firstname here)</h1>
+      {myShop.info ? (
+        <h1 className="text-3xl text-center">Welcome, {myShop.info.name}!</h1>
+      ) : null}
       <div className="flex">
         <ShopMenu
           activeSection={activeSection}
@@ -61,6 +67,7 @@ const Page = ({ router, myShop }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    setMerchantData: (data) => dispatch(actions.setMerchantData(data)),
   };
 };
 

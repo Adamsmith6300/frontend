@@ -17,6 +17,7 @@ const actionTypes = {
   POST_NEW_ORDER: "POST_NEW_ORDER",
   CLEAR_FLAG: "CLEAR_FLAG",
   MERCHANT_APPLICATION_SUCCESS: "MERCHANT_APPLICATION_SUCCESS",
+  SET_MERCHANT_DATA: "SET_MERCHANT_DATA",
 };
 
 const actions = {
@@ -226,6 +227,12 @@ const actions = {
             });
           }
         });
+    };
+  },
+  setMerchantData: (data) => {
+    return {
+      type: actionTypes.SET_MERCHANT_DATA,
+      payload: data,
     };
   },
 };
