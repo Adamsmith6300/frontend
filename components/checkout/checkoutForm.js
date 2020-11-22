@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CardElement } from "@stripe/react-stripe-js";
 import { Button, Form } from "semantic-ui-react";
 import axios from "axios";
+import { getAuth, getPersonId } from "./../../store/helpers";
 
 const index = ({ stripe, elements, postNewOrder, cartData }) => {
   const [isLoading, updateIsLoading] = useState(false);
@@ -11,7 +12,7 @@ const index = ({ stripe, elements, postNewOrder, cartData }) => {
     if (!stripe || !elements) {
       return;
     }
-    const payload = { customer: "" };
+    const payload = { PersonId: getPersonId() };
     payload.items = Object.values(cartData.items).map((item, index) => {
       return {
         ProductId: item.ProductId,
@@ -19,9 +20,16 @@ const index = ({ stripe, elements, postNewOrder, cartData }) => {
         qty: item.qty,
       };
     });
+    const authorization = getAuth();
+    console.log(authorization);
     const resp = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/market/order`,
-      payload
+      payload,
+      {
+        headers: {
+          Authorization: authorization,
+        },
+      }
     );
     if (resp.status == 200) {
       const cardElement = elements.getElement(CardElement);

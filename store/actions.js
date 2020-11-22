@@ -178,10 +178,16 @@ const actions = {
     };
   },
   postNewOrder: (OrderId) => {
+    const authorization = getAuth();
     return async (dispatch) => {
       const resp = await axios
         .get(
-          `${process.env.NEXT_PUBLIC_API_URL}/market/order/${OrderId}/update`
+          `${process.env.NEXT_PUBLIC_API_URL}/market/order/${OrderId}/update`,
+          {
+            headers: {
+              Authorization: authorization,
+            },
+          }
         )
         .then(function (response) {
           console.log(response);

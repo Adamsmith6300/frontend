@@ -29,6 +29,12 @@ export const getAuth = () => {
   return authRes["IdToken"];
 };
 
+export const getPersonId = () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const person = jwt(authRes["IdToken"]);
+  return person["sub"];
+};
+
 export const checkMerchant = () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   if (authRes != null) {
