@@ -21,6 +21,7 @@ const Layout = ({
   clearFlag,
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
 
   //use effect-->get cart from local storage
   useEffect(() => {
@@ -30,18 +31,19 @@ const Layout = ({
       setCart(cart);
     }
     updateIsMerchant(checkMerchant());
+    setIsAuthed(isLoggedIn());
   }, []);
 
   return (
-    <div className="ui container">
+    <div className="container">
       <Head>
         <title>LOMA</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} />
       {children}
-      {!isMerchant ? (
-        <div className="w-full bottom-0 left-0 absolute py-12">
+      {!isMerchant && isAuthed ? (
+        <div className="w-full bottom-0 left-0 relative py-12">
           <ul className="flex justify-center">
             <li className="text-xl">
               <Link href="/merchant-application">
