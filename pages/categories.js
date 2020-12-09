@@ -4,27 +4,16 @@ import { connect } from "react-redux";
 // import { wrapper } from "../store";
 import actions from "../store/actions";
 import { motion } from "framer-motion";
-import AllMerchants from "../components/merchants/allMerchants";
 
-const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
-  useEffect(() => {
-    getMerchants();
-  }, []);
+const Page = ({ getProducts, products, addToCart, cartData, clearFlag }) => {
+  useEffect(() => {}, []);
 
-  return (
-    <Layout>
-      <AllMerchants
-        merchants={merchants}
-        addToCart={addToCart}
-        cartData={cartData}
-      />
-    </Layout>
-  );
+  return <Layout></Layout>;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMerchants: () => dispatch(actions.getMerchants()),
+    getProducts: () => dispatch(actions.getProducts()),
     addToCart: (product, oldCart) =>
       dispatch(actions.addToCart(product, oldCart)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),

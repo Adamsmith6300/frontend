@@ -1,27 +1,3 @@
-// import { Button } from "semantic-ui-react";
-
-// const productCard = ({ product, addToCart, cartData }) => {
-//   let mainImageUrl = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${
-//     product.MerchantId
-//   }/${product.ProductId}/${product.images[product.mainImage]}`;
-
-//   return (
-//     <div>
-//       <img src={mainImageUrl} className="w-full" />
-//       <p>{product.title}</p>
-//       <p>${product.price}</p>
-//       <Button onClick={() => addToCart(product, cartData)}>Add to Cart</Button>
-//     </div>
-//   );
-// };
-
-// export default productCard;
-//
-//
-//
-//
-//
-
 import { memo, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import { Link } from "next/link";
@@ -34,28 +10,19 @@ import { useScrollConstraints } from "../../utils/use-scroll-constraints";
 import { useWheelScroll } from "../../utils/use-wheel-scroll";
 const dismissDistance = 100;
 
-const ProductCard = memo(
+const MerchantCard = memo(
   ({
     isSelected,
     setSelectedId,
-    category,
-    history,
-    product,
+    merchant,
     addToCart,
     cartData,
     pointOfInterest,
   }) => {
-    const id = product.ProductId;
-    const title = product.title;
+    const id = merchant.MerchantId;
+    const title = merchant.name;
     const backgroundColor = "#a1a1a1";
-    const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
-      product.MerchantId
-    }/products/${
-      product.ProductId.length > 36
-        ? product.ProductId.substring(2)
-        : product.ProductId
-    }/${product.images[product.mainImage]}`;
-    // const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${product.MerchantId}/banner`;
+    const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/banner`;
 
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
@@ -110,14 +77,9 @@ const ProductCard = memo(
               backgroundColor={backgroundColor}
               imgSrc={imgSrc}
             />
-            <Title
-              title={title}
-              price={product.price}
-              category={category}
-              isSelected={isSelected}
-            />
+            <Title title={title} isSelected={isSelected} />
             <ContentPlaceholder
-              product={product}
+              merchant={merchant}
               addToCart={addToCart}
               cartData={cartData}
             />
@@ -144,4 +106,4 @@ const Overlay = ({ isSelected, setSelectedId }) => (
   </motion.div>
 );
 
-export default ProductCard;
+export default MerchantCard;
