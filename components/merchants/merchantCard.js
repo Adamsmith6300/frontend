@@ -5,6 +5,7 @@ import { useInvertedBorderRadius } from "../../utils/use-inverted-border-radius"
 import { ContentPlaceholder } from "./contentPlaceholder";
 import { Title } from "./title";
 import { Image } from "./image";
+import MerchantProducts from "./products/merchantProducts";
 import { openSpring, closeSpring } from "../animations";
 import { useScrollConstraints } from "../../utils/use-scroll-constraints";
 import { useWheelScroll } from "../../utils/use-wheel-scroll";
@@ -83,6 +84,11 @@ const MerchantCard = memo(
               addToCart={addToCart}
               cartData={cartData}
             />
+            <MerchantProducts
+              products={merchant.products}
+              addToCart={addToCart}
+              cartData={cartData}
+            />
           </motion.div>
         </div>
         {!isSelected && (
@@ -102,7 +108,12 @@ const Overlay = ({ isSelected, setSelectedId }) => (
     style={{ pointerEvents: isSelected ? "auto" : "none" }}
     className="overlay"
   >
-    <a onClick={() => setSelectedId(-1)}></a>
+    <a
+      onClick={() => {
+        console.log("Merch");
+        setSelectedId(-1);
+      }}
+    ></a>
   </motion.div>
 );
 

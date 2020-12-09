@@ -1,49 +1,24 @@
-// import { Button } from "semantic-ui-react";
-
-// const productCard = ({ product, addToCart, cartData }) => {
-//   let mainImageUrl = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${
-//     product.MerchantId
-//   }/${product.ProductId}/${product.images[product.mainImage]}`;
-
-//   return (
-//     <div>
-//       <img src={mainImageUrl} className="w-full" />
-//       <p>{product.title}</p>
-//       <p>${product.price}</p>
-//       <Button onClick={() => addToCart(product, cartData)}>Add to Cart</Button>
-//     </div>
-//   );
-// };
-
-// export default productCard;
-//
-//
-//
-//
-//
-
 import { memo, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import { Link } from "next/link";
-import { useInvertedBorderRadius } from "../../utils/use-inverted-border-radius";
+import { useInvertedBorderRadius } from "../../../utils/use-inverted-border-radius";
 import { ContentPlaceholder } from "./contentPlaceholder";
 import { Title } from "./title";
 import { Image } from "./image";
-import { openSpring, closeSpring } from "../animations";
-import { useScrollConstraints } from "../../utils/use-scroll-constraints";
-import { useWheelScroll } from "../../utils/use-wheel-scroll";
+import { openSpring, closeSpring } from "../../animations";
+import { useScrollConstraints } from "../../../utils/use-scroll-constraints";
+import { useWheelScroll } from "../../../utils/use-wheel-scroll";
 const dismissDistance = 100;
 
-const ProductCard = memo(
+const MProductCard = memo(
   ({
     isSelected,
     setSelectedId,
-    category,
-    history,
     product,
     addToCart,
     cartData,
-    pointOfInterest,
+    // category,
+    // pointOfInterest,
   }) => {
     const id = product.ProductId;
     const title = product.title;
@@ -90,12 +65,12 @@ const ProductCard = memo(
     );
 
     return (
-      <li ref={containerRef} className={`card`}>
+      <li ref={containerRef} className={`card--mProducts`}>
         <Overlay isSelected={isSelected} setSelectedId={setSelectedId} />
         <div className={`card-content-container ${isSelected && "open"}`}>
           <motion.div
             ref={cardRef}
-            className="card-content"
+            className="card-content--mProducts"
             style={{ ...inverted, zIndex, y }}
             layoutTransition={isSelected ? openSpring : closeSpring}
             drag={isSelected ? "y" : false}
@@ -106,14 +81,14 @@ const ProductCard = memo(
             <Image
               id={id}
               isSelected={isSelected}
-              pointOfInterest={pointOfInterest}
+              // pointOfInterest={pointOfInterest}
               backgroundColor={backgroundColor}
               imgSrc={imgSrc}
             />
             <Title
               title={title}
               price={product.price}
-              category={category}
+              // category={category}
               isSelected={isSelected}
             />
             <ContentPlaceholder
@@ -138,14 +113,15 @@ const Overlay = ({ isSelected, setSelectedId }) => (
     animate={{ opacity: isSelected ? 1 : 0 }}
     transition={{ duration: 0.2 }}
     style={{ pointerEvents: isSelected ? "auto" : "none" }}
-    className="overlay"
+    className="overlay--mProducts"
   >
     <a
       onClick={() => {
+        console.log("Prod");
         setSelectedId(-1);
       }}
     ></a>
   </motion.div>
 );
 
-export default ProductCard;
+export default MProductCard;
