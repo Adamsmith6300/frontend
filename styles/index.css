@@ -90,10 +90,10 @@ li {
 
 .card {
   position: relative;
-  padding: 25px;
-  height: 460px;
-  flex: 0 0 40%;
-  max-width: 40%;
+  padding: 10px;
+  height: 250px;
+  flex: 0 0 310px;
+  max-width: 310px;
 }
 .card--mProducts {
   position: relative;
@@ -104,27 +104,27 @@ li {
 }
 
 .card-image {
-  width: 800px;
-  height: 450px;
+  /* width: 300px; */
+  height: 250px;
 }
 .card-image--mProducts {
   width: 800px;
   height: 80px;
 }
 
-.card:nth-child(4n + 1),
+/* .card:nth-child(4n + 1),
 .card:nth-child(4n + 4) {
   flex: 0 0 60%;
   max-width: 60%;
-}
+} */
 
-.card:nth-child(odd) {
+/* .card:nth-child(odd) {
   padding-left: 0;
 }
 
 .card:nth-child(even) {
   padding-right: 0;
-}
+} */
 
 .card-content-container {
   width: 100%;

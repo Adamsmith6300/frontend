@@ -34,7 +34,12 @@ const nav = ({ toggleCart, showCart, clearFlag }) => {
     navItems.unshift({ title: "my shop", link: "/my-shop" });
   }
 
-  navItems.unshift({ title: "home", link: "/" });
+  navItems = [
+    { title: "home", link: "/" },
+    { title: "categories", link: "/categories" },
+    { title: "products", link: "/products" },
+    ...navItems,
+  ];
   navItems = navItems.map((item, index) => {
     if (item.link != undefined) {
       return (
