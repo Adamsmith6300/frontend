@@ -95,6 +95,13 @@ li {
   flex: 0 0 40%;
   max-width: 40%;
 }
+.card--products {
+  position: relative;
+  padding: 10px;
+  height: 250px;
+  flex: 0 0 310px;
+  max-width: 310px;
+}
 .card--mProducts {
   position: relative;
   padding: 10px;
@@ -113,6 +120,10 @@ li {
 .card-image {
   width: 800px;
   height: 450px;
+}
+.card-image--products {
+  /* width: 300px; */
+  height: 250px;
 }
 .card-image--mProducts {
   width: 800px;

@@ -8,7 +8,11 @@ import { motion } from "framer-motion";
 const Page = ({ getProducts, products, addToCart, cartData, clearFlag }) => {
   useEffect(() => {}, []);
 
-  return <Layout></Layout>;
+  return (
+    <Layout>
+      <h1>Categories</h1>
+    </Layout>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => {
