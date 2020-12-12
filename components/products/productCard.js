@@ -90,7 +90,7 @@ const ProductCard = memo(
     );
 
     return (
-      <li ref={containerRef} className={`card`}>
+      <li ref={containerRef} className={`card--products`}>
         <Overlay isSelected={isSelected} setSelectedId={setSelectedId} />
         <div className={`card-content-container ${isSelected && "open"}`}>
           <motion.div

@@ -17,7 +17,7 @@ export const Image = ({
       style={{ ...inverted, backgroundColor, originX: 0, originY: 0 }}
     >
       <motion.img
-        className="card-image"
+        className="card-image--products"
         src={imgSrc}
         alt=""
         align="center"
