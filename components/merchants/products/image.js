@@ -17,15 +17,14 @@ export const Image = ({
       style={{ ...inverted, backgroundColor, originX: 0, originY: 0 }}
     >
       <motion.img
-        className="card-image"
+        className="card-image--products"
         src={imgSrc}
-        // alt=""
-        align="left"
+        alt=""
+        align="top"
         initial={false}
-        animate={
-          isSelected ? { x: -20, y: -20 } : { x: -pointOfInterest, y: 0 }
-        }
+        // animate={isSelected ? { x: 0, y: 0 } : { x: -0, y: 0 }}
         transition={closeSpring}
+        style={isSelected ? { width: "700px", height: "100%" } : {}}
       />
     </motion.div>
   );

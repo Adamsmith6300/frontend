@@ -20,13 +20,11 @@ export const Image = ({
         className="card-image--products"
         src={imgSrc}
         alt=""
-        align="center"
+        align="top"
         initial={false}
         // animate={isSelected ? { x: 0, y: 0 } : { x: -0, y: 0 }}
         transition={closeSpring}
-        style={
-          isSelected ? { width: "700px", height: "100%" } : { height: "250px" }
-        }
+        style={isSelected ? { width: "700px", height: "100%" } : {}}
       />
     </motion.div>
   );
