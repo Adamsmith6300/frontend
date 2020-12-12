@@ -102,6 +102,13 @@ li {
   flex: 0 0 45%;
   max-width: 45%;
 }
+.card--products {
+  position: relative;
+  padding: 10px;
+  height: 250px;
+  flex: 0 0 300px;
+  max-width: 300px;
+}
 
 .card-image {
   width: 800px;
