@@ -16,13 +16,13 @@ const Page = ({ router }) => {
     updateIsMerchant(checkMerchant());
   }, []);
 
-  if (!loggedIn) {
-    router.push("/");
-  }
+  // if (!loggedIn) {
+  //   router.push("/");
+  // }
 
   return (
     <Layout>
-      <h1 className="text-3xl text-center">My Account</h1>
+      <h1 className="text-3xl text-center text-black">My Account</h1>
     </Layout>
   );
 };

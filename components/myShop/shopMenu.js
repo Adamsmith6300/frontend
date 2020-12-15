@@ -5,7 +5,7 @@ const index = ({ activeSection, updateActiveSection }) => {
       return (
         <p
           onClick={() => updateActiveSection(index)}
-          className={`px-4 py-2 shadow cursor-pointer ${
+          className={`px-4 py-2 shadow cursor-pointer text-black ${
             active ? " bg-black text-white" : ""
           }`}
           key={index + option}
@@ -16,7 +16,7 @@ const index = ({ activeSection, updateActiveSection }) => {
     }
   );
 
-  return <div className="w-64">{options}</div>;
+  return <div className="w-64 text-black">{options}</div>;
 };
 
 export default index;

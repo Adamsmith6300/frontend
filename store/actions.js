@@ -11,6 +11,7 @@ const actionTypes = {
   ERROR_SUBMIT_FORM_DATA: "ERROR_SUBMIT_FORM_DATA",
   RESEND_SUCCESS: "RESEND_SUCCESS",
   GET_PRODUCTS: "GET_PRODUCTS",
+  GET_CATEGORIES: "GET_CATEGORIES",
   GET_MERCHANTS: "GET_MERCHANTS",
   TOGGLE_CART: "TOGGLE_CART",
   UPDATE_CART: "UPDATE_CART",
@@ -122,6 +123,24 @@ const actions = {
           dispatch({
             type: actionTypes.ERROR,
             payload: "FAILED TO GET PRODUCTS",
+          });
+        });
+    };
+  },
+  getCategories: () => {
+    return async (dispatch) => {
+      const resp = await axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/market/categories`)
+        .then(function (response) {
+          dispatch({
+            type: actionTypes.GET_CATEGORIES,
+            payload: response.data,
+          });
+        })
+        .catch(function (error) {
+          dispatch({
+            type: actionTypes.ERROR,
+            payload: "FAILED TO GET CATEGORIES",
           });
         });
     };

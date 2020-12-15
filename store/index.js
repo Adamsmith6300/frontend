@@ -33,6 +33,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, error: action.payload };
     case actionTypes.GET_PRODUCTS:
       return { ...state, products: action.payload };
+    case actionTypes.GET_CATEGORIES:
+      return { ...state, categories: action.payload };
     case actionTypes.GET_MERCHANTS:
       return { ...state, merchants: action.payload };
     case actionTypes.TOGGLE_CART:

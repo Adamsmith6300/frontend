@@ -3,6 +3,8 @@ import App from "next/app";
 import "semantic-ui-css/semantic.min.css";
 import { wrapper } from "../store";
 import "../styles/index.css";
+import "../styles/sideMenu.css";
+import "../styles/responsive.css";
 
 class MyApp extends App {
   getStaticProps = async ({ Component, ctx }) => {

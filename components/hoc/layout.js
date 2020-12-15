@@ -4,6 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Button } from "semantic-ui-react";
 import actions from "../../store/actions";
+import { SideMenu } from "./sideMenu";
 
 import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
 
@@ -40,9 +41,10 @@ const Layout = ({
         <title>LOMA</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} />
+      <SideMenu />
+      {/* <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} /> */}
       {children}
-      {!isMerchant && isAuthed ? (
+      {/* {!isMerchant && isAuthed ? (
         <div className="w-full bottom-0 left-0 relative py-12">
           <ul className="flex justify-center">
             <li className="text-xl">
@@ -52,7 +54,7 @@ const Layout = ({
             </li>
           </ul>
         </div>
-      ) : null}
+      ) : null} */}
       {showCart ? (
         <Cart
           toggleCart={toggleCart}
