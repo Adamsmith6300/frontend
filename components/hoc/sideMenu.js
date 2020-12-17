@@ -6,8 +6,7 @@ import { Navigation } from "./navigation";
 
 const sidebar = {
   open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
-    // clipPath: "rect(110px, 160px, 170px, 60px)",
+    clipPath: `circle(${height * 2 + 200}px at 80px 80px)`,
     transition: {
       type: "spring",
       stiffness: 20,
@@ -15,8 +14,7 @@ const sidebar = {
     },
   }),
   closed: {
-    clipPath: "circle(30px at 261px 40px)",
-    // clipPath: "rect(10px, 60px, 70px, 10px)",
+    clipPath: "circle(30px at 270px 80px)",
     transition: {
       delay: 0.2,
       type: "spring",
@@ -37,10 +35,10 @@ export const SideMenu = () => {
       animate={isOpen ? "open" : "closed"}
       custom={height}
       ref={containerRef}
-      className="nav"
+      className={`nav ${!isOpen ? "nav--closed" : ""}`}
     >
       <motion.div className="background" variants={sidebar} />
-      <Navigation />
+      <Navigation isOpen={isOpen} />
       <MenuToggle toggle={() => toggleOpen()} />
     </motion.nav>
   );

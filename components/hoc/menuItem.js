@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const variants = {
+export const menuItemVariants = {
   open: {
     y: 0,
     opacity: 1,
@@ -11,6 +11,7 @@ const variants = {
   },
   closed: {
     y: 50,
+    height: 0,
     opacity: 0,
     transition: {
       y: { stiffness: 1000 },
@@ -18,12 +19,12 @@ const variants = {
   },
 };
 
-export const MenuItem = ({ item }) => {
+export const MenuItem = ({ item, isOpen }) => {
   if (item.link != undefined) {
     return (
       <Link href={item.link}>
         <motion.li
-          variants={variants}
+          variants={menuItemVariants}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.3 }}
@@ -38,7 +39,7 @@ export const MenuItem = ({ item }) => {
     return (
       <motion.li
         onClick={item.action}
-        variants={variants}
+        variants={menuItemVariants}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         transition={{ duration: 0.3 }}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
-import { MenuItem } from "./menuItem";
+import { MenuItem, menuItemVariants } from "./menuItem";
 
 const variants = {
   open: {
@@ -13,7 +13,7 @@ const variants = {
   },
 };
 
-export const Navigation = ({}) => {
+export const Navigation = ({ isOpen }) => {
   const router = useRouter();
 
   const [isMerchant, updateIsMerchant] = useState(false);
@@ -53,9 +53,12 @@ export const Navigation = ({}) => {
   ];
 
   return (
-    <motion.ul className="side-menu-list" variants={variants}>
+    <motion.ul
+      className={`side-menu-list ${isOpen ? "" : "w-0"}`}
+      variants={variants}
+    >
       {navItems.map((item, index) => (
-        <MenuItem item={item} key={index} />
+        <MenuItem item={item} key={index} isOpen={isOpen} />
       ))}
     </motion.ul>
   );

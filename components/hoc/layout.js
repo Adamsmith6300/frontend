@@ -38,9 +38,18 @@ const Layout = ({
   return (
     <div className="container">
       <Head>
-        <title>LOMA</title>
+        <title>Loma</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Dawning+of+a+New+Day&family=Great+Vibes&display=swap"
+          rel="stylesheet"
+        />
       </Head>
+      <h1 className="h-16 w-full loma-padding absolute top-0 left-0 vibes text-black text-5xl">
+        Loma
+      </h1>
+
       <SideMenu />
       {/* <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} /> */}
       {children}
