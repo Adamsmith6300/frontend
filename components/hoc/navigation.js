@@ -6,10 +6,19 @@ import { MenuItem, menuItemVariants } from "./menuItem";
 
 const variants = {
   open: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+    x: 10,
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.2,
+    },
   },
   closed: {
-    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+    x: 300,
+    transition: {
+      staggerChildren: 0.05,
+      staggerDirection: -1,
+      when: "afterChildren",
+    },
   },
 };
 
@@ -54,7 +63,7 @@ export const Navigation = ({ isOpen }) => {
 
   return (
     <motion.ul
-      className={`side-menu-list ${isOpen ? "" : "w-0"}`}
+      className={`side-menu-list ${isOpen ? "" : ""}`}
       variants={variants}
     >
       {navItems.map((item, index) => (

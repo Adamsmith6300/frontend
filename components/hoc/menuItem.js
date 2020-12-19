@@ -5,16 +5,18 @@ export const menuItemVariants = {
   open: {
     y: 0,
     opacity: 1,
+    // height: "auto",
     transition: {
       y: { stiffness: 1000, velocity: -100 },
     },
   },
   closed: {
     y: 50,
-    height: 0,
     opacity: 0,
+    // height: "0",
     transition: {
       y: { stiffness: 1000 },
+      // delay: 0.5,
     },
   },
 };

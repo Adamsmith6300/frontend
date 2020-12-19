@@ -173,6 +173,9 @@ button:focus {
   overflow: hidden;
   padding: 40px 0;
 }
+.card--mProducts .card-content-container.open {
+  /* padding: 10px 0; */
+}
 
 .card-content {
   pointer-events: auto;
@@ -183,6 +186,7 @@ button:focus {
   width: 100%;
   height: 100%;
   margin: 0 auto;
+  max-width: 700px;
 }
 .card-content--mProducts {
   pointer-events: auto;
@@ -251,32 +255,10 @@ button:focus {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 990px;
+  /* max-width: 1000px; */
 }
-
-.overlay a {
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100vw;
-  left: 50%;
-
-  transform: translateX(-50%);
-}
-.overlay--mProducts a {
-  z-index: 2;
-  /* display: block; */
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100vw;
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
-}
-
 .overlay--mProducts {
-  z-index: 2;
+  z-index: 1;
   position: fixed;
   background: rgba(255, 255, 255, 0.8);
   will-change: opacity;
@@ -284,7 +266,27 @@ button:focus {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  /* max-width: 1000px; */
+}
+.overlay a {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
   width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.overlay--mProducts a {
+  /* z-index: 2; */
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .content-container {
@@ -296,4 +298,31 @@ button:focus {
 .loma-padding {
   padding-left: 50px;
   padding-top: 50px;
+}
+
+.close-card-btn {
+  z-index: 1;
+  outline: none;
+  border: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top: 7;
+  right: -10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: transparent;
+  /* padding-top: 11px;
+  padding-left: 7.5px; */
+}
+.card--mProducts .close-card-btn {
+  /* z-index: 2; */
+}
+
+.hidden {
+  display: none;
 }

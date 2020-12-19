@@ -3,10 +3,10 @@ import MProductCard from "./mProductCard.js";
 const pOIS = [80, 120, 260, 200, 150, 60, 200, 260];
 
 const merchantProducts = ({ products, addToCart, cartData }) => {
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedIdP, setSelectedIdP] = useState(null);
   if (products != undefined && products.length > 0) {
     products = products.map((product, index) => {
-      let isSelected = selectedId == product.ProductId;
+      let isSelected = selectedIdP == product.ProductId;
       return (
         <MProductCard
           key={product.ProductId}
@@ -14,7 +14,7 @@ const merchantProducts = ({ products, addToCart, cartData }) => {
           addToCart={addToCart}
           cartData={cartData}
           isSelected={isSelected}
-          setSelectedId={setSelectedId}
+          setSelectedId={setSelectedIdP}
           //   category={categories[product.category]}
           //   pointOfInterest={pOIS[index]}
         />

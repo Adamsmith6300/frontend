@@ -53,11 +53,11 @@ const MProductCard = memo(
         zIndex.set(0);
       }
     }
-
+    // console.log("PRODUCT:", isSelected);
     // When this card is selected, attach a wheel event listener
-    const containerRef = useRef(null);
+    const containerRefP = useRef(null);
     useWheelScroll(
-      containerRef,
+      containerRefP,
       y,
       constraints,
       checkSwipeToDismiss,
@@ -65,7 +65,7 @@ const MProductCard = memo(
     );
 
     return (
-      <li ref={containerRef} className={`card--mProducts`}>
+      <li ref={containerRefP} className={`card--mProducts`}>
         <Overlay isSelected={isSelected} setSelectedId={setSelectedId} />
         <div className={`card-content-container ${isSelected && "open"}`}>
           <motion.div
@@ -78,6 +78,43 @@ const MProductCard = memo(
             onDrag={checkSwipeToDismiss}
             onUpdate={checkZIndex}
           >
+            <button
+              className={`close-card-btn ${!isSelected ? "hidden" : ""}`}
+              onClick={() => setSelectedId(-1)}
+            >
+              <svg width="23" height="23" viewBox="0 0 23 23">
+                <path
+                  d="M 3 16.5 L 17 2.5"
+                  fill="transparent"
+                  strokeWidth="2"
+                  stroke="hsl(0, 0%, 100%)"
+                  strokeLinecap="round"
+                  // variants={{
+                  //   closed: { d: "M 2 2.5 L 50 2.5" },
+                  //   open: { d: "M 3 16.5 L 17 2.5" },
+                  // }}
+                />
+                {/* <Path
+                  d="M 2 9.423 L 50 9.423"
+                  variants={{
+                    closed: { opacity: 1 },
+                    open: { opacity: 0 },
+                  }}
+                  transition={{ duration: 0.1 }}
+                /> */}
+                <path
+                  d="M 3 2.5 L 17 16.346"
+                  fill="transparent"
+                  strokeWidth="2"
+                  stroke="hsl(0, 0%, 100%)"
+                  strokeLinecap="round"
+                  // variants={{
+                  //   closed: { d: "M 2 16.346 L 50 16.346" },
+                  //   open: { d:  },
+                  // }}
+                />
+              </svg>
+            </button>
             <Image
               id={id}
               isSelected={isSelected}
@@ -115,12 +152,12 @@ const Overlay = ({ isSelected, setSelectedId }) => (
     style={{ pointerEvents: isSelected ? "auto" : "none" }}
     className="overlay--mProducts"
   >
-    <a
-      onClick={() => {
-        console.log("Prod");
-        setSelectedId(-1);
-      }}
-    ></a>
+    {/* <a
+    onClick={() => {
+      console.log("Prod");
+      setSelectedId(-1);
+    }}
+    ></a> */}
   </motion.div>
 );
 

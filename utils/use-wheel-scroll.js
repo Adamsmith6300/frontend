@@ -93,7 +93,7 @@ export function useWheelScroll(ref, y, constraints, onWheelCallback, isActive) {
       debouncedSpringTo.cancel();
     }
 
-    onWheelCallback(event);
+    // onWheelCallback(event);
   };
 
   useDomEvent(ref, "wheel", isActive && onWheel, { passive: false });

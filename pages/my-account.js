@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import actions from "../store/actions";
 import { withRouter } from "next/router";
 import Link from "next/link";
-import { Button, Checkbox, Form, Input, TextArea } from "semantic-ui-react";
 import { isLoggedIn, checkMerchant } from "../store/helpers";
+import { LargeLoader } from "../components/loaders";
 
 const Page = ({ router }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
@@ -14,15 +14,18 @@ const Page = ({ router }) => {
   useEffect(() => {
     updateLoggedIn(isLoggedIn());
     updateIsMerchant(checkMerchant());
+    if (!loggedIn) {
+      router.push("/");
+    }
   }, []);
-
-  // if (!loggedIn) {
-  //   router.push("/");
-  // }
 
   return (
     <Layout>
-      <h1 className="text-3xl text-center text-black">My Account</h1>
+      {loggedIn ? (
+        <h1 className="text-3xl text-center text-black">My Account</h1>
+      ) : (
+        <LargeLoader />
+      )}
     </Layout>
   );
 };
