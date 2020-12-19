@@ -7,13 +7,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
   /* z-index: 99; */
 }
-
-/* .nav--closed {
-  width: 0;
-} */
-
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
@@ -98,4 +94,9 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.hr--menu {
+  background-color: rgba(0, 0, 0, 0.9);
+  border: none;
 }

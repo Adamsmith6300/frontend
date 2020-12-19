@@ -34,32 +34,46 @@ export const Navigation = ({ isOpen }) => {
   }, []);
 
   let navItems = [];
+  let secondaryNavItems = [];
 
   if (loggedIn) {
-    navItems.unshift({ title: "my account", link: "/my-account" });
-    // navItems.push({
-    //   title: "logout",
-    //   action: () => {
-    //     logoutSession();
-    //     clearFlag("successfulLogin");
-    //     router.push("/");
-    //   },
-    // });
+    secondaryNavItems.unshift({
+      title: "my account",
+      link: "/my-account",
+      linkStyle: "secondary",
+    });
   } else {
-    navItems.unshift({ title: "signup", link: "/signup" });
-    navItems.unshift({ title: "login", link: "/login" });
+    secondaryNavItems.unshift({
+      title: "signup",
+      link: "/signup",
+      linkStyle: "secondary",
+    });
+    secondaryNavItems.unshift({
+      title: "login",
+      link: "/login",
+      linkStyle: "secondary",
+    });
   }
   if (isMerchant && loggedIn) {
-    navItems.unshift({ title: "my shop", link: "/my-shop" });
+    secondaryNavItems.unshift({
+      title: "my shop",
+      link: "/my-shop",
+      linkStyle: "secondary",
+    });
   }
 
   navItems = [
-    { title: "merchants", link: "/" },
-    { title: "categories", link: "/categories" },
-    { title: "products", link: "/products" },
-    { title: "contact", link: "/contact" },
-    ...navItems,
+    { title: "merchants", link: "/", linkStyle: "primary" },
+    { title: "categories", link: "/categories", linkStyle: "primary" },
+    { title: "products", link: "/products", linkStyle: "primary" },
+    { title: "about", link: "/about", linkStyle: "primary" },
   ];
+
+  secondaryNavItems.push({
+    title: "contact",
+    link: "/contact",
+    linkStyle: "secondary",
+  });
 
   return (
     <motion.ul
@@ -67,6 +81,10 @@ export const Navigation = ({ isOpen }) => {
       variants={variants}
     >
       {navItems.map((item, index) => (
+        <MenuItem item={item} key={index} isOpen={isOpen} />
+      ))}
+      <hr className="mt-4 mb-6 hr--menu" />
+      {secondaryNavItems.map((item, index) => (
         <MenuItem item={item} key={index} isOpen={isOpen} />
       ))}
     </motion.ul>

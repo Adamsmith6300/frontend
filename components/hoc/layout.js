@@ -42,14 +42,18 @@ const Layout = ({
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Dawning+of+a+New+Day&family=Great+Vibes&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
           rel="stylesheet"
+        />
+        <link
+          href="https://db.onlinewebfonts.com/c/9550467e9991316a81acde7241010891?family=TeeFranklinW01-Light"
+          rel="stylesheet"
+          type="text/css"
         />
       </Head>
       <h1 className="h-16 w-full loma-padding absolute top-0 left-0 vibes text-black text-5xl">
         Loma
       </h1>
-
       <SideMenu />
       {/* <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} /> */}
       {children}
@@ -73,6 +77,11 @@ const Layout = ({
           removeFromCart={removeFromCart}
         />
       ) : null}
+      <div className="text-white absolute bottom-0">
+        Font made from{" "}
+        <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
+        by CC BY 3.0
+      </div>
     </div>
   );
 };

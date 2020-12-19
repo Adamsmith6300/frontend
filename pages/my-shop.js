@@ -51,9 +51,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
   return (
     <Layout>
       {myShop.info ? (
-        <h1 className="text-3xl text-center text-black">
-          Welcome, {myShop.info.name}!
-        </h1>
+        <h1 className="text-3xl text-center text-black">{myShop.info.name}!</h1>
       ) : null}
       <div className="flex text-black">
         <ShopMenu

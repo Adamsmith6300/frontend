@@ -2,8 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url(//db.onlinewebfonts.com/c/9931bc04967a4865ca25b3a45c4f3cc2?family=TeeFranklinW01-Light);
+@font-face {
+  font-family: "TeeFranklinW01-Light";
+  src: url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.eot");
+  src: url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.svg#TeeFranklinW01-Light")
+      format("svg");
+}
+
 .App {
-  font-family: sans-serif;
   text-align: center;
 }
 
@@ -11,32 +26,27 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   --secondary: #a1a1a1;
   --divider: #343434;
   width: 100vw;
   height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  /* font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif; */
+  /* font-family: "Work Sans", Arial, Helvetica, sans-serif; */
 }
 
-.dawning {
-  font-family: "Dawning of a New Day", cursive;
-}
 .vibes {
   font-family: "Great Vibes", cursive;
 }
-/* .parisienne {
-  font-family: "Parisienne", cursive;
-} */
-/* .tangerine {
-  font-family: "Tangerine", cursive;
-} */
 
 * {
   box-sizing: border-box;
-  font-family: ".SFNSText", "SFProText-Regular", "SFUIText-Regular", ".SFUIText",
-    Helvetica, Arial, sans-serif;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
+}
+
+.ui.button {
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
 }
 
 #__next {
@@ -45,15 +55,18 @@ body {
 }
 
 h1 {
-  font-weight: bold;
+  /* font-weight: 300; */
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
   color: white;
   margin: 6px 0 12px;
 }
 
 h2 {
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
   color: #fff;
   margin: 8px 0;
-  font-size: 1.5em;
+  font-weight: 400;
+  font-size: 2.625rem;
 }
 
 header {
@@ -252,9 +265,9 @@ button:focus {
   will-change: opacity;
   top: 0;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
+  /* left: 50%;
+  transform: translateX(-50%); */
+  width: 100vw;
   /* max-width: 1000px; */
 }
 .overlay--mProducts {
@@ -264,9 +277,9 @@ button:focus {
   will-change: opacity;
   top: 0;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  width: 100vw;
   /* max-width: 1000px; */
 }
 .overlay a {
@@ -316,13 +329,11 @@ button:focus {
   height: 50px;
   border-radius: 50%;
   background: transparent;
-  /* padding-top: 11px;
-  padding-left: 7.5px; */
-}
-.card--mProducts .close-card-btn {
-  /* z-index: 2; */
 }
 
 .hidden {
   display: none;
+}
+
+.small-menu-link {
 }

@@ -31,8 +31,10 @@ export const MenuItem = ({ item, isOpen }) => {
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="text-placeholder">
-            <p>{item.title}</p>
+          <div className={`text-placeholder`}>
+            <p className={item.linkStyle == "secondary" ? "text-base" : ""}>
+              {item.title}
+            </p>
           </div>
         </motion.li>
       </Link>
@@ -46,8 +48,10 @@ export const MenuItem = ({ item, isOpen }) => {
         whileTap={{ scale: 0.95 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="text-placeholder">
-          <p>{item.title}</p>
+        <div className={`text-placeholder`}>
+          <p className={item.linkStyle == "secondary" ? "text-base" : ""}>
+            {item.title}
+          </p>
         </div>
       </motion.li>
     );
