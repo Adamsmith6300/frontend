@@ -32,6 +32,7 @@ body {
   width: 100vw;
   height: 100vh;
   font-weight: 500;
+  color: black;
   /* font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif; */
   /* font-family: "Work Sans", Arial, Helvetica, sans-serif; */
 }
@@ -82,7 +83,6 @@ li {
 }
 
 p {
-  color: #fff;
   font-size: 20px;
   line-height: 28px;
 }
@@ -117,6 +117,10 @@ button:focus {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.card-list p,
+.card-list--mProducts p {
+  color: #fff;
 }
 
 .card {
@@ -335,5 +339,9 @@ button:focus {
   display: none;
 }
 
-.small-menu-link {
+.my-account-container {
+  width: 100%;
+  max-width: 990px;
+  padding: 30px 0;
+  margin: 0 auto;
 }

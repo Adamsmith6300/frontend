@@ -2,6 +2,7 @@ import React from "react";
 import App from "next/app";
 import "semantic-ui-css/semantic.min.css";
 import { wrapper } from "../store";
+import "../styles/tailwindplus.css";
 import "../styles/index.css";
 import "../styles/sideMenu.css";
 import "../styles/responsive.css";

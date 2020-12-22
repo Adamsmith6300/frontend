@@ -35,7 +35,8 @@ export const SideMenu = () => {
       animate={isOpen ? "open" : "closed"}
       custom={height}
       ref={containerRef}
-      className={`nav`}
+      variants={sidebar}
+      className={`nav ${isOpen ? "" : ""}`}
     >
       <motion.div className="background" variants={sidebar} />
       <Navigation isOpen={isOpen} />

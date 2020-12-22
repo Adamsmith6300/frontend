@@ -72,3 +72,17 @@ export const getAccountLink = async () => {
   );
   return resp;
 };
+
+export const fetchAccountData = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/person/${user["sub"]}`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};

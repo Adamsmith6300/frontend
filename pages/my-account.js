@@ -6,23 +6,38 @@ import { withRouter } from "next/router";
 import Link from "next/link";
 import { isLoggedIn, checkMerchant } from "../store/helpers";
 import { LargeLoader } from "../components/loaders";
+import Account from "../components/myAccount/account";
+import { fetchAccountData } from "../store/helpers";
 
 const Page = ({ router }) => {
-  const [isMerchant, updateIsMerchant] = useState(false);
-  const [loggedIn, updateLoggedIn] = useState(false);
+  const [loggedIn, updateLoggedIn] = useState(null);
+  const [accountData, setAccountData] = useState(null);
 
   useEffect(() => {
     updateLoggedIn(isLoggedIn());
-    updateIsMerchant(checkMerchant());
-    if (!loggedIn) {
+    if (!loggedIn && loggedIn != null) {
       router.push("/");
+    }
+    if (accountData == null) {
+      (async function callFetchAccountData() {
+        try {
+          let resp = await fetchAccountData();
+          setAccountData(resp.data);
+        } catch (err) {
+          console.log(err);
+          router.push("/");
+        }
+      })();
     }
   }, []);
 
   return (
     <Layout>
-      {loggedIn ? (
-        <h1 className="text-3xl text-center text-black">My Account</h1>
+      {loggedIn && accountData != null ? (
+        <>
+          {/* <h1 className="text-3xl text-center text-black">My Account</h1> */}
+          <Account accountData={accountData} />
+        </>
       ) : (
         <LargeLoader />
       )}
