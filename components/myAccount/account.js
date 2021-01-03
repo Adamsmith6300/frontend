@@ -1,8 +1,9 @@
 import { Accordion, Icon } from "semantic-ui-react";
 import { useState } from "react";
 import MyOrders from "./myOrders";
+import AccountDetails from "./accountDetails";
 
-const index = ({ accountData }) => {
+const index = ({ accountData, callFetchAccountData }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
   let info = accountData.info;
   return (
@@ -17,17 +18,14 @@ const index = ({ accountData }) => {
           onClick={() => setActiveIndex(activeIndex === 0 ? -1 : 0)}
         >
           <Icon name="dropdown" />
-          My Info
+          Account Details
         </Accordion.Title>
         <Accordion.Content active={activeIndex === 0}>
-          <ul className="list-reset mx-auto">
-            <li>First Name: {info.firstname}</li>
-            <li>Last Name: {info.lastname}</li>
-            <li>Email Address: {info.email}</li>
-            <li>Shipping Address: {info.address}</li>
-          </ul>
+          <AccountDetails
+            info={info}
+            callFetchAccountData={callFetchAccountData}
+          />
         </Accordion.Content>
-
         <Accordion.Title
           active={activeIndex === 1}
           index={1}

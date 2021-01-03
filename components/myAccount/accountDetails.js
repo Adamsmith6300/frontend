@@ -1,21 +1,19 @@
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 import { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
-import { updateStoreDetails } from "../../store/helpers";
+import { updateAccountDetails } from "../../store/helpers";
 import { LargeLoader } from "../loaders";
 
 const possibleAttr = [
-  "about",
   "address",
   "address2",
   "city",
   "phone",
   "postalcode",
   "province",
-  "website",
 ];
 
-const StoreDetails = ({ info, callFetchMerchData }) => {
+const index = ({ info, callFetchAccountData }) => {
   const [formData, updateFormData] = useState({});
   const [editAttr, setEditAttr] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,12 +26,9 @@ const StoreDetails = ({ info, callFetchMerchData }) => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    let resp = await updateStoreDetails({
-      ...formData,
-      MerchantId: info.MerchantId,
-    });
+    let resp = await updateAccountDetails(formData);
     if (resp.status == 200) {
-      callFetchMerchData().then((response) => {
+      callFetchAccountData().then((response) => {
         setEditAttr(null);
         updateFormData({});
         setLoading(false);
@@ -43,10 +38,10 @@ const StoreDetails = ({ info, callFetchMerchData }) => {
       window.location.reload();
     }
   };
-
   let details = [];
   if (info) {
     details = Object.entries(info).map((entry, index) => {
+      if (entry[0] == "PersonId") return null;
       if (editAttr == index) {
         return (
           <Input
@@ -103,4 +98,4 @@ const StoreDetails = ({ info, callFetchMerchData }) => {
   );
 };
 
-export default StoreDetails;
+export default index;

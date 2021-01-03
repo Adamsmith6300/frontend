@@ -24,7 +24,7 @@ const sidebar = {
   },
 };
 
-export const SideMenu = () => {
+export const SideMenu = ({ clearFlag }) => {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -39,7 +39,7 @@ export const SideMenu = () => {
       className={`nav ${isOpen ? "" : ""}`}
     >
       <motion.div className="background" variants={sidebar} />
-      <Navigation isOpen={isOpen} />
+      <Navigation isOpen={isOpen} clearFlag={clearFlag} />
       <MenuToggle toggle={() => toggleOpen()} />
     </motion.nav>
   );

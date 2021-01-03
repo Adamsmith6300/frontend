@@ -8,7 +8,6 @@ const Orders = ({ orders }) => {
   });
   return (
     <div>
-      <h2>Orders</h2>
       {orderList.length > 0 ? orderList : <p>You don't have any orders yet!</p>}
     </div>
   );

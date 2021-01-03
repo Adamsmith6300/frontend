@@ -46,10 +46,10 @@ body {
   font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
 }
 
-.ui.button {
-  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
+.ui.button,
+.ui .title {
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif !important;
 }
-
 #__next {
   display: flex;
   justify-content: center;

@@ -4,33 +4,35 @@ import { connect, useStore } from "react-redux";
 import actions from "../store/actions";
 import { withRouter } from "next/router";
 import Link from "next/link";
-import { Button, Checkbox, Form, Input, TextArea } from "semantic-ui-react";
+import { Accordion, Icon } from "semantic-ui-react";
 import { isLoggedIn, checkMerchant, fetchMerchantData } from "../store/helpers";
 import ShopMenu from "../components/myShop/shopMenu";
 import { Orders, Products, StoreDetails, Payments } from "../components/myShop";
+import { LargeLoader } from "../components/loaders";
 
 const Page = ({ router, myShop, setMerchantData }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
   const [checkedAuth, updateCheckedAuth] = useState(false);
-  const [activeSection, updateActiveSection] = useState(2);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [merchantDataExists, setMerchantDataExists] = useState(
     Object.keys(myShop).length > 0
   );
+
+  async function callFetchMerchData() {
+    try {
+      let resp = await fetchMerchantData();
+      setMerchantData(resp.data);
+      setMerchantDataExists(true);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     updateLoggedIn(isLoggedIn());
     updateIsMerchant(checkMerchant());
     updateCheckedAuth(true);
-
-    async function callFetchMerchData() {
-      try {
-        let resp = await fetchMerchantData();
-        setMerchantData(resp.data);
-        setMerchantDataExists(true);
-      } catch (err) {
-        console.log(err);
-      }
-    }
 
     if (!merchantDataExists) {
       callFetchMerchData();
@@ -41,25 +43,82 @@ const Page = ({ router, myShop, setMerchantData }) => {
     router.push("/");
   }
 
-  let sections = [
-    <Orders orders={myShop.orders} />,
-    <Products products={myShop.products} />,
-    <StoreDetails info={myShop.info} />,
-    <Payments />,
-  ];
-
+  let bannerImgSrc = myShop.info
+    ? `url(${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${myShop.info.MerchantId}/banner`
+    : "";
   return (
     <Layout>
       {myShop.info ? (
-        <h1 className="text-3xl text-center text-black">{myShop.info.name}!</h1>
-      ) : null}
-      <div className="flex text-black">
-        <ShopMenu
-          activeSection={activeSection}
-          updateActiveSection={updateActiveSection}
-        />
-        {sections[activeSection]}
-      </div>
+        <div className="my-account-container">
+          <div
+            style={{
+              backgroundPosition: "center",
+              bakcgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              backgroundImage: bannerImgSrc,
+              height: "400px",
+              borderRadius: "10px",
+              marginBottom: "20px",
+              padding: "30px",
+            }}
+          >
+            <h2 className="w-full">{myShop.info.name}</h2>
+          </div>
+
+          <Accordion fluid styled>
+            <Accordion.Title
+              active={activeIndex === 0}
+              index={0}
+              onClick={() => setActiveIndex(activeIndex === 0 ? -1 : 0)}
+            >
+              <Icon name="dropdown" />
+              Orders
+            </Accordion.Title>
+            <Accordion.Content active={activeIndex === 0}>
+              <Orders orders={myShop.orders} />
+            </Accordion.Content>
+
+            <Accordion.Title
+              active={activeIndex === 1}
+              index={1}
+              onClick={() => setActiveIndex(activeIndex === 1 ? -1 : 1)}
+            >
+              <Icon name="dropdown" />
+              Products
+            </Accordion.Title>
+            <Accordion.Content active={activeIndex === 1}>
+              <Products products={myShop.products} />
+            </Accordion.Content>
+            <Accordion.Title
+              active={activeIndex === 2}
+              index={2}
+              onClick={() => setActiveIndex(activeIndex === 2 ? -1 : 2)}
+            >
+              <Icon name="dropdown" />
+              Shop Details
+            </Accordion.Title>
+            <Accordion.Content active={activeIndex === 2}>
+              <StoreDetails
+                info={myShop.info}
+                callFetchMerchData={callFetchMerchData}
+              />
+            </Accordion.Content>
+            <Accordion.Title
+              active={activeIndex === 3}
+              index={3}
+              onClick={() => setActiveIndex(activeIndex === 3 ? -1 : 3)}
+            >
+              <Icon name="dropdown" />
+              Payments
+            </Accordion.Title>
+            <Accordion.Content active={activeIndex === 3}>
+              <Payments />
+            </Accordion.Content>
+          </Accordion>
+        </div>
+      ) : (
+        <LargeLoader />
+      )}
     </Layout>
   );
 };

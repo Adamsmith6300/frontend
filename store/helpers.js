@@ -86,3 +86,33 @@ export const fetchAccountData = async () => {
   );
   return resp;
 };
+
+export const updateStoreDetails = async (payload) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const updateAccountDetails = async (payload) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/person/${user["sub"]}`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};

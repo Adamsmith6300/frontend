@@ -51,10 +51,10 @@ const Layout = ({
           type="text/css"
         />
       </Head>
-      <h1 className="h-16 w-full loma-padding absolute top-0 left-0 vibes text-black text-5xl">
+      <h1 className="h-16 w-full loma-padding absolute top-0 left-0 font-bold uppercase text-black text-5xl">
         Loma
       </h1>
-      <SideMenu />
+      <SideMenu clearFlag={clearFlag} />
       {/* <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} /> */}
       {children}
       {/* {!isMerchant && isAuthed ? (
@@ -77,7 +77,7 @@ const Layout = ({
           removeFromCart={removeFromCart}
         />
       ) : null}
-      <div className="text-white absolute bottom-0">
+      <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
         Font made from{" "}
         <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
         by CC BY 3.0

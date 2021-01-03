@@ -14,8 +14,8 @@ const Payments = ({}) => {
   }
 
   return (
-    <div className="px-5 pt-5 text-center">
-      <h2>Connect your account to Stripe</h2>
+    <div className="px-5 pb-8 text-center">
+      <h2 className="text-black text-3xl">Connect your account to Stripe</h2>
       <p>
         We use Stripe to make sure you get paid on time and keep your personal
         and bank details secure.

@@ -1,9 +1,13 @@
 import moment from "moment";
+import { useState } from "react";
+import SelectedOrder from "./selectedOrder";
 
 export default ({ orders }) => {
-  orders = orders.map((order, index) => {
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  let orderList = orders.map((order, index) => {
     return (
       <li
+        onClick={() => setSelectedOrder(selectedOrder == index ? null : index)}
         key={order.OrderId}
         className="cursor-pointer p-3 border border-1 w-350 m-2 text-base"
       >
@@ -17,5 +21,19 @@ export default ({ orders }) => {
       </li>
     );
   });
-  return <ul className="flex flex-wrap h-500 overflow-y-auto">{orders}</ul>;
+
+  if (selectedOrder != null) {
+    let order = orders[selectedOrder];
+    return (
+      <SelectedOrder
+        key={order.OrderId}
+        order={order}
+        setSelectedOrder={setSelectedOrder}
+      />
+    );
+  } else {
+    return (
+      <ul className="flex flex-wrap h-500 overflow-y-auto">{orderList}</ul>
+    );
+  }
 };

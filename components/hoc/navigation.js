@@ -22,7 +22,7 @@ const variants = {
   },
 };
 
-export const Navigation = ({ isOpen }) => {
+export const Navigation = ({ isOpen, clearFlag }) => {
   const router = useRouter();
 
   const [isMerchant, updateIsMerchant] = useState(false);
@@ -40,6 +40,15 @@ export const Navigation = ({ isOpen }) => {
     secondaryNavItems.unshift({
       title: "my account",
       link: "/my-account",
+      linkStyle: "secondary",
+    });
+    secondaryNavItems.push({
+      title: "logout",
+      action: () => {
+        logoutSession();
+        clearFlag("successfulLogin");
+        router.push("/");
+      },
       linkStyle: "secondary",
     });
   } else {
