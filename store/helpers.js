@@ -116,3 +116,16 @@ export const updateAccountDetails = async (payload) => {
   );
   return resp;
 };
+
+export const getPresignedBannerURL = async (merchantid) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  return axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/banner/${merchantid}`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+};

@@ -1,7 +1,8 @@
 import React from "react";
 import App from "next/app";
-import "semantic-ui-css/semantic.min.css";
 import { wrapper } from "../store";
+import "semantic-ui-css/semantic.min.css";
+import "react-image-crop/dist/ReactCrop.css";
 import "../styles/tailwindplus.css";
 import "../styles/index.css";
 import "../styles/sideMenu.css";
