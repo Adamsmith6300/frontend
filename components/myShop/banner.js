@@ -2,22 +2,9 @@ import React, { useState, useRef } from "react";
 import ReactCrop from "react-image-crop";
 import { Button } from "semantic-ui-react";
 import { MdModeEdit } from "react-icons/md";
-import { getPresignedBannerURL } from "../../store/helpers";
+import { getPresignedBannerURL, postBannerUpload } from "../../store/helpers";
+import { dataURLtoFile, getCroppedImg } from "../componentHelpers";
 import { LargeLoader } from "../loaders";
-
-const dataURLtoFile = (dataurl, filename) => {
-  let arr = dataurl.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n);
-
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  let croppedImage = new File([u8arr], filename, { type: mime });
-  return croppedImage;
-};
 
 const index = ({ MerchantId, name }) => {
   let bannerImgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${MerchantId}/banner`;
@@ -29,8 +16,8 @@ const index = ({ MerchantId, name }) => {
   const [bannerUpload, setBannerUpload] = useState(bannerImgSrc);
   // src of react crop image
   const [croppedBannerUpload, setCroppedBannerUpload] = useState(null);
-  // final url of cropped image
-  const [croppedImageUrl, setCroppedImageUrl] = useState(null);
+  // final File of cropped image
+  const [croppedImageFile, setCroppedImageFile] = useState(null);
 
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -43,50 +30,31 @@ const index = ({ MerchantId, name }) => {
   const uploadBanner = async () => {
     try {
       if (croppedBannerUpload && crop.width && crop.height) {
-        getCroppedImg(croppedBannerUpload, crop);
+        const reader = new FileReader();
+        let canvas = getCroppedImg(croppedBannerUpload, crop);
+        canvas.toBlob((blob) => {
+          reader.readAsDataURL(blob);
+          reader.onloadend = async () => {
+            let file = dataURLtoFile(reader.result, "banner");
+            const resp = await getPresignedBannerURL(MerchantId);
+            console.log("Presigned", resp);
+            // UPLOAD THIS TO S3
+            console.log("File", file);
+            if (resp.data && file) {
+              await postBannerUpload(file, resp.data);
+            } else {
+              throw { resp, file };
+            }
+            setEditing(false);
+            setLoading(false);
+          };
+        });
       }
-      //   const resp = await getPresignedBannerURL(MerchantId);
-      //   console.log(resp);
-      setEditing(false);
-      setLoading(false);
-      // if (resp.data) {
-      //   await uploadAvatar(avatarUpload, resp.data);
-      // }
     } catch (err) {
       setEditing(false);
       setLoading(false);
       console.log(err);
     }
-  };
-
-  const getCroppedImg = (image, crop) => {
-    const canvas = document.createElement("canvas");
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-    const ctx = canvas.getContext("2d");
-
-    ctx.drawImage(
-      image,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height
-    );
-
-    const reader = new FileReader();
-    canvas.toBlob((blob) => {
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => {
-        // UPLOAD THIS TO S3
-        console.log(dataURLtoFile(reader.result, "banner"));
-      };
-    });
   };
 
   return (
@@ -95,18 +63,9 @@ const index = ({ MerchantId, name }) => {
         onChange={(e) => {
           if (FileReader && e.target.files && e.target.files.length) {
             var fileReader = new FileReader();
-            // fr.onload = function () {
-            //   // set temp image
-            //   // setProfileImgSrc(fr.result);
-            // };
-            // // console.log(e.target.files[0]);
-            // // console.log(URL.createObjectURL(e.target.files[0]));
-            // setBannerUpload(URL.createObjectURL(e.target.files[0]));
-            // fr.readAsDataURL(e.target.files[0]);
             fileReader.onloadend = () => {
               setBannerUpload(fileReader.result);
             };
-            console.log("FILE", e.target.files[0]);
             fileReader.readAsDataURL(e.target.files[0]);
             setEditing(true);
           } else {
