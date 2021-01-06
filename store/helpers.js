@@ -131,16 +131,22 @@ export const getPresignedBannerURL = async (merchantid) => {
 };
 
 export const postBannerUpload = async (file, presignedData) => {
-  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
-  const user = jwt(authRes["IdToken"]);
-  const resp = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/people/person/${user["sub"]}`,
-    payload,
-    {
-      headers: {
-        Authorization: authRes["IdToken"],
-      },
-    }
-  );
-  return resp;
+  return new Promise((resolve, reject) => {
+    const formData = new FormData();
+    Object.keys(presignedData.fields).forEach((key) => {
+      if (key != "Cache-Control") {
+        formData.append(key, presignedData.fields[key]);
+      }
+    });
+    // Actual file has to be appended last.
+    formData.append("file", file);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", presignedData.url, true);
+    xhr.send(formData);
+    xhr.onload = function () {
+      this.status === 204
+        ? resolve("Successfully uploaded")
+        : reject(this.responseText);
+    };
+  });
 };

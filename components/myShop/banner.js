@@ -8,7 +8,6 @@ import { LargeLoader } from "../loaders";
 
 const index = ({ MerchantId, name }) => {
   let bannerImgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${MerchantId}/banner`;
-  let bannerImgURL = `url(${bannerImgSrc})`;
 
   // reference to general image input
   const bannerInput = useRef(null);
@@ -27,6 +26,28 @@ const index = ({ MerchantId, name }) => {
     height: 450,
   });
 
+  function imageExists(url, callback) {
+    var img = new Image();
+    img.onload = function () {
+      callback(true);
+    };
+    img.onerror = function () {
+      callback(false);
+    };
+    img.src = url;
+  }
+
+  const checkBannerExists = () => {
+    imageExists(bannerUpload, function (exists) {
+      if (!exists) {
+        let sampleBanner = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
+        console.log(sampleBanner);
+        setBannerUpload(sampleBanner);
+      }
+    });
+  };
+  checkBannerExists();
+
   const uploadBanner = async () => {
     try {
       if (croppedBannerUpload && crop.width && crop.height) {
@@ -36,17 +57,19 @@ const index = ({ MerchantId, name }) => {
           reader.readAsDataURL(blob);
           reader.onloadend = async () => {
             let file = dataURLtoFile(reader.result, "banner");
-            const resp = await getPresignedBannerURL(MerchantId);
+            let resp = await getPresignedBannerURL(MerchantId);
             console.log("Presigned", resp);
             // UPLOAD THIS TO S3
             console.log("File", file);
             if (resp.data && file) {
-              await postBannerUpload(file, resp.data);
+              let postBannerResp = await postBannerUpload(file, resp.data);
+              console.log(postBannerResp);
+              window.location.reload();
             } else {
               throw { resp, file };
             }
-            setEditing(false);
-            setLoading(false);
+            // setEditing(false);
+            // setLoading(false);
           };
         });
       }
@@ -56,6 +79,8 @@ const index = ({ MerchantId, name }) => {
       console.log(err);
     }
   };
+
+  let bannerImgURL = `url(${bannerUpload})`;
 
   return (
     <>
@@ -129,6 +154,8 @@ const index = ({ MerchantId, name }) => {
             <Button
               className="red inverted"
               onClick={() => {
+                setBannerUpload(bannerImgSrc);
+                checkBannerExists();
                 setEditing(false);
               }}
             >
