@@ -28,4 +28,15 @@
   .card-content-container.open {
     padding: 0;
   }
+
+  .myShop-banner {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 410px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 30px;
+    position: relative;
+  }
 }

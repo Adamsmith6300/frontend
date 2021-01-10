@@ -6,8 +6,8 @@ import { getPresignedBannerURL, postBannerUpload } from "../../store/helpers";
 import { dataURLtoFile, getCroppedImg } from "../componentHelpers";
 import { LargeLoader } from "../loaders";
 
-const index = ({ MerchantId, name }) => {
-  let bannerImgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${MerchantId}/banner`;
+const index = ({ MerchantId, name, bannerImageName }) => {
+  let bannerImgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${MerchantId}/${bannerImageName}`;
 
   // reference to general image input
   const bannerInput = useRef(null);
@@ -17,6 +17,8 @@ const index = ({ MerchantId, name }) => {
   const [croppedBannerUpload, setCroppedBannerUpload] = useState(null);
   // final File of cropped image
   const [croppedImageFile, setCroppedImageFile] = useState(null);
+  //filename for upload
+  const [bannerName, setBannerName] = useState(null);
 
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,7 +43,6 @@ const index = ({ MerchantId, name }) => {
     imageExists(bannerUpload, function (exists) {
       if (!exists) {
         let sampleBanner = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
-        console.log(sampleBanner);
         setBannerUpload(sampleBanner);
       }
     });
@@ -56,8 +57,11 @@ const index = ({ MerchantId, name }) => {
         canvas.toBlob((blob) => {
           reader.readAsDataURL(blob);
           reader.onloadend = async () => {
-            let file = dataURLtoFile(reader.result, "banner");
-            let resp = await getPresignedBannerURL(MerchantId);
+            let file = dataURLtoFile(reader.result, bannerName);
+            let resp = await getPresignedBannerURL({
+              MerchantId: MerchantId,
+              name: bannerName,
+            });
             console.log("Presigned", resp);
             // UPLOAD THIS TO S3
             console.log("File", file);
@@ -68,8 +72,6 @@ const index = ({ MerchantId, name }) => {
             } else {
               throw { resp, file };
             }
-            // setEditing(false);
-            // setLoading(false);
           };
         });
       }
@@ -91,6 +93,7 @@ const index = ({ MerchantId, name }) => {
             fileReader.onloadend = () => {
               setBannerUpload(fileReader.result);
             };
+            setBannerName(e.target.files[0].name);
             fileReader.readAsDataURL(e.target.files[0]);
             setEditing(true);
           } else {
@@ -107,16 +110,9 @@ const index = ({ MerchantId, name }) => {
         <LargeLoader />
       ) : !editing ? (
         <div
+          className="myShop-banner"
           style={{
-            backgroundPosition: "center",
-            bakcgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
             backgroundImage: bannerImgURL,
-            height: "470px",
-            borderRadius: "10px",
-            marginBottom: "20px",
-            padding: "30px",
-            position: "relative",
           }}
         >
           <h2 className="w-full">{name}</h2>

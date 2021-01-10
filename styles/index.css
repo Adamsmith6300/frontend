@@ -358,3 +358,14 @@ button:focus {
   line-height: 17px;
   display: flex;
 }
+
+.myShop-banner {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 470px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 30px;
+  position: relative;
+}

@@ -3,7 +3,6 @@ import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 // import { wrapper } from "../store";
 import actions from "../store/actions";
-import { motion } from "framer-motion";
 import AllMerchants from "../components/merchants/allMerchants";
 
 const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {

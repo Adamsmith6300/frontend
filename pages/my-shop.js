@@ -52,7 +52,11 @@ const Page = ({ router, myShop, setMerchantData }) => {
     <Layout>
       {myShop.info ? (
         <div className="my-account-container">
-          <Banner MerchantId={myShop.info.MerchantId} name={myShop.info.name} />
+          <Banner
+            MerchantId={myShop.info.MerchantId}
+            name={myShop.info.name}
+            bannerImageName={myShop.info.bannerImage}
+          />
           <Accordion fluid styled>
             <Accordion.Title
               active={activeIndex === 0}

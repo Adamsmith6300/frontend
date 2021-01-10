@@ -23,7 +23,7 @@ const MerchantCard = memo(
     const id = merchant.MerchantId;
     const title = merchant.name;
     const backgroundColor = "#a1a1a1";
-    const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/banner`;
+    const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/${merchant.bannerImage}`;
 
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
