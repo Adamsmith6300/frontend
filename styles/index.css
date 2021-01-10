@@ -149,6 +149,9 @@ button:focus {
 .card-image {
   width: 800px;
   height: 450px;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .card-image--products {
   /* width: 300px; */
@@ -351,10 +354,13 @@ button:focus {
   display: flex;
 }
 
-.ui.button.save-banner-btn {
+.save-banner-btns {
   position: absolute;
-  bottom: 2rem;
-  right: 10rem;
+  bottom: 3rem;
+  right: 3rem;
+  display: flex;
+}
+.save-banner-btns .ui.button {
   line-height: 17px;
   display: flex;
 }

@@ -19,6 +19,7 @@ const index = ({ MerchantId, name, bannerImageName }) => {
   const [croppedImageFile, setCroppedImageFile] = useState(null);
   //filename for upload
   const [bannerName, setBannerName] = useState(null);
+  const [uploadFile, setUploadFile] = useState(null);
 
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -51,29 +52,42 @@ const index = ({ MerchantId, name, bannerImageName }) => {
 
   const uploadBanner = async () => {
     try {
-      if (croppedBannerUpload && crop.width && crop.height) {
-        const reader = new FileReader();
-        let canvas = getCroppedImg(croppedBannerUpload, crop);
-        canvas.toBlob((blob) => {
-          reader.readAsDataURL(blob);
-          reader.onloadend = async () => {
-            let file = dataURLtoFile(reader.result, bannerName);
-            let resp = await getPresignedBannerURL({
-              MerchantId: MerchantId,
-              name: bannerName,
-            });
-            console.log("Presigned", resp);
-            // UPLOAD THIS TO S3
-            console.log("File", file);
-            if (resp.data && file) {
-              let postBannerResp = await postBannerUpload(file, resp.data);
-              console.log(postBannerResp);
-              window.location.reload();
-            } else {
-              throw { resp, file };
-            }
-          };
-        });
+      // if (croppedBannerUpload && crop.width && crop.height) {
+      //   const reader = new FileReader();
+      //   let canvas = getCroppedImg(croppedBannerUpload, crop);
+      //   canvas.toBlob((blob) => {
+      //     reader.readAsDataURL(blob);
+      //     reader.onloadend = async () => {
+      //       let file = dataURLtoFile(reader.result, bannerName);
+      //       let resp = await getPresignedBannerURL({
+      //         MerchantId: MerchantId,
+      //         name: bannerName,
+      //       });
+      //       console.log("Presigned", resp);
+      //       // UPLOAD THIS TO S3
+      //       console.log("File", file);
+      //       if (resp.data && file) {
+      //         let postBannerResp = await postBannerUpload(file, resp.data);
+      //         console.log(postBannerResp);
+      //         window.location.reload();
+      //       } else {
+      //         throw { resp, file };
+      //       }
+      //     };
+      //   });
+      // }
+      let { data } = await getPresignedBannerURL({
+        MerchantId: MerchantId,
+        name: bannerName,
+      });
+      if (data && uploadFile) {
+        let postBannerResp = await postBannerUpload(uploadFile, data);
+        console.log(postBannerResp);
+        setEditing(false);
+        setLoading(false);
+        // window.location.reload();
+      } else {
+        throw { resp, file };
       }
     } catch (err) {
       setEditing(false);
@@ -94,6 +108,7 @@ const index = ({ MerchantId, name, bannerImageName }) => {
               setBannerUpload(fileReader.result);
             };
             setBannerName(e.target.files[0].name);
+            setUploadFile(e.target.files[0]);
             fileReader.readAsDataURL(e.target.files[0]);
             setEditing(true);
           } else {
@@ -106,17 +121,15 @@ const index = ({ MerchantId, name, bannerImageName }) => {
         style={{ display: "none" }}
       />
 
-      {loading ? (
-        <LargeLoader />
-      ) : !editing ? (
-        <div
-          className="myShop-banner"
-          style={{
-            backgroundImage: bannerImgURL,
-          }}
-        >
-          <h2 className="w-full">{name}</h2>
-
+      {loading ? <LargeLoader /> : null}
+      <div
+        className="myShop-banner"
+        style={{
+          backgroundImage: bannerImgURL,
+        }}
+      >
+        <h2 className="w-full">{name}</h2>
+        {!editing ? (
           <Button
             className="edit-banner-btn inverted"
             onClick={() => {
@@ -126,18 +139,8 @@ const index = ({ MerchantId, name, bannerImageName }) => {
             <span className="mr-2 ">Edit</span>
             <MdModeEdit className="inline cursor-pointer" />
           </Button>
-        </div>
-      ) : (
-        <>
-          <ReactCrop
-            src={bannerUpload}
-            crop={crop}
-            onImageLoaded={(image) => setCroppedBannerUpload(image)}
-            onChange={(newCrop) =>
-              setCrop({ ...newCrop, unit: "px", width: 800, height: 450 })
-            }
-          />
-          <div className="my-2 mb-4">
+        ) : (
+          <div className="save-banner-btns">
             <Button
               className="teal"
               onClick={() => {
@@ -158,10 +161,42 @@ const index = ({ MerchantId, name, bannerImageName }) => {
               <span className="mr-2">Cancel</span>
             </Button>
           </div>
-        </>
-      )}
+        )}
+      </div>
     </>
   );
 };
 
 export default index;
+
+// <>
+//   <ReactCrop
+//     src={bannerUpload}
+//     crop={crop}
+//     onImageLoaded={(image) => setCroppedBannerUpload(image)}
+//     onChange={(newCrop) =>
+//       setCrop({ ...newCrop, unit: "px", width: 800, height: 450 })
+//     }
+//   />
+//   <div className="my-2 mb-4">
+//     <Button
+//       className="teal"
+//       onClick={() => {
+//         setLoading(true);
+//         uploadBanner();
+//       }}
+//     >
+//       <span className="">Save</span>
+//     </Button>
+//     <Button
+//       className="red inverted"
+//       onClick={() => {
+//         setBannerUpload(bannerImgSrc);
+//         checkBannerExists();
+//         setEditing(false);
+//       }}
+//     >
+//       <span className="mr-2">Cancel</span>
+//     </Button>
+//   </div>
+// </>

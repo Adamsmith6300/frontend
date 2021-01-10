@@ -18,6 +18,15 @@
     padding-left: 0;
     padding-right: 0;
   }
+  .card-image {
+    height: 100%;
+    transform: none !important;
+    max-width: none;
+    width: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
   .card:nth-child(4n + 1),
   .card:nth-child(4n + 4) {
