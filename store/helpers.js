@@ -151,3 +151,18 @@ export const postBannerUpload = async (file, presignedData) => {
     };
   });
 };
+
+export const updateProductDetails = async (productId, payload) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/product/${productId}`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};

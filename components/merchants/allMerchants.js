@@ -2,7 +2,7 @@ import { useState } from "react";
 import MerchantCard from "./merchantCard";
 const categories = ["Home + decor", "healthy + beauty", "jewellery"];
 
-const pOIS = [80, 120, 260, 200, 150, 60, 200, 260];
+// const pOIS = [80, 120, 260, 200, 150, 60, 200, 260];
 
 const allMerchants = ({ merchants, addToCart, cartData }) => {
   const [selectedId, setSelectedId] = useState(null);
@@ -17,7 +17,7 @@ const allMerchants = ({ merchants, addToCart, cartData }) => {
           cartData={cartData}
           isSelected={isSelected}
           setSelectedId={setSelectedId}
-          pointOfInterest={pOIS[index]}
+          // pointOfInterest={pOIS[index]}
         />
       );
     });

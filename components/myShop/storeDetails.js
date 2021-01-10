@@ -21,7 +21,7 @@ const StoreDetails = ({ info, callFetchMerchData }) => {
   const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     updateFormData({
-      ...formData,
+      // ...formData,
       [e.target.name]: e.target.value.trim(),
     });
   };
@@ -64,7 +64,10 @@ const StoreDetails = ({ info, callFetchMerchData }) => {
             <span className="mx-3">{entry[1]}</span>
             {possibleAttr.includes(entry[0]) ? (
               <MdModeEdit
-                onClick={() => setEditAttr(index)}
+                onClick={() => {
+                  updateFormData({});
+                  setEditAttr(index);
+                }}
                 className="inline cursor-pointer"
               />
             ) : null}
@@ -87,11 +90,12 @@ const StoreDetails = ({ info, callFetchMerchData }) => {
                   setEditAttr(null);
                   updateFormData({});
                 }}
+                color="red"
               >
                 Cancel
               </Button>
               {Object.keys(formData).length > 0 ? (
-                <Button onClick={() => handleSubmit()} color="black">
+                <Button onClick={() => handleSubmit()} color="green">
                   Save
                 </Button>
               ) : null}

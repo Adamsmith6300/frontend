@@ -19,7 +19,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
   const [checkedAuth, updateCheckedAuth] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
   const [merchantDataExists, setMerchantDataExists] = useState(
     Object.keys(myShop).length > 0
   );
@@ -79,7 +79,10 @@ const Page = ({ router, myShop, setMerchantData }) => {
               Products
             </Accordion.Title>
             <Accordion.Content active={activeIndex === 1}>
-              <Products products={myShop.products} />
+              <Products
+                products={myShop.products}
+                callFetchMerchData={callFetchMerchData}
+              />
             </Accordion.Content>
             <Accordion.Title
               active={activeIndex === 2}

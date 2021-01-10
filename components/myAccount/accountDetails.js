@@ -19,7 +19,7 @@ const index = ({ info, callFetchAccountData }) => {
   const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     updateFormData({
-      ...formData,
+      // ...formData,
       [e.target.name]: e.target.value.trim(),
     });
   };

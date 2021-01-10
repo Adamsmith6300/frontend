@@ -18,7 +18,7 @@ const MerchantCard = memo(
     merchant,
     addToCart,
     cartData,
-    pointOfInterest,
+    // pointOfInterest,
   }) => {
     const id = merchant.MerchantId;
     const title = merchant.name;
@@ -111,7 +111,7 @@ const MerchantCard = memo(
             <Image
               id={id}
               isSelected={isSelected}
-              pointOfInterest={pointOfInterest}
+              // pointOfInterest={pointOfInterest}
               backgroundColor={backgroundColor}
               imgSrc={imgSrc}
             />

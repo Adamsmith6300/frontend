@@ -2,7 +2,7 @@ import Product from "./product";
 import SelectedProduct from "./selectedProduct";
 import { useState } from "react";
 
-const Products = ({ products }) => {
+const Products = ({ products, callFetchMerchData }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   let productList = products.map((prod, index) => {
     return (
@@ -22,6 +22,7 @@ const Products = ({ products }) => {
         key={products[selectedProduct].ProductId}
         setSelectedProduct={setSelectedProduct}
         product={products[selectedProduct]}
+        callFetchMerchData={callFetchMerchData}
       />
     );
   } else {

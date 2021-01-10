@@ -5,7 +5,7 @@ import { closeSpring } from "../animations";
 export const Image = ({
   id,
   isSelected,
-  pointOfInterest = 0,
+  // pointOfInterest = 0,
   backgroundColor,
   imgSrc,
 }) => {
