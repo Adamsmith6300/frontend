@@ -5,27 +5,40 @@ import { BsPlusCircle } from "react-icons/bs";
 import { TextArea, Input, Button, Table } from "semantic-ui-react";
 import { LargeLoader } from "../loaders";
 import { updateProductDetails } from "../../store/helpers";
+import ImageCarouselProd from "./imageCarouselProd";
 
 const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
-  // console.log(product.options);
   const initialOptionsCount = product.options.length;
+  const initialOptions = [...product.options];
   const [formData, updateFormData] = useState({});
   const [editAttr, setEditAttr] = useState(null);
   const [loading, setLoading] = useState(false);
   const [newOption, setNewOption] = useState(null);
+  const [editedOption, setEditedOption] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null);
+
+  const clearState = () => {
+    setEditAttr(null);
+    setNewOption(null);
+    setEditedOption(null);
+    setDeleteIndex(null);
+    updateFormData({});
+  };
+
   const handleChange = (e) => {
     updateFormData({
       // ...formData,
       [e.target.name]: e.target.value.trim(),
     });
   };
+
   const handleOptionChange = (e, index, key) => {
-    product.options[index][key] = e.target.value.trim();
-    updateFormData({
-      options: product.options,
-    });
+    setEditedOption([
+      index,
+      { ...product.options[index], [key]: e.target.value.trim() },
+    ]);
   };
+
   const handleNewOptionChange = (e, key) => {
     let newNewOption = { ...newOption, [key]: e.target.value.trim() };
     updateFormData({
@@ -33,32 +46,60 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
     });
     setNewOption(newNewOption);
   };
-  const deleteOption = (index) => {
-    setDeleteIndex(index);
-    product.options.splice(index, 1);
-    updateFormData({
-      options: product.options,
-    });
-  };
 
   const handleSubmit = async () => {
     setLoading(true);
+    let data = formData;
+    if (deleteIndex != null) {
+      product.options.splice(deleteIndex, 1);
+      data = {
+        options: product.options,
+      };
+    }
+    if (editedOption != null) {
+      product.options[editedOption[0]] = editedOption[1];
+      data = {
+        options: product.options,
+      };
+    }
     let resp = await updateProductDetails(product.ProductId, {
-      ...formData,
+      ...data,
       MerchantId: product.MerchantId,
     });
     if (resp.status == 200) {
       callFetchMerchData().then((response) => {
-        setEditAttr(null);
-        setNewOption(null);
-        setDeleteIndex(null);
-        updateFormData({});
+        clearState();
         setLoading(false);
       });
     } else {
       console.log("ERROR! Failed to update shop details");
       window.location.reload();
     }
+  };
+
+  const readyToSave = () => {
+    let optionsOk = true;
+    if ("options" in formData) {
+      for (let i = 0; i < formData.options.length; ++i) {
+        if (
+          !("label" in formData.options[i]) ||
+          formData.options[i]["label"].length <= 0 ||
+          formData.options[i]["label"] == null ||
+          !("price" in formData.options[i]) ||
+          formData.options[i]["price"].length <= 0 ||
+          formData.options[i]["price"] == null
+        ) {
+          optionsOk = false;
+          break;
+        }
+      }
+    }
+    return (
+      (Object.keys(formData).length > 0 ||
+        deleteIndex != null ||
+        editedOption != null) &&
+      optionsOk
+    );
   };
 
   const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
@@ -69,7 +110,8 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
       : product.ProductId
   }/${product.images[product.mainImage]}`;
 
-  let options = product.options.map((option, index) => {
+  const options = initialOptions.map((ogOption, index) => {
+    const option = Object.assign({}, ogOption);
     return (
       <Table.Row key={index}>
         {editAttr == 3 + index ? (
@@ -109,27 +151,30 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
               <span className="">
                 <MdModeEdit
                   onClick={() => {
-                    updateFormData({});
+                    clearState();
                     setEditAttr(3 + index);
                   }}
                   className="inline cursor-pointer"
                 />
               </span>
-              <span>
-                <MdDelete
-                  onClick={() => {
-                    updateFormData({});
-                    deleteOption(index);
-                  }}
-                  className="inline cursor-pointer"
-                />
-              </span>
+              {deleteIndex != index ? (
+                <span>
+                  <MdDelete
+                    onClick={() => {
+                      clearState();
+                      setDeleteIndex(index);
+                    }}
+                    className="inline cursor-pointer"
+                  />
+                </span>
+              ) : null}
             </Table.Cell>
           </>
         )}
       </Table.Row>
     );
   });
+  const baseImgPath = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${product.MerchantId}/products/${product.ProductId}`;
 
   return loading ? (
     <LargeLoader />
@@ -142,11 +187,12 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
         Back
       </span>
       <div className="w-500 max-w-full mx-auto">
-        <img
-          className="w-350 max-w-full mt-2"
-          src={imgSrc}
-          alt=""
-          align="top"
+        <ImageCarouselProd
+          baseImgPath={baseImgPath}
+          images={product.images}
+          mainImageIndex={product.mainImage}
+          MerchantId={product.MerchantId}
+          ProductId={product.ProductId}
         />
         <div>
           <p className="text-2xl font-bold">Title:</p>
@@ -164,6 +210,8 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
                 <MdModeEdit
                   onClick={() => {
                     updateFormData({});
+                    setDeleteIndex(null);
+                    setEditedOption(null);
                     setEditAttr(0);
                   }}
                   className="inline cursor-pointer"
@@ -188,6 +236,8 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
                 <MdModeEdit
                   onClick={() => {
                     updateFormData({});
+                    setDeleteIndex(null);
+                    setEditedOption(null);
                     setEditAttr(1);
                   }}
                   className="inline cursor-pointer"
@@ -213,6 +263,8 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
                 <MdModeEdit
                   onClick={() => {
                     updateFormData({});
+                    setDeleteIndex(null);
+                    setEditedOption(null);
                     setEditAttr(2);
                   }}
                   className="inline cursor-pointer"
@@ -261,7 +313,7 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
                         <span className="mr-2">Add Option</span>
                         <BsPlusCircle
                           onClick={() => {
-                            updateFormData({});
+                            clearState();
                             setEditAttr("newOption");
                           }}
                           className="inline cursor-pointer"
@@ -278,16 +330,13 @@ const index = ({ product, setSelectedProduct, callFetchMerchData }) => {
           <div className="mt-2 w-full text-center">
             <Button
               onClick={() => {
-                setNewOption(null);
-                setEditAttr(null);
-                setDeleteIndex(null);
-                updateFormData({});
+                clearState();
               }}
               color="red"
             >
               Cancel
             </Button>
-            {Object.keys(formData).length > 0 ? (
+            {readyToSave() ? (
               <Button onClick={() => handleSubmit()} color="green">
                 Save
               </Button>

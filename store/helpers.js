@@ -131,7 +131,7 @@ export const getPresignedBannerURL = async (payload) => {
   );
 };
 
-export const postBannerUpload = async (file, presignedData) => {
+export const postImageUpload = async (file, presignedData) => {
   return new Promise((resolve, reject) => {
     const formData = new FormData();
     Object.keys(presignedData.fields).forEach((key) => {
@@ -165,4 +165,18 @@ export const updateProductDetails = async (productId, payload) => {
     }
   );
   return resp;
+};
+
+export const getPresignedProductImgURL = async (payload, ProductId) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  return axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/product/${ProductId}/upload`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
 };

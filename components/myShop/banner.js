@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import ReactCrop from "react-image-crop";
 import { Button } from "semantic-ui-react";
 import { MdModeEdit } from "react-icons/md";
-import { getPresignedBannerURL, postBannerUpload } from "../../store/helpers";
+import { getPresignedBannerURL, postImageUpload } from "../../store/helpers";
 import { dataURLtoFile, getCroppedImg } from "../componentHelpers";
 import { LargeLoader } from "../loaders";
 
@@ -67,7 +67,7 @@ const index = ({ MerchantId, name, bannerImageName }) => {
       //       // UPLOAD THIS TO S3
       //       console.log("File", file);
       //       if (resp.data && file) {
-      //         let postBannerResp = await postBannerUpload(file, resp.data);
+      //         let postBannerResp = await postImageUpload(file, resp.data);
       //         console.log(postBannerResp);
       //         window.location.reload();
       //       } else {
@@ -81,7 +81,7 @@ const index = ({ MerchantId, name, bannerImageName }) => {
         name: bannerName,
       });
       if (data && uploadFile) {
-        let postBannerResp = await postBannerUpload(uploadFile, data);
+        let postBannerResp = await postImageUpload(uploadFile, data);
         console.log(postBannerResp);
         setEditing(false);
         setLoading(false);
