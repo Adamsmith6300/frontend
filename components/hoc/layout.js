@@ -23,8 +23,8 @@ const Layout = ({
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
+  // const [isAuthed, setIsAuthed] = useState(null);
 
-  //use effect-->get cart from local storage
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
     if (cartString != undefined) {
@@ -55,7 +55,13 @@ const Layout = ({
         Loma
       </h1>
       <SideMenu clearFlag={clearFlag} />
-      {/* <Nav toggleCart={toggleCart} showCart={showCart} clearFlag={clearFlag} /> */}
+      <Cart
+        toggleCart={toggleCart}
+        showCart={showCart}
+        cartData={cartData}
+        addToCart={addToCart}
+        removeFromCart={removeFromCart}
+      />
       {children}
       {/* {!isMerchant && isAuthed ? (
         <div className="w-full bottom-0 left-0 relative py-12">
@@ -68,15 +74,6 @@ const Layout = ({
           </ul>
         </div>
       ) : null} */}
-      {showCart ? (
-        <Cart
-          toggleCart={toggleCart}
-          showCart={showCart}
-          cartData={cartData}
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
-        />
-      ) : null}
       <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
         Font made from{" "}
         <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed

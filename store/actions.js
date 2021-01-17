@@ -176,7 +176,7 @@ const actions = {
     } else {
       newCart.items[product.ProductId] = { ...product, qty: 1 };
     }
-    newCart.total += product.price;
+    newCart.total += Number(product.price);
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     return {

@@ -1,58 +1,61 @@
-import { Button } from "semantic-ui-react";
-import CartSummary from "./cartSummary";
-const index = ({
+import { useRef } from "react";
+import { motion, useCycle } from "framer-motion";
+import { useDimensions } from "../../utils/use-dimensions";
+import { CartMenuToggle } from "./cartMenuToggle";
+import CartContent from "./cartContent";
+
+const sidebar = {
+  open: (height = 1000) => ({
+    clipPath: `circle(${height * 2 + 200}px at 80px 80px)`,
+    transition: {
+      type: "spring",
+      stiffness: 20,
+      restDelta: 2,
+    },
+  }),
+  closed: {
+    clipPath: "circle(30px at 210px 80px)",
+    transition: {
+      delay: 0.2,
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
+    },
+  },
+};
+
+const Cart = ({
   toggleCart,
   showCart,
   cartData,
   addToCart,
   removeFromCart,
 }) => {
-  const items = Object.entries(cartData.items).map((entry, index) => {
-    let item = entry[1];
-    let mainImageUrl = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${
-      item.MerchantId
-    }/${item.ProductId}/${item.images[item.mainImage]}`;
-    return (
-      <div key={entry[0]} className="flex justify-center">
-        <img src={mainImageUrl} className="h-32 mr-4" />
-        <div>
-          <p>{item.title}</p>
-          <p>${item.price}</p>
-          <Button onClick={() => removeFromCart(item, cartData, 1)}>-</Button>
-          <span>{item.qty}</span>
-          <Button onClick={() => addToCart(item, cartData)}>+</Button>
-          <Button
-            className=""
-            color="red"
-            onClick={() => removeFromCart(item, cartData, -1)}
-          >
-            remove
-          </Button>
-        </div>
-      </div>
-    );
-  });
+  const [isOpen, toggleOpen] = useCycle(false, true);
+  const cartContainerRef = useRef(null);
+  const { height } = useDimensions(cartContainerRef);
+
   return (
-    <div className="w-full h-full z-10 absolute bg-green-200 top-0 left-0">
-      <p className="flex justify-end">
-        <span
-          onClick={() => toggleCart(false)}
-          className="cursor-pointer px-8 p-4 text-2xl font-bold"
-        >
-          CLOSE
-        </span>
-      </p>
-      <h2 className="text-3xl font-bolder text-center">CART</h2>
-      {items.length > 0 ? (
-        <>
-          <div className="w-1/3 sm:w-4/5 text-center mx-auto">{items}</div>
-          <CartSummary cartData={cartData} toggleCart={toggleCart} />
-        </>
-      ) : (
-        <p className="text-xl font-bold text-center">Your cart is empty!</p>
-      )}
-    </div>
+    <motion.nav
+      initial={false}
+      animate={isOpen ? "open" : "closed"}
+      custom={height}
+      ref={cartContainerRef}
+      variants={sidebar}
+      className={`cart-nav ${isOpen ? "front" : ""}`}
+    >
+      <motion.div
+        className={`cart-background ${isOpen ? "front" : ""}`}
+        variants={sidebar}
+      />
+      <CartContent
+        toggle={() => toggleOpen()}
+        cartData={cartData}
+        addToCart={addToCart}
+        removeFromCart={removeFromCart}
+      />
+      <CartMenuToggle toggle={() => toggleOpen()} isOpen={isOpen} />
+    </motion.nav>
   );
 };
-
-export default index;
+export default Cart;

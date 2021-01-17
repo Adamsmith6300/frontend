@@ -86,7 +86,7 @@ export const Navigation = ({ isOpen, clearFlag }) => {
 
   return (
     <motion.ul
-      className={`side-menu-list ${isOpen ? "" : ""}`}
+      className={`side-menu-list ${isOpen ? "front" : ""}`}
       variants={variants}
     >
       {navItems.map((item, index) => (

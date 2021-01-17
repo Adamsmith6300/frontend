@@ -14,7 +14,7 @@ const sidebar = {
     },
   }),
   closed: {
-    clipPath: "circle(30px at 270px 80px)",
+    clipPath: "circle(30px at 290px 80px)",
     transition: {
       delay: 0.2,
       type: "spring",
@@ -36,11 +36,14 @@ export const SideMenu = ({ clearFlag }) => {
       custom={height}
       ref={containerRef}
       variants={sidebar}
-      className={`nav ${isOpen ? "" : ""}`}
+      className={`nav ${isOpen ? "front" : ""}`}
     >
-      <motion.div className="background" variants={sidebar} />
+      <motion.div
+        className={`background ${isOpen ? "front" : ""}`}
+        variants={sidebar}
+      />
       <Navigation isOpen={isOpen} clearFlag={clearFlag} />
-      <MenuToggle toggle={() => toggleOpen()} />
+      <MenuToggle isOpen={isOpen} toggle={() => toggleOpen()} />
     </motion.nav>
   );
 };
