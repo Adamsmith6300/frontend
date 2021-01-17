@@ -6,6 +6,7 @@ import { LargeLoader, MiniLoader } from "../loaders";
 import {
   getPresignedProductImgURL,
   postImageUpload,
+  updateProductDetails,
 } from "../../store/helpers";
 
 const index = ({
@@ -25,8 +26,6 @@ const index = ({
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const clearState = () => {};
-
   const uploadImage = async () => {
     try {
       let { data } = await getPresignedProductImgURL(
@@ -36,19 +35,47 @@ const index = ({
         },
         ProductId
       );
-      console.log(data);
-      // setLoading(false);
       if (data && uploadFile) {
         let uploadImageResp = await postImageUpload(uploadFile, data);
         console.log(uploadImageResp);
+        images.push(imageName);
         setLoading(false);
-        // window.location.reload();
       } else {
         throw { resp, file };
       }
     } catch (err) {
+      console.log("FAILED TO UPLOAD");
+      let resp = await updateProductDetails(ProductId, {
+        images: images,
+        MerchantId: MerchantId,
+      });
       setLoading(false);
-      console.log(err);
+    }
+  };
+
+  const deleteImage = async () => {
+    images.splice(currentIndex, 1);
+    let payload = {
+      images: images,
+      MerchantId: MerchantId,
+    };
+    if (images.length > 0) {
+      if (images.length == 1) {
+        payload["mainImage"] = 0;
+      }
+      let resp = await updateProductDetails(ProductId, payload);
+      window.location.reload();
+    }
+  };
+
+  const setMainImage = async () => {
+    if (images.length > 1 && selectedImg != null) {
+      let payload = {
+        mainImage: selectedImg,
+        MerchantId: MerchantId,
+      };
+      let resp = await updateProductDetails(ProductId, payload);
+      window.location.reload();
     }
   };
 
@@ -96,6 +123,7 @@ const index = ({
               }`;
               setImageUpload(newSrc);
               setCurrentIndex(Math.max(currentIndex - 1, 0));
+              setSelectedImg(null);
             }}
           >
             Prev
@@ -109,6 +137,7 @@ const index = ({
               }`;
               setImageUpload(newSrc);
               setCurrentIndex(Math.min(currentIndex + 1, images.length - 1));
+              setSelectedImg(null);
             }}
           >
             Next
@@ -146,13 +175,23 @@ const index = ({
           </>
         ) : (
           <Button
-            disabled={selectedImg == null}
-            color={selectedImg == null ? "grey" : "red"}
+            disabled={selectedImg == null || images.length == 1}
+            color={selectedImg == null || images.length == 1 ? "grey" : "red"}
+            onClick={() => deleteImage()}
           >
             <span className="mr-2">Delete Selected</span>
             <MdDelete className="inline cursor-pointer" />
           </Button>
         )}
+        <Button
+          color="blue"
+          disabled={selectedImg == null || images.length == 1}
+          onClick={() => {
+            setMainImage();
+          }}
+        >
+          <span className="mr-2">Set Main Image</span>
+        </Button>
       </div>
     </>
   );

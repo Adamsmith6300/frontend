@@ -80,6 +80,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
             </Accordion.Title>
             <Accordion.Content active={activeIndex === 1}>
               <Products
+                MerchantId={myShop.info.MerchantId}
                 products={myShop.products}
                 callFetchMerchData={callFetchMerchData}
               />

@@ -61,7 +61,6 @@ export const fetchMerchantData = async () => {
 export const getAccountLink = async () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const user = jwt(authRes["IdToken"]);
-  console.log(authRes);
   const resp = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/account-link`,
     {
@@ -179,4 +178,19 @@ export const getPresignedProductImgURL = async (payload, ProductId) => {
       },
     }
   );
+};
+
+export const postNewProduct = async (formData) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/product`,
+    formData,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
 };
