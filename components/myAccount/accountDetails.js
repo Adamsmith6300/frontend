@@ -40,6 +40,11 @@ const index = ({ info, callFetchAccountData }) => {
   };
   let details = [];
   if (info) {
+    for (let i = 0; i < possibleAttr.length; ++i) {
+      if (!(possibleAttr[i] in info)) {
+        info[possibleAttr[i]] = "";
+      }
+    }
     details = Object.entries(info).map((entry, index) => {
       if (entry[0] == "PersonId") return null;
       if (editAttr == index) {

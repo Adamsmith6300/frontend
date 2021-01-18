@@ -3,6 +3,7 @@ import { useState } from "react";
 import SelectedOrder from "./selectedOrder";
 
 export default ({ orders }) => {
+  console.log(orders);
   const [selectedOrder, setSelectedOrder] = useState(null);
   let orderList = orders.map((order, index) => {
     return (
@@ -14,8 +15,7 @@ export default ({ orders }) => {
         <p>Order# {order.OrderId.slice(-12)}</p>
         <p>{order.items.length} Product(s)</p>{" "}
         <p>
-          Date of Order:{" "}
-          {moment.unix(order.paymentIntent.created).format("MMMM Do YYYY")}
+          Date of Order: {moment.unix(order.created).format("MMMM Do YYYY")}
         </p>
         <p>Total: {"$$$"}</p>
       </li>
