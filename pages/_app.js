@@ -1,19 +1,19 @@
 import React from "react";
 import App from "next/app";
-import "semantic-ui-css/semantic.min.css";
 import { wrapper } from "../store";
+import "semantic-ui-css/semantic.min.css";
+import "react-image-crop/dist/ReactCrop.css";
+import "../styles/tailwindplus.css";
 import "../styles/index.css";
+import "../styles/sideMenu.css";
+import "../styles/responsive.css";
 
 class MyApp extends App {
-  getInitialProps = async ({ Component, ctx }) => {
+  getStaticProps = async ({ Component, ctx }) => {
     // ctx.store.dispatch({ type: "TOE", payload: "was set in _app" });
     return {
       pageProps: {
-        // Call page-level getInitialProps
-        ...(Component.getInitialProps
-          ? await Component.getInitialProps(ctx)
-          : {}),
-        // Some custom thing for all pages
+        ...(Component.getStaticProps ? await Component.getStaticProps() : {}),
         pathname: ctx.pathname,
       },
     };

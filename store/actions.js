@@ -1,24 +1,28 @@
 import axios from "axios";
-import { saveLoginSession } from "./helpers"
-
+import { useRouter } from "next/router";
+import { saveLoginSession, getAuth, checkMerchant } from "./helpers";
 
 const actionTypes = {
-  TEST: "TEST",
+  ERROR: "ERROR",
   SIGNUP_SUCCESS: "SIGNUP_SUCCESS",
   VERIFY_SUCCESS: "VERIFY_SUCCESS",
-  VERIFY_FAILED:"VERIFY_FAILED",
+  VERIFY_FAILED: "VERIFY_FAILED",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   ERROR_SUBMIT_FORM_DATA: "ERROR_SUBMIT_FORM_DATA",
-  RESEND_SUCCESS: "RESEND_SUCCESS"
+  RESEND_SUCCESS: "RESEND_SUCCESS",
+  GET_PRODUCTS: "GET_PRODUCTS",
+  GET_CATEGORIES: "GET_CATEGORIES",
+  GET_MERCHANTS: "GET_MERCHANTS",
+  TOGGLE_CART: "TOGGLE_CART",
+  UPDATE_CART: "UPDATE_CART",
+  SET_ACTIVE_CHECKOUT: "SET_ACTIVE_CHECKOUT",
+  POST_NEW_ORDER: "POST_NEW_ORDER",
+  CLEAR_FLAG: "CLEAR_FLAG",
+  MERCHANT_APPLICATION_SUCCESS: "MERCHANT_APPLICATION_SUCCESS",
+  SET_MERCHANT_DATA: "SET_MERCHANT_DATA",
 };
 
 const actions = {
-  setTest: (val) => {
-    return {
-      type: actionTypes.TEST,
-      payload: val,
-    };
-  },
   submitSignup: (formData) => {
     delete formData["RePassword"];
     return async (dispatch) => {
@@ -40,7 +44,7 @@ const actions = {
     };
   },
   verifyUser: (data) => {
-    console.log(data)
+    console.log(data);
     return async (dispatch) => {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/verify`, data)
@@ -50,13 +54,19 @@ const actions = {
         })
         .catch(function (error) {
           console.log(error.response);
-          if (error.response.data == "Account already verified!" || error.response.data == "Account already exists for this alias!") {
+          if (
+            error.response.data == "Account already verified!" ||
+            error.response.data == "Account already exists for this alias!"
+          ) {
             dispatch({
               type: actionTypes.VERIFY_FAILED,
               payload: error.response.data,
             });
           } else {
-            dispatch({ type: actionTypes.VERIFY_FAILED, payload: "Failed to verify!" });
+            dispatch({
+              type: actionTypes.VERIFY_FAILED,
+              payload: "Failed to verify!",
+            });
           }
         });
     };
@@ -66,12 +76,11 @@ const actions = {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, formData)
         .then(function (response) {
-          console.log(response);
           saveLoginSession(response);
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })
         .catch(function (error) {
-          console.log(error.response);
+          console.log(error);
           if (error) {
             dispatch({
               type: actionTypes.ERROR_SUBMIT_FORM_DATA,
@@ -84,7 +93,10 @@ const actions = {
   submitResend: (formData) => {
     return async (dispatch) => {
       const resp = await axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/resend`, formData)
+        .post(
+          `${process.env.NEXT_PUBLIC_API_URL}/people/signup/resend`,
+          formData
+        )
         .then(function (response) {
           console.log(response);
           dispatch({ type: actionTypes.RESEND_SUCCESS });
@@ -99,7 +111,174 @@ const actions = {
           }
         });
     };
-  }, 
+  },
+  getProducts: () => {
+    return async (dispatch) => {
+      const resp = await axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/market/products`)
+        .then(function (response) {
+          dispatch({ type: actionTypes.GET_PRODUCTS, payload: response.data });
+        })
+        .catch(function (error) {
+          dispatch({
+            type: actionTypes.ERROR,
+            payload: "FAILED TO GET PRODUCTS",
+          });
+        });
+    };
+  },
+  getCategories: () => {
+    return async (dispatch) => {
+      const resp = await axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/market/categories`)
+        .then(function (response) {
+          dispatch({
+            type: actionTypes.GET_CATEGORIES,
+            payload: response.data,
+          });
+        })
+        .catch(function (error) {
+          dispatch({
+            type: actionTypes.ERROR,
+            payload: "FAILED TO GET CATEGORIES",
+          });
+        });
+    };
+  },
+  getMerchants: () => {
+    return async (dispatch) => {
+      const resp = await axios
+        .get(`${process.env.NEXT_PUBLIC_API_URL}/market/merchants`)
+        .then(function (response) {
+          dispatch({
+            type: actionTypes.GET_MERCHANTS,
+            payload: response.data.Merchants,
+          });
+        })
+        .catch(function (error) {
+          dispatch({
+            type: actionTypes.ERROR,
+            payload: "FAILED TO GET MERCHANTS",
+          });
+        });
+    };
+  },
+  toggleCart: (showCart) => {
+    return {
+      type: actionTypes.TOGGLE_CART,
+      payload: showCart,
+    };
+  },
+  addToCart: (product, oldCart) => {
+    let newCart = { ...oldCart };
+    if (newCart.items[product.ProductId]) {
+      newCart.items[product.ProductId].qty++;
+    } else {
+      newCart.items[product.ProductId] = { ...product, qty: 1 };
+    }
+    newCart.total += Number(product.price);
+    //save cart to local storage
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    return {
+      type: actionTypes.UPDATE_CART,
+      payload: newCart,
+    };
+  },
+  removeFromCart: (product, oldCart, qty) => {
+    let newCart = { ...oldCart };
+    if (newCart.items[product.ProductId]) {
+      if (qty < 0) {
+        qty = newCart.items[product.ProductId].qty;
+      }
+      newCart.items[product.ProductId].qty -= qty;
+      newCart.total -= product.price * qty;
+      if (newCart.items[product.ProductId].qty <= 0) {
+        delete newCart.items[product.ProductId];
+      }
+      //save cart to local storage
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    }
+    return {
+      type: actionTypes.UPDATE_CART,
+      payload: newCart,
+    };
+  },
+  setCart: (cart) => {
+    return {
+      type: actionTypes.UPDATE_CART,
+      payload: cart,
+    };
+  },
+  setActiveCheckout: (stepNo) => {
+    return {
+      type: actionTypes.SET_ACTIVE_CHECKOUT,
+      payload: stepNo,
+    };
+  },
+  postNewOrder: (OrderId) => {
+    const authorization = getAuth();
+    return async (dispatch) => {
+      const resp = await axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_URL}/market/order/${OrderId}/update`,
+          {
+            headers: {
+              Authorization: authorization,
+            },
+          }
+        )
+        .then(function (response) {
+          console.log(response);
+          dispatch({
+            type: actionTypes.POST_NEW_ORDER,
+          });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error) {
+            dispatch({
+              type: actionTypes.ERROR,
+              payload: error.response,
+            });
+          }
+        });
+    };
+  },
+  clearFlag: (flag) => {
+    return {
+      type: actionTypes.CLEAR_FLAG,
+      payload: flag,
+    };
+  },
+  submitMerchantApplication: (formData) => {
+    const authorization = getAuth();
+    return async (dispatch) => {
+      const resp = await axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/merchant/`, formData, {
+          headers: {
+            Authorization: authorization,
+          },
+        })
+        .then(function (response) {
+          dispatch({ type: actionTypes.MERCHANT_APPLICATION_SUCCESS });
+        })
+        .catch(function (error) {
+          console.log(error.response);
+          if (error) {
+            dispatch({
+              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
+              payload: "Failed to submit merchant application!",
+            });
+          }
+        });
+    };
+  },
+  setMerchantData: (data) => {
+    return {
+      type: actionTypes.SET_MERCHANT_DATA,
+      payload: data,
+    };
+  },
 };
 
 export default {

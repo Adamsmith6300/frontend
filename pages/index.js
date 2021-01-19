@@ -1,32 +1,33 @@
+import { useEffect } from "react";
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
+// import { wrapper } from "../store";
 import actions from "../store/actions";
+import AllMerchants from "../components/merchants/allMerchants";
 
-import { Button } from "semantic-ui-react";
+const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
+  useEffect(() => {
+    getMerchants();
+  }, []);
 
-const Page = (props) => {
   return (
     <Layout>
-      <h1 className="text-3xl text-center">LOMA</h1>
-      <Button
-        onClick={() => {
-          props.setTest(Math.random());
-        }}
-      >
-        TEST
-      </Button>
-      <div>Prop from Redux {props.val}</div>
+      <AllMerchants
+        merchants={merchants}
+        addToCart={addToCart}
+        cartData={cartData}
+      />
     </Layout>
   );
 };
-// No need to wrap pages if App was wrapped
-// Page.getInitialProps = ({ store, pathname, query }) => {
-//   // console.log(store);
-//   store.dispatch({ type: "FOO", payload: "waaa" }); // The component can read from the store's state when rendered
-//   return { custom: "we" }; // You can pass some custom props to the component from here
-// };
+
 const mapDispatchToProps = (dispatch) => {
-  return { setTest: (val) => dispatch(actions.setTest(val)) };
+  return {
+    getMerchants: () => dispatch(actions.getMerchants()),
+    addToCart: (product, oldCart) =>
+      dispatch(actions.addToCart(product, oldCart)),
+    clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+  };
 };
 
 export default connect((state) => state, mapDispatchToProps)(Page);

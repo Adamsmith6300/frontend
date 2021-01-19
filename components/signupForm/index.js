@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
-import SuccessfulSignup from "./successfulSignup"
+import SuccessfulSignup from "./successfulSignup";
 
 const index = ({ submitSignup, formError, successfulSignup }) => {
-  
+  if (successfulSignup) return <SuccessfulSignup />;
 
-  if (successfulSignup) return (<SuccessfulSignup />);
-  
   let isValidEmail = true
     ? null
     : {
@@ -23,8 +21,6 @@ const index = ({ submitSignup, formError, successfulSignup }) => {
       [e.target.name]: e.target.value.trim(),
     });
   };
-
-  const handleLoadingChange = (e) => setLoading(e.target.value);
 
   const handleSubmit = () => {
     submitSignup(formData);

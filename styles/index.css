@@ -1,3 +1,389 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url(//db.onlinewebfonts.com/c/9931bc04967a4865ca25b3a45c4f3cc2?family=TeeFranklinW01-Light);
+@font-face {
+  font-family: "TeeFranklinW01-Light";
+  src: url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.eot");
+  src: url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/9931bc04967a4865ca25b3a45c4f3cc2.svg#TeeFranklinW01-Light")
+      format("svg");
+}
+
+.App {
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden !important;
+  --secondary: #a1a1a1;
+  --divider: #343434;
+  width: 100vw;
+  height: 100vh;
+  font-weight: 500;
+  color: black;
+  /* font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif; */
+  /* font-family: "Work Sans", Arial, Helvetica, sans-serif; */
+}
+
+.vibes {
+  font-family: "Great Vibes", cursive;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
+}
+
+.ui.button,
+.ui .title {
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif !important;
+}
+#__next {
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  /* font-weight: 300; */
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
+  color: white;
+  margin: 6px 0 12px;
+}
+
+h2 {
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
+  color: #fff;
+  margin: 8px 0;
+  font-weight: 400;
+  font-size: 2.625rem;
+}
+
+header {
+  border-bottom: 1px solid var(--divider);
+  position: relative;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  max-width: 990px;
+  flex: 1 1 100%;
+  padding: 100px 25px 45px 25px;
+}
+
+.date {
+  color: var(--secondary);
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.card-list--mProducts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card-list p,
+.card-list--mProducts p {
+  color: #fff;
+}
+
+.card {
+  position: relative;
+  padding: 25px;
+  height: 460px;
+  flex: 0 0 40%;
+  max-width: 40%;
+}
+.card--mProducts {
+  position: relative;
+  padding: 10px;
+  height: 200px;
+  flex: 0 0 45%;
+  max-width: 45%;
+}
+.card--products {
+  position: relative;
+  padding: 5px;
+  margin: 6px;
+  height: 250px;
+  flex: 0 0 300px;
+  max-width: 300px;
+}
+
+.card-image {
+  width: 800px;
+  height: 450px;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.card-image--products {
+  /* width: 300px; */
+  height: 250px;
+}
+.card-image--mProducts {
+  width: 800px;
+  height: 80px;
+}
+
+.card:nth-child(4n + 1),
+.card:nth-child(4n + 4) {
+  flex: 0 0 60%;
+  max-width: 60%;
+}
+
+.card:nth-child(odd) {
+  padding-left: 0;
+}
+
+.card:nth-child(even) {
+  padding-right: 0;
+}
+
+.card-content-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: block;
+  pointer-events: none;
+}
+
+.card-content-container.open {
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 1;
+  overflow: hidden;
+  padding: 40px 0;
+}
+
+.card-content {
+  pointer-events: auto;
+  position: relative;
+  border-radius: 10px;
+  background: #1c1c1e;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 700px;
+}
+.card-content--mProducts {
+  pointer-events: auto;
+  position: relative;
+  border-radius: 10px;
+  background: #1c1c1e;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.open .card-content {
+  height: auto;
+  max-width: 700px;
+  overflow: hidden;
+}
+
+.card-open-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.card-image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 420px;
+  width: 100vw;
+  transform: translateZ(0);
+}
+.card-image-container--mProducts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 100px;
+  width: 100vw;
+  transform: translateZ(0);
+}
+
+.title-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 300px;
+}
+
+.category {
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.overlay {
+  z-index: 1;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.8);
+  will-change: opacity;
+  top: 0;
+  bottom: 0;
+  /* left: 50%;
+  transform: translateX(-50%); */
+  width: 100vw;
+  /* max-width: 1000px; */
+}
+.overlay--mProducts {
+  z-index: 1;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.8);
+  will-change: opacity;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  /* transform: translateX(-50%); */
+  width: 100vw;
+  /* max-width: 1000px; */
+}
+.overlay a {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.overlay--mProducts a {
+  /* z-index: 2; */
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.content-container {
+  padding: 460px 35px 35px 35px;
+  max-width: 700px;
+  width: 90vw;
+}
+
+.loma-padding {
+  padding-left: 50px;
+  padding-top: 50px;
+}
+
+.close-card-btn {
+  z-index: 1;
+  outline: none;
+  border: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top: 7;
+  right: -10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.hidden {
+  display: none;
+}
+
+.my-account-container {
+  width: 100%;
+  max-width: 990px;
+  padding: 30px 0;
+  margin: 0 auto;
+}
+
+.ui.button.edit-banner-btn {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  line-height: 17px;
+  display: flex;
+}
+
+.save-banner-btns {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  display: flex;
+}
+.save-banner-btns .ui.button {
+  line-height: 17px;
+  display: flex;
+}
+
+.myShop-banner {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 470px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 30px;
+  position: relative;
+}
+
+.myShop-product-image {
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  cursor: pointer;
+  width: 350px;
+  min-height: 200px;
+  max-width: 100vw;
+  margin: 2rem auto;
+}

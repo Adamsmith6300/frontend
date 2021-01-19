@@ -5,7 +5,11 @@ import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import middleware from "./middleware";
 import actionTypes from "./actions";
 
-const initialState = { val: "" };
+const initialState = {
+  cartData: { items: {}, total: 0 },
+  checkout: { activeStep: 1, pi_client_secret: null },
+  myShop: {},
+};
 
 // create your reducer
 const reducer = (state = initialState, action) => {
@@ -17,13 +21,46 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SIGNUP_SUCCESS:
       return { ...state, successfulSignup: true };
     case actionTypes.LOGIN_SUCCESS:
-      return { ...state, successfulLogin: true };
+      return {
+        ...state,
+        successfulLogin: true,
+      };
     case actionTypes.VERIFY_SUCCESS:
       return { ...state, verifiedUser: true };
     case actionTypes.VERIFY_FAILED:
       return { ...state, error: action.payload };
-    case actionTypes.RESEND_SUCCESS:
-      return { ...state, successfulResend: true };
+    case actionTypes.ERROR:
+      return { ...state, error: action.payload };
+    case actionTypes.GET_PRODUCTS:
+      return { ...state, products: action.payload };
+    case actionTypes.GET_CATEGORIES:
+      return { ...state, categories: action.payload };
+    case actionTypes.GET_MERCHANTS:
+      return { ...state, merchants: action.payload };
+    case actionTypes.TOGGLE_CART:
+      return { ...state, showCart: action.payload };
+    case actionTypes.UPDATE_CART:
+      return { ...state, cartData: action.payload };
+    case actionTypes.SET_ACTIVE_CHECKOUT:
+      return {
+        ...state,
+        checkout: { ...state.checkout, activeStep: action.payload },
+      };
+    case actionTypes.POST_NEW_ORDER:
+      return {
+        ...state,
+        checkout: {
+          ...state.checkout,
+          postNewOrderSuccess: true,
+        },
+      };
+    case actionTypes.CLEAR_FLAG:
+      const flag = action.payload;
+      return { ...state, [flag]: false };
+    case actionTypes.MERCHANT_APPLICATION_SUCCESS:
+      return { ...state, successfulMerchantApplication: true };
+    case actionTypes.SET_MERCHANT_DATA:
+      return { ...state, myShop: action.payload };
     default:
       return state;
   }
