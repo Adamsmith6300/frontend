@@ -38,18 +38,11 @@ const index = ({ submitSignup, formError, successfulSignup }) => {
       }}
     >
       <Form.Input
-        label="First Name"
+        label="Name"
         onChange={handleChange}
-        name="firstname"
+        name="name"
         required
-        placeholder="First Name"
-      />
-      <Form.Input
-        label="Last Name"
-        onChange={handleChange}
-        name="lastname"
-        required
-        placeholder="Last Name"
+        placeholder="Name"
       />
       <Form.Input
         label="Email"
