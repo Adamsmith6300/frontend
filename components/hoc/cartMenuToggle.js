@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BiShoppingBag } from "react-icons/bi";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const variants = {
   open: {
@@ -22,8 +22,8 @@ export const CartMenuToggle = ({ toggle, isOpen }) => (
     onClick={toggle}
     variants={variants}
   >
-    <span className="text-white text-3xl">
-      <BiShoppingBag className="inline cursor-pointer" />
+    <span className="text-black text-3xl">
+      <AiOutlineShoppingCart className="inline cursor-pointer" />
     </span>
     {/* <svg width="23" height="23" viewBox="0 0 23 23">
       <Path

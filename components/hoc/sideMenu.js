@@ -5,7 +5,7 @@ import { MenuToggle } from "./menuToggle";
 import { Navigation } from "./navigation";
 
 const sidebar = {
-  open: (height = 1000) => ({
+  open: (height = 3000) => ({
     clipPath: `circle(${height * 2 + 200}px at 80px 80px)`,
     transition: {
       type: "spring",
@@ -38,10 +38,12 @@ export const SideMenu = ({ clearFlag }) => {
       variants={sidebar}
       className={`nav ${isOpen ? "front" : ""}`}
     >
+      {/* <span className="tag-wrap"> */}
       <motion.div
         className={`background ${isOpen ? "front" : ""}`}
         variants={sidebar}
       />
+      {/* </span> */}
       <Navigation isOpen={isOpen} clearFlag={clearFlag} />
       <MenuToggle isOpen={isOpen} toggle={() => toggleOpen()} />
     </motion.nav>

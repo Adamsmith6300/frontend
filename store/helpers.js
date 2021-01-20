@@ -39,7 +39,10 @@ export const checkMerchant = () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   if (authRes != null) {
     const user = jwt(authRes["IdToken"]);
-    return user["cognito:groups"].includes("merchant-group");
+    return (
+      "cognito:groups" in user &&
+      user["cognito:groups"].includes("merchant-group")
+    );
   }
   return false;
 };
