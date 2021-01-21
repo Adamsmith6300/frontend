@@ -4,7 +4,7 @@ import { LoremIpsum } from "react-lorem-ipsum";
 import { motion, useInvertedScale } from "framer-motion";
 
 export const ContentPlaceholder = React.memo(
-  ({ product, addToCart, cartData }) => {
+  ({ product, addToCart, cartData, title, isSelected }) => {
     const inverted = useInvertedScale();
     return (
       <motion.div
@@ -18,6 +18,8 @@ export const ContentPlaceholder = React.memo(
         >
           Add to Cart
         </Button> */}
+
+        {isSelected ? <h2>{title}</h2> : null}
         <LoremIpsum
           p={3}
           avgWordsPerSentence={6}

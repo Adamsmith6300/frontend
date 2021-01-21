@@ -97,7 +97,8 @@ button:focus {
 }
 
 .container {
-  max-width: 990px;
+  /* max-width: 990px; */
+  max-width: 1280px;
   flex: 1 1 100%;
   padding: 100px 25px 45px 25px;
 }
@@ -125,10 +126,10 @@ button:focus {
 
 .card {
   position: relative;
-  padding: 25px;
-  height: 460px;
-  flex: 0 0 40%;
-  max-width: 40%;
+  padding: 25px 25px 45px 25px;
+  height: 300px;
+  flex: 0 0 30%;
+  max-width: 30%;
 }
 .card--mProducts {
   position: relative;
@@ -162,18 +163,20 @@ button:focus {
   height: 80px;
 }
 
-.card:nth-child(4n + 1),
+/* .card:nth-child(4n + 1),
 .card:nth-child(4n + 4) {
   flex: 0 0 60%;
   max-width: 60%;
-}
+} */
 
 .card:nth-child(odd) {
-  padding-left: 0;
+  /* padding-left: 0; */
 }
 
 .card:nth-child(even) {
-  padding-right: 0;
+  /* padding-right: 0; */
+  /* flex: 0 0 40%;
+  max-width: 40%; */
 }
 
 .card-content-container {
@@ -255,6 +258,9 @@ button:focus {
   left: 0;
   max-width: 300px;
 }
+/* .title-container h2 {
+  color: black !important;
+} */
 
 .category {
   color: #fff;
@@ -386,4 +392,9 @@ button:focus {
   min-height: 200px;
   max-width: 100vw;
   margin: 2rem auto;
+}
+
+.loma-logo {
+  top: 50px;
+  left: 50px;
 }

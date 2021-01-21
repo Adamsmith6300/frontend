@@ -51,9 +51,10 @@ const Layout = ({
           type="text/css"
         />
       </Head>
-      <h1 className="h-16 w-full loma-padding absolute top-0 left-0 font-bold uppercase text-black text-5xl">
+      {/* <h1 className="h-16 w-full loma-padding absolute top-0 left-0 font-bold uppercase text-black text-5xl">
         Loma
-      </h1>
+      </h1> */}
+      <img src="/loma.png" className="h-16 absolute loma-logo" />
       <SideMenu clearFlag={clearFlag} />
       <Cart
         toggleCart={toggleCart}

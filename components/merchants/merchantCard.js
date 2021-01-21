@@ -1,4 +1,4 @@
-import { memo, useRef } from "react";
+import { memo, useRef, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import { Link } from "next/link";
 import { useInvertedBorderRadius } from "../../utils/use-inverted-border-radius";
@@ -23,7 +23,31 @@ const MerchantCard = memo(
     const id = merchant.MerchantId;
     const title = merchant.name;
     const backgroundColor = "#a1a1a1";
-    const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/${merchant.bannerImage}`;
+    const [imgSrc, setImgSrc] = useState(
+      `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/${merchant.bannerImage}`
+    );
+
+    // function imageExists(url, callback) {
+    //   var img = new Image();
+    //   img.onload = function () {
+    //     callback(true);
+    //   };
+    //   img.onerror = function () {
+    //     callback(false);
+    //   };
+    //   img.src = url;
+    // }
+
+    // const checkBannerExists = () => {
+    //   imageExists(imgSrc, function (exists) {
+    //     if (!exists) {
+    //       let newSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
+    //       setImgSrc(newSrc);
+    //     }
+    //   });
+    // };
+    // checkBannerExists();
+    // console.log(imgSrc);
 
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
@@ -115,11 +139,13 @@ const MerchantCard = memo(
               backgroundColor={backgroundColor}
               imgSrc={imgSrc}
             />
-            <Title title={title} isSelected={isSelected} />
+            {/* <Title title={title} isSelected={isSelected} /> */}
             <ContentPlaceholder
               merchant={merchant}
               addToCart={addToCart}
               cartData={cartData}
+              title={title}
+              isSelected={isSelected}
             />
             <MerchantProducts
               products={merchant.products}
@@ -128,6 +154,7 @@ const MerchantCard = memo(
             />
           </motion.div>
         </div>
+        {!isSelected ? <h2 className="text-black">{title}</h2> : null}
         {!isSelected && (
           <a onClick={() => setSelectedId(id)} className={`card-open-link`}></a>
         )}
