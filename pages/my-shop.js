@@ -108,7 +108,9 @@ const Page = ({ router, myShop, setMerchantData }) => {
               Payments
             </Accordion.Title>
             <Accordion.Content active={activeIndex === 3}>
-              <Payments />
+              <Payments
+                stripe_onboard_complete={myShop.info.stripe_onboard_complete}
+              />
             </Accordion.Content>
           </Accordion>
         </div>
