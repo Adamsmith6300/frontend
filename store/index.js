@@ -71,4 +71,4 @@ const makeStore = (context) =>
   createStore(reducer, compose(applyMiddleware(thunk, ...middleware)));
 
 // export an assembled wrapper
-export const wrapper = createWrapper(makeStore, { debug: true });
+export const wrapper = createWrapper(makeStore, { debug: false });

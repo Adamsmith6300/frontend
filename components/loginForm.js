@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 
-const LoginForm = ({ submitLogin, formError, successfulLogin }) => {
-  let isLoading = false;
+const LoginForm = ({
+  loading,
+  setLoading,
+  submitLogin,
+  formError,
+  successfulLogin,
+}) => {
   let isValidEmail = true
     ? null
     : {
@@ -24,9 +29,10 @@ const LoginForm = ({ submitLogin, formError, successfulLogin }) => {
 
   return (
     <Form
-      loading={isLoading}
+      // loading={isLoading}
       onSubmit={(e) => {
         e.preventDefault();
+        setLoading(true);
         handleSubmit();
       }}
     >

@@ -92,7 +92,7 @@ export const Navigation = ({ isOpen, clearFlag }) => {
       {navItems.map((item, index) => (
         <MenuItem item={item} key={index} isOpen={isOpen} />
       ))}
-      <hr className="mt-4 mb-6 hr--menu" />
+      <hr className="mt-12 mb-6 hr--menu" />
       {secondaryNavItems.map((item, index) => (
         <MenuItem item={item} key={index} isOpen={isOpen} />
       ))}

@@ -10,6 +10,15 @@ export const saveLoginSession = (response) => {
       JSON.stringify(response.data["AuthenticationResult"])
     );
   }
+  if (response.id_token) {
+    const user = jwt(response.id_token);
+    let authResults = {
+      ...response,
+      IdToken: response.id_token,
+      IdExp: user["exp"],
+    };
+    localStorage.setItem("AuthResults", JSON.stringify(authResults));
+  }
 };
 
 export const isLoggedIn = () => {
@@ -192,6 +201,19 @@ export const postNewProduct = async (formData) => {
     {
       headers: {
         Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const submitSocialLogin = async (params) => {
+  // const user = jwt(params["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`,
+    {
+      headers: {
+        Authorization: params["id_token"],
       },
     }
   );

@@ -32,7 +32,7 @@ export const MenuItem = ({ item, isOpen }) => {
           transition={{ duration: 0.3 }}
         >
           <div className={`text-placeholder`}>
-            <p className={item.linkStyle == "secondary" ? "text-base" : ""}>
+            <p className={item.linkStyle == "secondary" ? "" : ""}>
               {item.title}
             </p>
           </div>
@@ -49,7 +49,7 @@ export const MenuItem = ({ item, isOpen }) => {
         transition={{ duration: 0.3 }}
       >
         <div className={`text-placeholder`}>
-          <p className={item.linkStyle == "secondary" ? "text-base" : ""}>
+          <p className={item.linkStyle == "secondary" ? "" : ""}>
             {item.title}
           </p>
         </div>
