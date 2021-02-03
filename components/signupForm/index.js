@@ -14,9 +14,9 @@ const index = ({ submitSignup, formError, successfulSignup }) => {
 
   const [isLoading, setLoading] = useState(false);
   const [formData, updateFormData] = useState({
-    name: "adam smith",
-    email: "adamsmith6300@gmail.com",
-    password: "Password123!",
+    // name: "adam smith",
+    // email: "adamsmith6300@gmail.com",
+    // password: "Password123!",
   });
 
   const handleChange = (e) => {
@@ -45,14 +45,14 @@ const index = ({ submitSignup, formError, successfulSignup }) => {
         label="Name"
         onChange={handleChange}
         name="name"
-        // required
+        required
         placeholder="Name"
       />
       <Form.Input
         label="Email"
         onChange={handleChange}
         name="email"
-        // required
+        required
         placeholder="adam@email.com"
         type="email"
       />
@@ -61,14 +61,14 @@ const index = ({ submitSignup, formError, successfulSignup }) => {
         type="password"
         onChange={handleChange}
         name="password"
-        // required
+        required
       />
       <Form.Input
         label="Re-enter Password"
         type="password"
         onChange={handleChange}
         name="RePassword"
-        // required
+        required
       />
       <Form.Field>
         <Checkbox

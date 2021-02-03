@@ -72,8 +72,8 @@ export const Navigation = ({ isOpen, clearFlag }) => {
   }
 
   navItems = [
-    { title: "merchants", link: "/", linkStyle: "primary" },
-    { title: "categories", link: "/categories", linkStyle: "primary" },
+    { title: "home", link: "/", linkStyle: "primary" },
+    { title: "merchants", link: "/merchants", linkStyle: "primary" },
     { title: "products", link: "/products", linkStyle: "primary" },
     { title: "about", link: "/about", linkStyle: "primary" },
   ];

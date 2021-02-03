@@ -11,14 +11,6 @@ export const ContentPlaceholder = React.memo(
         className="content-container"
         style={{ ...inverted, originY: 0, originX: 0 }}
       >
-        {/* <Button
-          inverted
-          color="black"
-          onClick={() => addToCart(product, cartData)}
-        >
-          Add to Cart
-        </Button> */}
-
         {isSelected ? <h2>{title}</h2> : null}
         <LoremIpsum
           p={3}

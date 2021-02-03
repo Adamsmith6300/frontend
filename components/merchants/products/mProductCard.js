@@ -25,11 +25,7 @@ const MProductCard = memo(
     const backgroundColor = "#a1a1a1";
     const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
       product.MerchantId
-    }/products/${
-      product.ProductId.length > 36
-        ? product.ProductId.substring(2)
-        : product.ProductId
-    }/${product.images[product.mainImage]}`;
+    }/products/${product.ProductId}/${product.images[product.mainImage]}`;
     // const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${product.MerchantId}/banner`;
 
     const y = useMotionValue(0);

@@ -2,13 +2,7 @@ import * as React from "react";
 import { motion, useInvertedScale } from "framer-motion";
 import { closeSpring } from "../animations";
 
-export const Image = ({
-  id,
-  isSelected,
-  // pointOfInterest = 0,
-  backgroundColor,
-  imgSrc,
-}) => {
+export const BannerImage = ({ isSelected, backgroundColor, imgSrc }) => {
   const inverted = useInvertedScale();
 
   return (
@@ -18,9 +12,6 @@ export const Image = ({
     >
       <motion.div
         className="card-image"
-        // src={imgSrc}
-        // align="center"
-        // alt=""
         style={{
           backgroundImage: "url(" + imgSrc + ")",
         }}

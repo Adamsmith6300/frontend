@@ -56,7 +56,7 @@ const Page = ({
           let resp = await submitSocialLogin(parameters);
           if (resp.status == 200) {
             saveLoginSession(parameters);
-            router.push("/");
+            router.push("/my-account");
           }
         } catch (err) {
           console.log(err);

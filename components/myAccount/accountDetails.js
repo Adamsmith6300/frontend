@@ -11,15 +11,16 @@ const possibleAttr = [
   "phone",
   "postalcode",
   "province",
+  "fullname",
 ];
 
 const index = ({ info, callFetchAccountData }) => {
   const [formData, updateFormData] = useState({});
-  const [editAttr, setEditAttr] = useState(null);
+  const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     updateFormData({
-      // ...formData,
+      ...formData,
       [e.target.name]: e.target.value.trim(),
     });
   };
@@ -29,7 +30,7 @@ const index = ({ info, callFetchAccountData }) => {
     let resp = await updateAccountDetails(formData);
     if (resp.status == 200) {
       callFetchAccountData().then((response) => {
-        setEditAttr(null);
+        setEdit(null);
         updateFormData({});
         setLoading(false);
       });
@@ -47,7 +48,7 @@ const index = ({ info, callFetchAccountData }) => {
     }
     details = Object.entries(info).map((entry, index) => {
       if (entry[0] == "PersonId") return null;
-      if (editAttr == index) {
+      if (edit && possibleAttr.includes(entry[0])) {
         return (
           <Input
             label={entry[0]}
@@ -62,12 +63,12 @@ const index = ({ info, callFetchAccountData }) => {
           <li key={index + entry[0]}>
             <span className="font-bold">{entry[0]}:</span>
             <span className="mx-3">{entry[1]}</span>
-            {possibleAttr.includes(entry[0]) ? (
+            {/* {possibleAttr.includes(entry[0]) ? (
               <MdModeEdit
-                onClick={() => setEditAttr(index)}
+                onClick={() => setEdit(index)}
                 className="inline cursor-pointer"
               />
-            ) : null}
+            ) : null} */}
           </li>
         );
       }
@@ -80,11 +81,11 @@ const index = ({ info, callFetchAccountData }) => {
       ) : (
         <>
           <ul className="list-reset">{details}</ul>
-          {editAttr != null ? (
+          {edit ? (
             <div className="mt-2 w-full text-center">
               <Button
                 onClick={() => {
-                  setEditAttr(null);
+                  setEdit(null);
                   updateFormData({});
                 }}
               >
@@ -96,7 +97,17 @@ const index = ({ info, callFetchAccountData }) => {
                 </Button>
               ) : null}
             </div>
-          ) : null}
+          ) : (
+            <Button
+              color="yellow"
+              onClick={() => {
+                setEdit(true);
+                updateFormData({});
+              }}
+            >
+              Edit
+            </Button>
+          )}
         </>
       )}
     </div>

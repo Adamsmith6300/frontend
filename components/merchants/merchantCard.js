@@ -4,7 +4,7 @@ import { Link } from "next/link";
 import { useInvertedBorderRadius } from "../../utils/use-inverted-border-radius";
 import { ContentPlaceholder } from "./contentPlaceholder";
 import { Title } from "./title";
-import { Image } from "./image";
+import { BannerImage } from "./image";
 import MerchantProducts from "./products/merchantProducts";
 import { openSpring, closeSpring } from "../animations";
 import { useScrollConstraints } from "../../utils/use-scroll-constraints";
@@ -20,34 +20,36 @@ const MerchantCard = memo(
     cartData,
     // pointOfInterest,
   }) => {
+    let sampleBanner = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
     const id = merchant.MerchantId;
     const title = merchant.name;
     const backgroundColor = "#a1a1a1";
     const [imgSrc, setImgSrc] = useState(
-      `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/${merchant.bannerImage}`
+      merchant.bannerImage
+        ? `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/${merchant.bannerImage}`
+        : sampleBanner
     );
 
-    // function imageExists(url, callback) {
-    //   var img = new Image();
-    //   img.onload = function () {
-    //     callback(true);
-    //   };
-    //   img.onerror = function () {
-    //     callback(false);
-    //   };
-    //   img.src = url;
-    // }
+    function imageExists(url, callback) {
+      var img = new Image();
+      img.onload = function () {
+        callback(true);
+      };
+      img.onerror = function () {
+        callback(false);
+      };
+      img.src = url;
+    }
 
-    // const checkBannerExists = () => {
-    //   imageExists(imgSrc, function (exists) {
-    //     if (!exists) {
-    //       let newSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
-    //       setImgSrc(newSrc);
-    //     }
-    //   });
-    // };
-    // checkBannerExists();
-    // console.log(imgSrc);
+    const checkBannerExists = () => {
+      imageExists(imgSrc, function (exists) {
+        if (!exists) {
+          let newSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
+          setImgSrc(newSrc);
+        }
+      });
+    };
+    checkBannerExists();
 
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
@@ -70,7 +72,6 @@ const MerchantCard = memo(
         zIndex.set(0);
       }
     }
-    // console.log("MERCHANT:", isSelected);
     // When this card is selected, attach a wheel event listener
     const containerRef = useRef(null);
     useWheelScroll(
@@ -132,14 +133,12 @@ const MerchantCard = memo(
                 />
               </svg>
             </button>
-            <Image
-              id={id}
+            <BannerImage
               isSelected={isSelected}
-              // pointOfInterest={pointOfInterest}
               backgroundColor={backgroundColor}
               imgSrc={imgSrc}
             />
-            {/* <Title title={title} isSelected={isSelected} /> */}
+            <Title title={title} isSelected={isSelected} />
             <ContentPlaceholder
               merchant={merchant}
               addToCart={addToCart}

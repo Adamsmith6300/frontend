@@ -3,11 +3,7 @@ import Products from "./products";
 const index = ({ product, index, selectedProduct, setSelectedProduct }) => {
   const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
     product.MerchantId
-  }/products/${
-    product.ProductId.length > 36
-      ? product.ProductId.substring(2)
-      : product.ProductId
-  }/${product.images[product.mainImage]}`;
+  }/products/${product.ProductId}/${product.images[product.mainImage]}`;
   return (
     <div
       className="m-2 cursor-pointer"

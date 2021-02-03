@@ -206,6 +206,10 @@ const index = ({ showNewProductForm, MerchantId }) => {
           <Input name="price" type="number" onChange={handleChange} />
         </div>
         <div>
+          <p className="text-2xl font-bold">Stock:</p>
+          <Input name="stock" type="number" min="1" onChange={handleChange} />
+        </div>
+        <div>
           <p className="text-2xl font-bold">Description:</p>
           <TextArea
             className="w-full"
@@ -213,7 +217,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
             onChange={handleChange}
           ></TextArea>
         </div>
-        <div>
+        {/* <div>
           <p className="text-2xl font-bold">Options:</p>
           <Table unstackable>
             <Table.Header>
@@ -261,7 +265,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
               </Table.Row>
             </Table.Body>
           </Table>
-        </div>
+        </div> */}
 
         <div className="mt-2 w-full text-center">
           <Button

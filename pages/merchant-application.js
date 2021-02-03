@@ -28,7 +28,7 @@ const Page = ({
   const handleSubmit = async () => {
     if (loggedIn) {
       await submitMerchantApplication(formData);
-      router.push("/");
+      router.push("/my-account");
     }
   };
 

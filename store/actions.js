@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { saveLoginSession, getAuth, checkMerchant } from "./helpers";
+import {
+  saveLoginSession,
+  getAuth,
+  checkMerchant,
+  getPersonId,
+} from "./helpers";
 
 const actionTypes = {
   ERROR: "ERROR",
