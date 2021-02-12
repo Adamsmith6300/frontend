@@ -48,9 +48,12 @@ const ProductCard = memo(
     const id = product.ProductId;
     const title = product.title;
     const backgroundColor = "#a1a1a1";
-    const imgSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
-      product.MerchantId
-    }/products/${product.ProductId}/${product.images[product.mainImage]}`;
+    let imgSrc =
+      product.source == "loma"
+        ? `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
+            product.MerchantId
+          }/products/${product.ProductId}/${product.images[product.mainImage]}`
+        : product.images[product.mainImage];
     // const imgSrc = `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE_URL}/${product.MerchantId}/banner`;
 
     const y = useMotionValue(0);
