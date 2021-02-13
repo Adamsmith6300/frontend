@@ -55,15 +55,16 @@ const Layout = ({
         Loma
       </h1> */}
       <img src="/loma.png" className="h-16 absolute loma-logo" />
-      <SideMenu clearFlag={clearFlag} />
+      {/* <SideMenu clearFlag={clearFlag} />
       <Cart
         toggleCart={toggleCart}
         showCart={showCart}
         cartData={cartData}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
-      />
-      {children}
+      /> */}
+      <h2 className="text-black text-center">Coming Soon!</h2>
+      {/* {children} */}
       {/* {!isMerchant && isAuthed ? (
         <div className="w-full bottom-0 left-0 relative py-12">
           <ul className="flex justify-center">
