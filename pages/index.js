@@ -1,19 +1,30 @@
 import { useEffect } from "react";
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
-// import { wrapper } from "../store";
 import actions from "../store/actions";
-import AllMerchants from "../components/merchants/allMerchants";
+import Banner from "../components/home/banner";
+import ProductSection from "../components/home/productSection";
+import { add } from "lodash";
 
 const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
   useEffect(() => {
-    getMerchants();
+    if (merchants == null || merchants.length == 0) {
+      getMerchants();
+    }
   }, []);
 
   return (
     <Layout>
-      <AllMerchants
-        merchants={merchants}
+      <Banner
+        bgSrc={"/firstBanner.jpg"}
+        heading={"Only Local"}
+        content={
+          "Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses!"
+        }
+      />
+      <ProductSection
+        heading={"Featured Products"}
+        link={"/products"}
         addToCart={addToCart}
         cartData={cartData}
       />

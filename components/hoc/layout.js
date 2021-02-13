@@ -36,7 +36,7 @@ const Layout = ({
   }, []);
 
   return (
-    <div className="container">
+    <div className="loma-container">
       <Head>
         <title>Loma</title>
         <link rel="icon" href="/loma.ico" />

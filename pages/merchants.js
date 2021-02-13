@@ -7,7 +7,9 @@ import AllMerchants from "../components/merchants/allMerchants";
 
 const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
   useEffect(() => {
-    getMerchants();
+    if (merchants == null || merchants.length == 0) {
+      getMerchants();
+    }
   }, []);
 
   return (

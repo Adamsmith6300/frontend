@@ -1,6 +1,5 @@
 import { memo, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
-import { Link } from "next/link";
 import { useInvertedBorderRadius } from "../../utils/use-inverted-border-radius";
 import { ContentPlaceholder } from "./contentPlaceholder";
 import { Title } from "./title";
@@ -10,17 +9,8 @@ import { useScrollConstraints } from "../../utils/use-scroll-constraints";
 import { useWheelScroll } from "../../utils/use-wheel-scroll";
 const dismissDistance = 100;
 
-const ProductCard = memo(
-  ({
-    isSelected,
-    setSelectedId,
-    category,
-    history,
-    product,
-    addToCart,
-    cartData,
-    pointOfInterest,
-  }) => {
+const product = memo(
+  ({ isSelected, setSelectedId, product, addToCart, cartData }) => {
     const id = product.ProductId;
     const title = product.title;
     const backgroundColor = "#a1a1a1";
@@ -118,14 +108,12 @@ const ProductCard = memo(
             <Image
               id={id}
               isSelected={isSelected}
-              pointOfInterest={pointOfInterest}
               backgroundColor={backgroundColor}
               imgSrc={imgSrc}
             />
             <Title
               title={title}
               price={product.price}
-              category={category}
               isSelected={isSelected}
             />
             <ContentPlaceholder
@@ -160,4 +148,4 @@ const Overlay = ({ isSelected, setSelectedId }) => (
   </motion.div>
 );
 
-export default ProductCard;
+export default product;
