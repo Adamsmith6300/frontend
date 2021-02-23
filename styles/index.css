@@ -95,7 +95,7 @@ button:focus {
 
 .loma-container {
   width: 100%;
-  padding: 150px 0 45px 0;
+  padding: 160px 0 45px 0;
 }
 
 .banner {
@@ -164,9 +164,9 @@ button:focus {
 .card--products {
   position: relative;
   padding: 5px;
-  margin: 6px;
+  margin: 100px 6px;
   height: 250px;
-  flex: 0 0 300px;
+  /* flex: 0 0 300px; */
   max-width: 300px;
 }
 
@@ -182,8 +182,8 @@ button:focus {
   height: 250px;
 }
 .card-image--mProducts {
-  width: 800px;
-  height: 80px;
+  width: 100%;
+  /* height: 80px; */
 }
 
 /* .card:nth-child(4n + 1),
@@ -224,13 +224,14 @@ button:focus {
   pointer-events: auto;
   position: relative;
   border-radius: 10px;
-  background: #1c1c1e;
+  background: #fff;
   overflow: hidden;
   width: 100%;
   height: 100%;
   margin: 0 auto;
   max-width: 700px;
 }
+
 .card-content--mProducts {
   pointer-events: auto;
   position: relative;
@@ -261,8 +262,9 @@ button:focus {
   top: 0;
   left: 0;
   overflow: hidden;
-  height: 420px;
-  width: 100vw;
+  text-align: center;
+  /* height: 420px;
+  width: 100vw; */
   transform: translateZ(0);
 }
 .card-image-container--mProducts {
@@ -298,10 +300,8 @@ button:focus {
   will-change: opacity;
   top: 0;
   bottom: 0;
-  /* left: 50%;
-  transform: translateX(-50%); */
+  left: 0;
   width: 100vw;
-  /* max-width: 1000px; */
 }
 .overlay--mProducts {
   z-index: 1;
@@ -420,4 +420,20 @@ button:focus {
 .loma-logo {
   top: 50px;
   left: 50px;
+}
+
+.merchantCard--home {
+  width: 500px;
+  height: 400px;
+  overflow: hidden;
+  margin: 20px 10px;
+  cursor: pointer;
+}
+
+.merchantCard--image {
+  height: 300px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

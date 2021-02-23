@@ -1,12 +1,11 @@
 import * as React from "react";
-import { motion, useInvertedScale } from "framer-motion";
-import { closeSpring, openSpring } from "../animations";
+// import { motion, useInvertedScale } from "framer-motion";
+// import { closeSpring, openSpring } from "../animations";
 
 export const Title = ({ title, price, category, isSelected }) => {
-  const inverted = useInvertedScale();
-  const x = isSelected ? 30 : 15;
-  const y = x;
-
+  // const inverted = useInvertedScale();
+  // const x = isSelected ? 30 : 15;
+  // const y = x;
   return (
     <motion.div
       className="title-container"
@@ -16,9 +15,9 @@ export const Title = ({ title, price, category, isSelected }) => {
       transformTemplate={scaleTranslate}
       style={{ ...inverted, originX: 0, originY: 0 }}
     >
-      <span className="category">{category}</span>
+      {/* <span className="category">{category}</span> */}
       <h2>{title}</h2>
-      <span className="category">${price}</span>
+      {/* <span className="category">${price}</span> */}
     </motion.div>
   );
 };

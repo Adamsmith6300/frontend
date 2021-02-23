@@ -1,4 +1,6 @@
-const banner = ({ bgSrc, heading, content }) => {
+import Link from "next/link";
+
+const banner = ({ bgSrc, heading, content, link }) => {
   let bgStyle = {
     backgroundImage: `url(${bgSrc})`,
   };
@@ -7,7 +9,9 @@ const banner = ({ bgSrc, heading, content }) => {
       <div className="banner-content">
         <h2 className="text-black">{heading}</h2>
         <p className="my-6">{content}</p>
-        <button className="standard-btn">Signup</button>
+        <Link href={link}>
+          <button className="standard-btn">Signup</button>
+        </Link>
       </div>
     </div>
   );

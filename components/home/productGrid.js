@@ -1,7 +1,5 @@
-import productSection from "./productSection";
-
 import { useState } from "react";
-import Product from "./product";
+import ProductCard from "./productCard";
 
 const productGrid = ({ products, addToCart, cartData }) => {
   const [selectedId, setSelectedId] = useState(null);
@@ -9,7 +7,7 @@ const productGrid = ({ products, addToCart, cartData }) => {
   return products.map((product, index) => {
     let isSelected = selectedId == product.ProductId;
     return (
-      <Product
+      <ProductCard
         key={index}
         isSelected={isSelected}
         setSelectedId={setSelectedId}

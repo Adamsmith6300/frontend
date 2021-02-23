@@ -2,29 +2,35 @@ import * as React from "react";
 import { motion, useInvertedScale } from "framer-motion";
 import { closeSpring } from "../animations";
 
-export const Image = ({
-  id,
-  isSelected,
-  pointOfInterest = 0,
-  backgroundColor,
-  imgSrc,
-}) => {
+export const Image = ({ id, isSelected, imgSrc }) => {
   const inverted = useInvertedScale();
-  // console.log(pointOfInterest);
+  const selectedStyle = isSelected
+    ? {
+        height: "420px",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+      }
+    : {};
   return (
     <motion.div
       className="card-image-container"
-      style={{ ...inverted, backgroundColor, originX: 0, originY: 0 }}
+      style={{
+        ...inverted,
+        originX: 0,
+        originY: 0,
+        ...selectedStyle,
+      }}
     >
       <motion.img
-        className="card-image--products"
+        // className="card-image--products"
+        className={`${isSelected && "h-full"}`}
         src={imgSrc}
         alt=""
-        align="top"
+        align="center"
         initial={false}
-        // animate={isSelected ? { x: 0, y: 0 } : { x: -0, y: 0 }}
         transition={closeSpring}
-        style={isSelected ? { width: "700px", height: "100%" } : {}}
+        // style={isSelected ? {} : { minHeight: "250px" }}
       />
     </motion.div>
   );

@@ -4,15 +4,9 @@ import { connect } from "react-redux";
 import actions from "../store/actions";
 import Banner from "../components/home/banner";
 import ProductSection from "../components/home/productSection";
-import { add } from "lodash";
+import MerchantSection from "../components/home/merchantSection";
 
-const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
-  useEffect(() => {
-    if (merchants == null || merchants.length == 0) {
-      getMerchants();
-    }
-  }, []);
-
+const Page = ({ addToCart, cartData, clearFlag }) => {
   return (
     <Layout>
       <Banner
@@ -21,9 +15,31 @@ const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
         content={
           "Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses!"
         }
+        link={"/signup"}
       />
       <ProductSection
         heading={"Featured Products"}
+        link={"/products"}
+        addToCart={addToCart}
+        cartData={cartData}
+      />
+      <MerchantSection heading={"Some of our Merchants"} link={"/merchants"} />
+      <Banner
+        bgSrc={"/secondBanner.jpg"}
+        heading={"Started in Vancouver"}
+        content={
+          "Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses!"
+        }
+        link={"/signup"}
+      />
+      <ProductSection
+        heading={"Popular"}
+        link={"/products"}
+        addToCart={addToCart}
+        cartData={cartData}
+      />
+      <ProductSection
+        heading={"Home + Garden"}
         link={"/products"}
         addToCart={addToCart}
         cartData={cartData}
