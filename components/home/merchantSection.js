@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import MerchantGrid from "./merchantGrid";
+import { shuffleArray } from "../../store/helpers";
 
 const merchantSection = ({ heading, link }) => {
   const [merchants, setMerchants] = useState([]);
@@ -13,8 +14,7 @@ const merchantSection = ({ heading, link }) => {
     };
     getMerchants()
       .then((resp) => {
-        console.log(resp);
-        setMerchants(resp.data.Merchants.slice(0, 6));
+        setMerchants(shuffleArray(resp.data.Merchants).slice(0, 6));
       })
       .catch((err) => {
         console.log(err);
@@ -23,7 +23,7 @@ const merchantSection = ({ heading, link }) => {
 
   return (
     <div className="px-8 pb-4 pt-8">
-      <h2 className="flex justify-between max-w-1250 mx-auto">
+      <h2 className="flex justify-between max-w-1250 mx-auto mb-12">
         <span>{heading}</span>
         <Link href={link}>
           <button className="standard-btn">View All</button>

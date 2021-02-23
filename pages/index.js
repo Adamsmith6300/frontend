@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 import actions from "../store/actions";
 import Banner from "../components/home/banner";
 import ProductSection from "../components/home/productSection";
 import MerchantSection from "../components/home/merchantSection";
+import SmallAboutSection from "../components/home/smallAboutSection";
 
 const Page = ({ addToCart, cartData, clearFlag }) => {
   return (
@@ -38,6 +38,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
         addToCart={addToCart}
         cartData={cartData}
       />
+      <SmallAboutSection />
       <ProductSection
         heading={"Home + Garden"}
         link={"/products"}

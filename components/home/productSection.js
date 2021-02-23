@@ -2,24 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProductGrid from "./productGrid";
-
-function shuffleArray(array) {
-  let curId = array.length;
-  // There remain elements to shuffle
-  while (0 !== curId) {
-    // Pick a remaining element
-    let randId = Math.floor(Math.random() * curId);
-    curId -= 1;
-    // Swap it with the current element.
-    let tmp = array[curId];
-    array[curId] = array[randId];
-    array[randId] = tmp;
-  }
-  return array;
-}
-// Usage of shuffle
-// let arr = [1, 2, 3, 4, 5];
-// console.log(arr);
+import { shuffleArray } from "../../store/helpers";
 
 const productSection = ({ heading, link, addToCart, cartData }) => {
   const [products, setProducts] = useState([]);
@@ -41,7 +24,7 @@ const productSection = ({ heading, link, addToCart, cartData }) => {
 
   return (
     <div className="px-8 pb-4 pt-8">
-      <h2 className="flex justify-between max-w-1250 mx-auto">
+      <h2 className="flex justify-between max-w-1250 mx-auto mb-12">
         <span>{heading}</span>
         <Link href={link}>
           <button className="standard-btn">View All</button>

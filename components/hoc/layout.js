@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Head from "next/head";
 import Link from "next/link";
-import { Button } from "semantic-ui-react";
 import actions from "../../store/actions";
 import { SideMenu } from "./sideMenu";
-
 import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
-
-import Nav from "./nav";
 import Cart from "./cart";
+import Footer from "./footer";
 
 const Layout = ({
   children,
@@ -51,10 +48,12 @@ const Layout = ({
           type="text/css"
         />
       </Head>
-      {/* <h1 className="h-16 w-full loma-padding absolute top-0 left-0 font-bold uppercase text-black text-5xl">
-        Loma
-      </h1> */}
-      <img src="/loma.png" className="h-16 absolute loma-logo" />
+      <Link href="/">
+        <img
+          src="/loma.png"
+          className="h-16 absolute loma-logo cursor-pointer"
+        />
+      </Link>
       <SideMenu clearFlag={clearFlag} />
       <Cart
         toggleCart={toggleCart}
@@ -64,17 +63,7 @@ const Layout = ({
         removeFromCart={removeFromCart}
       />
       {children}
-      {/* {!isMerchant && isAuthed ? (
-        <div className="w-full bottom-0 left-0 relative py-12">
-          <ul className="flex justify-center">
-            <li className="text-xl">
-              <Link href="/merchant-application">
-                <Button color="black">Become a Merchant</Button>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      ) : null} */}
+      <Footer />
       <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
         Font made from{" "}
         <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
