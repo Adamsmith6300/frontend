@@ -3,7 +3,7 @@ import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 // import { wrapper } from "../store";
 import actions from "../store/actions";
-import AllMerchants from "../components/merchants/allMerchants";
+import MerchantGrid from "../components/home/merchantGrid";
 
 const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
   useEffect(() => {
@@ -14,11 +14,9 @@ const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
 
   return (
     <Layout>
-      <AllMerchants
-        merchants={merchants}
-        addToCart={addToCart}
-        cartData={cartData}
-      />
+      <div className="flex flex-wrap justify-start max-w-1040 mx-auto">
+        <MerchantGrid merchants={merchants} />
+      </div>
     </Layout>
   );
 };

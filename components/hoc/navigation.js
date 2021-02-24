@@ -78,11 +78,11 @@ export const Navigation = ({ isOpen, clearFlag }) => {
     { title: "about", link: "/about", linkStyle: "primary" },
   ];
 
-  secondaryNavItems.push({
-    title: "contact",
-    link: "/contact",
-    linkStyle: "secondary",
-  });
+  // secondaryNavItems.push({
+  //   title: "contact",
+  //   link: "/contact",
+  //   linkStyle: "secondary",
+  // });
 
   return (
     <motion.ul

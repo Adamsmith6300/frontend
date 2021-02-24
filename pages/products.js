@@ -3,8 +3,7 @@ import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 // import { wrapper } from "../store";
 import actions from "../store/actions";
-import { motion } from "framer-motion";
-import AllProducts from "../components/products/allProducts";
+import ProductGrid from "../components/home/productGrid";
 
 const Page = ({ getProducts, products, addToCart, cartData, clearFlag }) => {
   useEffect(() => {
@@ -13,11 +12,13 @@ const Page = ({ getProducts, products, addToCart, cartData, clearFlag }) => {
 
   return (
     <Layout>
-      <AllProducts
-        products={products}
-        addToCart={addToCart}
-        cartData={cartData}
-      />
+      <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
+        <ProductGrid
+          products={products}
+          addToCart={addToCart}
+          cartData={cartData}
+        />
+      </div>
     </Layout>
   );
 };
