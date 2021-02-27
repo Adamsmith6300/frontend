@@ -138,6 +138,16 @@ button:focus {
   font-size: 1.3rem;
   line-height: 1.3rem;
 }
+.social-btn {
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+}
+.social-btn:hover {
+  background-color: rgba(9, 30, 66, 0.02) !important;
+  color: black;
+}
+.color-fb {
+  color: #1777f2;
+}
 
 .date {
   color: var(--secondary);

@@ -10,6 +10,10 @@ import {
 import { withRouter } from "next/router";
 import LoginForm from "../components/loginForm";
 import { LargeLoader } from "../components/loaders";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillFacebook } from "react-icons/ai";
+import { VscDebugBreakpointData } from "react-icons/vsc";
 
 const Page = ({
   verifiedUser,
@@ -73,22 +77,39 @@ const Page = ({
       ) : (
         <>
           <h1 className="text-3xl text-center">Login</h1>
-          {verifiedUser != undefined ? (
-            <p className="text-green-500 text-2xl mb-3">
-              Successfully Verified User!
+          <div className="max-w-500 mx-auto">
+            <div className="w-full flex flex-wrap mt-6">
+              <a
+                className="social-btn w-full py-4 text-center my-3 text-xl"
+                href="https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=http://localhost:3000/login&response_type=TOKEN&client_id=66mvecqdvf707kid13h8qlluk6&scope=email openid profile"
+              >
+                <AiFillFacebook className="inline mr-2 color-fb" />
+                Continue With Facebook
+              </a>
+              <a
+                className="social-btn w-full py-4 text-center my-3 text-xl"
+                href="https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:3000/login&response_type=TOKEN&client_id=66mvecqdvf707kid13h8qlluk6&scope=email openid profile"
+              >
+                <FcGoogle className="inline mr-2" /> Continue With Google
+              </a>
+            </div>
+            <p className="my-6 text-center">OR</p>
+            <LoginForm
+              submitLogin={submitLogin}
+              formError={formError}
+              successfulLogin={successfulLogin}
+              loading={loading}
+              setLoading={setLoading}
+            />
+            <p className="mt-12 text-center">
+              <Link href="/reset-password">
+                <span className="cursor-pointer">Forgot password?</span>
+              </Link>
+              <VscDebugBreakpointData className="inline mx-2" />
+              <Link href="/signup">
+                <span className="cursor-pointer">Signup for an account</span>
+              </Link>
             </p>
-          ) : null}
-          <LoginForm
-            submitLogin={submitLogin}
-            formError={formError}
-            successfulLogin={successfulLogin}
-            loading={loading}
-            setLoading={setLoading}
-          />
-          <div className="mt-12">
-            <a href="https://shoploma.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=66mvecqdvf707kid13h8qlluk6&redirect_uri=http://localhost:3000/login">
-              Login With Social
-            </a>
           </div>
         </>
       )}
