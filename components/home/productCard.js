@@ -12,18 +12,12 @@ const productCard = memo(
   ({ isSelected, setSelectedId, product, addToCart, cartData }) => {
     const id = product.ProductId;
     const title = product.title;
-    let imgSrc =
-      product.source == "loma"
-        ? `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
-            product.MerchantId
-          }/products/${product.ProductId}/${product.images[product.mainImage]}`
-        : product.images[product.mainImage];
 
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
 
     // Maintain the visual border radius when we perform the layoutTransition by inverting its scaleX/Y
-    const inverted = useInvertedBorderRadius(10);
+    const inverted = useInvertedBorderRadius(0);
 
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
@@ -58,7 +52,7 @@ const productCard = memo(
           <motion.div
             ref={cardRef}
             className={`card-content ${isSelected && "shadow"}`}
-            style={{ ...inverted, zIndex, y }}
+            style={{ zIndex, y }}
             layoutTransition={isSelected ? openSpring : closeSpring}
             drag={isSelected ? "y" : false}
             dragConstraints={constraints}
@@ -86,10 +80,16 @@ const productCard = memo(
                 />
               </svg>
             </button>
-            <Image id={id} isSelected={isSelected} imgSrc={imgSrc} />
+            <Image
+              id={id}
+              isSelected={isSelected}
+              source={product.source}
+              MerchantId={product.MerchantId}
+              ProductId={product.ProductId}
+              images={product.images}
+              mainImage={product.mainImage}
+            />
             <ContentPlaceholder
-              title={title}
-              price={product.price}
               product={product}
               addToCart={addToCart}
               cartData={cartData}
@@ -98,7 +98,7 @@ const productCard = memo(
         </div>
         {!isSelected ? (
           <>
-            <p className="text-black text-3xl">{title}</p>
+            <p className="text-black text-3xl my-2 mt-4">{title}</p>
             <p>${product.price}</p>
           </>
         ) : null}

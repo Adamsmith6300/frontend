@@ -174,14 +174,14 @@ const actions = {
       payload: showCart,
     };
   },
-  addToCart: (product, oldCart) => {
+  addToCart: (product, oldCart, qty = 1) => {
     let newCart = { ...oldCart };
     if (newCart.items[product.ProductId]) {
-      newCart.items[product.ProductId].qty++;
+      newCart.items[product.ProductId].qty + qty;
     } else {
-      newCart.items[product.ProductId] = { ...product, qty: 1 };
+      newCart.items[product.ProductId] = { ...product, qty: qty };
     }
-    newCart.total += Number(product.price);
+    newCart.total += Number(product.price) * qty;
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     return {

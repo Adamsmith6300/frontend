@@ -245,7 +245,7 @@ button:focus {
 .card-content {
   pointer-events: auto;
   position: relative;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   background: #fff;
   overflow: hidden;
   width: 100%;
@@ -257,7 +257,7 @@ button:focus {
 .card-content--mProducts {
   pointer-events: auto;
   position: relative;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   background: #1c1c1e;
   overflow: hidden;
   width: 100%;

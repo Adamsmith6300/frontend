@@ -5,7 +5,13 @@ import { connect } from "react-redux";
 import actions from "../store/actions";
 import MerchantGrid from "../components/home/merchantGrid";
 
-const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
+const Page = ({
+  getMerchants,
+  merchants = [],
+  addToCart,
+  cartData,
+  clearFlag,
+}) => {
   useEffect(() => {
     if (merchants == null || merchants.length == 0) {
       getMerchants();

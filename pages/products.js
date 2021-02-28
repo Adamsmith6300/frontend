@@ -5,7 +5,13 @@ import { connect } from "react-redux";
 import actions from "../store/actions";
 import ProductGrid from "../components/home/productGrid";
 
-const Page = ({ getProducts, products, addToCart, cartData, clearFlag }) => {
+const Page = ({
+  getProducts,
+  products = [],
+  addToCart,
+  cartData,
+  clearFlag,
+}) => {
   useEffect(() => {
     getProducts();
   }, []);

@@ -52,7 +52,7 @@ const Page = ({ addToCart, cartData }) => {
                 cartData={cartData}
               />
             </div>
-            {merchant.info.about != null ? (
+            {merchant.info.about != null && merchant.info.about.length > 0 ? (
               <div>
                 <p>About {merchant.info.busname}</p>
                 <p>{merchant.info.about}</p>
