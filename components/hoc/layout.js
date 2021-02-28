@@ -76,8 +76,8 @@ const Layout = ({
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleCart: (showCart) => dispatch(actions.toggleCart(showCart)),
-    addToCart: (product, oldCart) =>
-      dispatch(actions.addToCart(product, oldCart)),
+    addToCart: (product, oldCart, qty = 1) =>
+      dispatch(actions.addToCart(product, oldCart, qty)),
     removeFromCart: (product, oldcart, qty) =>
       dispatch(actions.removeFromCart(product, oldcart, qty)),
     setCart: (cart) => dispatch(actions.setCart(cart)),

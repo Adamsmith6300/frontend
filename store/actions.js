@@ -177,7 +177,7 @@ const actions = {
   addToCart: (product, oldCart, qty = 1) => {
     let newCart = { ...oldCart };
     if (newCart.items[product.ProductId]) {
-      newCart.items[product.ProductId].qty + qty;
+      newCart.items[product.ProductId].qty += qty;
     } else {
       newCart.items[product.ProductId] = { ...product, qty: qty };
     }
@@ -192,11 +192,8 @@ const actions = {
   removeFromCart: (product, oldCart, qty) => {
     let newCart = { ...oldCart };
     if (newCart.items[product.ProductId]) {
-      if (qty < 0) {
-        qty = newCart.items[product.ProductId].qty;
-      }
       newCart.items[product.ProductId].qty -= qty;
-      newCart.total -= product.price * qty;
+      newCart.total -= Number(product.price) * qty;
       if (newCart.items[product.ProductId].qty <= 0) {
         delete newCart.items[product.ProductId];
       }

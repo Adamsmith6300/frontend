@@ -39,14 +39,14 @@ const index = ({ toggle, cartData, addToCart, removeFromCart }) => {
           <span>{item.qty}</span>
           <Button
             className="text-black"
-            onClick={() => addToCart(item, cartData)}
+            onClick={() => addToCart(item, cartData, 1)}
           >
             +
           </Button>
           <Button
             className=""
             color="red"
-            onClick={() => removeFromCart(item, cartData, -1)}
+            onClick={() => removeFromCart(item, cartData, item.qty)}
           >
             remove
           </Button>
