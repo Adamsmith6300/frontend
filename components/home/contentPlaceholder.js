@@ -10,8 +10,8 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
         <span>{product.title}</span>
         <span className="w-150 text-center">${product.price}</span>
       </p>
-      <div className="my-6 flex flex-wrap w-150 mx-auto justify-center">
-        <div className="flex justify-between w-150 mb-5">
+      <div className="my-6 flex flex-wrap mx-auto justify-center">
+        <div className="flex justify-between w-150 mr-5">
           <button
             className="btn-no-size p-2 px-5"
             onClick={() => setQty(Math.max(1, qty - 1))}
