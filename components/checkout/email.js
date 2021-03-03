@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Button, Input, Form } from "semantic-ui-react";
 
-const email = ({ activeCheckoutStep, setActiveCheckout }) => {
+const email = ({ activeCheckoutStep, setActiveCheckout, email }) => {
   const step = 1;
   const isActive = activeCheckoutStep == step;
 
-  const [emailData, updateEmailData] = useState("adamsmith6300@gmail.com");
+  const [emailData, updateEmailData] = useState(email);
 
   const handleChange = (e) => {
     updateEmailData(e.target.value.trim());
@@ -24,7 +24,6 @@ const email = ({ activeCheckoutStep, setActiveCheckout }) => {
           onSubmit={(e) => {
             e.preventDefault();
             setActiveCheckout(activeCheckoutStep + 1);
-            console.log("Add to checkout state: ", emailData);
           }}
         >
           <Input

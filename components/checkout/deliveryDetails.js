@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { Button, Input, TextArea, Form } from "semantic-ui-react";
 
-const deliveryDetails = ({ activeCheckoutStep, setActiveCheckout }) => {
+const deliveryDetails = ({
+  activeCheckoutStep,
+  setActiveCheckout,
+  personInfo,
+}) => {
   const step = 2;
   const isActive = activeCheckoutStep == step;
   const [deliveryData, updateDeliveryData] = useState({
-    firstname: "adam",
-    lastname: "smith",
-    address1: "266 e 2nd ave",
-    city: "Vancouver",
-    province: "BC",
-    postalcode: "v5t1b8",
-    phonenumber: "6044456169",
+    fullname: personInfo.fullname,
+    address1: personInfo.address,
+    address2: personInfo.address2,
+    city: personInfo.city,
+    province: personInfo.province,
+    postalcode: personInfo.postalcode,
+    phone: personInfo.phone,
   });
 
   const handleChange = (e) => {
@@ -33,23 +37,14 @@ const deliveryDetails = ({ activeCheckoutStep, setActiveCheckout }) => {
           onSubmit={(e) => {
             e.preventDefault();
             setActiveCheckout(activeCheckoutStep + 1);
-            console.log(deliveryData);
           }}
         >
           <Input
             required
-            label="first name"
-            value={deliveryData.firstname}
-            name="firstname"
-            type="firstname"
-            onChange={handleChange}
-          />
-          <Input
-            required
-            label="last name"
-            value={deliveryData.lastname}
-            name="lastname"
-            type="lastname"
+            label="Full Name"
+            value={deliveryData.fullname}
+            name="fullname"
+            type="name"
             onChange={handleChange}
           />
           <Input
@@ -91,8 +86,8 @@ const deliveryDetails = ({ activeCheckoutStep, setActiveCheckout }) => {
           <Input
             required
             label="Phone Number"
-            value={deliveryData.phonenumber}
-            name="phonenumber"
+            value={deliveryData.phone}
+            name="phone"
             type="tel"
             onChange={handleChange}
           />

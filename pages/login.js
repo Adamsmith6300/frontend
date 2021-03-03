@@ -22,6 +22,7 @@ const Page = ({
   router,
   successfulLogin,
   clearFlag,
+  savePersonInfo,
 }) => {
   const [loading, setLoading] = useState(false);
   if (successfulLogin) {
@@ -60,7 +61,8 @@ const Page = ({
           let resp = await submitSocialLogin(parameters);
           if (resp.status == 200) {
             saveLoginSession(parameters);
-            router.push("/my-account");
+            savePersonInfo(resp.data);
+            router.push("/");
           }
         } catch (err) {
           console.log(err);
@@ -121,6 +123,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     submitLogin: (formData) => dispatch(actions.submitLogin(formData)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    savePersonInfo: (info) => dispatch(actions.savePersonInfo(info)),
   };
 };
 

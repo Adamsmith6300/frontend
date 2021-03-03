@@ -4,20 +4,14 @@ import { MdModeEdit } from "react-icons/md";
 import { updateAccountDetails } from "../../store/helpers";
 import { LargeLoader } from "../loaders";
 
-const possibleAttr = [
-  "address",
-  "address2",
-  "city",
-  "phone",
-  "postalcode",
-  "province",
-  "fullname",
-];
+const contactAttr = ["fullname", "phone", "email"];
+const addressAttr = ["address", "address2", "city", "province", "postalcode"];
 
 const index = ({ info, callFetchAccountData }) => {
   const [formData, updateFormData] = useState({});
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -39,74 +33,105 @@ const index = ({ info, callFetchAccountData }) => {
       window.location.reload();
     }
   };
-  let details = [];
+
+  const getLabel = (attribute) => {
+    if (attribute == "fullname") {
+      return "Name";
+    }
+    if (attribute == "postalcode") {
+      return "Postal Code";
+    }
+
+    return attribute.charAt(0).toUpperCase() + attribute.slice(1);
+  };
+
+  const getAttrComponent = (attr) => {
+    let val = info[attr];
+    let label = getLabel(attr);
+    if (edit && attr != "email") {
+      return (
+        <li key={index + attr} className="flex flex-wrap py-1">
+          <span className="font-bold w-full pl-3 py-1">{label}:</span>
+          <input
+            defaultValue={val}
+            className="w-full pl-3 py-1 h-10 bg-gray-200"
+            name={attr}
+            type="text"
+            onChange={(e) => handleChange(e)}
+          />
+        </li>
+      );
+    } else {
+      return (
+        <li key={index + attr} className="flex flex-wrap py-1">
+          <span className="font-bold w-full pl-3 py-1">{label}:</span>
+          <span className="w-full pl-3 py-1 h-10 ">{val}</span>
+        </li>
+      );
+    }
+  };
+
+  let contactDetails = [];
+  let addressDetails = [];
   if (info) {
-    for (let i = 0; i < possibleAttr.length; ++i) {
-      if (!(possibleAttr[i] in info)) {
-        info[possibleAttr[i]] = "";
+    for (let i = 0; i < contactAttr.length; ++i) {
+      if (contactAttr[i] in info) {
+        const comp = getAttrComponent(contactAttr[i]);
+        contactDetails.push(comp);
       }
     }
-    details = Object.entries(info).map((entry, index) => {
-      if (entry[0] == "PersonId") return null;
-      if (edit && possibleAttr.includes(entry[0])) {
-        return (
-          <Input
-            label={entry[0]}
-            defaultValue={entry[1]}
-            name={entry[0]}
-            type="text"
-            onChange={handleChange}
-          />
-        );
-      } else {
-        return (
-          <li key={index + entry[0]}>
-            <span className="font-bold">{entry[0]}:</span>
-            <span className="mx-3">{entry[1]}</span>
-            {/* {possibleAttr.includes(entry[0]) ? (
-              <MdModeEdit
-                onClick={() => setEdit(index)}
-                className="inline cursor-pointer"
-              />
-            ) : null} */}
-          </li>
-        );
+    for (let i = 0; i < addressAttr.length; ++i) {
+      if (addressAttr[i] in info) {
+        const comp = getAttrComponent(addressAttr[i]);
+        addressDetails.push(comp);
       }
-    });
+    }
   }
+
   return (
-    <div>
+    <div className="w-300 py-5 mx-auto">
       {loading ? (
         <LargeLoader />
       ) : (
         <>
-          <ul className="list-reset">{details}</ul>
+          <p className="text-3xl bolder text-center">Contact</p>
+          <ul className="list-reset py-3">{contactDetails}</ul>
+          <p className="text-3xl bolder text-center mt-5">Address</p>
+          <ul className="list-reset py-3 mb-5">{addressDetails}</ul>
           {edit ? (
-            <div className="mt-2 w-full text-center">
-              <Button
+            <div className="w-full flex flex-wrap justify-between text-center">
+              {/* <div className="w-full"> */}
+              <button
+                className="btn-no-size-color px-8 py-3 bg-black"
                 onClick={() => {
                   setEdit(null);
                   updateFormData({});
                 }}
               >
                 Cancel
-              </Button>
+              </button>
+              {/* </div> */}
               {Object.keys(formData).length > 0 ? (
-                <Button onClick={() => handleSubmit()} color="black">
+                // <div className="w-full pt-3">
+                <button
+                  className="btn-no-size-color px-12 py-3 bg-green-600"
+                  onClick={() => handleSubmit()}
+                >
                   Save
-                </Button>
-              ) : null}
+                </button>
+              ) : // </div>
+              null}
             </div>
           ) : (
-            <Button
-              color="yellow"
+            <button
+              className="btn-no-size-color px-8 py-3 bg-black"
               onClick={() => {
                 setEdit(true);
                 updateFormData({});
               }}
             >
               Edit
-            </Button>
+            </button>
           )}
         </>
       )}

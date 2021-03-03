@@ -12,28 +12,30 @@ const index = ({ cartData, toggle }) => {
       <p className="text-base">
         Taxes and delivery fees calculated at checkout.
       </p>
-      {isLoggedIn() ? (
-        <Link href="/checkout">
-          <button className="standard-btn" onClick={toggle}>
-            Checkout
-          </button>
-        </Link>
-      ) : (
-        <div className="mt-3 text-center">
-          <p className="text-red-500">Must have an account to order.</p>
-          <Link href="/login">
-            <button className="my-2 standard-btn" onClick={toggle}>
-              Login
+      <div className="mt-3 text-center">
+        {isLoggedIn() ? (
+          <Link href="/checkout">
+            <button className="standard-btn" onClick={toggle}>
+              Checkout
             </button>
           </Link>
-          <p>OR</p>
-          <Link href="/signup">
-            <button className="my-2 standard-btn" onClick={toggle}>
-              Signup
-            </button>
-          </Link>
-        </div>
-      )}
+        ) : (
+          <>
+            <p className="text-red-500">Must have an account to order.</p>
+            <Link href="/login">
+              <button className="my-2 standard-btn" onClick={toggle}>
+                Login
+              </button>
+            </Link>
+            <p>OR</p>
+            <Link href="/signup">
+              <button className="my-2 standard-btn" onClick={toggle}>
+                Signup
+              </button>
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 };

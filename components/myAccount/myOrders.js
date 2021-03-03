@@ -1,9 +1,9 @@
 import moment from "moment";
 import { useState } from "react";
 import SelectedOrder from "./selectedOrder";
+import Link from "next/link";
 
 export default ({ orders }) => {
-  console.log(orders);
   const [selectedOrder, setSelectedOrder] = useState(null);
   let orderList = orders.map((order, index) => {
     return (
@@ -33,7 +33,25 @@ export default ({ orders }) => {
     );
   } else {
     return (
-      <ul className="flex flex-wrap h-500 overflow-y-auto">{orderList}</ul>
+      <ul className="flex flex-wrap py-5 overflow-y-auto">
+        {orderList.length > 0 ? (
+          orderList
+        ) : (
+          <div className="w-full">
+            <p className="w-full text-center text-3xl bolder mb-3">
+              You don't have any orders yet!
+            </p>
+            <p className="w-full text-center mb-6">
+              Visit the shop to start your order.
+            </p>
+            <div className="w-full text-center">
+              <Link href="/">
+                <button className="standard-btn">Shop</button>
+              </Link>
+            </div>
+          </div>
+        )}
+      </ul>
     );
   }
 };

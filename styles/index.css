@@ -32,6 +32,7 @@ body {
   width: 100vw;
   height: 100vh;
   font-weight: 500;
+  font-size: 1.2rem;
   /* font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif; */
   /* font-family: "Work Sans", Arial, Helvetica, sans-serif; */
 }
@@ -126,6 +127,20 @@ button:focus {
   background-color: #000;
   width: 150px;
   height: 40px;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+.standard-btn-no-color {
+  width: 150px;
+  height: 40px;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+.btn-no-size-color {
   text-transform: uppercase;
   color: #fff;
   font-size: 1.3rem;
@@ -463,4 +478,9 @@ button:focus {
 .merchant--banner {
   height: 600px;
   width: 100%;
+}
+
+#account-details.ui.accordion.fluid.styled {
+  box-shadow: none;
+  border-radius: none;
 }

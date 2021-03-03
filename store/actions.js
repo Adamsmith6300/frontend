@@ -25,6 +25,7 @@ const actionTypes = {
   CLEAR_FLAG: "CLEAR_FLAG",
   MERCHANT_APPLICATION_SUCCESS: "MERCHANT_APPLICATION_SUCCESS",
   SET_MERCHANT_DATA: "SET_MERCHANT_DATA",
+  SAVE_PERSON_INFO: "SAVE_PERSON_INFO",
 };
 
 const actions = {
@@ -81,6 +82,7 @@ const actions = {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, formData)
         .then(function (response) {
+          console.log("REG LOGIN", response);
           saveLoginSession(response);
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })
@@ -95,6 +97,7 @@ const actions = {
         });
     };
   },
+
   submitResend: (formData) => {
     return async (dispatch) => {
       const resp = await axios
@@ -279,6 +282,12 @@ const actions = {
     return {
       type: actionTypes.SET_MERCHANT_DATA,
       payload: data,
+    };
+  },
+  savePersonInfo: (info) => {
+    return {
+      type: actionTypes.SAVE_PERSON_INFO,
+      payload: info,
     };
   },
 };

@@ -37,7 +37,6 @@ const Page = ({ router }) => {
     <Layout>
       {loggedIn && accountData != null ? (
         <>
-          {/* <h1 className="text-3xl text-center text-black">My Account</h1> */}
           <Account
             accountData={accountData}
             callFetchAccountData={callFetchAccountData}
