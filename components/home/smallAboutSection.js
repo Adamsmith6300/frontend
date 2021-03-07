@@ -23,14 +23,14 @@ const index = ({}) => {
     return (
       <div key={point.title + index} className="w-300 text-center mx-12">
         <img className="h-150 w-150 rounded-full mx-auto" src={point.img} />
-        <p className="bolder text-3xl my-5">{point.title}</p>
+        <h4 className="text-3xl my-5">{point.title}</h4>
         <p>{point.subtitle}</p>
       </div>
     );
   });
   return (
     <div className="text-center my-24">
-      <h2>A better option</h2>
+      <h2 className="">A better option</h2>
       <p className="mt-4 mb-8">
         Loma gives you another ecommerce option that allows you to support your
         local community

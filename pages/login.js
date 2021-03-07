@@ -6,6 +6,7 @@ import {
   checkMerchant,
   saveLoginSession,
   submitSocialLogin,
+  isLoggedIn,
 } from "../store/helpers";
 import { withRouter } from "next/router";
 import LoginForm from "../components/loginForm";
@@ -20,20 +21,10 @@ const Page = ({
   submitLogin,
   formError,
   router,
-  successfulLogin,
   clearFlag,
   savePersonInfo,
 }) => {
-  const [loading, setLoading] = useState(false);
-  if (successfulLogin) {
-    if (checkMerchant()) {
-      router.push("/my-shop");
-      clearFlag("successfulLogin");
-    } else {
-      router.push("/");
-      clearFlag("successfulLogin");
-    }
-  }
+  const [loading, setLoading] = useState(true);
 
   const socialParameters = (href) => {
     const strippedDomain = href.split("#")[1];
@@ -53,16 +44,14 @@ const Page = ({
       if (!window.location.href.includes("#")) {
         return;
       }
-      setLoading(true);
       const parameters = socialParameters(window.location.href);
-      console.log(parameters);
       if ("id_token" in parameters) {
         try {
           let resp = await submitSocialLogin(parameters);
           if (resp.status == 200) {
             saveLoginSession(parameters);
             savePersonInfo(resp.data);
-            router.push("/");
+            router.push("/marketplace");
           }
         } catch (err) {
           console.log(err);
@@ -70,6 +59,18 @@ const Page = ({
       }
     };
     call();
+    let loggedIn = isLoggedIn();
+    let merchant = checkMerchant();
+    if (loggedIn) {
+      if (merchant) {
+        router.push("/my-store");
+        clearFlag("successfulLogin");
+      } else {
+        router.push("/marketplace");
+        clearFlag("successfulLogin");
+      }
+    }
+    setLoading(false);
   }, []);
 
   return (
@@ -83,14 +84,14 @@ const Page = ({
             <div className="w-full flex flex-wrap mt-6">
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"
-                href="https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=http://localhost:3000/login&response_type=TOKEN&client_id=66mvecqdvf707kid13h8qlluk6&scope=email openid profile"
+                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=http://localhost:3000/login&response_type=token&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
               >
                 <AiFillFacebook className="inline mr-2 color-fb" />
                 Continue With Facebook
               </a>
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"
-                href="https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:3000/login&response_type=TOKEN&client_id=66mvecqdvf707kid13h8qlluk6&scope=email openid profile"
+                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:3000/login&response_type=token&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
               >
                 <FcGoogle className="inline mr-2" /> Continue With Google
               </a>
@@ -99,7 +100,6 @@ const Page = ({
             <LoginForm
               submitLogin={submitLogin}
               formError={formError}
-              successfulLogin={successfulLogin}
               loading={loading}
               setLoading={setLoading}
             />

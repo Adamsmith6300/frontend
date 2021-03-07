@@ -31,6 +31,10 @@ const Page = ({ router }) => {
     if (accountData == null) {
       callFetchAccountData();
     }
+    let merchant = checkMerchant();
+    if (merchant) {
+      router.push("/my-store");
+    }
   }, []);
 
   return (

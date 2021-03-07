@@ -35,13 +35,17 @@ export const Navigation = ({ isOpen, clearFlag }) => {
 
   let navItems = [];
   let secondaryNavItems = [];
+  let homeLink = "/";
 
   if (loggedIn) {
-    secondaryNavItems.unshift({
-      title: "my account",
-      link: "/my-account",
-      linkStyle: "secondary",
-    });
+    homeLink = "/marketplace";
+    if (!isMerchant) {
+      secondaryNavItems.unshift({
+        title: "my account",
+        link: "/my-account",
+        linkStyle: "secondary",
+      });
+    }
     secondaryNavItems.push({
       title: "logout",
       action: () => {
@@ -65,24 +69,18 @@ export const Navigation = ({ isOpen, clearFlag }) => {
   }
   if (isMerchant && loggedIn) {
     secondaryNavItems.unshift({
-      title: "my shop",
-      link: "/my-shop",
+      title: "my store",
+      link: "/my-store",
       linkStyle: "secondary",
     });
   }
 
   navItems = [
-    { title: "home", link: "/", linkStyle: "primary" },
+    { title: "home", link: homeLink, linkStyle: "primary" },
     { title: "merchants", link: "/merchants", linkStyle: "primary" },
     { title: "products", link: "/products", linkStyle: "primary" },
     { title: "about", link: "/about", linkStyle: "primary" },
   ];
-
-  // secondaryNavItems.push({
-  //   title: "contact",
-  //   link: "/contact",
-  //   linkStyle: "secondary",
-  // });
 
   return (
     <motion.ul

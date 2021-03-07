@@ -11,9 +11,6 @@ const index = ({ submitSignup, successfulSignup }) => {
   const [modal, setModal] = useState(null);
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
-    // name: "adam smith",
-    // email: "adamsmith6300@gmail.com",
-    // password: "Password123!",
   });
 
   const validatePassword = (e) => {
@@ -73,7 +70,7 @@ const index = ({ submitSignup, successfulSignup }) => {
       return;
     }
     console.log("SUBMITTED");
-    // submitSignup(formData);
+    submitSignup(formData);
   };
 
   return (

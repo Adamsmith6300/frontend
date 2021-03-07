@@ -55,15 +55,15 @@ body {
   justify-content: center;
 }
 
-h1 {
-  /* font-weight: 300; */
-  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
-  /* margin: 6px 0 12px; */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif !important;
 }
-
 h2 {
-  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
-  /* margin: 8px 0; */
   font-weight: 400;
   font-size: 3rem;
 }

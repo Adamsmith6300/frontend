@@ -7,7 +7,7 @@ import {
   AiOutlineCopyrightCircle,
 } from "react-icons/ai";
 
-const footer = ({}) => {
+const footer = ({ isAuthed }) => {
   let menuItems = [
     { title: "About", link: "/about" },
     { title: "Contact", link: "/contact" },
@@ -25,7 +25,7 @@ const footer = ({}) => {
   return (
     <div className="w-full py-32 px-64">
       <div className="max-w-1040 mx-auto">
-        <Link href="/">
+        <Link href={isAuthed ? "/marketplace" : "/"}>
           <img src="/loma.png" className="h-16 loma-logo cursor-pointer" />
         </Link>
       </div>

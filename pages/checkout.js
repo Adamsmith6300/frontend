@@ -7,17 +7,19 @@ import { isLoggedIn, fetchAccountData } from "../store/helpers";
 import { LargeLoader } from "../components/loaders";
 import Checkout from "../components/checkout/index";
 import OrderSummary from "../components/checkout/orderSummary";
+import OrderConfirmation from "../components/checkout/orderConfirmation";
 
 const Page = ({
   router,
   cartData,
-  postNewOrder,
+  confirmPayment,
   personInfo,
   addToCart,
   removeFromCart,
 }) => {
   //reroute if carts empty or show msg
   const [personInfoCheckout, setPersonInfo] = useState(personInfo);
+  const [orderNo, setOrderNo] = useState(null);
   // const [loggedIn, updateLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -25,7 +27,6 @@ const Page = ({
     if (!isLoggedIn()) {
       router.push("/");
     }
-    console.log(cartData);
     const call = async () => {
       try {
         let resp = await fetchAccountData();
@@ -41,24 +42,30 @@ const Page = ({
 
   return (
     <Layout>
-      {personInfoCheckout ? (
+      {!orderNo ? (
         <>
-          <h1 className="text-3xl text-center">Checkout</h1>
-          <OrderSummary
-            cartData={cartData}
-            addToCart={addToCart}
-            removeFromCart={removeFromCart}
-          />
-          <Checkout
-            personInfo={personInfoCheckout}
-            // activeCheckoutStep={checkout.activeStep}
-            // setActiveCheckout={setActiveCheckout}
-            postNewOrder={postNewOrder}
-            cartData={cartData}
-          />
+          {personInfoCheckout ? (
+            <>
+              <h1 className="text-3xl text-center">Checkout</h1>
+              <OrderSummary
+                cartData={cartData}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+              />
+              <Checkout
+                personInfo={personInfoCheckout}
+                setPersonInfo={setPersonInfo}
+                setOrderNo={setOrderNo}
+                confirmPayment={confirmPayment}
+                cartData={cartData}
+              />
+            </>
+          ) : (
+            <LargeLoader />
+          )}
         </>
       ) : (
-        <LargeLoader />
+        <OrderConfirmation orderNo={orderNo} />
       )}
     </Layout>
   );
@@ -70,7 +77,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.addToCart(product, oldCart, qty)),
     removeFromCart: (product, oldcart, qty) =>
       dispatch(actions.removeFromCart(product, oldcart, qty)),
-    postNewOrder: (OrderId) => dispatch(actions.postNewOrder(OrderId)),
+    confirmPayment: (OrderId) => dispatch(actions.confirmPayment(OrderId)),
   };
 };
 

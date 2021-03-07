@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 
-const LoginForm = ({
-  loading,
-  setLoading,
-  submitLogin,
-  formError,
-  successfulLogin,
-}) => {
+const LoginForm = ({ loading, setLoading, submitLogin }) => {
   let isValidEmail = true
     ? null
     : {

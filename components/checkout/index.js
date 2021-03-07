@@ -4,30 +4,35 @@ import Payment from "./payment";
 import { useState } from "react";
 
 const index = ({
-  // activeCheckoutStep,
-  // setActiveCheckout,
-  postNewOrder,
+  setOrderNo,
+  confirmPayment,
   cartData,
   personInfo,
+  setPersonInfo,
 }) => {
-  const [activeCheckoutStep, setActiveCheckout] = useState(1);
+  const [activeCheckoutStep, setActiveCheckout] = useState(2);
 
   return (
     <div className="w-1/2 mx-auto text-center">
       <Email
-        email={personInfo.email || ""}
         activeCheckoutStep={activeCheckoutStep}
         setActiveCheckout={setActiveCheckout}
+        setPersonInfo={setPersonInfo}
+        personInfo={personInfo}
       />
       <DeliveryDetails
         personInfo={personInfo}
+        setPersonInfo={setPersonInfo}
         activeCheckoutStep={activeCheckoutStep}
         setActiveCheckout={setActiveCheckout}
       />
       <Payment
+        setOrderNo={setOrderNo}
+        personInfo={personInfo}
+        // setPersonInfo={setPersonInfo}
         activeCheckoutStep={activeCheckoutStep}
         setActiveCheckout={setActiveCheckout}
-        postNewOrder={postNewOrder}
+        confirmPayment={confirmPayment}
         cartData={cartData}
       />
     </div>

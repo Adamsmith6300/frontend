@@ -20,7 +20,6 @@ const Layout = ({
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
-  // const [isAuthed, setIsAuthed] = useState(null);
 
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
@@ -48,7 +47,7 @@ const Layout = ({
           type="text/css"
         />
       </Head>
-      <Link href="/">
+      <Link href={isAuthed ? "/marketplace" : "/"}>
         <img
           src="/loma.png"
           className="h-16 absolute loma-logo cursor-pointer"
@@ -63,7 +62,7 @@ const Layout = ({
         removeFromCart={removeFromCart}
       />
       {children}
-      <Footer />
+      <Footer isAuthed={isAuthed} />
       <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
         Font made from{" "}
         <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed

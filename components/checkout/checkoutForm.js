@@ -4,7 +4,14 @@ import { Button, Form } from "semantic-ui-react";
 import axios from "axios";
 import { getAuth, getPersonId } from "./../../store/helpers";
 
-const index = ({ stripe, elements, postNewOrder, cartData }) => {
+const index = ({
+  stripe,
+  elements,
+  confirmPayment,
+  cartData,
+  setOrderNo,
+  personInfo,
+}) => {
   const [isLoading, updateIsLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -12,7 +19,10 @@ const index = ({ stripe, elements, postNewOrder, cartData }) => {
     if (!stripe || !elements) {
       return;
     }
-    const payload = { PersonId: getPersonId() };
+    const payload = { ...personInfo };
+    if ("username" in payload) {
+      delete payload["username"];
+    }
     payload.items = Object.values(cartData.items).map((item, index) => {
       return {
         ProductId: item.ProductId,
@@ -21,7 +31,6 @@ const index = ({ stripe, elements, postNewOrder, cartData }) => {
       };
     });
     const authorization = getAuth();
-    console.log(authorization);
     const resp = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/market/order`,
       payload,
@@ -43,9 +52,10 @@ const index = ({ stripe, elements, postNewOrder, cartData }) => {
       } else {
         // The payment has been processed!
         if (result.paymentIntent.status === "succeeded") {
-          await postNewOrder(resp.data.OrderId);
-          console.log("Successfully processed!!!");
+          let orderResp = await confirmPayment(resp.data.OrderId);
+          console.log("orderResp", orderResp);
           localStorage.removeItem("cart");
+          setOrderNo(resp.data.OrderId);
         }
       }
     } else {
@@ -55,7 +65,14 @@ const index = ({ stripe, elements, postNewOrder, cartData }) => {
   };
 
   return (
-    <Form loading={isLoading} onSubmit={handleSubmit} className="w-3/4 mx-auto">
+    <Form
+      loading={isLoading}
+      onSubmit={(e) => {
+        console.log("ordered!");
+        handleSubmit(e);
+      }}
+      className="w-3/4 mx-auto pt-6"
+    >
       <CardElement
         options={{
           style: {
@@ -72,10 +89,13 @@ const index = ({ stripe, elements, postNewOrder, cartData }) => {
           },
         }}
       />
-      <label>Billing same as delivery?</label>
-      <Button type="submit" disabled={!stripe}>
+      <button
+        className="btn-no-size-color px-12 py-3 bg-green-600 mt-6"
+        type="submit"
+        disabled={!stripe}
+      >
         Pay
-      </Button>
+      </button>
     </Form>
   );
 };

@@ -1,12 +1,30 @@
 import Layout from "../components/hoc/layout";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "next/router";
+import { checkMerchant, isLoggedIn } from "../store/helpers";
 import actions from "../store/actions";
 import Banner from "../components/home/banner";
 import ProductSection from "../components/home/productSection";
 import MerchantSection from "../components/home/merchantSection";
 import SmallAboutSection from "../components/home/smallAboutSection";
 
-const Page = ({ addToCart, cartData, clearFlag }) => {
+const Page = ({ addToCart, cartData, router, clearFlag }) => {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    let loggedIn = isLoggedIn();
+    let merchant = checkMerchant();
+    if (loggedIn) {
+      if (merchant) {
+        router.push("/my-store");
+        clearFlag("successfulLogin");
+      } else {
+        router.push("/marketplace");
+        clearFlag("successfulLogin");
+      }
+    }
+    setLoading(false);
+  }, []);
   return (
     <Layout>
       <Banner
@@ -58,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect((state) => state, mapDispatchToProps)(Page);
+export default connect((state) => state, mapDispatchToProps)(withRouter(Page));

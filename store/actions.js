@@ -35,7 +35,7 @@ const actions = {
       let resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup`, formData)
         .then(function (response) {
-          console.log(response);
+          saveLoginSession(response);
           dispatch({ type: actionTypes.SIGNUP_SUCCESS });
         })
         .catch(function (error) {
@@ -50,12 +50,11 @@ const actions = {
     };
   },
   verifyUser: (data) => {
-    console.log(data);
     return async (dispatch) => {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/verify`, data)
         .then(function (response) {
-          console.log(response);
+          saveLoginSession(response);
           dispatch({ type: actionTypes.VERIFY_SUCCESS });
         })
         .catch(function (error) {
@@ -220,7 +219,7 @@ const actions = {
       payload: stepNo,
     };
   },
-  postNewOrder: (OrderId) => {
+  confirmPayment: (OrderId) => {
     const authorization = getAuth();
     return async (dispatch) => {
       const resp = await axios
