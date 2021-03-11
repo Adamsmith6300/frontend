@@ -23,9 +23,10 @@ const Page = ({
   router,
   clearFlag,
   savePersonInfo,
+  successfulLogin,
 }) => {
   const [loading, setLoading] = useState(true);
-
+  if (successfulLogin) router.push("/marketplace");
   const socialParameters = (href) => {
     const strippedDomain = href.split("#")[1];
     const parameterList = strippedDomain.split("&");

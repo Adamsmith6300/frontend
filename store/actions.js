@@ -96,7 +96,6 @@ const actions = {
         });
     };
   },
-
   submitResend: (formData) => {
     return async (dispatch) => {
       const resp = await axios

@@ -41,14 +41,14 @@ const index = ({ accountData, callFetchAccountData }) => {
           <MyOrders orders={accountData.orders} />
         </Accordion.Content>
       </Accordion>
-      {!checkMerchant() ? (
+      {/* {!checkMerchant() ? (
         <div>
           <p>Want to become a merchant?</p>
           <Link href="/merchant-application">
             <Button color="black">Apply now!</Button>
           </Link>
         </div>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

@@ -11,6 +11,7 @@ const footer = ({ isAuthed }) => {
   let menuItems = [
     { title: "About", link: "/about" },
     { title: "Contact", link: "/contact" },
+    { title: "Become a Merchant", link: "/become-a-merchant" },
     { title: "Terms + Conditions", link: "/terms" },
     { title: "Privacy Policy", link: "/privacy" },
   ];

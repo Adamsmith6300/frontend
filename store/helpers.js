@@ -71,6 +71,18 @@ export const checkMerchant = () => {
   return false;
 };
 
+export const checkPerson = () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  if (authRes != null) {
+    const user = jwt(authRes["IdToken"]);
+    return (
+      "cognito:groups" in user &&
+      user["cognito:groups"].includes("people-group")
+    );
+  }
+  return false;
+};
+
 export const fetchMerchantData = async () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const user = jwt(authRes["IdToken"]);
@@ -226,6 +238,18 @@ export const submitSocialLogin = async (params) => {
   // const user = jwt(params["IdToken"]);
   const resp = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`,
+    {
+      headers: {
+        Authorization: params["id_token"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const submitSocialLoginMerchant = async (params) => {
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/login/social/merchant`,
     {
       headers: {
         Authorization: params["id_token"],
