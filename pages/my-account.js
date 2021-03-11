@@ -31,13 +31,16 @@ const Page = ({ router }) => {
     if (accountData == null) {
       callFetchAccountData();
     }
+    let merchant = checkMerchant();
+    if (merchant) {
+      router.push("/my-store");
+    }
   }, []);
 
   return (
     <Layout>
       {loggedIn && accountData != null ? (
         <>
-          {/* <h1 className="text-3xl text-center text-black">My Account</h1> */}
           <Account
             accountData={accountData}
             callFetchAccountData={callFetchAccountData}

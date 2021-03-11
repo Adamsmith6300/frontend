@@ -61,6 +61,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, successfulMerchantApplication: true };
     case actionTypes.SET_MERCHANT_DATA:
       return { ...state, myShop: action.payload };
+    case actionTypes.SAVE_PERSON_INFO:
+      return { ...state, personInfo: action.payload };
     default:
       return state;
   }

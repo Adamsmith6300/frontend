@@ -1,112 +1,126 @@
-import React, { useState } from "react";
-import { Button, Input, TextArea, Form } from "semantic-ui-react";
+import { FcCheckmark } from "react-icons/fc";
 
-const deliveryDetails = ({ activeCheckoutStep, setActiveCheckout }) => {
+const deliveryDetails = ({
+  activeCheckoutStep,
+  setActiveCheckout,
+  personInfo,
+  setPersonInfo,
+}) => {
   const step = 2;
   const isActive = activeCheckoutStep == step;
-  const [deliveryData, updateDeliveryData] = useState({
-    firstname: "adam",
-    lastname: "smith",
-    address1: "266 e 2nd ave",
-    city: "Vancouver",
-    province: "BC",
-    postalcode: "v5t1b8",
-    phonenumber: "6044456169",
-  });
 
   const handleChange = (e) => {
-    updateDeliveryData({
-      ...deliveryData,
+    setPersonInfo({
+      ...personInfo,
       [e.target.name]: e.target.value.trim(),
     });
   };
   return (
-    <div className="border border-grey-400 p-3 m-3">
-      <p>
-        2. Delivery Details{" "}
+    <div className="p-3 m-3">
+      <p className="flex justify-between border-b">
+        <span>
+          2. Delivery Details
+          {activeCheckoutStep > step ? (
+            <FcCheckmark className="inline ml-3 mb-1" />
+          ) : null}
+        </span>
         {activeCheckoutStep > step ? (
-          <span onClick={() => setActiveCheckout(step)}>Edit</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => setActiveCheckout(step)}
+          >
+            Edit
+          </span>
         ) : null}
       </p>
       {isActive ? (
-        <Form
+        <form
           onSubmit={(e) => {
             e.preventDefault();
             setActiveCheckout(activeCheckoutStep + 1);
-            console.log(deliveryData);
           }}
+          className="flex flex-wrap text-left pt-4"
         >
-          <Input
+          <label className="font-bold w-full pl-3 py-1">Full Name:</label>
+          <input
             required
-            label="first name"
-            value={deliveryData.firstname}
-            name="firstname"
-            type="firstname"
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
+            label="Full Name"
+            value={personInfo.fullname}
+            name="fullname"
+            type="name"
             onChange={handleChange}
           />
-          <Input
+          <label className="font-bold w-full pl-3 py-1">Address:</label>
+          <input
             required
-            label="last name"
-            value={deliveryData.lastname}
-            name="lastname"
-            type="lastname"
-            onChange={handleChange}
-          />
-          <Input
-            required
-            label="Address 1"
-            value={deliveryData.address1}
-            name="address1"
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
+            label="Address"
+            value={personInfo.address}
+            name="address"
             type="address"
             onChange={handleChange}
           />
-          <Input
+          <label className="font-bold w-full pl-3 py-1">Address2:</label>
+          <input
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
             label="Address 2"
-            value={deliveryData.address2}
+            value={personInfo.address2}
             name="address2"
             type="address"
             onChange={handleChange}
           />
-          <Input
+          <label className="font-bold w-full pl-3 py-1">City:</label>
+          <input
             required
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
             label="City"
-            value={deliveryData.city}
+            value={personInfo.city}
             name="city"
             onChange={handleChange}
           />
-          <Input
+          <label className="font-bold w-full pl-3 py-1">Province:</label>
+          <input
             required
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
             label="Province"
-            value={deliveryData.province}
+            value={personInfo.province}
             name="province"
             onChange={handleChange}
           />
-          <Input
+          <label className="font-bold w-full pl-3 py-1">Postal Code:</label>
+          <input
             required
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
             label="Postal Code"
-            value={deliveryData.postalcode}
+            value={personInfo.postalcode}
             name="postalcode"
             onChange={handleChange}
           />
-          <Input
+          <label className="font-bold w-full pl-3 py-1">Phone:</label>
+          <input
             required
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
             label="Phone Number"
-            value={deliveryData.phonenumber}
-            name="phonenumber"
+            value={personInfo.phone}
+            name="phone"
             type="tel"
             onChange={handleChange}
           />
-          <TextArea
+          <textarea
             placeholder="Special notes about delivery..."
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
             label="Notes"
             name="notes"
-            value={deliveryData.notes}
+            value={personInfo.notes}
             onChange={handleChange}
           />
-          <Form.Field>
-            <Button>Continue</Button>
-          </Form.Field>
-        </Form>
+          <div className="w-full text-center">
+            <button className="standard-btn" type="submit">
+              Continue
+            </button>
+          </div>
+        </form>
       ) : null}
     </div>
   );

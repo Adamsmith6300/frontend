@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import { saveLoginSession, getAuth, checkMerchant } from "./helpers";
+import {
+  saveLoginSession,
+  getAuth,
+  checkMerchant,
+  getPersonId,
+} from "./helpers";
 
 const actionTypes = {
   ERROR: "ERROR",
@@ -20,6 +25,7 @@ const actionTypes = {
   CLEAR_FLAG: "CLEAR_FLAG",
   MERCHANT_APPLICATION_SUCCESS: "MERCHANT_APPLICATION_SUCCESS",
   SET_MERCHANT_DATA: "SET_MERCHANT_DATA",
+  SAVE_PERSON_INFO: "SAVE_PERSON_INFO",
 };
 
 const actions = {
@@ -29,7 +35,7 @@ const actions = {
       let resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup`, formData)
         .then(function (response) {
-          console.log(response);
+          saveLoginSession(response);
           dispatch({ type: actionTypes.SIGNUP_SUCCESS });
         })
         .catch(function (error) {
@@ -44,12 +50,11 @@ const actions = {
     };
   },
   verifyUser: (data) => {
-    console.log(data);
     return async (dispatch) => {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup/verify`, data)
         .then(function (response) {
-          console.log(response);
+          saveLoginSession(response);
           dispatch({ type: actionTypes.VERIFY_SUCCESS });
         })
         .catch(function (error) {
@@ -76,6 +81,7 @@ const actions = {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, formData)
         .then(function (response) {
+          console.log("REG LOGIN", response);
           saveLoginSession(response);
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })
@@ -169,14 +175,14 @@ const actions = {
       payload: showCart,
     };
   },
-  addToCart: (product, oldCart) => {
+  addToCart: (product, oldCart, qty = 1) => {
     let newCart = { ...oldCart };
     if (newCart.items[product.ProductId]) {
-      newCart.items[product.ProductId].qty++;
+      newCart.items[product.ProductId].qty += qty;
     } else {
-      newCart.items[product.ProductId] = { ...product, qty: 1 };
+      newCart.items[product.ProductId] = { ...product, qty: qty };
     }
-    newCart.total += Number(product.price);
+    newCart.total += Number(product.price) * qty;
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     return {
@@ -187,11 +193,8 @@ const actions = {
   removeFromCart: (product, oldCart, qty) => {
     let newCart = { ...oldCart };
     if (newCart.items[product.ProductId]) {
-      if (qty < 0) {
-        qty = newCart.items[product.ProductId].qty;
-      }
       newCart.items[product.ProductId].qty -= qty;
-      newCart.total -= product.price * qty;
+      newCart.total -= Number(product.price) * qty;
       if (newCart.items[product.ProductId].qty <= 0) {
         delete newCart.items[product.ProductId];
       }
@@ -215,7 +218,7 @@ const actions = {
       payload: stepNo,
     };
   },
-  postNewOrder: (OrderId) => {
+  confirmPayment: (OrderId) => {
     const authorization = getAuth();
     return async (dispatch) => {
       const resp = await axios
@@ -277,6 +280,12 @@ const actions = {
     return {
       type: actionTypes.SET_MERCHANT_DATA,
       payload: data,
+    };
+  },
+  savePersonInfo: (info) => {
+    return {
+      type: actionTypes.SAVE_PERSON_INFO,
+      payload: info,
     };
   },
 };

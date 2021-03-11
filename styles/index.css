@@ -32,7 +32,7 @@ body {
   width: 100vw;
   height: 100vh;
   font-weight: 500;
-  color: black;
+  font-size: 1.2rem;
   /* font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif; */
   /* font-family: "Work Sans", Arial, Helvetica, sans-serif; */
 }
@@ -55,19 +55,17 @@ body {
   justify-content: center;
 }
 
-h1 {
-  /* font-weight: 300; */
-  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
-  color: white;
-  margin: 6px 0 12px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif !important;
 }
-
 h2 {
-  font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif;
-  color: #fff;
-  margin: 8px 0;
   font-weight: 400;
-  font-size: 2.625rem;
+  font-size: 3rem;
 }
 
 header {
@@ -96,11 +94,74 @@ button:focus {
   height: 100%;
 }
 
-.container {
-  /* max-width: 990px; */
-  max-width: 1280px;
-  flex: 1 1 100%;
-  padding: 100px 25px 45px 25px;
+.loma-container {
+  width: 100%;
+  padding: 160px 0 0 0;
+}
+
+.banner {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 700px;
+  width: 100%;
+}
+
+.bg-img {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.banner-content {
+  position: relative;
+  top: 200px;
+  left: calc(100vw / 2 - 200px);
+  width: 450px;
+  padding: 30px 20px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.standard-btn {
+  background-color: #000;
+  width: 150px;
+  height: 40px;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+.standard-btn-no-color {
+  width: 150px;
+  height: 40px;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+.btn-no-size-color {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+.btn-no-size {
+  background-color: #000;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+}
+.social-btn {
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+}
+.social-btn:hover {
+  background-color: rgba(9, 30, 66, 0.02) !important;
+  color: black;
+}
+.color-fb {
+  color: #1777f2;
 }
 
 .date {
@@ -141,9 +202,8 @@ button:focus {
 .card--products {
   position: relative;
   padding: 5px;
-  margin: 6px;
+  margin: 0 6px 120px 6px;
   height: 250px;
-  flex: 0 0 300px;
   max-width: 300px;
 }
 
@@ -159,8 +219,8 @@ button:focus {
   height: 250px;
 }
 .card-image--mProducts {
-  width: 800px;
-  height: 80px;
+  width: 100%;
+  /* height: 80px; */
 }
 
 /* .card:nth-child(4n + 1),
@@ -200,18 +260,19 @@ button:focus {
 .card-content {
   pointer-events: auto;
   position: relative;
-  border-radius: 10px;
-  background: #1c1c1e;
+  /* border-radius: 10px; */
+  background: #fff;
   overflow: hidden;
   width: 100%;
   height: 100%;
   margin: 0 auto;
   max-width: 700px;
 }
+
 .card-content--mProducts {
   pointer-events: auto;
   position: relative;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   background: #1c1c1e;
   overflow: hidden;
   width: 100%;
@@ -238,8 +299,9 @@ button:focus {
   top: 0;
   left: 0;
   overflow: hidden;
-  height: 420px;
-  width: 100vw;
+  text-align: center;
+  /* height: 420px;
+  width: 100vw; */
   transform: translateZ(0);
 }
 .card-image-container--mProducts {
@@ -275,10 +337,8 @@ button:focus {
   will-change: opacity;
   top: 0;
   bottom: 0;
-  /* left: 50%;
-  transform: translateX(-50%); */
+  left: 0;
   width: 100vw;
-  /* max-width: 1000px; */
 }
 .overlay--mProducts {
   z-index: 1;
@@ -397,4 +457,30 @@ button:focus {
 .loma-logo {
   top: 50px;
   left: 50px;
+}
+
+.merchantCard--home {
+  width: 500px;
+  height: 400px;
+  overflow: hidden;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.merchantCard--image {
+  height: 300px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.merchant--banner {
+  height: 600px;
+  width: 100%;
+}
+
+#account-details.ui.accordion.fluid.styled {
+  box-shadow: none;
+  border-radius: none;
 }

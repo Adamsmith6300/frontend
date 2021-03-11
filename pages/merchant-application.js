@@ -13,7 +13,7 @@ const Page = ({
   submitMerchantApplication,
   successfulMerchantApplication,
 }) => {
-  const loggedIn = isLoggedIn();
+  // const loggedIn = isLoggedIn();
 
   const [isLoading, setLoading] = useState(false);
   const [formData, updateFormData] = useState({});
@@ -28,22 +28,25 @@ const Page = ({
   const handleSubmit = async () => {
     if (loggedIn) {
       await submitMerchantApplication(formData);
-      router.push("/");
+      router.push("/my-account");
     }
   };
 
   return (
     <Layout>
       <h1 className="text-3xl text-center">Merchant Application</h1>
-      {loggedIn ? (
+      {true ? (
+        <div className="my-account-container">
+
         <Form
-          loading={isLoading}
-          onSubmit={(e) => {
-            e.preventDefault();
-            setLoading(true);
-            handleSubmit();
-            setLoading(false);
-          }}
+        className=""
+        loading={isLoading}
+        onSubmit={(e) => {
+          e.preventDefault();
+          setLoading(true);
+          handleSubmit();
+          setLoading(false);
+        }}
         >
           <Form.Input
             label="Business Name"
@@ -51,7 +54,7 @@ const Page = ({
             name="busname"
             required
             placeholder="Business Name"
-          />
+            />
           <Form.Input
             label="Business Email"
             onChange={handleChange}
@@ -59,7 +62,7 @@ const Page = ({
             type="email"
             required
             placeholder="adam@mybusiness.com"
-          />
+            />
           <Form.Input
             label="Business Phone"
             onChange={handleChange}
@@ -67,55 +70,56 @@ const Page = ({
             required
             placeholder="(604)-123-1234"
             type="tel"
-          />
+            />
           <Input
             required
             label="Address 1"
             name="address1"
             type="address"
             onChange={handleChange}
-          />
+            />
           <Input
             label="Address 2"
             name="address2"
             type="address"
             onChange={handleChange}
-          />
+            />
           <Input required label="City" name="city" onChange={handleChange} />
           <Input
             required
             label="Province"
             name="province"
             onChange={handleChange}
-          />
+            />
           <Input
             required
             label="Postal Code"
             name="postalcode"
             onChange={handleChange}
-          />
+            />
           <Form.Input
             label="Website"
             type="url"
             onChange={handleChange}
             name="website"
-          />
+            />
           <TextArea
             placeholder="Tell us about your business!"
             label="About"
             name="about"
             onChange={handleChange}
-          />
+            />
           <Form.Field>
             <Checkbox
               name="agreeTerms"
               label="I agree to the Terms and Conditions"
-            />
+              />
           </Form.Field>
           <Button color="black" type="submit">
             Submit
           </Button>
         </Form>
+              </div>
       ) : (
         <div className="mx-auto w-1/2 mt-12 text-center">
           <p className="text-xl mb-4">

@@ -1,6 +1,7 @@
 import { Button } from "semantic-ui-react";
 import { motion } from "framer-motion";
 import CartSummary from "./cartSummary";
+import CartItems from "./cartItems";
 
 const variants = {
   open: {
@@ -18,46 +19,10 @@ const variants = {
 };
 
 const index = ({ toggle, cartData, addToCart, removeFromCart }) => {
-  const items = Object.entries(cartData.items).map((entry, index) => {
-    let item = entry[1];
-    let mainImageUrl = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
-      item.MerchantId
-    }/products/${item.ProductId}/${item.images[item.mainImage]}`;
-
-    return (
-      <div key={entry[0]} className="flex justify-center">
-        <img src={mainImageUrl} className="h-16 mr-4" />
-        <div>
-          <p>{item.title}</p>
-          <p>${item.price}</p>
-          <Button
-            className="text-black"
-            onClick={() => removeFromCart(item, cartData, 1)}
-          >
-            -
-          </Button>
-          <span>{item.qty}</span>
-          <Button
-            className="text-black"
-            onClick={() => addToCart(item, cartData)}
-          >
-            +
-          </Button>
-          <Button
-            className=""
-            color="red"
-            onClick={() => removeFromCart(item, cartData, -1)}
-          >
-            remove
-          </Button>
-        </div>
-      </div>
-    );
-  });
   return (
     <motion.div
       variants={variants}
-      className="w-full h-full cartContent front absolute"
+      className="w-full h-full px-4 front absolute"
     >
       <p className="flex justify-end">
         <span
@@ -67,10 +32,15 @@ const index = ({ toggle, cartData, addToCart, removeFromCart }) => {
           CLOSE
         </span>
       </p>
-      {/* <h2 className="text-3xl font-bolder text-center">CART</h2> */}
-      {items.length > 0 ? (
+      {Object.entries(cartData.items).length > 0 ? (
         <>
-          <div className="w-1/3 sm:w-4/5 text-center mx-auto">{items}</div>
+          <div className="w-full h-400 overflow-y-auto text-center">
+            <CartItems
+              cartData={cartData}
+              addToCart={addToCart}
+              removeFromCart={removeFromCart}
+            />
+          </div>
           <CartSummary cartData={cartData} toggle={toggle} />
         </>
       ) : (

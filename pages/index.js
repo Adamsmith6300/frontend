@@ -1,19 +1,65 @@
-import { useEffect } from "react";
 import Layout from "../components/hoc/layout";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-// import { wrapper } from "../store";
+import { withRouter } from "next/router";
+import { checkMerchant, isLoggedIn } from "../store/helpers";
 import actions from "../store/actions";
-import AllMerchants from "../components/merchants/allMerchants";
+import Banner from "../components/home/banner";
+import ProductSection from "../components/home/productSection";
+import MerchantSection from "../components/home/merchantSection";
+import SmallAboutSection from "../components/home/smallAboutSection";
 
-const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
+const Page = ({ addToCart, cartData, router, clearFlag }) => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getMerchants();
+    let loggedIn = isLoggedIn();
+    let merchant = checkMerchant();
+    if (loggedIn) {
+      if (merchant) {
+        router.push("/my-store");
+        clearFlag("successfulLogin");
+      } else {
+        router.push("/marketplace");
+        clearFlag("successfulLogin");
+      }
+    }
+    setLoading(false);
   }, []);
-
   return (
     <Layout>
-      <AllMerchants
-        merchants={merchants}
+      <Banner
+        bgSrc={"/firstBanner.jpg"}
+        heading={"Only Local"}
+        content={
+          "Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses!"
+        }
+        link={"/signup"}
+      />
+      <ProductSection
+        heading={"Featured Products"}
+        link={"/products"}
+        addToCart={addToCart}
+        cartData={cartData}
+      />
+      <MerchantSection heading={"Some of our Merchants"} link={"/merchants"} />
+      <Banner
+        bgSrc={"/secondBanner.jpg"}
+        heading={"Started in Vancouver"}
+        content={
+          "Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses!"
+        }
+        link={"/signup"}
+      />
+      <ProductSection
+        heading={"Popular"}
+        link={"/products"}
+        addToCart={addToCart}
+        cartData={cartData}
+      />
+      <SmallAboutSection />
+      <ProductSection
+        heading={"Home + Garden"}
+        link={"/products"}
         addToCart={addToCart}
         cartData={cartData}
       />
@@ -24,10 +70,10 @@ const Page = ({ getMerchants, merchants, addToCart, cartData, clearFlag }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMerchants: () => dispatch(actions.getMerchants()),
-    addToCart: (product, oldCart) =>
-      dispatch(actions.addToCart(product, oldCart)),
+    addToCart: (product, oldCart, qty = 1) =>
+      dispatch(actions.addToCart(product, oldCart, qty)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
   };
 };
 
-export default connect((state) => state, mapDispatchToProps)(Page);
+export default connect((state) => state, mapDispatchToProps)(withRouter(Page));

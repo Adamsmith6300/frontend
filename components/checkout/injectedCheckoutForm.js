@@ -1,15 +1,22 @@
 import { ElementsConsumer } from "@stripe/react-stripe-js";
 import CheckoutForm from "./checkoutForm";
 
-const InjectedCheckoutForm = ({ postNewOrder, cartData }) => {
+const InjectedCheckoutForm = ({
+  confirmPayment,
+  cartData,
+  setOrderNo,
+  personInfo,
+}) => {
   return (
     <ElementsConsumer>
       {({ elements, stripe }) => (
         <CheckoutForm
           elements={elements}
           stripe={stripe}
-          postNewOrder={postNewOrder}
+          confirmPayment={confirmPayment}
           cartData={cartData}
+          setOrderNo={setOrderNo}
+          personInfo={personInfo}
         />
       )}
     </ElementsConsumer>

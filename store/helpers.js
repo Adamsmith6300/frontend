@@ -1,6 +1,21 @@
 import jwt from "jwt-decode";
 import axios from "axios";
 
+export const shuffleArray = (array) => {
+  let curId = array.length;
+  // There remain elements to shuffle
+  while (0 !== curId) {
+    // Pick a remaining element
+    let randId = Math.floor(Math.random() * curId);
+    curId -= 1;
+    // Swap it with the current element.
+    let tmp = array[curId];
+    array[curId] = array[randId];
+    array[randId] = tmp;
+  }
+  return array;
+};
+
 export const saveLoginSession = (response) => {
   if (response.data) {
     const user = jwt(response.data["AuthenticationResult"]["IdToken"]);
@@ -51,6 +66,18 @@ export const checkMerchant = () => {
     return (
       "cognito:groups" in user &&
       user["cognito:groups"].includes("merchant-group")
+    );
+  }
+  return false;
+};
+
+export const checkPerson = () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  if (authRes != null) {
+    const user = jwt(authRes["IdToken"]);
+    return (
+      "cognito:groups" in user &&
+      user["cognito:groups"].includes("people-group")
     );
   }
   return false;
@@ -211,6 +238,18 @@ export const submitSocialLogin = async (params) => {
   // const user = jwt(params["IdToken"]);
   const resp = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`,
+    {
+      headers: {
+        Authorization: params["id_token"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const submitSocialLoginMerchant = async (params) => {
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/login/social/merchant`,
     {
       headers: {
         Authorization: params["id_token"],

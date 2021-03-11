@@ -1,66 +1,30 @@
-import { memo, useRef, useState } from "react";
+import { memo, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
-import { Link } from "next/link";
 import { useInvertedBorderRadius } from "../../utils/use-inverted-border-radius";
 import { ContentPlaceholder } from "./contentPlaceholder";
-import { Title } from "./title";
 import { Image } from "./image";
-import MerchantProducts from "./products/merchantProducts";
 import { openSpring, closeSpring } from "../animations";
 import { useScrollConstraints } from "../../utils/use-scroll-constraints";
 import { useWheelScroll } from "../../utils/use-wheel-scroll";
 const dismissDistance = 100;
 
-const MerchantCard = memo(
-  ({
-    isSelected,
-    setSelectedId,
-    merchant,
-    addToCart,
-    cartData,
-    // pointOfInterest,
-  }) => {
-    const id = merchant.MerchantId;
-    const title = merchant.name;
-    const backgroundColor = "#a1a1a1";
-    const [imgSrc, setImgSrc] = useState(
-      `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.MerchantId}/${merchant.bannerImage}`
-    );
-
-    // function imageExists(url, callback) {
-    //   var img = new Image();
-    //   img.onload = function () {
-    //     callback(true);
-    //   };
-    //   img.onerror = function () {
-    //     callback(false);
-    //   };
-    //   img.src = url;
-    // }
-
-    // const checkBannerExists = () => {
-    //   imageExists(imgSrc, function (exists) {
-    //     if (!exists) {
-    //       let newSrc = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
-    //       setImgSrc(newSrc);
-    //     }
-    //   });
-    // };
-    // checkBannerExists();
-    // console.log(imgSrc);
+const productCard = memo(
+  ({ isSelected, setSelectedId, product, addToCart, cartData }) => {
+    const id = product.ProductId;
+    const title = product.title;
 
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
 
     // Maintain the visual border radius when we perform the layoutTransition by inverting its scaleX/Y
-    const inverted = useInvertedBorderRadius(10);
+    const inverted = useInvertedBorderRadius(0);
 
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
 
     function checkSwipeToDismiss() {
-      y.get() > dismissDistance && setSelectedId(-1);
+      y.get() > dismissDistance && setSelectedId(null);
     }
 
     function checkZIndex(latest) {
@@ -70,7 +34,7 @@ const MerchantCard = memo(
         zIndex.set(0);
       }
     }
-    // console.log("MERCHANT:", isSelected);
+
     // When this card is selected, attach a wheel event listener
     const containerRef = useRef(null);
     useWheelScroll(
@@ -82,13 +46,13 @@ const MerchantCard = memo(
     );
 
     return (
-      <li ref={containerRef} className={`card`}>
+      <li ref={containerRef} className={`card--products`}>
         <Overlay isSelected={isSelected} setSelectedId={setSelectedId} />
         <div className={`card-content-container ${isSelected && "open"}`}>
           <motion.div
             ref={cardRef}
-            className="card-content"
-            style={{ ...inverted, zIndex, y }}
+            className={`card-content ${isSelected && "shadow"}`}
+            style={{ zIndex, y }}
             layoutTransition={isSelected ? openSpring : closeSpring}
             drag={isSelected ? "y" : false}
             dragConstraints={constraints}
@@ -104,57 +68,40 @@ const MerchantCard = memo(
                   d="M 3 16.5 L 17 2.5"
                   fill="transparent"
                   strokeWidth="2"
-                  stroke="hsl(0, 0%, 100%)"
+                  stroke="hsl(0, 0%, 0%)"
                   strokeLinecap="round"
-                  // variants={{
-                  //   closed: { d: "M 2 2.5 L 50 2.5" },
-                  //   open: { d: "M 3 16.5 L 17 2.5" },
-                  // }}
                 />
-                {/* <Path
-                  d="M 2 9.423 L 50 9.423"
-                  variants={{
-                    closed: { opacity: 1 },
-                    open: { opacity: 0 },
-                  }}
-                  transition={{ duration: 0.1 }}
-                /> */}
                 <path
                   d="M 3 2.5 L 17 16.346"
                   fill="transparent"
                   strokeWidth="2"
-                  stroke="hsl(0, 0%, 100%)"
+                  stroke="hsl(0, 0%, 0%)"
                   strokeLinecap="round"
-                  // variants={{
-                  //   closed: { d: "M 2 16.346 L 50 16.346" },
-                  //   open: { d:  },
-                  // }}
                 />
               </svg>
             </button>
             <Image
               id={id}
               isSelected={isSelected}
-              // pointOfInterest={pointOfInterest}
-              backgroundColor={backgroundColor}
-              imgSrc={imgSrc}
+              source={product.source}
+              MerchantId={product.MerchantId}
+              ProductId={product.ProductId}
+              images={product.images}
+              mainImage={product.mainImage}
             />
-            {/* <Title title={title} isSelected={isSelected} /> */}
             <ContentPlaceholder
-              merchant={merchant}
-              addToCart={addToCart}
-              cartData={cartData}
-              title={title}
-              isSelected={isSelected}
-            />
-            <MerchantProducts
-              products={merchant.products}
+              product={product}
               addToCart={addToCart}
               cartData={cartData}
             />
           </motion.div>
         </div>
-        {!isSelected ? <h2 className="text-black">{title}</h2> : null}
+        {!isSelected ? (
+          <>
+            <p className="text-black text-3xl my-2 mt-4">{title}</p>
+            <p>${product.price}</p>
+          </>
+        ) : null}
         {!isSelected && (
           <a onClick={() => setSelectedId(id)} className={`card-open-link`}></a>
         )}
@@ -172,13 +119,12 @@ const Overlay = ({ isSelected, setSelectedId }) => (
     style={{ pointerEvents: isSelected ? "auto" : "none" }}
     className="overlay"
   >
-    {/* <a
-    onClick={() => {
-      console.log("Merch");
-      setSelectedId(-1);
-    }}
-    ></a> */}
+    <a
+      onClick={() => {
+        setSelectedId(-1);
+      }}
+    ></a>
   </motion.div>
 );
 
-export default MerchantCard;
+export default productCard;

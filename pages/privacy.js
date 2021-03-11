@@ -5,7 +5,7 @@ import actions from "../store/actions";
 
 const Page = ({}) => {
   return (
-    <Layout>
+    <div className="loma-container">
       <h1 className="text-3xl text-center text-black">Privacy Policy</h1>
       <p>Last updated: February 01, 2021</p>
       <p>
@@ -497,7 +497,7 @@ const Page = ({}) => {
       <ul>
         <li>By email: privacy@shoploma.ca</li>
       </ul>
-    </Layout>
+    </div>
   );
 };
 

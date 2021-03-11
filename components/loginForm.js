@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 
-const LoginForm = ({
-  loading,
-  setLoading,
-  submitLogin,
-  formError,
-  successfulLogin,
-}) => {
+const LoginForm = ({ loading, setLoading, submitLogin }) => {
   let isValidEmail = true
     ? null
     : {
@@ -41,6 +35,7 @@ const LoginForm = ({
         placeholder="adam@email.com"
         error={isValidEmail}
         name="email"
+        required
         type="email"
         onChange={handleChange}
       />
@@ -48,9 +43,15 @@ const LoginForm = ({
         label="Enter Password"
         name="password"
         type="password"
+        placeholder="Password123!"
+        required
         onChange={handleChange}
       />
-      <Button type="submit">Login</Button>
+      <div className="flex justify-center">
+        <button className="standard-btn" type="submit">
+          Login
+        </button>
+      </div>
     </Form>
   );
 };

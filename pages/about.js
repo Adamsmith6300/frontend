@@ -1,12 +1,26 @@
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
-import actions from "../store/actions";
-// import { useRouter } from "next/router";
+import Banner from "../components/home/banner";
 
 const Page = ({}) => {
   return (
     <Layout>
-      <h1 className="text-3xl text-center text-black">About Loma </h1>
+      <Banner bgSrc={"/passion.jpg"} empty />
+      <div className="text-center my-24">
+        <h2>Our Story</h2>
+        <p className="mt-4 mb-8">
+          Loma gives you another ecommerce option that allows you to support
+          your local community
+        </p>
+      </div>
+      <Banner bgSrc={"/lions.jpg"} empty />
+      <div className="text-center my-24">
+        <h2>Mission</h2>
+        <p className="mt-4 mb-8">
+          Loma gives you another ecommerce option that allows you to support
+          your local community
+        </p>
+      </div>
     </Layout>
   );
 };

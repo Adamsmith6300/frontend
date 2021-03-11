@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Head from "next/head";
 import Link from "next/link";
-import { Button } from "semantic-ui-react";
 import actions from "../../store/actions";
 import { SideMenu } from "./sideMenu";
-
 import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
-
-import Nav from "./nav";
 import Cart from "./cart";
+import Footer from "./footer";
 
 const Layout = ({
   children,
@@ -23,7 +20,6 @@ const Layout = ({
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
-  // const [isAuthed, setIsAuthed] = useState(null);
 
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
@@ -36,10 +32,10 @@ const Layout = ({
   }, []);
 
   return (
-    <div className="container">
+    <div className="loma-container">
       <Head>
         <title>Loma</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/loma.ico" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
@@ -65,17 +61,7 @@ const Layout = ({
       /> */}
       <h2 className="text-black text-center">Coming Soon!</h2>
       {/* {children} */}
-      {/* {!isMerchant && isAuthed ? (
-        <div className="w-full bottom-0 left-0 relative py-12">
-          <ul className="flex justify-center">
-            <li className="text-xl">
-              <Link href="/merchant-application">
-                <Button color="black">Become a Merchant</Button>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      ) : null} */}
+      {/* <Footer isAuthed={isAuthed} /> */}
       <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
         Font made from{" "}
         <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
@@ -88,8 +74,8 @@ const Layout = ({
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleCart: (showCart) => dispatch(actions.toggleCart(showCart)),
-    addToCart: (product, oldCart) =>
-      dispatch(actions.addToCart(product, oldCart)),
+    addToCart: (product, oldCart, qty = 1) =>
+      dispatch(actions.addToCart(product, oldCart, qty)),
     removeFromCart: (product, oldcart, qty) =>
       dispatch(actions.removeFromCart(product, oldcart, qty)),
     setCart: (cart) => dispatch(actions.setCart(cart)),

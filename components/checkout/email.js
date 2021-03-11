@@ -1,45 +1,60 @@
-import React, { useState } from "react";
-import { Button, Input, Form } from "semantic-ui-react";
+import { FcCheckmark } from "react-icons/fc";
 
-const email = ({ activeCheckoutStep, setActiveCheckout }) => {
+const email = ({
+  activeCheckoutStep,
+  setActiveCheckout,
+  setPersonInfo,
+  personInfo,
+}) => {
   const step = 1;
   const isActive = activeCheckoutStep == step;
 
-  const [emailData, updateEmailData] = useState("adamsmith6300@gmail.com");
-
   const handleChange = (e) => {
-    updateEmailData(e.target.value.trim());
+    setPersonInfo({
+      ...personInfo,
+      [e.target.name]: e.target.value.trim(),
+    });
   };
 
   return (
-    <div className="border border-grey-400 p-3 m-3">
-      <p>
-        1. Your Email{" "}
+    <div className="p-3 m-3">
+      <p className="flex justify-between border-b">
+        <span>
+          1. Email{" "}
+          {activeCheckoutStep > step ? (
+            <FcCheckmark className="inline ml-3 mb-1" />
+          ) : null}
+        </span>
         {activeCheckoutStep > step ? (
-          <span onClick={() => setActiveCheckout(step)}>Edit</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => setActiveCheckout(step)}
+          >
+            Edit
+          </span>
         ) : null}
       </p>
       {isActive ? (
-        <Form
+        <form
           onSubmit={(e) => {
             e.preventDefault();
             setActiveCheckout(activeCheckoutStep + 1);
-            console.log("Add to checkout state: ", emailData);
           }}
         >
-          <Input
+          <input
+            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
             required
             label="Email"
-            value={emailData}
+            value={personInfo.email}
             placeholder="adam@email.com"
             name="email"
             type="email"
             onChange={handleChange}
           />
-          <Form.Field>
-            <Button type="submit">Continue</Button>
-          </Form.Field>
-        </Form>
+          <button className="standard-btn" type="submit">
+            Continue
+          </button>
+        </form>
       ) : null}
     </div>
   );
