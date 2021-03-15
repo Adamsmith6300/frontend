@@ -24,6 +24,7 @@ export const Image = ({
         height: "420px",
         width: "100%",
         display: "flex",
+        paddingTop: "1rem",
         justifyContent: "space-between",
       }
     : {

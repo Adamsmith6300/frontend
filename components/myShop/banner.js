@@ -52,30 +52,6 @@ const index = ({ MerchantId, name, bannerImageName }) => {
 
   const uploadBanner = async () => {
     try {
-      // if (croppedBannerUpload && crop.width && crop.height) {
-      //   const reader = new FileReader();
-      //   let canvas = getCroppedImg(croppedBannerUpload, crop);
-      //   canvas.toBlob((blob) => {
-      //     reader.readAsDataURL(blob);
-      //     reader.onloadend = async () => {
-      //       let file = dataURLtoFile(reader.result, bannerName);
-      //       let resp = await getPresignedBannerURL({
-      //         MerchantId: MerchantId,
-      //         name: bannerName,
-      //       });
-      //       console.log("Presigned", resp);
-      //       // UPLOAD THIS TO S3
-      //       console.log("File", file);
-      //       if (resp.data && file) {
-      //         let postBannerResp = await postImageUpload(file, resp.data);
-      //         console.log(postBannerResp);
-      //         window.location.reload();
-      //       } else {
-      //         throw { resp, file };
-      //       }
-      //     };
-      //   });
-      // }
       let { data } = await getPresignedBannerURL({
         MerchantId: MerchantId,
         name: bannerName,
@@ -123,46 +99,37 @@ const index = ({ MerchantId, name, bannerImageName }) => {
 
       {loading ? <LargeLoader /> : null}
       <div
-        className="myShop-banner"
         style={{
           backgroundImage: bannerImgURL,
         }}
-      >
-        <h2 className="w-full">{name}</h2>
-        {!editing ? (
-          <Button
-            className="edit-banner-btn inverted"
+        className="bg-img merchant--banner cursor-pointer"
+        onClick={() => {
+          bannerInput.current.click();
+        }}
+      />
+      {!editing ? null : (
+        <div className="w-full flex justify-center py-2">
+          <button
+            className="btn-no-size-color px-12 py-3 bg-green-600 mx-2"
             onClick={() => {
-              bannerInput.current.click();
+              setLoading(true);
+              uploadBanner();
             }}
           >
-            <span className="mr-2 ">Edit</span>
-            <MdModeEdit className="inline cursor-pointer" />
-          </Button>
-        ) : (
-          <div className="save-banner-btns">
-            <Button
-              className="teal"
-              onClick={() => {
-                setLoading(true);
-                uploadBanner();
-              }}
-            >
-              <span className="">Save</span>
-            </Button>
-            <Button
-              className="red inverted"
-              onClick={() => {
-                setBannerUpload(bannerImgSrc);
-                checkBannerExists();
-                setEditing(false);
-              }}
-            >
-              <span className="mr-2">Cancel</span>
-            </Button>
-          </div>
-        )}
-      </div>
+            Save
+          </button>
+          <button
+            className="btn-no-size-color px-8 py-3 bg-black mx-2"
+            onClick={() => {
+              setBannerUpload(bannerImgSrc);
+              checkBannerExists();
+              setEditing(false);
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </>
   );
 };

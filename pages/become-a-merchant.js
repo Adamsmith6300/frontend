@@ -48,7 +48,7 @@ const Page = ({
         if (resp.status == 200) {
           savePersonInfo(resp.data);
           await submitMerchantApplication(formData);
-          console.log("Success!");
+          console.log("Submitted signup!");
           router.push("/my-store");
         }
       } catch (err) {
@@ -114,24 +114,23 @@ const Page = ({
                 }}
               >
                 <Form.Input
-                  label="Business Name"
+                  label="Store Name"
                   onChange={handleChange}
-                  name="busname"
+                  name="storename"
                   required
-                  placeholder="Business Name"
+                  placeholder="Store Name"
                 />
-                {/* <Form.Input
-                  label="Business Email"
-                  onChange={handleChange}
-                  name="busemail"
-                  type="email"
-                  required
-                  placeholder="adam@mybusiness.com"
-                /> */}
                 <Form.Input
-                  label="Business Phone"
+                  label="Contact Name"
                   onChange={handleChange}
-                  name="busphone"
+                  name="fullname"
+                  required
+                  placeholder="Contact Name"
+                />
+                <Form.Input
+                  label="Contact Phone"
+                  onChange={handleChange}
+                  name="phone"
                   required
                   placeholder="(604)-123-1234"
                   type="tel"
@@ -172,12 +171,6 @@ const Page = ({
                   type="url"
                   onChange={handleChange}
                   name="website"
-                />
-                <TextArea
-                  placeholder="Tell us about your business!"
-                  label="About"
-                  name="about"
-                  onChange={handleChange}
                 />
                 <div className="flex justify-center mt-4">
                   <button className="standard-btn" type="submit">

@@ -4,7 +4,7 @@ import { LargeLoader } from "../loaders";
 
 const productGrid = ({ products, addToCart, cartData }) => {
   const [selectedId, setSelectedId] = useState(null);
-  if (products == null || products.length < 1) return <LargeLoader />;
+  if (products == null || products.length < 1) return <div />;
   return products.map((product, index) => {
     let isSelected = selectedId == product.ProductId;
     return (

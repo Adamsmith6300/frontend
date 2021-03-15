@@ -99,13 +99,6 @@ const index = ({ submitSignup, successfulSignup }) => {
         }}
       >
         <Form.Input
-          label="Name of Account Owner"
-          onChange={handleChange}
-          name="fullname"
-          required
-          placeholder="Full Name"
-        />
-        <Form.Input
           label="Email"
           onChange={handleChange}
           name="email"

@@ -3,7 +3,7 @@ import { useState } from "react";
 import SelectedOrder from "./selectedOrder";
 import Link from "next/link";
 
-export default ({ orders }) => {
+const myOrders = ({ orders }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   let orderList = orders.map((order, index) => {
     return (
@@ -55,3 +55,4 @@ export default ({ orders }) => {
     );
   }
 };
+export default myOrders;

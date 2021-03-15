@@ -52,25 +52,23 @@ const Page = ({
           if (resp.status == 200) {
             saveLoginSession(parameters);
             savePersonInfo(resp.data);
-            router.push("/marketplace");
           }
         } catch (err) {
           console.log(err);
         }
       }
     };
-    call();
-    let loggedIn = isLoggedIn();
-    let merchant = checkMerchant();
-    if (loggedIn) {
-      if (merchant) {
-        router.push("/my-store");
-        clearFlag("successfulLogin");
-      } else {
-        router.push("/marketplace");
-        clearFlag("successfulLogin");
+    call().then((resp) => {
+      let loggedIn = isLoggedIn();
+      let merchant = checkMerchant();
+      if (loggedIn) {
+        if (merchant) {
+          router.push("/my-store");
+        } else {
+          router.push("/marketplace");
+        }
       }
-    }
+    });
     setLoading(false);
   }, []);
 

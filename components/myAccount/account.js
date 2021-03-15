@@ -1,19 +1,22 @@
 import { Accordion, Icon, Button } from "semantic-ui-react";
 import { useState } from "react";
 import MyOrders from "./myOrders";
+import StoreOrders from "./storeOrders";
 import AccountDetails from "./accountDetails";
-import Link from "next/link";
-import { checkMerchant } from "../../store/helpers";
+import { Payments } from "../myShop";
 
-const index = ({ accountData, callFetchAccountData }) => {
+const index = ({
+  accountData,
+  myShop,
+  isMerchant,
+  callFetchAccountData,
+  callFetchMerchData,
+}) => {
   const [activeIndex, setActiveIndex] = useState(-1);
-  let info = accountData.info;
-  console.log(accountData);
+  let info = myShop ? myShop.info : accountData.info;
+  let mId = myShop ? myShop.info.MerchantId : null;
   return (
     <div className="my-account-container">
-      <h2 className="w-full text-center text-black text-3xl mb-5">
-        Welcome {info.fullname},
-      </h2>
       <Accordion id="account-details" fluid styled>
         <Accordion.Title
           active={activeIndex === 0}
@@ -26,6 +29,9 @@ const index = ({ accountData, callFetchAccountData }) => {
         <Accordion.Content active={activeIndex === 0}>
           <AccountDetails
             info={info}
+            isMerchant={isMerchant}
+            mId={mId}
+            callFetchMerchData={callFetchMerchData}
             callFetchAccountData={callFetchAccountData}
           />
         </Accordion.Content>
@@ -35,20 +41,33 @@ const index = ({ accountData, callFetchAccountData }) => {
           onClick={() => setActiveIndex(activeIndex === 1 ? -1 : 1)}
         >
           <Icon name="dropdown" />
-          Orders
+          {isMerchant ? "Store Orders" : "Orders"}
         </Accordion.Title>
         <Accordion.Content active={activeIndex === 1}>
-          <MyOrders orders={accountData.orders} />
+          {isMerchant ? (
+            <StoreOrders orders={myShop.orders} />
+          ) : (
+            <MyOrders orders={accountData.orders} />
+          )}
         </Accordion.Content>
+        {isMerchant && myShop ? (
+          <>
+            <Accordion.Title
+              active={activeIndex === 2}
+              index={2}
+              onClick={() => setActiveIndex(activeIndex === 2 ? -1 : 2)}
+            >
+              <Icon name="dropdown" />
+              Payments
+            </Accordion.Title>
+            <Accordion.Content active={activeIndex === 2}>
+              <Payments
+                stripe_onboard_complete={myShop.info.stripe_onboard_complete}
+              />
+            </Accordion.Content>
+          </>
+        ) : null}
       </Accordion>
-      {/* {!checkMerchant() ? (
-        <div>
-          <p>Want to become a merchant?</p>
-          <Link href="/merchant-application">
-            <Button color="black">Apply now!</Button>
-          </Link>
-        </div>
-      ) : null} */}
     </div>
   );
 };

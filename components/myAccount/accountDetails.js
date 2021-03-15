@@ -1,13 +1,17 @@
-import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 import { useState } from "react";
-import { MdModeEdit } from "react-icons/md";
-import { updateAccountDetails } from "../../store/helpers";
+import { updateAccountDetails, updateStoreDetails } from "../../store/helpers";
 import { LargeLoader } from "../loaders";
 
 const contactAttr = ["fullname", "phone", "email"];
 const addressAttr = ["address", "address2", "city", "province", "postalcode"];
 
-const index = ({ info, callFetchAccountData }) => {
+const index = ({
+  info,
+  callFetchAccountData,
+  callFetchMerchData,
+  isMerchant,
+  mId,
+}) => {
   const [formData, updateFormData] = useState({});
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,11 +23,18 @@ const index = ({ info, callFetchAccountData }) => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (update, fetchDetails) => {
     setLoading(true);
-    let resp = await updateAccountDetails(formData);
+    console.log(formData);
+    if (isMerchant && mId) {
+      formData["MerchantId"] = mId;
+    } else {
+      console.log("ERROR! cant submit edits");
+      return;
+    }
+    let resp = await update(formData);
     if (resp.status == 200) {
-      callFetchAccountData().then((response) => {
+      fetchDetails().then((response) => {
         setEdit(null);
         updateFormData({});
         setLoading(false);
@@ -41,12 +52,14 @@ const index = ({ info, callFetchAccountData }) => {
     if (attribute == "postalcode") {
       return "Postal Code";
     }
-
+    if (attribute == "email") {
+      return "Email (readonly)";
+    }
     return attribute.charAt(0).toUpperCase() + attribute.slice(1);
   };
 
   const getAttrComponent = (attr) => {
-    let val = info[attr];
+    let val = attr in info ? info[attr] : "";
     let label = getLabel(attr);
     if (edit && attr != "email") {
       return (
@@ -65,7 +78,7 @@ const index = ({ info, callFetchAccountData }) => {
       return (
         <li key={index + attr} className="flex flex-wrap py-1">
           <span className="font-bold w-full pl-3 py-1">{label}:</span>
-          <span className="w-full pl-3 py-1 h-10 ">{val}</span>
+          <span className="w-full pl-3 py-1 h-10 bg-gray-200">{val}</span>
         </li>
       );
     }
@@ -75,16 +88,16 @@ const index = ({ info, callFetchAccountData }) => {
   let addressDetails = [];
   if (info) {
     for (let i = 0; i < contactAttr.length; ++i) {
-      if (contactAttr[i] in info) {
-        const comp = getAttrComponent(contactAttr[i]);
-        contactDetails.push(comp);
-      }
+      // if (contactAttr[i] in info) {
+      const comp = getAttrComponent(contactAttr[i]);
+      contactDetails.push(comp);
+      // }
     }
     for (let i = 0; i < addressAttr.length; ++i) {
-      if (addressAttr[i] in info) {
-        const comp = getAttrComponent(addressAttr[i]);
-        addressDetails.push(comp);
-      }
+      // if (addressAttr[i] in info) {
+      const comp = getAttrComponent(addressAttr[i]);
+      addressDetails.push(comp);
+      // }
     }
   }
 
@@ -115,7 +128,13 @@ const index = ({ info, callFetchAccountData }) => {
                 // <div className="w-full pt-3">
                 <button
                   className="btn-no-size-color px-12 py-3 bg-green-600"
-                  onClick={() => handleSubmit()}
+                  onClick={() => {
+                    if (isMerchant) {
+                      handleSubmit(updateStoreDetails, callFetchMerchData);
+                    } else {
+                      handleSubmit(updateAccountDetails, callFetchAccountData);
+                    }
+                  }}
                 >
                   Save
                 </button>

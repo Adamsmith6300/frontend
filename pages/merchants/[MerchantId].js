@@ -15,11 +15,9 @@ const Page = ({ addToCart, cartData }) => {
     async function fetchMerchant() {
       try {
         const { MerchantId } = router.query;
-        console.log("MerchantId", MerchantId);
         const resp = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/market/merchants/${MerchantId}`
         );
-        console.log(resp.data);
         setMerchant(resp.data);
       } catch (err) {
         console.log(err);
@@ -28,10 +26,16 @@ const Page = ({ addToCart, cartData }) => {
     fetchMerchant();
   }, []);
 
-  let bgStyle =
-    merchant != null
-      ? { backgroundImage: `url(${merchant.info.bannerImage})` }
-      : {};
+  let bannerUrl;
+  if (merchant && merchant.info.bannerImage) {
+    bannerUrl = merchant.info.bannerImage.includes("http")
+      ? merchant.info.bannerImage
+      : `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${merchant.info.MerchantId}/${merchant.info.bannerImage}`;
+  } else {
+    bannerUrl = `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/sampleBanner`;
+  }
+
+  let bgStyle = { backgroundImage: `url(${bannerUrl})` };
 
   return (
     <Layout>
@@ -40,7 +44,7 @@ const Page = ({ addToCart, cartData }) => {
           <div style={bgStyle} className="bg-img merchant--banner" />
           <div className="px-64 pt-12">
             <h1 className="text-5xl my-12 flex justify-between">
-              <span>{merchant.info.busname}</span>
+              <span>{merchant.info.storename}</span>
               <a href={merchant.info.website} target="_blank">
                 <button className="btn-no-size px-8 py-4">Visit Website</button>
               </a>
@@ -54,7 +58,7 @@ const Page = ({ addToCart, cartData }) => {
             </div>
             {merchant.info.about != null && merchant.info.about.length > 0 ? (
               <div>
-                <p>About {merchant.info.busname}</p>
+                <p>About {merchant.info.storename}</p>
                 <p>{merchant.info.about}</p>
               </div>
             ) : null}

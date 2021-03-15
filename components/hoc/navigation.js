@@ -39,13 +39,11 @@ export const Navigation = ({ isOpen, clearFlag }) => {
 
   if (loggedIn) {
     homeLink = "/marketplace";
-    if (!isMerchant) {
-      secondaryNavItems.unshift({
-        title: "my account",
-        link: "/my-account",
-        linkStyle: "secondary",
-      });
-    }
+    secondaryNavItems.unshift({
+      title: "my account",
+      link: "/my-account",
+      linkStyle: "secondary",
+    });
     secondaryNavItems.push({
       title: "logout",
       action: () => {

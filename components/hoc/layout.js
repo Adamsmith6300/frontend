@@ -54,13 +54,15 @@ const Layout = ({
         />
       </Link>
       <SideMenu clearFlag={clearFlag} />
-      <Cart
-        toggleCart={toggleCart}
-        showCart={showCart}
-        cartData={cartData}
-        addToCart={addToCart}
-        removeFromCart={removeFromCart}
-      />
+      {!isMerchant ? (
+        <Cart
+          toggleCart={toggleCart}
+          showCart={showCart}
+          cartData={cartData}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+        />
+      ) : null}
       {children}
       <Footer isAuthed={isAuthed} />
       <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
