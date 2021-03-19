@@ -9,7 +9,7 @@ import {
   fetchMerchantData,
   updateStoreDetails,
 } from "../store/helpers";
-import { Products, Banner } from "../components/myShop";
+import { Products, Banner, ShopifyImportModal } from "../components/myStore";
 import { LargeLoader } from "../components/loaders";
 import Modal from "../components/modal";
 
@@ -156,7 +156,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
       ) : (
         <LargeLoader />
       )}
-      {showModal ? (
+      {showModal && myShop != null ? (
         <Modal open={setShowModal}>
           <div className="flex justify-end p-4">
             <button className={``} onClick={() => setShowModal(false)}>
@@ -178,9 +178,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
               </svg>
             </button>
           </div>
-          <p className="text-center text-2xl font-bold">
-            Start by connecting to you Shopify store
-          </p>
+          <ShopifyImportModal open={setShowModal} myShop={myShop} />
         </Modal>
       ) : null}
     </Layout>

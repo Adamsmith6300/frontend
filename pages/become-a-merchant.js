@@ -1,12 +1,13 @@
-import Layout from "../components/hoc/layout";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
-import actions from "../store/actions";
 import { withRouter } from "next/router";
-import MerchantSignupForm from "../components/merchantSignupForm/index";
 import Link from "next/link";
-import { Form, TextArea } from "semantic-ui-react";
-import { LargeLoader } from "../components/loaders";
+import { Form } from "semantic-ui-react";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillFacebook } from "react-icons/ai";
+
+import actions from "../store/actions";
 import {
   checkMerchant,
   checkPerson,
@@ -15,8 +16,9 @@ import {
   saveLoginSession,
 } from "../store/helpers";
 
-import { FcGoogle } from "react-icons/fc";
-import { AiFillFacebook } from "react-icons/ai";
+import Layout from "../components/hoc/layout";
+import MerchantSignupForm from "../components/merchantSignupForm/index";
+import { LargeLoader } from "../components/loaders";
 
 const Page = ({
   submitSignup,
@@ -33,6 +35,8 @@ const Page = ({
   const [showApplication, setShowApplication] = useState(successfulSignup);
   const [params, setParams] = useState(null);
 
+  // const router = useRouter();
+
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -44,9 +48,11 @@ const Page = ({
     let loggedIn = isLoggedIn();
     if (loggedIn) {
       try {
+        // pass shopify params from local storage (if exists)
         let resp = await submitSocialLoginMerchant(params);
         if (resp.status == 200) {
           savePersonInfo(resp.data);
+          formData["shopify_params"] = localStorage.getItem("shopify_params");
           await submitMerchantApplication(formData);
           console.log("Submitted signup!");
           router.push("/my-store");
@@ -73,17 +79,33 @@ const Page = ({
 
   useEffect(() => {
     const call = async () => {
-      if (!window.location.href.includes("#")) {
-        return;
+      let queryParams = router.query;
+      if (
+        "hmac" in queryParams &&
+        "shop" in queryParams &&
+        "timestamp" in queryParams
+      ) {
+        let shopify_state = localStorage.getItem("shopify_state");
+        if (
+          !shopify_state ||
+          queryParams.state != shopify_state.replace(/['"]+/g, "")
+        )
+          return;
+        localStorage.setItem("shopify_params", JSON.stringify(queryParams));
       }
-      const parameters = socialParameters(window.location.href);
-      if ("id_token" in parameters) {
-        saveLoginSession(parameters);
-        setShowApplication(true);
-        setParams(parameters);
+      if (window.location.href.includes("id_token")) {
+        const parameters = socialParameters(window.location.href);
+        if ("id_token" in parameters) {
+          saveLoginSession(parameters);
+          setShowApplication(true);
+          setParams(parameters);
+        }
       }
     };
-    call();
+    call().then((resp) => {
+      console.log("HERE");
+      setLoading(false);
+    });
     // let loggedIn = isLoggedIn();
     // let merchant = checkMerchant();
     // if (loggedIn) {
@@ -95,7 +117,6 @@ const Page = ({
     //     clearFlag("successfulLogin");
     //   }
     // }
-    setLoading(false);
   }, []);
   return (
     <Layout>

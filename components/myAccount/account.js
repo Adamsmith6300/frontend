@@ -3,7 +3,7 @@ import { useState } from "react";
 import MyOrders from "./myOrders";
 import StoreOrders from "./storeOrders";
 import AccountDetails from "./accountDetails";
-import { Payments } from "../myShop";
+import Payments from "./payments";
 
 const index = ({
   accountData,
