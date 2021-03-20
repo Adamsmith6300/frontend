@@ -49,3 +49,15 @@
     position: relative;
   }
 }
+
+@media only screen and (min-width: 500px) {
+  .modal-content-container {
+    max-width: 90vw;
+    max-height: 80vh;
+    min-width: 450px;
+    min-height: 300px;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+  }
+}

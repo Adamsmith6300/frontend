@@ -481,8 +481,9 @@ button:focus {
 .modal-content-container {
   max-width: 90vw;
   max-height: 80vh;
-  width: 500px;
-  height: 300px;
+  min-width: 300px;
+  min-height: 200px;
+  padding: 1rem 2rem;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
 }

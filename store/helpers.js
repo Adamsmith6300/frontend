@@ -275,7 +275,36 @@ export const getAuthUrl = async (storeName) => {
     `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/connect?storeName=${storeName}`,
     {
       headers: {
-        Authorization: params["id_token"],
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const getShopifyProducts = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/shopify/products`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const importProducts = async (products) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/products`,
+    products,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
       },
     }
   );

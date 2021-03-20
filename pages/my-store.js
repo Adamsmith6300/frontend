@@ -158,7 +158,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
       )}
       {showModal && myShop != null ? (
         <Modal open={setShowModal}>
-          <div className="flex justify-end p-4">
+          <div className="flex justify-end">
             <button className={``} onClick={() => setShowModal(false)}>
               <svg width="23" height="23" viewBox="0 0 23 23">
                 <path

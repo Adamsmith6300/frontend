@@ -24,7 +24,18 @@
   width: 500px;
 }
 
-/* max width  */
+/* min-width */
+.min-w-200 {
+  min-width: 200px;
+}
+.min-w-300 {
+  min-width: 300px;
+}
+.min-w-350 {
+  min-width: 350px;
+}
+
+/* max width */
 .max-w-500 {
   max-width: 500px;
 }
