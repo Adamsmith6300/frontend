@@ -10,14 +10,13 @@ export const Image = ({
   MerchantId,
   ProductId,
   images,
-  mainImage,
+  mainImageIndex,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(mainImage);
+  const [currentIndex, setCurrentIndex] = useState(mainImageIndex);
 
-  let imgSrc =
-    source == "loma"
-      ? `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${MerchantId}/products/${ProductId}/${images[currentIndex]}`
-      : images[currentIndex];
+  let imgSrc = images[currentIndex].src
+    ? images[currentIndex].src
+    : images[currentIndex];
 
   const selectedStyle = isSelected
     ? {

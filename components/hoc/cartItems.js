@@ -2,12 +2,7 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
   if (!cartData || !cartData.items) return null;
   return Object.entries(cartData.items).map((entry, index) => {
     let item = entry[1];
-    let mainImageUrl =
-      item.source == "loma"
-        ? `${process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL}/${
-            item.MerchantId
-          }/products/${item.ProductId}/${item.images[item.mainImage || 0]}`
-        : item.images[item.mainImage || 0];
+    let mainImageUrl = item.images[0].src;
 
     return (
       <div key={entry[0]} className="flex justify-start w-full my-6">

@@ -13,7 +13,13 @@ import { Products, Banner, ShopifyImportModal } from "../components/myStore";
 import { LargeLoader } from "../components/loaders";
 import Modal from "../components/modal";
 
-const Page = ({ router, myShop, setMerchantData }) => {
+const Page = ({
+  router,
+  myShop,
+  setMerchantData,
+  getCategories,
+  categories,
+}) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
   const [website, updateWebsite] = useState(myShop ? myShop.info.website : "");
@@ -21,7 +27,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  async function callFetchMerchData() {
+  const callFetchMerchData = async () => {
     try {
       let resp = await fetchMerchantData();
       setMerchantData(resp.data);
@@ -30,7 +36,16 @@ const Page = ({ router, myShop, setMerchantData }) => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+
+  // const callGetCategories = async () => {
+  //   try {
+  //     let resp = await getCategories();
+  //     console.log(resp);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   useEffect(() => {
     let l = isLoggedIn();
@@ -43,11 +58,13 @@ const Page = ({ router, myShop, setMerchantData }) => {
     if (!myShop) {
       callFetchMerchData();
     }
+    if (categories == null) {
+      getCategories();
+    }
   }, []);
 
   const handleUpdateStore = async (data) => {
     setLoading(true);
-    console.log(data);
     data["MerchantId"] = myShop.info.MerchantId;
     let resp = await updateStoreDetails(data);
     if (resp.status == 200) {
@@ -150,6 +167,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
               products={myShop.products}
               callFetchMerchData={callFetchMerchData}
               setShowModal={setShowModal}
+              categories={categories}
             />
           </div>
         </div>
@@ -189,6 +207,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
     setMerchantData: (data) => dispatch(actions.setMerchantData(data)),
+    getCategories: () => dispatch(actions.getCategories()),
   };
 };
 

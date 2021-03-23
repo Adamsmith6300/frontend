@@ -70,9 +70,13 @@ const Page = ({
           router.push("/marketplace");
         }
       }
+      if (!window.location.href.includes("#")) {
+        setLoading(false);
+      }
     });
-    setLoading(false);
   }, []);
+
+  console.log(loading);
 
   return (
     <Layout>

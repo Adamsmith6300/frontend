@@ -87,7 +87,7 @@ const productCard = memo(
               MerchantId={product.MerchantId}
               ProductId={product.ProductId}
               images={product.images}
-              mainImage={product.mainImage}
+              mainImageIndex={0}
             />
             <ContentPlaceholder
               product={product}
@@ -99,7 +99,9 @@ const productCard = memo(
         {!isSelected ? (
           <>
             <p className="text-black text-3xl my-2 mt-4">{title}</p>
-            <p>${product.price}</p>
+            <p>
+              ${product.variants ? product.variants[0].price : product.price}
+            </p>
           </>
         ) : null}
         {!isSelected && (

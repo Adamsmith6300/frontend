@@ -234,6 +234,23 @@ export const postNewProduct = async (formData) => {
   return resp;
 };
 
+export const deleteProducts = async (data) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.delete(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/products`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+      data: {
+        ...data,
+      },
+    }
+  );
+  return resp;
+};
+
 export const submitSocialLogin = async (params) => {
   let shopify_params = localStorage.getItem("shopify_params");
   let req_url = `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`;
