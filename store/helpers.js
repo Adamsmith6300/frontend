@@ -327,3 +327,30 @@ export const importProducts = async (products) => {
   );
   return resp;
 };
+
+export const verifyAddress = async (payload) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/market/address`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const confirmPayment = async (OrderId) => {
+  const authorization = getAuth();
+  return await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/market/order/${OrderId}/update`,
+    {
+      headers: {
+        Authorization: authorization,
+      },
+    }
+  );
+};

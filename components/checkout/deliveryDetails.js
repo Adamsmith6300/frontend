@@ -1,13 +1,38 @@
+import { useState } from "react";
 import { FcCheckmark } from "react-icons/fc";
+import { Form, Input, TextArea, Checkbox, Message } from "semantic-ui-react";
+import { verifyAddress } from "../../store/helpers";
 
 const deliveryDetails = ({
   activeCheckoutStep,
   setActiveCheckout,
   personInfo,
   setPersonInfo,
+  step,
 }) => {
-  const step = 2;
   const isActive = activeCheckoutStep == step;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const verifyAddressToContinue = async (personInfo) => {
+    let postalcode = personInfo["postalcode"].trim().toUpperCase().slice(0, 3);
+    try {
+      let resp = await verifyAddress({ postalcode: postalcode });
+      let valid = resp.status == 200 && resp.data == "Valid postal code";
+      if (valid) {
+        setActiveCheckout(activeCheckoutStep + 1);
+        setLoading(false);
+      } else {
+        console.log("NOT VALID");
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      setError(
+        "We currently only deliver to Vancouver, North Vancouver and West Vancouver."
+      );
+    }
+  };
 
   const handleChange = (e) => {
     setPersonInfo({
@@ -19,7 +44,7 @@ const deliveryDetails = ({
     <div className="p-3 m-3">
       <p className="flex justify-between border-b">
         <span>
-          2. Delivery Details
+          {step}. Delivery Details
           {activeCheckoutStep > step ? (
             <FcCheckmark className="inline ml-3 mb-1" />
           ) : null}
@@ -34,93 +59,111 @@ const deliveryDetails = ({
         ) : null}
       </p>
       {isActive ? (
-        <form
+        <Form
+          error
+          loading={loading}
           onSubmit={(e) => {
             e.preventDefault();
-            setActiveCheckout(activeCheckoutStep + 1);
+            setLoading(true);
+            verifyAddressToContinue(personInfo);
           }}
           className="flex flex-wrap text-left pt-4"
         >
-          <label className="font-bold w-full pl-3 py-1">Full Name:</label>
-          <input
+          <label className="font-bold w-full ">Full Name:</label>
+          <Input
             required
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="Full Name"
+            className="w-full my-3 mb-6"
             value={personInfo.fullname}
             name="fullname"
             type="name"
             onChange={handleChange}
           />
-          <label className="font-bold w-full pl-3 py-1">Address:</label>
-          <input
+          <label className="font-bold w-full ">Address:</label>
+          <Input
             required
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="Address"
+            className="w-full my-3 mb-6"
             value={personInfo.address}
             name="address"
             type="address"
             onChange={handleChange}
           />
-          <label className="font-bold w-full pl-3 py-1">Address2:</label>
-          <input
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="Address 2"
+          <label className="font-bold w-full ">
+            Apartment, suite, etc. (optional):
+          </label>
+          <Input
+            className="w-full my-3 mb-6"
             value={personInfo.address2}
             name="address2"
             type="address"
             onChange={handleChange}
           />
-          <label className="font-bold w-full pl-3 py-1">City:</label>
-          <input
+          <label className="font-bold w-full ">City:</label>
+          <Input
             required
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="City"
+            className="w-full my-3 mb-6"
             value={personInfo.city}
             name="city"
             onChange={handleChange}
           />
-          <label className="font-bold w-full pl-3 py-1">Province:</label>
-          <input
-            required
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="Province"
-            value={personInfo.province}
-            name="province"
-            onChange={handleChange}
+          <label className="font-bold w-full focus:none">Country:</label>
+          <Input
+            readOnly
+            className="w-full my-3 mb-6"
+            value={"Canada"}
+            name="country"
           />
-          <label className="font-bold w-full pl-3 py-1">Postal Code:</label>
-          <input
+          <label className="font-bold w-full ">Province:</label>
+          <Input
+            readOnly
+            className="w-full my-3 mb-6"
+            value={"British Columbia"}
+            name="province"
+          />
+          <label className="font-bold w-full ">Postal Code:</label>
+          <Input
             required
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="Postal Code"
+            className="w-full my-3 mb-6"
             value={personInfo.postalcode}
             name="postalcode"
             onChange={handleChange}
           />
-          <label className="font-bold w-full pl-3 py-1">Phone:</label>
-          <input
+          <label className="font-bold w-full ">Phone:</label>
+          <Input
             required
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="Phone Number"
+            className="w-full my-3 mb-6"
             value={personInfo.phone}
             name="phone"
             type="tel"
             onChange={handleChange}
           />
-          <textarea
+          <TextArea
             placeholder="Special notes about delivery..."
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
-            label="Notes"
+            className="w-full my-3 mb-6 p-3"
             name="notes"
             value={personInfo.notes}
             onChange={handleChange}
           />
+          <div className="my-3">
+            <Checkbox
+              onChange={() => {
+                setPersonInfo({
+                  ...personInfo,
+                  saveDeliveryDetails: !personInfo["saveDeliveryDetails"],
+                });
+              }}
+              defaultChecked
+              label="Save delivery details for later"
+            />
+          </div>
+          {error != null ? (
+            <Message error header="Invalid Address!" content={error} />
+          ) : null}
           <div className="w-full text-center">
             <button className="standard-btn" type="submit">
               Continue
             </button>
           </div>
-        </form>
+        </Form>
       ) : null}
     </div>
   );

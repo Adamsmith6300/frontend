@@ -19,23 +19,23 @@ const Page = ({
 }) => {
   //reroute if carts empty or show msg
   const [personInfoCheckout, setPersonInfo] = useState(personInfo);
+  const [billingInfo, setBillingInfo] = useState({});
   const [orderNo, setOrderNo] = useState(null);
-  // const [loggedIn, updateLoggedIn] = useState(false);
 
   useEffect(() => {
-    // updateLoggedIn(isLoggedIn());
-    if (!isLoggedIn()) {
+    let loggedIn = isLoggedIn();
+    if (!loggedIn) {
       router.push("/");
     }
     const call = async () => {
       try {
         let resp = await fetchAccountData();
-        setPersonInfo(resp.data.info);
+        setPersonInfo({ ...resp.data.info, saveDeliveryDetails: true });
       } catch (err) {
         console.log("Error fetching person info", err);
       }
     };
-    if (!personInfo) {
+    if (!personInfo && loggedIn) {
       call();
     }
   }, []);
@@ -58,6 +58,8 @@ const Page = ({
                 setOrderNo={setOrderNo}
                 confirmPayment={confirmPayment}
                 cartData={cartData}
+                billingInfo={billingInfo}
+                setBillingInfo={setBillingInfo}
               />
             </>
           ) : (

@@ -21,7 +21,7 @@ const Page = ({ router }) => {
       call(new_uuid).then((resp) => {
         let shop = queryParams.shop;
         let redir = window.location["origin"];
-        let scopes = "read_product_listings,read_products,write_inventory";
+        let scopes = "read_products,write_inventory";
 
         window.location.replace(
           `https://${shop}/admin/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_SHOPIFY_API_KEY}&scope=${scopes}&redirect_uri=${redir}/become-a-merchant&state=${new_uuid}`

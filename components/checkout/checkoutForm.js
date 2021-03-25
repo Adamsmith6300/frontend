@@ -2,17 +2,11 @@ import React, { useState } from "react";
 import { CardElement } from "@stripe/react-stripe-js";
 import { Button, Form } from "semantic-ui-react";
 import axios from "axios";
-import { getAuth, getPersonId } from "./../../store/helpers";
+import { getAuth, getPersonId, confirmPayment } from "./../../store/helpers";
 
-const index = ({
-  stripe,
-  elements,
-  confirmPayment,
-  cartData,
-  setOrderNo,
-  personInfo,
-}) => {
+const index = ({ stripe, elements, cartData, setOrderNo, personInfo }) => {
   const [isLoading, updateIsLoading] = useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     updateIsLoading(true);
@@ -52,10 +46,15 @@ const index = ({
       } else {
         // The payment has been processed!
         if (result.paymentIntent.status === "succeeded") {
-          let orderResp = await confirmPayment(resp.data.OrderId);
-          console.log("orderResp", orderResp);
-          localStorage.removeItem("cart");
-          setOrderNo(resp.data.OrderId);
+          try {
+            let orderResp = await confirmPayment(resp.data.OrderId);
+            if (orderResp.status == 200) {
+              localStorage.removeItem("cart");
+              setOrderNo(resp.data.OrderId);
+            }
+          } catch (err) {
+            console.log(err);
+          }
         }
       }
     } else {

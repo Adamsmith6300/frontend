@@ -4,7 +4,7 @@ const orderSummary = ({ cartData, addToCart, removeFromCart }) => {
   return (
     <div className="w-1/2 mx-auto text-center pt-12">
       <CartItems
-        items={cartData.items}
+        cartData={cartData}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
       />

@@ -14,15 +14,14 @@ const payment = ({
   cartData,
   setOrderNo,
   personInfo,
+  step,
 }) => {
-  const step = 3;
   const isActive = activeCheckoutStep == step;
-
   return (
     <div className="p-3 m-3">
       <p className="flex justify-between border-b">
         <span>
-          3. Confirm & Pay
+          {step}. Confirm & Pay
           {activeCheckoutStep > step ? (
             <FcCheckmark className="inline ml-3 mb-1" />
           ) : null}
