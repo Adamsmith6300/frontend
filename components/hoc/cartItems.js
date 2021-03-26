@@ -3,7 +3,6 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
   return Object.entries(cartData.items).map((entry, index) => {
     let item = entry[1];
     let mainImageUrl = item.images[0].src;
-
     return (
       <div key={entry[0]} className="flex justify-start w-full my-6">
         <div className="w-1/3 overflow-x-hidden mr-4 flex justify-center">

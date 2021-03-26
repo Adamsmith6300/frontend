@@ -2,6 +2,7 @@ import moment from "moment";
 import { useState } from "react";
 import SelectedOrder from "./selectedOrder";
 import Link from "next/link";
+import { getStatus } from "./selectedOrder";
 
 const myOrders = ({ orders }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -10,14 +11,18 @@ const myOrders = ({ orders }) => {
       <li
         onClick={() => setSelectedOrder(selectedOrder == index ? null : index)}
         key={order.OrderId}
-        className="cursor-pointer p-3 border border-1 w-350 m-2 text-base"
+        className="cursor-pointer flex justify-start place-items-center p-3 border border-1 w-350 max-w-screen m-2 text-base"
       >
-        <p>Order# {order.OrderId.slice(-12)}</p>
-        <p>{order.items.length} Product(s)</p>{" "}
-        <p>
-          Date of Order: {moment.unix(order.created).format("MMMM Do YYYY")}
-        </p>
-        <p>Total: {"$$$"}</p>
+        <div className="w-100 h-75 overflow-hidden">
+          <img src={order.items[0].image.src} className="h-full" />
+        </div>
+        <div className="w-200 pl-3">
+          <p className="text-lg">{order.items.length} Product(s)</p>
+          <p className="text-lg">Status: {getStatus(order.status)}</p>
+          <p className="text-lg">
+            Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
+          </p>
+        </div>
       </li>
     );
   });

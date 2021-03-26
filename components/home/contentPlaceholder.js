@@ -37,9 +37,20 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
           </div>
           <button
             className="standard-btn"
-            onClick={() =>
-              addToCart({ ...product, ...product.variants[0] }, cartData, qty)
-            }
+            onClick={() => {
+              let title = product.title;
+              if (
+                product.variants[0].title &&
+                product.variants[0].title != "Default Title"
+              ) {
+                title = product.variants[0].title;
+              }
+              addToCart(
+                { ...product, ...product.variants[0], title: title },
+                cartData,
+                qty
+              );
+            }}
           >
             Add to Cart
           </button>

@@ -12,7 +12,7 @@ const index = ({
   callFetchAccountData,
   callFetchMerchData,
 }) => {
-  const [activeIndex, setActiveIndex] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(0);
   let info = myShop ? myShop.info : accountData.info;
   let mId = myShop ? myShop.info.MerchantId : null;
   return (

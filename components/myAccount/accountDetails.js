@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { updateAccountDetails, updateStoreDetails } from "../../store/helpers";
 import { LargeLoader } from "../loaders";
+import { Input } from "semantic-ui-react";
 
 const contactAttr = ["fullname", "phone", "email"];
 const addressAttr = ["address", "address2", "city", "province", "postalcode"];
@@ -28,9 +29,6 @@ const index = ({
     console.log(formData);
     if (isMerchant && mId) {
       formData["MerchantId"] = mId;
-    } else {
-      console.log("ERROR! cant submit edits");
-      return;
     }
     let resp = await update(formData);
     if (resp.status == 200) {
@@ -40,7 +38,7 @@ const index = ({
         setLoading(false);
       });
     } else {
-      console.log("ERROR! Failed to update shop details");
+      console.log("ERROR! Failed to update details");
       window.location.reload();
     }
   };
@@ -59,15 +57,16 @@ const index = ({
   };
 
   const getAttrComponent = (attr) => {
+    if (attr == "province") return null;
     let val = attr in info ? info[attr] : "";
     let label = getLabel(attr);
     if (edit && attr != "email") {
       return (
         <li key={index + attr} className="flex flex-wrap py-1">
           <span className="font-bold w-full pl-3 py-1">{label}:</span>
-          <input
+          <Input
             defaultValue={val}
-            className="w-full pl-3 py-1 h-10 bg-gray-200"
+            className="w-full my-3 h-10"
             name={attr}
             type="text"
             onChange={(e) => handleChange(e)}
@@ -77,8 +76,8 @@ const index = ({
     } else {
       return (
         <li key={index + attr} className="flex flex-wrap py-1">
-          <span className="font-bold w-full pl-3 py-1">{label}:</span>
-          <span className="w-full pl-3 py-1 h-10 bg-gray-200">{val}</span>
+          <span className="font-bold w-full  py-1">{label}:</span>
+          <span className="w-full my-3">{val}</span>
         </li>
       );
     }
