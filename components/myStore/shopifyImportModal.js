@@ -9,7 +9,7 @@ import {
 import ShopifyProductImport from "./shopifyProductImport";
 // import ProductToImport from "./productToImport";
 
-const index = ({ myShop, open }) => {
+const index = ({ myShop, closeModal, callFetchMerchData }) => {
   const [step, setStep] = useState(myShop.info.connectedStore ? 1 : 0);
   const [shopifyStoreName, updateShopifyStoreName] = useState(null);
   const [shopifyProducts, updateShopifyProducts] = useState(null);
@@ -31,6 +31,7 @@ const index = ({ myShop, open }) => {
     e.stopPropagation();
     setLoading(true);
     let response = await importProducts(selectedProducts);
+    await callFetchMerchData();
     setLoading(false);
     setStep(2);
   };
@@ -112,30 +113,9 @@ const index = ({ myShop, open }) => {
           )}
         </div>
       );
-    // case 2:
-    //   return (
-    //     <div className="grid place-items-center w-full">
-    //       <p className="text-center text-2xl font-bold">Review and Confirm</p>
-    //       <ul className="list-reset my-6 overflow-y-auto max-h-500 w-full">
-    //         {productsToImport}
-    //       </ul>
-    //       <p className="mb-6">
-    //         Importing {Object.keys(selectedProducts).length} product(s)
-    //       </p>
-    //       <button
-    //         className="btn-no-size-color px-8 py-3 bg-black ml-2"
-    //         onClick={(e) => {
-    //           e.stopPropagation();
-    //           setStep(3);
-    //         }}
-    //       >
-    //         Import
-    //       </button>
-    //     </div>
-    //   );
     case 2:
       return (
-        <div className="grid place-items-center">
+        <div className="grid place-items-center w-full">
           <p className="text-center text-2xl font-bold mb-6">
             Successfully imported products!
           </p>
@@ -144,7 +124,7 @@ const index = ({ myShop, open }) => {
             className="btn-no-size-color px-8 py-3 bg-black ml-2"
             onClick={(e) => {
               e.stopPropagation();
-              open(false);
+              closeModal();
             }}
           >
             Close

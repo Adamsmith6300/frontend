@@ -9,6 +9,7 @@ const Products = ({
   callFetchMerchData,
   MerchantId,
   setShowModal,
+  setModalContent,
   categories,
 }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -91,10 +92,11 @@ const Products = ({
       <button
         className="btn-shadowed mt-8 mx-auto px-16 py-4 grid grid-cols-2 place-items-center"
         onClick={() => {
+          setModalContent("shopifyImport");
           setShowModal(true);
         }}
       >
-        <span className="">Import from</span>
+        <span>Import from</span>
         <img className="h-12" src="./shopify_logo.png" />
       </button>
     </>

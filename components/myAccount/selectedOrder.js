@@ -7,8 +7,7 @@ export const getStatus = (status) => {
     case "payment_approved":
       return (
         <span>
-          out for delivery
-          {/* picking up */}
+          picking up
           <BsFillCircleFill className="inline text-yellow-300 ml-1" />
         </span>
       );

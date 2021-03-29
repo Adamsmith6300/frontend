@@ -125,6 +125,20 @@ export const fetchAccountData = async () => {
   return resp;
 };
 
+export const refreshIdToken = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/refresh`,
+    { refresh_token: authRes["RefreshToken"] },
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
 export const updateStoreDetails = async (payload) => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const user = jwt(authRes["IdToken"]);
@@ -330,7 +344,6 @@ export const importProducts = async (products) => {
 
 export const verifyAddress = async (payload) => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
-  const user = jwt(authRes["IdToken"]);
   const resp = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/market/address`,
     payload,
@@ -353,4 +366,18 @@ export const confirmPayment = async (OrderId) => {
       },
     }
   );
+};
+
+export const reviewStore = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/approval`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
 };

@@ -18,6 +18,7 @@ const Page = ({
   clearFlag,
   router,
 }) => {
+  if (successfulSignup) router.push("/marketplace");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     let loggedIn = isLoggedIn();

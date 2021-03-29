@@ -49,6 +49,7 @@ const Page = ({
       }
       const parameters = socialParameters(window.location.href);
       if ("id_token" in parameters) {
+        console.log(parameters);
         try {
           let resp = await submitSocialLogin(parameters);
           if (resp.status == 200) {
@@ -63,20 +64,18 @@ const Page = ({
     call().then((resp) => {
       let loggedIn = isLoggedIn();
       let merchant = checkMerchant();
-      if (loggedIn) {
-        if (merchant) {
-          router.push("/my-store");
-        } else {
-          router.push("/marketplace");
-        }
-      }
+      // if (loggedIn) {
+      //   if (merchant) {
+      //     router.push("/my-store");
+      //   } else {
+      //     router.push("/marketplace");
+      //   }
+      // }
       if (!window.location.href.includes("#")) {
         setLoading(false);
       }
     });
   }, []);
-
-  console.log(loading);
 
   return (
     <Layout>

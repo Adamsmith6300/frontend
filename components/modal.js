@@ -1,9 +1,6 @@
-const modal = ({ children, open }) => {
+const modal = ({ children, close }) => {
   return (
-    <div
-      onClick={() => open(false)}
-      className="overlay grid place-items-center"
-    >
+    <div onClick={() => close()} className="overlay grid place-items-center">
       <div className="modal-content-container">{children}</div>
     </div>
   );

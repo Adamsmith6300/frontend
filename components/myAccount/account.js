@@ -12,7 +12,7 @@ const index = ({
   callFetchAccountData,
   callFetchMerchData,
 }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
   let info = myShop ? myShop.info : accountData.info;
   let mId = myShop ? myShop.info.MerchantId : null;
   return (
@@ -45,7 +45,9 @@ const index = ({
         </Accordion.Title>
         <Accordion.Content active={activeIndex === 1}>
           {isMerchant ? (
-            <StoreOrders orders={myShop.orders} />
+            myShop ? (
+              <StoreOrders orders={myShop.orders} />
+            ) : null
           ) : (
             <MyOrders orders={accountData.orders} />
           )}

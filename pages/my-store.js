@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
-import actions from "../store/actions";
 import { withRouter } from "next/router";
+import { BsFillCircleFill } from "react-icons/bs";
+
+import actions from "../store/actions";
 import {
   isLoggedIn,
   checkMerchant,
   fetchMerchantData,
   updateStoreDetails,
 } from "../store/helpers";
-import { Products, Banner, ShopifyImportModal } from "../components/myStore";
+
+import Layout from "../components/hoc/layout";
+import {
+  Products,
+  Banner,
+  ShopifyImportModal,
+  ChangeListedModal,
+} from "../components/myStore";
 import { LargeLoader } from "../components/loaders";
 import Modal from "../components/modal";
 
@@ -26,6 +34,12 @@ const Page = ({
   const [about, updateAbout] = useState(myShop ? myShop.info.about : "");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+
+  const closeModal = () => {
+    setShowModal(false);
+    setModalContent(null);
+  };
 
   const callFetchMerchData = async () => {
     try {
@@ -37,15 +51,6 @@ const Page = ({
       console.log(err);
     }
   };
-
-  // const callGetCategories = async () => {
-  //   try {
-  //     let resp = await getCategories();
-  //     console.log(resp);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   useEffect(() => {
     let l = isLoggedIn();
@@ -90,6 +95,28 @@ const Page = ({
             <h1 className="text-5xl my-12 flex justify-between">
               <span>{myShop.info.storename}</span>
             </h1>
+            <p className="text-2xl font-bold">
+              {myShop.info.listed ? (
+                <>
+                  <BsFillCircleFill className="inline text-green-400 mr-2" />
+                  Listed
+                </>
+              ) : (
+                <>
+                  <BsFillCircleFill className="inline text-yellow-400 mr-2" />
+                  Not Listed
+                </>
+              )}
+              <button
+                onClick={() => {
+                  setModalContent("changeListed");
+                  setShowModal(true);
+                }}
+                className="btn-no-size-color bg-black px-4 py-2 ml-4"
+              >
+                Change
+              </button>
+            </p>
             {loading ? (
               <LargeLoader />
             ) : (
@@ -167,6 +194,7 @@ const Page = ({
               products={myShop.products}
               callFetchMerchData={callFetchMerchData}
               setShowModal={setShowModal}
+              setModalContent={setModalContent}
               categories={categories}
             />
           </div>
@@ -174,10 +202,18 @@ const Page = ({
       ) : (
         <LargeLoader />
       )}
-      {showModal && myShop != null ? (
-        <Modal open={setShowModal}>
+      {showModal && myShop != null && modalContent != null ? (
+        <Modal
+          close={() => {
+            closeModal();
+          }}
+        >
           <div className="flex justify-end">
-            <button className={``} onClick={() => setShowModal(false)}>
+            <button
+              onClick={() => {
+                closeModal();
+              }}
+            >
               <svg width="23" height="23" viewBox="0 0 23 23">
                 <path
                   d="M 3 16.5 L 17 2.5"
@@ -196,7 +232,20 @@ const Page = ({
               </svg>
             </button>
           </div>
-          <ShopifyImportModal open={setShowModal} myShop={myShop} />
+          {modalContent == "shopifyImport" ? (
+            <ShopifyImportModal
+              closeModal={closeModal}
+              myShop={myShop}
+              callFetchMerchData={callFetchMerchData}
+            />
+          ) : null}
+          {modalContent == "changeListed" ? (
+            <ChangeListedModal
+              closeModal={closeModal}
+              myShop={myShop}
+              callFetchMerchData={callFetchMerchData}
+            />
+          ) : null}
         </Modal>
       ) : null}
     </Layout>

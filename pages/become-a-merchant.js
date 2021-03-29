@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import actions from "../store/actions";
 import {
   checkMerchant,
   checkPerson,
+  refreshIdToken,
   isLoggedIn,
   submitSocialLoginMerchant,
   saveLoginSession,
@@ -21,7 +23,6 @@ import MerchantSignupForm from "../components/merchantSignupForm/index";
 import { LargeLoader } from "../components/loaders";
 
 const Page = ({
-  submitSignup,
   formError,
   successfulSignup,
   clearFlag,
@@ -34,8 +35,7 @@ const Page = ({
   const [formData, updateFormData] = useState({});
   const [showApplication, setShowApplication] = useState(successfulSignup);
   const [params, setParams] = useState(null);
-
-  // const router = useRouter();
+  const [userPass, setUserPass] = useState(null);
 
   const handleChange = (e) => {
     updateFormData({
@@ -47,21 +47,37 @@ const Page = ({
   const handleSubmit = async () => {
     let loggedIn = isLoggedIn();
     if (loggedIn) {
+      if (params) {
+        try {
+          let resp = await submitSocialLoginMerchant(params);
+          savePersonInfo(resp.data);
+          // resp = await refreshIdToken();
+          // console.log(resp);
+          // await saveLoginSession(resp);
+        } catch (err) {
+          console.log(err);
+        }
+      }
       try {
         // pass shopify params from local storage (if exists)
-        let resp = await submitSocialLoginMerchant(params);
-        if (resp.status == 200) {
-          savePersonInfo(resp.data);
-          formData["shopify_params"] = localStorage.getItem("shopify_params");
-          await submitMerchantApplication(formData);
-          console.log("Submitted signup!");
-          router.push("/my-store");
-        }
+        formData["shopify_params"] = localStorage.getItem("shopify_params");
+        await submitMerchantApplication(formData);
+        router.push("/my-store");
+        setLoading(false);
       } catch (err) {
         console.log(err);
-        setLoading(false);
       }
     }
+  };
+
+  const handleUserPassSubmit = async (formData) => {
+    // setUserPass(formData);
+    let resp = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/people/signup`,
+      formData
+    );
+    await saveLoginSession(resp);
+    setShowApplication(true);
   };
 
   const socialParameters = (href) => {
@@ -96,17 +112,20 @@ const Page = ({
       if (window.location.href.includes("id_token")) {
         const parameters = socialParameters(window.location.href);
         if ("id_token" in parameters) {
-          saveLoginSession(parameters);
+          console.log(parameters);
+          await saveLoginSession(parameters);
           setShowApplication(true);
           setParams(parameters);
         }
       }
     };
     call().then((resp) => {
-      console.log("HERE");
       setLoading(false);
     });
-    // let loggedIn = isLoggedIn();
+    let loggedIn = isLoggedIn();
+    if (loggedIn) {
+      setShowApplication(true);
+    }
     // let merchant = checkMerchant();
     // if (loggedIn) {
     //   if (merchant) {
@@ -219,9 +238,8 @@ const Page = ({
               </div>
               <p className="my-6 text-center">OR</p>
               <MerchantSignupForm
-                submitSignup={submitSignup}
+                handleUserPassSubmit={handleUserPassSubmit}
                 formError={formError}
-                successfulSignup={successfulSignup}
               />
               <p className="mt-12 text-center">
                 <Link href="/login">
@@ -240,7 +258,6 @@ const Page = ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitSignup: (formData) => dispatch(actions.submitSignup(formData)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
     submitMerchantApplication: (formData) =>
       dispatch(actions.submitMerchantApplication(formData)),

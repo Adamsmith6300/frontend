@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button, Checkbox, Form, Input, Message } from "semantic-ui-react";
 // import SuccessfulSignup from "./successfulSignup";
 
-const index = ({ submitSignup, successfulSignup }) => {
+const index = ({ handleUserPassSubmit }) => {
   const [isLoading, setLoading] = useState(false);
   const [formError, setFormError] = useState(null);
   const [modal, setModal] = useState(null);
@@ -68,7 +68,7 @@ const index = ({ submitSignup, successfulSignup }) => {
       setFormError("Please agree to terms and privacy policy");
       return;
     }
-    submitSignup(formData);
+    handleUserPassSubmit(formData);
   };
 
   return (
