@@ -9,13 +9,12 @@ const productSection = ({ heading, link, addToCart, cartData }) => {
   useEffect(() => {
     const getProducts = async () => {
       return await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/market/products`
+        `${process.env.NEXT_PUBLIC_API_URL}/market/products?lim=4`
       );
     };
     getProducts()
       .then((resp) => {
-        // console.log(resp);
-        setProducts(shuffleArray(resp.data).slice(0, 8));
+        setProducts(resp.data);
       })
       .catch((err) => {
         console.log(err);

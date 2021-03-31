@@ -27,6 +27,7 @@ const index = ({
         category: value,
         MerchantId: product.MerchantId,
       });
+      console.log(resp);
     } catch (err) {
       console.log(err);
     }
