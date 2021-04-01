@@ -4,13 +4,26 @@ import Link from "next/link";
 import ProductGrid from "./productGrid";
 import { shuffleArray } from "../../store/helpers";
 
-const productSection = ({ heading, link, addToCart, cartData }) => {
+const productSection = ({
+  heading,
+  link,
+  addToCart,
+  cartData,
+  category,
+  lim = 8,
+  start,
+}) => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const getProducts = async () => {
-      return await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/market/products?lim=4`
-      );
+      let url = `${process.env.NEXT_PUBLIC_API_URL}/market/products?lim=${lim}`;
+      if (category) {
+        url += "&category=" + category;
+      }
+      if (start) {
+        url += "&start=" + start;
+      }
+      return await axios.get(url);
     };
     getProducts()
       .then((resp) => {

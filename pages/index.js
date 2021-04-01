@@ -50,16 +50,18 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         }
         link={"/signup"}
       />
+      <SmallAboutSection />
       <ProductSection
-        heading={"Popular"}
-        link={"/products"}
+        heading={"Jewellery + Accessories"}
+        category={1}
+        link={"/products?category=1"}
         addToCart={addToCart}
         cartData={cartData}
       />
-      <SmallAboutSection />
       <ProductSection
-        heading={"Home + Garden"}
-        link={"/products"}
+        heading={"Home + Living"}
+        category={2}
+        link={"/products?category=2"}
         addToCart={addToCart}
         cartData={cartData}
       />

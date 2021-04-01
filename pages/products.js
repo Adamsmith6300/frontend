@@ -1,29 +1,47 @@
-import { useEffect } from "react";
-import Layout from "../components/hoc/layout";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { connect } from "react-redux";
-// import { wrapper } from "../store";
+import { useRouter } from "next/router";
+
 import actions from "../store/actions";
+
+import Layout from "../components/hoc/layout";
+import { LargeLoader } from "../components/loaders";
 import ProductGrid from "../components/home/productGrid";
 
-const Page = ({
-  getProducts,
-  products = [],
-  addToCart,
-  cartData,
-  clearFlag,
-}) => {
+const Page = ({ addToCart, cartData, clearFlag }) => {
+  const [products, setProducts] = useState(null);
+  const router = useRouter();
   useEffect(() => {
-    getProducts();
+    const getProducts = async () => {
+      const { category } = router.query;
+      let url = `${process.env.NEXT_PUBLIC_API_URL}/market/products?`;
+      if (category) {
+        url += "&category=" + category;
+      }
+      return await axios.get(url);
+    };
+    getProducts()
+      .then((resp) => {
+        setProducts(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
     <Layout>
       <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
-        <ProductGrid
-          products={products}
-          addToCart={addToCart}
-          cartData={cartData}
-        />
+        {products != null ? (
+          <ProductGrid
+            products={products}
+            addToCart={addToCart}
+            cartData={cartData}
+          />
+        ) : (
+          <LargeLoader />
+        )}
       </div>
     </Layout>
   );
