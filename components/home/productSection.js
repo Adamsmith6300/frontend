@@ -27,7 +27,7 @@ const productSection = ({
     };
     getProducts()
       .then((resp) => {
-        setProducts(resp.data);
+        setProducts(resp.data.Products);
       })
       .catch((err) => {
         console.log(err);

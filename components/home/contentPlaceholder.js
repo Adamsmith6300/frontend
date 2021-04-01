@@ -1,4 +1,5 @@
 import { memo, useState } from "react";
+import Link from "next/link";
 import { checkMerchant } from "../../store/helpers";
 
 export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
@@ -14,6 +15,11 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
           ${product.variants ? product.variants[0].price : product.price}
         </span>
       </p>
+      <Link href={`/merchants/${product.MerchantId}`}>
+        <p className="cursor-pointer text-black text-xl my-2">
+          by {product.storename}
+        </p>
+      </Link>
       {!isMerchant ? (
         <div className="my-6 flex flex-wrap mx-auto justify-center">
           <div className="flex justify-between w-150 mr-5">

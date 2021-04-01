@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import axios from "axios";
+import { Loader } from "semantic-ui-react";
 
 import actions from "../store/actions";
 
@@ -13,12 +14,14 @@ const Page = ({ addToCart, cartData, clearFlag, router }) => {
   const [merchants, setMerchants] = useState(null);
   const [startKey, setStartKey] = useState(null);
   const [moreMerchants, setMoreMerchants] = useState(true);
+  const [loadingMerchants, setLoadingMerchants] = useState(false);
+  const lim = 8;
 
   const getMerchants = async (starta = null, startb = null) => {
     // const { lim } = router.query;
-    let url = `${process.env.NEXT_PUBLIC_API_URL}/market/merchants`;
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/market/merchants?lim=${lim}`;
     if (starta != null && startb != null) {
-      url += "?starta=" + starta + "&startb=" + startb;
+      url += "&starta=" + starta + "&startb=" + startb;
     }
     return await axios.get(url);
   };
@@ -49,28 +52,35 @@ const Page = ({ addToCart, cartData, clearFlag, router }) => {
             <MerchantGrid merchants={merchants} />
             {moreMerchants ? (
               <div className="w-full text-center">
-                <button
-                  onClick={() => {
-                    getMerchants(startKey[0], startKey[1])
-                      .then((resp) => {
-                        setMerchants([...merchants, ...resp.data.Merchants]);
-                        if (resp.data.LastEvaluatedKey) {
-                          setStartKey([
-                            resp.data.LastEvaluatedKey.MerchantId,
-                            resp.data.LastEvaluatedKey.PersonId,
-                          ]);
-                        } else {
-                          setMoreMerchants(false);
-                        }
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                      });
-                  }}
-                  className="btn-no-size-color px-6 py-2 bg-black"
-                >
-                  Load more
-                </button>
+                {loadingMerchants ? (
+                  <Loader active inline="centered" />
+                ) : (
+                  <button
+                    onClick={() => {
+                      setLoadingMerchants(true);
+                      getMerchants(startKey[0], startKey[1])
+                        .then((resp) => {
+                          setMerchants([...merchants, ...resp.data.Merchants]);
+                          if (resp.data.LastEvaluatedKey) {
+                            setStartKey([
+                              resp.data.LastEvaluatedKey.MerchantId,
+                              resp.data.LastEvaluatedKey.PersonId,
+                            ]);
+                          } else {
+                            setMoreMerchants(false);
+                          }
+                          setLoadingMerchants(false);
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                          setLoadingMerchants(false);
+                        });
+                    }}
+                    className="btn-no-size-color px-6 py-2 bg-black"
+                  >
+                    Load more
+                  </button>
+                )}
               </div>
             ) : null}
           </>

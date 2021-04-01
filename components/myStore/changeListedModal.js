@@ -105,7 +105,7 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
     );
   }
   if (loading) {
-    content = <Loader active />;
+    content = <Loader inline="centered" active />;
   }
   if (successMsg) {
     content = (

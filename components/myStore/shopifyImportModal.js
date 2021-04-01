@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Loader } from "semantic-ui-react";
 
 import {
   getAuthUrl,
@@ -109,7 +110,7 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
               </button>
             </>
           ) : (
-            <h3>Place loader here...</h3>
+            <Loader inline="centered" active />
           )}
         </div>
       );
