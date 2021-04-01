@@ -20,6 +20,7 @@ const Page = ({
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
+
   useEffect(() => {
     let l = isLoggedIn();
     updateLoggedIn(l);
