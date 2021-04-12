@@ -12,8 +12,8 @@ import SmallAboutSection from "../components/home/smallAboutSection";
 const Page = ({ addToCart, cartData, router, clearFlag }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    let loggedIn = isLoggedIn();
-    let merchant = checkMerchant();
+    const loggedIn = isLoggedIn();
+    const merchant = checkMerchant();
     if (loggedIn) {
       if (merchant) {
         router.push("/my-store");

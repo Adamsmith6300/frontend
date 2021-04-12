@@ -16,6 +16,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
   const [moreProducts, setMoreProducts] = useState(true);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const router = useRouter();
+  let path = router.asPath;
   const lim = 8;
 
   const getProducts = async (start = null) => {
@@ -31,6 +32,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
   };
 
   useEffect(() => {
+    setProducts(null);
     getProducts()
       .then((resp) => {
         setProducts(resp.data.Products);
@@ -43,7 +45,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [path]);
 
   return (
     <Layout>

@@ -89,3 +89,8 @@
 .h-500 {
   height: 500px;
 }
+
+/* min-height */
+.min-h-40 {
+  min-height: 40px;
+}

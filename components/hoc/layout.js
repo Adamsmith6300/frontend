@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import actions from "../../store/actions";
@@ -17,6 +18,8 @@ const Layout = ({
   removeFromCart,
   setCart,
   clearFlag,
+  getCategories,
+  categories,
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
@@ -29,6 +32,9 @@ const Layout = ({
     }
     updateIsMerchant(checkMerchant());
     setIsAuthed(isLoggedIn());
+    if (categories == null) {
+      getCategories();
+    }
   }, []);
 
   return (
@@ -53,7 +59,7 @@ const Layout = ({
           className="h-16 absolute loma-logo cursor-pointer"
         />
       </Link>
-      <SideMenu clearFlag={clearFlag} />
+      <SideMenu categories={categories} clearFlag={clearFlag} />
       {!isMerchant ? (
         <Cart
           toggleCart={toggleCart}
@@ -83,7 +89,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.removeFromCart(product, oldcart, qty)),
     setCart: (cart) => dispatch(actions.setCart(cart)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    getCategories: () => dispatch(actions.getCategories()),
   };
 };
 
-export default connect((state) => state, mapDispatchToProps)(Layout);
+export default connect(
+  (state) => state,
+  mapDispatchToProps
+)(withRouter(Layout));

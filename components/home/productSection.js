@@ -39,7 +39,9 @@ const productSection = ({
       <h2 className="flex justify-between max-w-1250 mx-auto mb-12">
         <span>{heading}</span>
         <Link href={link}>
-          <button className="standard-btn">View All</button>
+          <button className="standard-btn">
+            {link == "/products" ? "All Products" : "View All"}
+          </button>
         </Link>
       </h2>
       <div className="flex flex-wrap justify-start max-w-1250 mx-auto">

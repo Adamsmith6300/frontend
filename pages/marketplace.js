@@ -8,25 +8,19 @@ import { isLoggedIn, checkMerchant } from "../store/helpers";
 import Layout from "../components/hoc/layout";
 import ProductSection from "../components/home/productSection";
 import MerchantSection from "../components/home/merchantSection";
+import SmallAboutSection from "../components/home/smallAboutSection";
 import { LargeLoader } from "../components/loaders";
 
-const Page = ({
-  addToCart,
-  cartData,
-  clearFlag,
-  getCategories,
-  categories,
-  router,
-}) => {
+const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
 
   useEffect(() => {
-    let l = isLoggedIn();
+    const l = isLoggedIn();
     updateLoggedIn(l);
-    let m = checkMerchant();
+    const m = checkMerchant();
     updateIsMerchant(m);
-    if (!l || !m) {
+    if (!l && !m) {
       router.push("/");
     }
     if (categories == null) {
@@ -43,6 +37,7 @@ const Page = ({
         cartData={cartData}
       />
       <MerchantSection heading={"Some of our Merchants"} link={"/merchants"} />
+      <SmallAboutSection />
       {categories != null ? (
         categories.map((cat, index) => {
           return (

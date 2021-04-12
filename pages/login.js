@@ -49,10 +49,8 @@ const Page = ({
       }
       const parameters = socialParameters(window.location.href);
       if ("id_token" in parameters) {
-        console.log(parameters);
         try {
           let resp = await submitSocialLogin(parameters);
-          console.log(resp);
           if (resp.status == 200) {
             saveLoginSession(parameters);
             savePersonInfo(resp.data);
