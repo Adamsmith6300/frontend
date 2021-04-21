@@ -3,6 +3,7 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
   return Object.entries(cartData.items).map((entry, index) => {
     let item = entry[1];
     let mainImageUrl = item.images[0].src;
+    console.log(item);
     return (
       <div key={entry[0]} className="flex justify-start w-full my-6">
         <div className="w-1/3 overflow-x-hidden mr-4 flex justify-center">
@@ -14,7 +15,9 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
               ? item.title.substring(0, 67) + "..."
               : item.title}
           </p>
-          <p className="text-base text-grey-300 mb-1">${item.price}</p>
+          <p className="text-base text-grey-300 mb-1">
+            ${item.price || item.chosenVariant.price}
+          </p>
           <button
             className="btn-no-size p-2 px-5"
             onClick={() => removeFromCart(item, cartData, 1)}

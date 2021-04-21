@@ -488,3 +488,11 @@ button:focus {
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
 }
+
+.product-options {
+  display: block;
+  background-color: #fff;
+  color: #000;
+  width: 150px;
+  padding: 5px auto;
+}
