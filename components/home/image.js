@@ -18,27 +18,26 @@ export const Image = ({
     ? images[currentIndex].src
     : images[currentIndex];
 
-  const selectedStyle = isSelected
-    ? {
-        height: "420px",
-        width: "100%",
-        display: "flex",
-        paddingTop: "1rem",
-        justifyContent: "space-between",
-      }
-    : {
-        height: "250px",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-      };
+  // const selectedStyle = isSelected
+  //   ? {
+  //       height: "420px",
+  //       width: "100%",
+  //       display: "flex",
+  //       paddingTop: "1rem",
+  //       justifyContent: "space-between",
+  //     }
+  //   : {
+  //       height: "250px",
+  //       width: "100%",
+  //       display: "flex",
+  //       justifyContent: "center",
+  //     };
 
   return (
     <div
-      className="card-image-container"
-      style={{
-        ...selectedStyle,
-      }}
+      className={
+        isSelected ? "card-image-container-selected" : "card-image-container"
+      }
     >
       {isSelected ? (
         <div

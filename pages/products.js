@@ -49,7 +49,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
 
   return (
     <Layout>
-      <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
+      <div className="flex flex-wrap justify-center xl:justify-start max-w-1250 mx-auto">
         {products != null ? (
           <>
             <ProductGrid

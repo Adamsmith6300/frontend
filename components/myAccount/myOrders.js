@@ -11,7 +11,7 @@ const myOrders = ({ orders }) => {
       <li
         onClick={() => setSelectedOrder(selectedOrder == index ? null : index)}
         key={order.OrderId}
-        className="cursor-pointer flex justify-start place-items-center p-3 border border-1 w-350 max-w-screen m-2 text-base"
+        className="cursor-pointer flex justify-start place-items-center p-3 border border-1 w-350 max-w-full my-2 md:m-2 text-base"
       >
         <div className="w-100 h-75 overflow-hidden">
           <img src={order.items[0].image.src} className="h-full" />

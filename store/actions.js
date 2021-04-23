@@ -180,8 +180,13 @@ const actions = {
     let price = product.chosenVariant
       ? product.chosenVariant.price
       : product.price;
+    let inventory = product.chosenVariant
+      ? product.chosenVariant.inventory_quantity
+      : Number.MAX_VALUE;
     if (newCart.items[product.ProductId]) {
-      newCart.items[product.ProductId].qty += qty;
+      if (newCart.items[product.ProductId].qty + qty <= inventory) {
+        newCart.items[product.ProductId].qty += qty;
+      }
     } else {
       newCart.items[product.ProductId] = { ...product, qty: qty };
     }

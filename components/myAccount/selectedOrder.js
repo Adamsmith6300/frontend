@@ -47,7 +47,7 @@ const index = ({ order, setSelectedOrder }) => {
   });
 
   return (
-    <div className="pl-2">
+    <div className="md:pl-2">
       <button
         className="btn-no-size-color bg-black px-6 py-2"
         onClick={() => setSelectedOrder(null)}
@@ -55,7 +55,7 @@ const index = ({ order, setSelectedOrder }) => {
         Back
       </button>
       <p className="text-3xl my-3">Order Details</p>
-      <div className=" p-3 border border-1 w-350 text-base">
+      <div className=" p-3 border border-1 sm:max-w-screen-sm text-base">
         <p className="text-lg">{order.items.length} Product(s)</p>
         <p className="text-lg">Status: {getStatus(order.status)}</p>
         <p className="text-lg">Order # {order.OrderId.slice(-12)}</p>
@@ -65,7 +65,7 @@ const index = ({ order, setSelectedOrder }) => {
         <p className="text-lg">Total: ${order.total / 100}</p>
       </div>
       <p className="text-3xl my-3">Delivery</p>
-      <div className=" p-3 border border-1 w-350 text-base">
+      <div className=" p-3 border border-1 sm:max-w-screen-sm text-base">
         <p className="text-lg">
           {order.deliveryInfo.address}
           {order.deliveryInfo.address2
@@ -77,7 +77,7 @@ const index = ({ order, setSelectedOrder }) => {
         <p className="text-lg">{order.deliveryInfo.postalcode}</p>
       </div>
       <p className="text-3xl my-3">Billing</p>
-      <div className=" p-3 border border-1 w-350 text-base">
+      <div className=" p-3 border border-1 sm:max-w-screen-sm text-base">
         <p className="text-lg">
           {order.billingInfo.address}{" "}
           {order.billingInfo.address2
@@ -90,10 +90,12 @@ const index = ({ order, setSelectedOrder }) => {
       </div>
 
       <p className="text-3xl my-3">Items</p>
-      <div className=" p-3 pb-0 border border-1 w-350 text-base">{items}</div>
+      <div className=" p-3 pb-0 border border-1 sm:max-w-screen-sm text-base">
+        {items}
+      </div>
 
       <p className="text-3xl my-3">Summary</p>
-      <div className=" p-3 pb-0 border border-1 w-350 text-base"></div>
+      <div className=" p-3 pb-0 border border-1 sm:max-w-screen-sm text-base"></div>
     </div>
   );
 };

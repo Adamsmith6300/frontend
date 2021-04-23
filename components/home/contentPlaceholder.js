@@ -34,8 +34,8 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
       });
 
       return (
-        <div key={option.name}>
-          <p>{option.name}</p>
+        <div key={option.name} className="w-300 mx-auto">
+          <p className="text-left">{option.name}</p>
           <select
             onChange={(e) => {
               let newOptions = {
@@ -82,57 +82,73 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
       </Link>
       {!isMerchant ? (
         <div className="my-6 mx-auto">
-          {options != null ? <div>{options}</div> : null}
-          <div className="flex justify-between w-150 mr-5 my-2">
+          {options != null ? <div className="">{options}</div> : null}
+          <div className="flex justify-between w-150 mx-auto my-2">
+            {inventory >= qty ? (
+              <>
+                <button
+                  className="btn-no-size p-2 px-5"
+                  onClick={() => setQty(Math.max(1, qty - 1))}
+                >
+                  -
+                </button>
+                <span className="leading-loose mx-3 text-2xl">{qty}</span>
+                <button
+                  disabled={qty + 1 > inventory}
+                  className={`btn-no-size-color p-2 px-4 ${
+                    qty + 1 > inventory
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-black"
+                  }`}
+                  onClick={() => {
+                    setQty(
+                      Math.min(
+                        inventory ? Number.MAX_VALUE : inventory,
+                        qty + 1
+                      )
+                    );
+                  }}
+                >
+                  +
+                </button>{" "}
+              </>
+            ) : (
+              <p className="text-red-500">OUT OF STOCK</p>
+            )}
+          </div>
+          <div className="w-full text-center">
             <button
-              className="btn-no-size p-2 px-5"
-              onClick={() => setQty(Math.max(1, qty - 1))}
+              className="standard-btn my-2"
+              onClick={async () => {
+                // let title = product.title;
+                // if (
+                //   product.variants[selectedVariant].title &&
+                //   product.variants[selectedVariant].title != "Default Title"
+                // ) {
+                //   title = product.variants[selectedVariant].title;
+                // }
+                setLoading(true);
+                setTimeout(() => {
+                  setLoading(false);
+                }, 300);
+                addToCart(
+                  {
+                    ...product,
+                    chosenVariant: product.variants[selectedVariant],
+                    // title: title,
+                  },
+                  cartData,
+                  qty
+                );
+              }}
             >
-              -
-            </button>
-            <span className="leading-loose mx-3 text-2xl">{qty}</span>
-            <button
-              className="btn-no-size p-2 px-4"
-              onClick={() =>
-                setQty(
-                  Math.min(inventory ? Number.MAX_VALUE : inventory, qty + 1)
-                )
-              }
-            >
-              +
+              {loading ? (
+                <Loader className="inline" active size="mini" inverted />
+              ) : (
+                "Add To Cart"
+              )}
             </button>
           </div>
-          <button
-            className="standard-btn my-2"
-            onClick={async () => {
-              // let title = product.title;
-              // if (
-              //   product.variants[selectedVariant].title &&
-              //   product.variants[selectedVariant].title != "Default Title"
-              // ) {
-              //   title = product.variants[selectedVariant].title;
-              // }
-              setLoading(true);
-              setTimeout(() => {
-                setLoading(false);
-              }, 300);
-              addToCart(
-                {
-                  ...product,
-                  chosenVariant: product.variants[selectedVariant],
-                  // title: title,
-                },
-                cartData,
-                qty
-              );
-            }}
-          >
-            {loading ? (
-              <Loader className="inline" active size="mini" inverted />
-            ) : (
-              "Add To Cart"
-            )}
-          </button>
         </div>
       ) : null}
       <p>{product.body_html ? product.body_html : product.description}</p>

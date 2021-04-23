@@ -242,7 +242,7 @@ button:focus {
   left: 0;
   right: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   overflow: hidden;
   padding: 40px 0;
 }
@@ -290,10 +290,27 @@ button:focus {
   left: 0;
   overflow: hidden;
   text-align: center;
-  /* height: 420px;
-  width: 100vw; */
-  transform: translateZ(0);
+  z-index: 999;
+  height: 250px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
+
+.card-image-container-selected {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  text-align: center;
+  transform: translateZ(0);
+  height: 420px;
+  width: 100%;
+  display: flex;
+  padding-top: 4rem;
+  justify-content: space-between;
+}
+
 .card-image-container--mProducts {
   position: absolute;
   top: 0;
@@ -493,6 +510,6 @@ button:focus {
   display: block;
   background-color: #fff;
   color: #000;
-  width: 150px;
-  padding: 5px auto;
+  width: 300px;
+  padding: 5px 0;
 }
