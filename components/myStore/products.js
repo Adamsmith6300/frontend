@@ -71,7 +71,7 @@ const Products = ({
           Delete Selected
         </button>
       ) : null}
-      <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
+      <div className="flex flex-wrap justify-center lg:justify-start max-w-1250 mx-auto">
         {productList.length > 0 ? (
           productList
         ) : (
@@ -90,7 +90,7 @@ const Products = ({
           </div> */}
       </div>
       <button
-        className="btn-shadowed mt-8 mx-auto px-16 py-4 grid grid-cols-2 place-items-center"
+        className="btn-shadowed mt-8 mx-auto px-8 lg:px-16 py-4 grid grid-cols-2 place-items-center"
         onClick={() => {
           setModalContent("shopifyImport");
           setShowModal(true);

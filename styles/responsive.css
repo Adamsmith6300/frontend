@@ -71,7 +71,7 @@
     padding: 5px;
     margin: 20px 6px 120px 6px;
     height: 250px;
-    max-width: 300px;
+    max-width: 100%;
   }
 
   .card-image-container-selected {
@@ -138,8 +138,21 @@
   }
   .my-account-container {
     width: 100%;
-    padding: 0;
+    padding: 2rem;
     margin: 0 auto;
+  }
+
+  .merchant--banner {
+    height: 200px;
+    width: 100%;
+  }
+  .modal-content-container {
+    max-width: 90vw;
+    max-height: 80vh;
+    min-height: 200px;
+    padding: 1rem 1rem 2rem 1rem;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
   }
 }
 

@@ -50,7 +50,7 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
   if (!myShop.info.listed && myShop.info.status == "approved") {
     content = (
       <>
-        <p className="text-center text-2xl font-bold mb-12">
+        <p className="text-center text-2xl font-bold mb-6 lg:mb-12 ">
           Are you ready to list your store in the market?
         </p>
         <button
@@ -69,7 +69,7 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
   if (myShop.info.listed && myShop.info.status == "approved") {
     content = (
       <>
-        <p className="text-center text-2xl font-bold mb-12">
+        <p className="text-center text-2xl font-bold mb-6 lg:mb-12 ">
           Remove store listing from market? This can be changed back anytime.
         </p>
         <button
@@ -88,7 +88,7 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
   if (!myShop.info.listed && myShop.info.status != "approved") {
     content = (
       <>
-        <p className="text-center text-2xl font-bold mb-12">
+        <p className="text-center text-2xl font-bold mb-6 lg:mb-12 ">
           All stores must be reviewed before they can be listed.
         </p>
         <button
@@ -110,7 +110,9 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
   if (successMsg) {
     content = (
       <>
-        <p className="text-center text-2xl font-bold mb-12">{successMsg}</p>
+        <p className="text-center text-2xl font-bold mb-6 lg:mb-12 ">
+          {successMsg}
+        </p>
         <button
           className="btn-no-size-color px-8 py-3 bg-black ml-2"
           onClick={(e) => {
@@ -126,7 +128,7 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
   if (myShop.info.status == "pending_approval") {
     content = (
       <>
-        <p className="text-center text-2xl font-bold mb-12">
+        <p className="text-center text-2xl font-bold mb-6 lg:mb-12 ">
           Your store is pending approval. Once approved you will be able to list
           your store.
         </p>
@@ -143,7 +145,9 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
     );
   }
   return (
-    <div className="grid place-items-center w-300 mx-auto pt-6">{content}</div>
+    <div className="grid place-items-center lg:w-300 mx-auto pt-6">
+      {content}
+    </div>
   );
 };
 

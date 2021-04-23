@@ -91,7 +91,7 @@ const Page = ({
             name={myShop.info.name}
             bannerImageName={myShop.info.bannerImage}
           />
-          <div className="px-64 pt-12">
+          <div className="pt-6 px-6 lg:px-64 lg:pt-12">
             <h1 className="text-5xl my-12 flex justify-between">
               <span>{myShop.info.storename}</span>
             </h1>
@@ -160,7 +160,7 @@ const Page = ({
                         : "Tell your store visitors about " +
                           myShop.info.storename
                     }
-                    className="w-full pl-3 py-1 mb-6 h-10 bg-gray-200"
+                    className="w-full pl-3 py-1 mb-6 h-20 bg-gray-200"
                     label="about"
                     name="about"
                     value={about}

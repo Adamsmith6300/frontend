@@ -42,12 +42,16 @@ const Page = ({ addToCart, cartData }) => {
       {merchant != null ? (
         <>
           <div style={bgStyle} className="bg-img merchant--banner" />
-          <div className="px-64 pt-12">
-            <h1 className="text-5xl my-12 flex justify-between">
+          <div className="pt-6 px-6 lg:px-64 lg:pt-12">
+            <h1 className="text-5xl lg:my-12 flex justify-center lg:justify-between">
               <span>{merchant.info.storename}</span>
-              <a href={merchant.info.website} target="_blank">
-                <button className="btn-no-size px-8 py-4">Visit Website</button>
-              </a>
+              {/* <a
+                className="lg:inline hidden btn-no-size px-8 py-4"
+                href={merchant.info.website}
+                target="_blank"
+              >
+                Visit Website
+              </a> */}
             </h1>
             <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
               <ProductGrid
@@ -56,6 +60,15 @@ const Page = ({ addToCart, cartData }) => {
                 cartData={cartData}
               />
             </div>
+            {/* <div className="text-center">
+              <a
+                className="block lg:hidden mt-12"
+                href={merchant.info.website}
+                target="_blank"
+              >
+                <button className="btn-no-size px-8 py-4">Visit Website</button>
+              </a>
+            </div> */}
             {merchant.info.about != null && merchant.info.about.length > 0 ? (
               <div>
                 <p>About {merchant.info.storename}</p>
