@@ -1,10 +1,12 @@
 import { memo, useState } from "react";
 import Link from "next/link";
 import { checkMerchant } from "../../store/helpers";
+import { Loader } from "semantic-ui-react";
 
 export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
-  let isMerchant = checkMerchant();
+  const isMerchant = checkMerchant();
   const [selectedVariant, setSelectedVariant] = useState(0);
+  const [loading, setLoading] = useState(false);
   let s = {};
   if (product.options) {
     for (let k = 0; k < product.options.length; ++k) {
@@ -102,7 +104,7 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
           </div>
           <button
             className="standard-btn my-2"
-            onClick={() => {
+            onClick={async () => {
               // let title = product.title;
               // if (
               //   product.variants[selectedVariant].title &&
@@ -110,6 +112,10 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
               // ) {
               //   title = product.variants[selectedVariant].title;
               // }
+              setLoading(true);
+              setTimeout(() => {
+                setLoading(false);
+              }, 300);
               addToCart(
                 {
                   ...product,
@@ -121,7 +127,11 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
               );
             }}
           >
-            Add to Cart
+            {loading ? (
+              <Loader className="inline" active size="mini" inverted />
+            ) : (
+              "Add To Cart"
+            )}
           </button>
         </div>
       ) : null}

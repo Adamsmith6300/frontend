@@ -36,7 +36,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
         addToCart={addToCart}
         cartData={cartData}
       />
-      <MerchantSection heading={"Some of our Merchants"} link={"/merchants"} />
+      <MerchantSection heading={"Featured Merchants"} link={"/merchants"} />
       <SmallAboutSection />
       {categories != null ? (
         categories.map((cat, index) => {

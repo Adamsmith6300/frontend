@@ -36,21 +36,25 @@ const productSection = ({
 
   return (
     <div className="px-8 pb-4 pt-8">
-      <h2 className="flex justify-between max-w-1250 mx-auto mb-12">
-        <span>{heading}</span>
-        <Link href={link}>
-          <button className="standard-btn">
-            {link == "/products" ? "All Products" : "View All"}
-          </button>
-        </Link>
+      <h2 className="max-w-1250 mx-auto text-center">
+        <span className="text-4xl">{heading}</span>
       </h2>
-      <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
+      <div className="flex flex-wrap justify-center max-w-1250 mx-auto pb-12 sm:pb-auto">
         <ProductGrid
           products={products}
           addToCart={addToCart}
           cartData={cartData}
         />
       </div>
+      {heading != "Featured Products" ? (
+        <div className="text-center">
+          <Link href={link}>
+            <button className="standard-btn">
+              {link == "/products" ? "All Products" : "View All"}
+            </button>
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 };

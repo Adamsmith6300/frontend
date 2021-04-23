@@ -24,15 +24,15 @@ const footer = ({ isAuthed }) => {
     );
   });
   return (
-    <div className="w-full py-32 px-64">
+    <div className="w-full py-32 px-6 lg:px-64">
       <div className="max-w-1040 mx-auto">
         <Link href={isAuthed ? "/marketplace" : "/"}>
           <img src="/loma.png" className="h-16 loma-logo cursor-pointer" />
         </Link>
       </div>
       <div className="flex flex-wrap justify-between mt-12 max-w-1040 mx-auto">
-        <ul className="pl-3">{menuItems}</ul>
-        <div className="mx-32">
+        <ul className="w-full pl-3 lg:w-64">{menuItems}</ul>
+        <div className="w-full pl-3 mt-12 lg:w-auto lg:ml-32">
           <p>
             <a href="mailto: contact@shoploma.ca" className="hover:text-black">
               <AiOutlineMail className="inline ml-1" />

@@ -116,7 +116,7 @@ button:focus {
 .banner-content {
   position: relative;
   top: 200px;
-  left: calc(100vw / 2 - 200px);
+  left: calc(100vw / 2 - 230px);
   width: 450px;
   padding: 30px 20px;
   text-align: center;
@@ -451,7 +451,7 @@ button:focus {
 
 .merchantCard--home {
   width: 500px;
-  height: 400px;
+  height: 380px;
   overflow: hidden;
   margin: 0 10px;
   cursor: pointer;

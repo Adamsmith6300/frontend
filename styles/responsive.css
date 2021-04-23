@@ -48,6 +48,67 @@
     padding: 30px;
     position: relative;
   }
+  .banner-content {
+    position: relative;
+    top: 30px;
+    left: calc(100vw / 2 - 150px);
+    width: 300px;
+    padding: 10px 10px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  .banner {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 350px;
+    width: 100%;
+  }
+
+  .card--products {
+    position: relative;
+    padding: 5px;
+    margin: 20px 6px 120px 6px;
+    height: 250px;
+    max-width: 300px;
+  }
+
+  .loma-logo {
+    top: 15px;
+    left: 15px;
+  }
+
+  .loma-container {
+    width: 100%;
+    padding: 90px 0 0 0;
+  }
+  .nav {
+    position: fixed;
+    top: -35px;
+    right: -25px;
+    bottom: 0;
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 99;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  .cart-nav {
+    position: fixed;
+    top: -35px;
+    right: -25px;
+    bottom: 0;
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 99;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
 }
 
 @media only screen and (min-width: 500px) {

@@ -41,7 +41,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         addToCart={addToCart}
         cartData={cartData}
       />
-      <MerchantSection heading={"Some of our Merchants"} link={"/merchants"} />
+      <MerchantSection heading={"Featured Merchants"} link={"/merchants"} />
       <Banner
         bgSrc={"/secondBanner.jpg"}
         heading={"Started in Vancouver"}
