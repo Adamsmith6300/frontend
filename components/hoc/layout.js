@@ -41,7 +41,7 @@ const Layout = ({
     <div className="loma-container">
       <Head>
         <title>Loma</title>
-        <link rel="icon" href="/loma.ico" />
+        <link rel="icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
