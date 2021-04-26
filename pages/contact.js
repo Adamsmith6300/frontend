@@ -12,7 +12,7 @@ import Banner from "../components/home/banner";
 const Page = ({}) => {
   return (
     <Layout>
-      <div className="text-center my-24">
+      <div className="text-center my-24 px-8">
         <h2>Contact Us</h2>
         <p className="mt-4 mb-8 max-w-500 mx-auto">
           We'd be excited to hear from you! Email us with any questions or

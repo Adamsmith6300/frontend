@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import actions from "../../store/actions";
@@ -17,6 +18,8 @@ const Layout = ({
   removeFromCart,
   setCart,
   clearFlag,
+  getCategories,
+  categories,
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
@@ -29,13 +32,16 @@ const Layout = ({
     }
     updateIsMerchant(checkMerchant());
     setIsAuthed(isLoggedIn());
+    if (categories == null) {
+      getCategories();
+    }
   }, []);
 
   return (
     <div className="loma-container">
       <Head>
         <title>Loma</title>
-        <link rel="icon" href="/loma.ico" />
+        <link rel="icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
@@ -47,21 +53,24 @@ const Layout = ({
           type="text/css"
         />
       </Head>
-      {/* <h1 className="h-16 w-full loma-padding absolute top-0 left-0 font-bold uppercase text-black text-5xl">
-        Loma
-      </h1> */}
-      <img src="/loma.png" className="h-16 absolute loma-logo" />
-      {/* <SideMenu clearFlag={clearFlag} />
-      <Cart
-        toggleCart={toggleCart}
-        showCart={showCart}
-        cartData={cartData}
-        addToCart={addToCart}
-        removeFromCart={removeFromCart}
-      /> */}
-      <h2 className="text-black text-center">Coming Soon!</h2>
-      {/* {children} */}
-      {/* <Footer isAuthed={isAuthed} /> */}
+      <Link href={isAuthed ? "/marketplace" : "/"}>
+        <img
+          src="/loma.png"
+          className="h-16 absolute loma-logo cursor-pointer"
+        />
+      </Link>
+      <SideMenu categories={categories} clearFlag={clearFlag} />
+      {/* {!isMerchant ? (
+        <Cart
+          toggleCart={toggleCart}
+          showCart={showCart}
+          cartData={cartData}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+        />
+      ) : null} */}
+      {children}
+      <Footer isAuthed={isAuthed} />
       <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
         Font made from{" "}
         <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
@@ -80,7 +89,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.removeFromCart(product, oldcart, qty)),
     setCart: (cart) => dispatch(actions.setCart(cart)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    getCategories: () => dispatch(actions.getCategories()),
   };
 };
 
-export default connect((state) => state, mapDispatchToProps)(Layout);
+export default connect(
+  (state) => state,
+  mapDispatchToProps
+)(withRouter(Layout));

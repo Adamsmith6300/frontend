@@ -22,30 +22,28 @@ const variants = {
   },
 };
 
-export const Navigation = ({ isOpen, clearFlag }) => {
+export const Navigation = ({ isOpen, clearFlag, categories }) => {
   const router = useRouter();
 
+  ////////////////// PASS THIS DOWN FROM LAYOUT ////////////////////
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loggedIn, updateLoggedIn] = useState(false);
-
   useEffect(() => {
     updateLoggedIn(isLoggedIn());
     updateIsMerchant(checkMerchant());
   }, []);
-
+  //////////////////////////////////////////////////////////////////
   let navItems = [];
   let secondaryNavItems = [];
   let homeLink = "/";
 
   if (loggedIn) {
     homeLink = "/marketplace";
-    if (!isMerchant) {
-      secondaryNavItems.unshift({
-        title: "my account",
-        link: "/my-account",
-        linkStyle: "secondary",
-      });
-    }
+    secondaryNavItems.unshift({
+      title: "my account",
+      link: "/my-account",
+      linkStyle: "secondary",
+    });
     secondaryNavItems.push({
       title: "logout",
       action: () => {
@@ -78,7 +76,12 @@ export const Navigation = ({ isOpen, clearFlag }) => {
   navItems = [
     { title: "home", link: homeLink, linkStyle: "primary" },
     { title: "merchants", link: "/merchants", linkStyle: "primary" },
-    { title: "products", link: "/products", linkStyle: "primary" },
+    {
+      title: "products",
+      link: "/products",
+      linkStyle: "primary",
+      categories: categories,
+    },
     { title: "about", link: "/about", linkStyle: "primary" },
   ];
 
@@ -88,11 +91,21 @@ export const Navigation = ({ isOpen, clearFlag }) => {
       variants={variants}
     >
       {navItems.map((item, index) => (
-        <MenuItem item={item} key={index} isOpen={isOpen} />
+        <MenuItem
+          item={item}
+          key={index}
+          isOpen={isOpen}
+          asPath={router.asPath}
+        />
       ))}
       <hr className="mt-12 mb-6 hr--menu" />
       {secondaryNavItems.map((item, index) => (
-        <MenuItem item={item} key={index} isOpen={isOpen} />
+        <MenuItem
+          item={item}
+          key={index}
+          isOpen={isOpen}
+          asPath={router.asPath}
+        />
       ))}
     </motion.ul>
   );

@@ -21,7 +21,7 @@ const index = ({ cartData, toggle }) => {
           </Link>
         ) : (
           <>
-            <p className="text-red-500">Must have an account to order.</p>
+            <p className="">Must have an account to order.</p>
             <Link href="/login">
               <button className="my-2 standard-btn" onClick={toggle}>
                 Login

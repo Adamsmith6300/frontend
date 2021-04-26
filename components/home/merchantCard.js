@@ -11,12 +11,11 @@ const merchantCard = ({ merchant }) => {
   }
 
   let bgStyle = { backgroundImage: `url(${bannerUrl})` };
-
   return (
     <Link href={`/merchants/${merchant.MerchantId}`}>
       <div className="merchantCard--home">
         <div className="merchantCard--image" style={bgStyle} />
-        <p className="text-black text-3xl mt-3">{merchant.busname}</p>
+        <p className="text-black text-3xl mt-3">{merchant.storename}</p>
       </div>
     </Link>
   );

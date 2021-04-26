@@ -12,8 +12,8 @@ import SmallAboutSection from "../components/home/smallAboutSection";
 const Page = ({ addToCart, cartData, router, clearFlag }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    let loggedIn = isLoggedIn();
-    let merchant = checkMerchant();
+    const loggedIn = isLoggedIn();
+    const merchant = checkMerchant();
     if (loggedIn) {
       if (merchant) {
         router.push("/my-store");
@@ -41,7 +41,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         addToCart={addToCart}
         cartData={cartData}
       />
-      <MerchantSection heading={"Some of our Merchants"} link={"/merchants"} />
+      <MerchantSection heading={"Featured Merchants"} link={"/merchants"} />
       <Banner
         bgSrc={"/secondBanner.jpg"}
         heading={"Started in Vancouver"}
@@ -50,16 +50,18 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         }
         link={"/signup"}
       />
+      <SmallAboutSection />
       <ProductSection
-        heading={"Popular"}
-        link={"/products"}
+        heading={"Jewellery + Accessories"}
+        category={1}
+        link={"/products?category=1"}
         addToCart={addToCart}
         cartData={cartData}
       />
-      <SmallAboutSection />
       <ProductSection
-        heading={"Home + Garden"}
-        link={"/products"}
+        heading={"Home + Living"}
+        category={2}
+        link={"/products?category=2"}
         addToCart={addToCart}
         cartData={cartData}
       />

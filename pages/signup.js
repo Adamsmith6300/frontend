@@ -18,6 +18,7 @@ const Page = ({
   clearFlag,
   router,
 }) => {
+  if (successfulSignup) router.push("/marketplace");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     let loggedIn = isLoggedIn();
@@ -40,7 +41,7 @@ const Page = ({
       ) : (
         <>
           <h1 className="text-3xl text-center">Signup</h1>
-          <div className="max-w-500 mx-auto">
+          <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
             <div className="w-full flex flex-wrap mt-6">
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"

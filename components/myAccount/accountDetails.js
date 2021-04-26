@@ -1,13 +1,18 @@
-import { Button, Checkbox, Form, Input } from "semantic-ui-react";
 import { useState } from "react";
-import { MdModeEdit } from "react-icons/md";
-import { updateAccountDetails } from "../../store/helpers";
+import { updateAccountDetails, updateStoreDetails } from "../../store/helpers";
 import { LargeLoader } from "../loaders";
+import { Input } from "semantic-ui-react";
 
 const contactAttr = ["fullname", "phone", "email"];
 const addressAttr = ["address", "address2", "city", "province", "postalcode"];
 
-const index = ({ info, callFetchAccountData }) => {
+const index = ({
+  info,
+  callFetchAccountData,
+  callFetchMerchData,
+  isMerchant,
+  mId,
+}) => {
   const [formData, updateFormData] = useState({});
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,17 +24,21 @@ const index = ({ info, callFetchAccountData }) => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (update, fetchDetails) => {
     setLoading(true);
-    let resp = await updateAccountDetails(formData);
+    console.log(formData);
+    if (isMerchant && mId) {
+      formData["MerchantId"] = mId;
+    }
+    let resp = await update(formData);
     if (resp.status == 200) {
-      callFetchAccountData().then((response) => {
+      fetchDetails().then((response) => {
         setEdit(null);
         updateFormData({});
         setLoading(false);
       });
     } else {
-      console.log("ERROR! Failed to update shop details");
+      console.log("ERROR! Failed to update details");
       window.location.reload();
     }
   };
@@ -41,20 +50,23 @@ const index = ({ info, callFetchAccountData }) => {
     if (attribute == "postalcode") {
       return "Postal Code";
     }
-
+    if (attribute == "email") {
+      return "Email (readonly)";
+    }
     return attribute.charAt(0).toUpperCase() + attribute.slice(1);
   };
 
   const getAttrComponent = (attr) => {
-    let val = info[attr];
+    if (attr == "province") return null;
+    let val = attr in info ? info[attr] : "";
     let label = getLabel(attr);
     if (edit && attr != "email") {
       return (
         <li key={index + attr} className="flex flex-wrap py-1">
           <span className="font-bold w-full pl-3 py-1">{label}:</span>
-          <input
+          <Input
             defaultValue={val}
-            className="w-full pl-3 py-1 h-10 bg-gray-200"
+            className="w-full my-3 h-10"
             name={attr}
             type="text"
             onChange={(e) => handleChange(e)}
@@ -64,8 +76,8 @@ const index = ({ info, callFetchAccountData }) => {
     } else {
       return (
         <li key={index + attr} className="flex flex-wrap py-1">
-          <span className="font-bold w-full pl-3 py-1">{label}:</span>
-          <span className="w-full pl-3 py-1 h-10 ">{val}</span>
+          <span className="font-bold w-full  py-1">{label}:</span>
+          <span className="w-full my-3">{val}</span>
         </li>
       );
     }
@@ -75,16 +87,16 @@ const index = ({ info, callFetchAccountData }) => {
   let addressDetails = [];
   if (info) {
     for (let i = 0; i < contactAttr.length; ++i) {
-      if (contactAttr[i] in info) {
-        const comp = getAttrComponent(contactAttr[i]);
-        contactDetails.push(comp);
-      }
+      // if (contactAttr[i] in info) {
+      const comp = getAttrComponent(contactAttr[i]);
+      contactDetails.push(comp);
+      // }
     }
     for (let i = 0; i < addressAttr.length; ++i) {
-      if (addressAttr[i] in info) {
-        const comp = getAttrComponent(addressAttr[i]);
-        addressDetails.push(comp);
-      }
+      // if (addressAttr[i] in info) {
+      const comp = getAttrComponent(addressAttr[i]);
+      addressDetails.push(comp);
+      // }
     }
   }
 
@@ -115,7 +127,13 @@ const index = ({ info, callFetchAccountData }) => {
                 // <div className="w-full pt-3">
                 <button
                   className="btn-no-size-color px-12 py-3 bg-green-600"
-                  onClick={() => handleSubmit()}
+                  onClick={() => {
+                    if (isMerchant) {
+                      handleSubmit(updateStoreDetails, callFetchMerchData);
+                    } else {
+                      handleSubmit(updateAccountDetails, callFetchAccountData);
+                    }
+                  }}
                 >
                   Save
                 </button>

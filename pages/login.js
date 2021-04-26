@@ -26,7 +26,9 @@ const Page = ({
   successfulLogin,
 }) => {
   const [loading, setLoading] = useState(true);
+
   if (successfulLogin) router.push("/marketplace");
+
   const socialParameters = (href) => {
     const strippedDomain = href.split("#")[1];
     const parameterList = strippedDomain.split("&");
@@ -52,26 +54,26 @@ const Page = ({
           if (resp.status == 200) {
             saveLoginSession(parameters);
             savePersonInfo(resp.data);
-            router.push("/marketplace");
           }
         } catch (err) {
           console.log(err);
         }
       }
     };
-    call();
-    let loggedIn = isLoggedIn();
-    let merchant = checkMerchant();
-    if (loggedIn) {
-      if (merchant) {
-        router.push("/my-store");
-        clearFlag("successfulLogin");
-      } else {
-        router.push("/marketplace");
-        clearFlag("successfulLogin");
+    call().then((resp) => {
+      let loggedIn = isLoggedIn();
+      let merchant = checkMerchant();
+      if (loggedIn) {
+        if (merchant) {
+          router.push("/my-store");
+        } else {
+          router.push("/marketplace");
+        }
       }
-    }
-    setLoading(false);
+      if (!window.location.href.includes("#")) {
+        setLoading(false);
+      }
+    });
   }, []);
 
   return (
@@ -81,7 +83,7 @@ const Page = ({
       ) : (
         <>
           <h1 className="text-3xl text-center">Login</h1>
-          <div className="max-w-500 mx-auto">
+          <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
             <div className="w-full flex flex-wrap mt-6">
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"

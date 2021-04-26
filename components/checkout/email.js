@@ -1,12 +1,13 @@
 import { FcCheckmark } from "react-icons/fc";
+import { Input } from "semantic-ui-react";
 
 const email = ({
   activeCheckoutStep,
   setActiveCheckout,
   setPersonInfo,
   personInfo,
+  step,
 }) => {
-  const step = 1;
   const isActive = activeCheckoutStep == step;
 
   const handleChange = (e) => {
@@ -20,7 +21,7 @@ const email = ({
     <div className="p-3 m-3">
       <p className="flex justify-between border-b">
         <span>
-          1. Email{" "}
+          {step}. Email{" "}
           {activeCheckoutStep > step ? (
             <FcCheckmark className="inline ml-3 mb-1" />
           ) : null}
@@ -41,10 +42,9 @@ const email = ({
             setActiveCheckout(activeCheckoutStep + 1);
           }}
         >
-          <input
-            className="w-full pl-3 py-1 my-3 mb-6 h-10 bg-gray-200"
+          <Input
+            className="w-full my-3 mb-6"
             required
-            label="Email"
             value={personInfo.email}
             placeholder="adam@email.com"
             name="email"

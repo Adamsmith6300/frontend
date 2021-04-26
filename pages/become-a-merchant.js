@@ -1,25 +1,28 @@
-import Layout from "../components/hoc/layout";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 import { connect } from "react-redux";
-import actions from "../store/actions";
 import { withRouter } from "next/router";
-import MerchantSignupForm from "../components/merchantSignupForm/index";
 import Link from "next/link";
-import { Form, TextArea } from "semantic-ui-react";
-import { LargeLoader } from "../components/loaders";
+import { Form } from "semantic-ui-react";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillFacebook } from "react-icons/ai";
+
+import actions from "../store/actions";
 import {
   checkMerchant,
   checkPerson,
+  refreshIdToken,
   isLoggedIn,
   submitSocialLoginMerchant,
   saveLoginSession,
 } from "../store/helpers";
 
-import { FcGoogle } from "react-icons/fc";
-import { AiFillFacebook } from "react-icons/ai";
+import Layout from "../components/hoc/layout";
+import MerchantSignupForm from "../components/merchantSignupForm/index";
+import { LargeLoader } from "../components/loaders";
 
 const Page = ({
-  submitSignup,
   formError,
   successfulSignup,
   clearFlag,
@@ -32,6 +35,7 @@ const Page = ({
   const [formData, updateFormData] = useState({});
   const [showApplication, setShowApplication] = useState(successfulSignup);
   const [params, setParams] = useState(null);
+  const [userPass, setUserPass] = useState(null);
 
   const handleChange = (e) => {
     updateFormData({
@@ -43,19 +47,37 @@ const Page = ({
   const handleSubmit = async () => {
     let loggedIn = isLoggedIn();
     if (loggedIn) {
-      try {
-        let resp = await submitSocialLoginMerchant(params);
-        if (resp.status == 200) {
+      if (params) {
+        try {
+          let resp = await submitSocialLoginMerchant(params);
           savePersonInfo(resp.data);
-          await submitMerchantApplication(formData);
-          console.log("Success!");
-          router.push("/my-store");
+          // resp = await refreshIdToken();
+          // console.log(resp);
+          // await saveLoginSession(resp);
+        } catch (err) {
+          console.log(err);
         }
+      }
+      try {
+        // pass shopify params from local storage (if exists)
+        formData["shopify_params"] = localStorage.getItem("shopify_params");
+        await submitMerchantApplication(formData);
+        router.push("/my-store");
+        setLoading(false);
       } catch (err) {
         console.log(err);
-        setLoading(false);
       }
     }
+  };
+
+  const handleUserPassSubmit = async (formData) => {
+    // setUserPass(formData);
+    let resp = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/people/signup`,
+      formData
+    );
+    await saveLoginSession(resp);
+    setShowApplication(true);
   };
 
   const socialParameters = (href) => {
@@ -73,18 +95,37 @@ const Page = ({
 
   useEffect(() => {
     const call = async () => {
-      if (!window.location.href.includes("#")) {
-        return;
+      let queryParams = router.query;
+      if (
+        "hmac" in queryParams &&
+        "shop" in queryParams &&
+        "timestamp" in queryParams
+      ) {
+        let shopify_state = localStorage.getItem("shopify_state");
+        if (
+          !shopify_state ||
+          queryParams.state != shopify_state.replace(/['"]+/g, "")
+        )
+          return;
+        localStorage.setItem("shopify_params", JSON.stringify(queryParams));
       }
-      const parameters = socialParameters(window.location.href);
-      if ("id_token" in parameters) {
-        saveLoginSession(parameters);
-        setShowApplication(true);
-        setParams(parameters);
+      if (window.location.href.includes("id_token")) {
+        const parameters = socialParameters(window.location.href);
+        if ("id_token" in parameters) {
+          console.log(parameters);
+          await saveLoginSession(parameters);
+          setShowApplication(true);
+          setParams(parameters);
+        }
       }
     };
-    call();
-    // let loggedIn = isLoggedIn();
+    call().then((resp) => {
+      setLoading(false);
+    });
+    let loggedIn = isLoggedIn();
+    if (loggedIn) {
+      setShowApplication(true);
+    }
     // let merchant = checkMerchant();
     // if (loggedIn) {
     //   if (merchant) {
@@ -95,7 +136,6 @@ const Page = ({
     //     clearFlag("successfulLogin");
     //   }
     // }
-    setLoading(false);
   }, []);
   return (
     <Layout>
@@ -114,24 +154,23 @@ const Page = ({
                 }}
               >
                 <Form.Input
-                  label="Business Name"
+                  label="Store Name"
                   onChange={handleChange}
-                  name="busname"
+                  name="storename"
                   required
-                  placeholder="Business Name"
+                  placeholder="Store Name"
                 />
-                {/* <Form.Input
-                  label="Business Email"
-                  onChange={handleChange}
-                  name="busemail"
-                  type="email"
-                  required
-                  placeholder="adam@mybusiness.com"
-                /> */}
                 <Form.Input
-                  label="Business Phone"
+                  label="Contact Name"
                   onChange={handleChange}
-                  name="busphone"
+                  name="fullname"
+                  required
+                  placeholder="Contact Name"
+                />
+                <Form.Input
+                  label="Contact Phone"
+                  onChange={handleChange}
+                  name="phone"
                   required
                   placeholder="(604)-123-1234"
                   type="tel"
@@ -173,12 +212,6 @@ const Page = ({
                   onChange={handleChange}
                   name="website"
                 />
-                <TextArea
-                  placeholder="Tell us about your business!"
-                  label="About"
-                  name="about"
-                  onChange={handleChange}
-                />
                 <div className="flex justify-center mt-4">
                   <button className="standard-btn" type="submit">
                     Submit
@@ -187,7 +220,7 @@ const Page = ({
               </Form>
             </div>
           ) : (
-            <div className="max-w-500 mx-auto">
+            <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
               <div className="w-full flex flex-wrap mt-6">
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"
@@ -205,9 +238,8 @@ const Page = ({
               </div>
               <p className="my-6 text-center">OR</p>
               <MerchantSignupForm
-                submitSignup={submitSignup}
+                handleUserPassSubmit={handleUserPassSubmit}
                 formError={formError}
-                successfulSignup={successfulSignup}
               />
               <p className="mt-12 text-center">
                 <Link href="/login">
@@ -226,7 +258,6 @@ const Page = ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    submitSignup: (formData) => dispatch(actions.submitSignup(formData)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
     submitMerchantApplication: (formData) =>
       dispatch(actions.submitMerchantApplication(formData)),

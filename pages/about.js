@@ -6,7 +6,7 @@ const Page = ({}) => {
   return (
     <Layout>
       <Banner bgSrc={"/passion.jpg"} empty />
-      <div className="text-center my-24">
+      <div className="text-center my-24 px-6 lg:px-4">
         <h2>Our Story</h2>
         <p className="mt-4 mb-8">
           Loma gives you another ecommerce option that allows you to support
@@ -14,7 +14,7 @@ const Page = ({}) => {
         </p>
       </div>
       <Banner bgSrc={"/lions.jpg"} empty />
-      <div className="text-center my-24">
+      <div className="text-center my-24 px-6 lg:px-4">
         <h2>Mission</h2>
         <p className="mt-4 mb-8">
           Loma gives you another ecommerce option that allows you to support

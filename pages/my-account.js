@@ -4,14 +4,19 @@ import { connect } from "react-redux";
 import actions from "../store/actions";
 import { withRouter } from "next/router";
 import Link from "next/link";
-import { isLoggedIn, checkMerchant } from "../store/helpers";
 import { LargeLoader } from "../components/loaders";
 import Account from "../components/myAccount/account";
-import { fetchAccountData } from "../store/helpers";
+import {
+  isLoggedIn,
+  checkMerchant,
+  fetchAccountData,
+  fetchMerchantData,
+} from "../store/helpers";
 
-const Page = ({ router }) => {
+const Page = ({ router, myShop, setMerchantData }) => {
   const [loggedIn, updateLoggedIn] = useState(null);
   const [accountData, setAccountData] = useState(null);
+  const [isMerchant, updateIsMerchant] = useState(false);
 
   async function callFetchAccountData() {
     try {
@@ -23,17 +28,28 @@ const Page = ({ router }) => {
     }
   }
 
+  async function callFetchMerchData() {
+    try {
+      let resp = await fetchMerchantData();
+      setMerchantData(resp.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
-    updateLoggedIn(isLoggedIn());
-    if (!loggedIn && loggedIn != null) {
+    let l = isLoggedIn();
+    updateLoggedIn(l);
+    let m = checkMerchant();
+    updateIsMerchant(m);
+    if (!l) {
       router.push("/");
     }
-    if (accountData == null) {
+    if (!accountData) {
       callFetchAccountData();
     }
-    let merchant = checkMerchant();
-    if (merchant) {
-      router.push("/my-store");
+    if (!myShop && m) {
+      callFetchMerchData();
     }
   }, []);
 
@@ -42,7 +58,10 @@ const Page = ({ router }) => {
       {loggedIn && accountData != null ? (
         <>
           <Account
+            isMerchant={isMerchant}
             accountData={accountData}
+            myShop={myShop}
+            callFetchMerchData={callFetchMerchData}
             callFetchAccountData={callFetchAccountData}
           />
         </>
@@ -56,6 +75,7 @@ const Page = ({ router }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    setMerchantData: (data) => dispatch(actions.setMerchantData(data)),
   };
 };
 

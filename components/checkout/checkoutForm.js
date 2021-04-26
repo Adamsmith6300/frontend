@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import { CardElement } from "@stripe/react-stripe-js";
 import { Button, Form } from "semantic-ui-react";
 import axios from "axios";
-import { getAuth, getPersonId } from "./../../store/helpers";
+import { getAuth, getPersonId, confirmPayment } from "./../../store/helpers";
 
-const index = ({
-  stripe,
-  elements,
-  confirmPayment,
-  cartData,
-  setOrderNo,
-  personInfo,
-}) => {
+const calcFees = (cart) => {
+  let fees = {
+    subtotal: cart.total,
+    serviceFee: cart.total * 0.1,
+    deliveryFee: 7.5,
+  };
+  fees["total"] = fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"];
+  return fees;
+};
+
+const index = ({ stripe, elements, cartData, setOrderNo, personInfo }) => {
   const [isLoading, updateIsLoading] = useState(false);
+  const [chargeDetails, setChargeDetails] = useState(calcFees(cartData));
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     updateIsLoading(true);
@@ -30,6 +35,7 @@ const index = ({
         qty: item.qty,
       };
     });
+    payload["chargeDetails"] = chargeDetails;
     const authorization = getAuth();
     const resp = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/market/order`,
@@ -52,10 +58,15 @@ const index = ({
       } else {
         // The payment has been processed!
         if (result.paymentIntent.status === "succeeded") {
-          let orderResp = await confirmPayment(resp.data.OrderId);
-          console.log("orderResp", orderResp);
-          localStorage.removeItem("cart");
-          setOrderNo(resp.data.OrderId);
+          try {
+            let orderResp = await confirmPayment(resp.data.OrderId);
+            if (orderResp.status == 200) {
+              localStorage.removeItem("cart");
+              setOrderNo(resp.data.OrderId);
+            }
+          } catch (err) {
+            console.log(err);
+          }
         }
       }
     } else {
@@ -63,40 +74,63 @@ const index = ({
     }
     updateIsLoading(false);
   };
-
   return (
-    <Form
-      loading={isLoading}
-      onSubmit={(e) => {
-        console.log("ordered!");
-        handleSubmit(e);
-      }}
-      className="w-3/4 mx-auto pt-6"
-    >
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: "16px",
-              color: "#424770",
-              "::placeholder": {
-                color: "#aab7c4",
+    <>
+      <div className="text-gray-600 px-6 py-6">
+        <p className="flex justify-between">
+          <span>Subtotal</span>
+          <span>${chargeDetails.subtotal}</span>
+        </p>
+        <p className="flex justify-between">
+          <span>Delivery Fee</span>
+          <span>${chargeDetails.deliveryFee}</span>
+        </p>
+        <p className="flex justify-between">
+          <span>Service Fee (10%)</span>
+          <span>${chargeDetails.serviceFee}</span>
+        </p>
+        <p className="flex justify-between text-black">
+          <span>Total</span>
+          <span>${chargeDetails.total}</span>
+        </p>
+      </div>
+      <Form
+        loading={isLoading}
+        onSubmit={(e) => {
+          console.log("ordered!");
+          handleSubmit(e);
+        }}
+        className="w-3/4 mx-auto pt-6"
+      >
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
               },
             },
-            invalid: {
-              color: "#9e2146",
-            },
-          },
-        }}
-      />
-      <button
-        className="btn-no-size-color px-12 py-3 bg-green-600 mt-6"
-        type="submit"
-        disabled={!stripe}
-      >
-        Pay
-      </button>
-    </Form>
+          }}
+        />
+        <button
+          className={`btn-no-size-color px-12 py-3 ${
+            chargeDetails.total == 0 || !stripe
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-green-600"
+          } mt-6`}
+          type="submit"
+          disabled={chargeDetails.total == 0 || !stripe}
+        >
+          Pay
+        </button>
+      </Form>
+    </>
   );
 };
 

@@ -125,6 +125,20 @@ export const fetchAccountData = async () => {
   return resp;
 };
 
+export const refreshIdToken = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/refresh`,
+    { refresh_token: authRes["RefreshToken"] },
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
 export const updateStoreDetails = async (payload) => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const user = jwt(authRes["IdToken"]);
@@ -234,16 +248,42 @@ export const postNewProduct = async (formData) => {
   return resp;
 };
 
-export const submitSocialLogin = async (params) => {
-  // const user = jwt(params["IdToken"]);
-  const resp = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`,
+export const deleteProducts = async (data) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.delete(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/products`,
     {
       headers: {
-        Authorization: params["id_token"],
+        Authorization: authRes["IdToken"],
+      },
+      data: {
+        ...data,
       },
     }
   );
+  return resp;
+};
+
+export const submitSocialLogin = async (params) => {
+  let shopify_params = localStorage.getItem("shopify_params");
+  let req_url = `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`;
+  if (shopify_params) {
+    shopify_params = JSON.parse(shopify_params);
+    req_url += "?";
+    let entries = Object.entries(shopify_params);
+    for (let i = 0; i < entries.length; ++i) {
+      req_url += entries[i][0] + "=" + entries[i][1];
+      if (i < entries.length - 1) {
+        req_url += "&";
+      }
+    }
+  }
+  const resp = await axios.get(req_url, {
+    headers: {
+      Authorization: params["id_token"],
+    },
+  });
   return resp;
 };
 
@@ -253,6 +293,89 @@ export const submitSocialLoginMerchant = async (params) => {
     {
       headers: {
         Authorization: params["id_token"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const getAuthUrl = async (storeName) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/connect?storeName=${storeName}`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const getShopifyProducts = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/shopify/products`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const importProducts = async (products) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/products`,
+    products,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const verifyAddress = async (payload) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/market/address`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
+};
+
+export const confirmPayment = async (OrderId) => {
+  const authorization = getAuth();
+  return await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/market/order/${OrderId}/update`,
+    {
+      headers: {
+        Authorization: authorization,
+      },
+    }
+  );
+};
+
+export const reviewStore = async () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/approval`,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
       },
     }
   );

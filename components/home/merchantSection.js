@@ -22,15 +22,19 @@ const merchantSection = ({ heading, link }) => {
   }, []);
 
   return (
-    <div className="px-8 pb-4 pt-8">
-      <h2 className="flex justify-between max-w-1250 mx-auto mb-12">
-        <span>{heading}</span>
-        <Link href={link}>
-          <button className="standard-btn">View All</button>
-        </Link>
+    <div className="p-8 pb-16">
+      <h2 className="max-w-1250 mx-auto mb-12 text-center">
+        <span className="text-4xl">{heading}</span>
       </h2>
-      <div className="flex flex-wrap justify-start max-w-1040 mx-auto">
+      <div className="flex flex-wrap justify-center max-w-1040 mx-auto">
         <MerchantGrid merchants={merchants} />
+      </div>
+      <div className="text-center">
+        <Link href={link}>
+          <button className="btn-no-size-color px-12 py-4 bg-black">
+            View All Merchants
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { Button } from "semantic-ui-react";
-import { LargeLoader } from "../loaders";
+import { LargeLoader } from "../../loaders";
 
 const index = ({
   setMainImage,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 
 const LoginForm = ({ loading, setLoading, submitLogin }) => {
   let isValidEmail = true
@@ -18,6 +18,7 @@ const LoginForm = ({ loading, setLoading, submitLogin }) => {
   };
 
   const handleSubmit = () => {
+    formData["shopify_params"] = localStorage.getItem("shopify_params");
     submitLogin(formData);
   };
 

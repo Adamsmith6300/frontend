@@ -3,8 +3,8 @@ import { useState } from "react";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import { BsPlusCircle } from "react-icons/bs";
 import { TextArea, Input, Button, Table } from "semantic-ui-react";
-import { LargeLoader } from "../loaders";
-import { updateProductDetails } from "../../store/helpers";
+import { LargeLoader } from "../../loaders";
+import { updateProductDetails } from "../../../store/helpers";
 import ImageCarouselProd from "./imageCarouselProd";
 
 const index = ({ product, setSelectedProduct, callFetchMerchData }) => {

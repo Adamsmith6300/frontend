@@ -4,12 +4,12 @@ import { v4 as uuidv4 } from "uuid";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import { BsCheck } from "react-icons/bs";
 import { TextArea, Input, Button, Table } from "semantic-ui-react";
-import { LargeLoader } from "../loaders";
+import { LargeLoader } from "../../loaders";
 import {
   postNewProduct,
   getPresignedProductImgURL,
   postImageUpload,
-} from "../../store/helpers";
+} from "../../../store/helpers";
 import ImageCarouselNewProd from "./imageCarouselNewProd";
 
 const requiredFields = [

@@ -21,7 +21,10 @@ const index = ({}) => {
   ];
   points = points.map((point, index) => {
     return (
-      <div key={point.title + index} className="w-300 text-center mx-12">
+      <div
+        key={point.title + index}
+        className="w-300 text-center mx-12 my-5 lg:my-auto"
+      >
         <img className="h-150 w-150 rounded-full mx-auto" src={point.img} />
         <h4 className="text-3xl my-5">{point.title}</h4>
         <p>{point.subtitle}</p>
@@ -29,7 +32,7 @@ const index = ({}) => {
     );
   });
   return (
-    <div className="text-center my-24">
+    <div className="text-center my-24 px-2 lg:px-auto">
       <h2 className="">A better option</h2>
       <p className="mt-4 mb-8">
         Loma gives you another ecommerce option that allows you to support your

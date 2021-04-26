@@ -177,12 +177,20 @@ const actions = {
   },
   addToCart: (product, oldCart, qty = 1) => {
     let newCart = { ...oldCart };
+    let price = product.chosenVariant
+      ? product.chosenVariant.price
+      : product.price;
+    let inventory = product.chosenVariant
+      ? product.chosenVariant.inventory_quantity
+      : Number.MAX_VALUE;
     if (newCart.items[product.ProductId]) {
-      newCart.items[product.ProductId].qty += qty;
+      if (newCart.items[product.ProductId].qty + qty <= inventory) {
+        newCart.items[product.ProductId].qty += qty;
+      }
     } else {
       newCart.items[product.ProductId] = { ...product, qty: qty };
     }
-    newCart.total += Number(product.price) * qty;
+    newCart.total += Number(price) * qty;
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     return {
@@ -192,9 +200,12 @@ const actions = {
   },
   removeFromCart: (product, oldCart, qty) => {
     let newCart = { ...oldCart };
+    let price = product.chosenVariant
+      ? product.chosenVariant.price
+      : product.price;
     if (newCart.items[product.ProductId]) {
       newCart.items[product.ProductId].qty -= qty;
-      newCart.total -= Number(product.price) * qty;
+      newCart.total -= Number(price) * qty;
       if (newCart.items[product.ProductId].qty <= 0) {
         delete newCart.items[product.ProductId];
       }

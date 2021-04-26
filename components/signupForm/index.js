@@ -100,13 +100,13 @@ const index = ({ submitSignup, successfulSignup }) => {
           setLoading(false);
         }}
       >
-        <Form.Input
+        {/* <Form.Input
           label="Full Name"
           onChange={handleChange}
           name="fullname"
           required
           placeholder="Full Name"
-        />
+        /> */}
         <Form.Input
           label="Email"
           onChange={handleChange}

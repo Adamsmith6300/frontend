@@ -4,18 +4,30 @@ import Link from "next/link";
 import ProductGrid from "./productGrid";
 import { shuffleArray } from "../../store/helpers";
 
-const productSection = ({ heading, link, addToCart, cartData }) => {
+const productSection = ({
+  heading,
+  link,
+  addToCart,
+  cartData,
+  category,
+  lim = 8,
+  start,
+}) => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const getProducts = async () => {
-      return await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/market/products`
-      );
+      let url = `${process.env.NEXT_PUBLIC_API_URL}/market/products?lim=${lim}`;
+      if (category) {
+        url += "&category=" + category;
+      }
+      if (start) {
+        url += "&start=" + start;
+      }
+      return await axios.get(url);
     };
     getProducts()
       .then((resp) => {
-        // console.log(resp);
-        setProducts(shuffleArray(resp.data).slice(0, 8));
+        setProducts(resp.data.Products);
       })
       .catch((err) => {
         console.log(err);
@@ -24,19 +36,25 @@ const productSection = ({ heading, link, addToCart, cartData }) => {
 
   return (
     <div className="px-8 pb-4 pt-8">
-      <h2 className="flex justify-between max-w-1250 mx-auto mb-12">
-        <span>{heading}</span>
-        <Link href={link}>
-          <button className="standard-btn">View All</button>
-        </Link>
+      <h2 className="max-w-1250 mx-auto text-center">
+        <span className="text-4xl">{heading}</span>
       </h2>
-      <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
+      <div className="flex flex-wrap justify-center max-w-1250 mx-auto pb-12 sm:pb-auto">
         <ProductGrid
           products={products}
           addToCart={addToCart}
           cartData={cartData}
         />
       </div>
+      {heading != "Featured Products" ? (
+        <div className="text-center">
+          <Link href={link}>
+            <button className="standard-btn">
+              {link == "/products" ? "All Products" : "View All"}
+            </button>
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 };
