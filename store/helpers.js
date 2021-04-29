@@ -284,6 +284,7 @@ export const submitSocialLogin = async (params) => {
       Authorization: params["id_token"],
     },
   });
+  localStorage.removeItem("shopify_params");
   return resp;
 };
 
