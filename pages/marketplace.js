@@ -42,6 +42,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
         categories.map((cat, index) => {
           return (
             <ProductSection
+              key={cat.CategoryIndex + cat.name}
               heading={cat.name}
               category={cat.CategoryIndex}
               link={"/products?category=" + cat.CategoryIndex}

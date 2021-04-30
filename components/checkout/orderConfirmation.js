@@ -15,7 +15,7 @@ const orderConfirmation = ({ orderNo }) => {
       </p>
       <p className="my-3">You will receive a confirmation email shortly.</p>
       <p className="my-3">Click the link below to return to the marketplace.</p>
-      <Link href="/">
+      <Link href="/marketplace">
         <button className="standard-btn my-3">Shop</button>
       </Link>
     </div>

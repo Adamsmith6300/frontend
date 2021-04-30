@@ -10,7 +10,7 @@ const productGrid = ({ products, addToCart, cartData }) => {
     let isSelected = selectedId == product.ProductId;
     return (
       <ProductCard
-        key={index}
+        key={product.ProductId + index}
         isSelected={isSelected}
         setSelectedId={setSelectedId}
         product={product}

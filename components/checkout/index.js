@@ -13,7 +13,7 @@ const index = ({
   billingInfo,
   setBillingInfo,
 }) => {
-  const [activeCheckoutStep, setActiveCheckout] = useState(4);
+  const [activeCheckoutStep, setActiveCheckout] = useState(2);
 
   return (
     <div className="w-1/2 mx-auto text-center">
