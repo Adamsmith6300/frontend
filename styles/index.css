@@ -100,11 +100,13 @@ button:focus {
 }
 
 .banner {
-  background-position: center;
+  background-position: 100% 40%;
   background-repeat: no-repeat;
-  background-size: cover;
-  height: 700px;
+  /* background-size: cover; */
+  background-image: url("../public/secondBanner.jpg");
+  height: 450px;
   width: 100%;
+  position: relative;
 }
 
 .bg-img {
@@ -114,13 +116,18 @@ button:focus {
 }
 
 .banner-content {
-  position: relative;
-  top: 200px;
-  left: calc(100vw / 2 - 230px);
-  width: 450px;
-  padding: 30px 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  padding: 4rem 2rem;
+  height: 100%;
   text-align: center;
-  background-color: #fff;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  display: grid;
+  align-items: center;
+  place-items: center;
+  justify-items: center;
 }
 
 .standard-btn {
@@ -462,8 +469,9 @@ button:focus {
 }
 
 .loma-logo {
-  top: 50px;
+  top: 30px;
   left: 50px;
+  height: 7rem;
 }
 
 .merchantCard--home {
@@ -512,4 +520,21 @@ button:focus {
   color: #000;
   width: 300px;
   padding: 5px 0;
+}
+
+.footer {
+  background-image: url("../public/loma-lions.png");
+  background-position: 50% 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: #000;
+}
+
+.offset-banner-image {
+  height: 450px;
+  width: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

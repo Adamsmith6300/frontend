@@ -77,11 +77,15 @@ const actions = {
     };
   },
   submitLogin: (formData) => {
+    let shopify_params = JSON.parse(localStorage.getItem("shopify_params"));
     return async (dispatch) => {
       const resp = await axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, formData)
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, {
+          ...formData,
+          shopify_params: shopify_params,
+        })
         .then(function (response) {
-          console.log("REG LOGIN", response);
+          localStorage.removeItem("shopify_params");
           saveLoginSession(response);
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })

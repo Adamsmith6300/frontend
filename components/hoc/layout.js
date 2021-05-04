@@ -54,10 +54,7 @@ const Layout = ({
         />
       </Head>
       <Link href={isAuthed ? "/marketplace" : "/"}>
-        <img
-          src="/loma.png"
-          className="h-16 absolute loma-logo cursor-pointer"
-        />
+        <img src="/loma.png" className="absolute loma-logo cursor-pointer" />
       </Link>
       <SideMenu categories={categories} clearFlag={clearFlag} />
       {/* {!isMerchant ? (
