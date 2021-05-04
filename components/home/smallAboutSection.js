@@ -32,12 +32,9 @@ const index = ({}) => {
     );
   });
   return (
-    <div className="text-center my-24 px-2 lg:px-auto">
-      <h2 className="">A better option</h2>
-      <p className="mt-4 mb-8">
-        Loma gives you another ecommerce option that allows you to support your
-        local community
-      </p>
+    <div className="text-center my-12 px-2 lg:px-auto">
+      <h2 className="text-4xl">A Better Option</h2>
+      <p className="mt-4 mb-8">We want to give you an option to</p>
       <div className="flex flex-wrap justify-center">{points}</div>
     </div>
   );

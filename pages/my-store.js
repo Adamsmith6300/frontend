@@ -17,6 +17,7 @@ import {
   Banner,
   ShopifyImportModal,
   ChangeListedModal,
+  GetStarted,
 } from "../components/myStore";
 import { LargeLoader } from "../components/loaders";
 import Modal from "../components/modal";
@@ -35,6 +36,7 @@ const Page = ({
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [getStarted, showGetStarted] = useState(false);
 
   const closeModal = () => {
     setShowModal(false);
@@ -47,6 +49,12 @@ const Page = ({
       setMerchantData(resp.data);
       updateAbout(resp.data.info.about);
       updateWebsite(resp.data.info.website);
+      if (
+        !("hasLoggedIn" in resp.data.info) ||
+        !resp.data.info["hasLoggedIn"]
+      ) {
+        showGetStarted(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -92,7 +100,21 @@ const Page = ({
             bannerImageName={myShop.info.bannerImage}
           />
           <div className="pt-6 px-6 lg:px-64 lg:pt-12">
-            <h1 className="text-5xl my-12 flex justify-between">
+            {getStarted ? (
+              <GetStarted showGetStarted={showGetStarted} />
+            ) : (
+              <p
+                className="cursor-pointer"
+                onClick={() => showGetStarted(true)}
+              >
+                Show setup instructions
+              </p>
+            )}
+            <h1
+              className={`text-5xl ${
+                getStarted ? "my-12" : "mt-3 mb-12"
+              } flex justify-between`}
+            >
               <span>{myShop.info.storename}</span>
             </h1>
             <p className="text-2xl font-bold">

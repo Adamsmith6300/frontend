@@ -48,30 +48,51 @@
     padding: 30px;
     position: relative;
   }
+
   .banner-content {
-    position: relative;
-    top: 30px;
-    left: calc(100vw / 2 - 150px);
-    width: 300px;
-    padding: 10px 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 4rem 2rem;
+    height: 50%;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.9);
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    display: grid;
+    align-items: center;
+    place-items: center;
+    justify-items: center;
   }
 
   .banner {
-    background-position: center;
+    background-position: 50% 0%;
+    background-image: url("../public/secondBannerMobile.jpg");
     background-repeat: no-repeat;
-    background-size: cover;
-    height: 350px;
+    /* background-size: contain; */
+    height: 650px;
     width: 100%;
+    position: relative;
   }
 
   .card--products {
     position: relative;
     padding: 5px;
     margin: 20px 6px 120px 6px;
-    height: 250px;
-    max-width: 100%;
+    height: 150px;
+    max-width: 45%;
+  }
+
+  .card-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    text-align: center;
+    z-index: 999;
+    height: 150px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .card-image-container-selected {
@@ -94,9 +115,11 @@
     width: 90vw;
     margin: 0 auto;
   }
+
   .loma-logo {
     top: 15px;
     left: 15px;
+    height: 4.5rem;
   }
 
   .loma-container {
@@ -153,6 +176,23 @@
     padding: 1rem 1rem 2rem 1rem;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
+  }
+
+  .offset-banner-image {
+    height: 200px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .footer {
+    background-image: url("../public/loma-lions.png");
+    background-position: 50% 0%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: white;
+    background-color: #000;
   }
 }
 

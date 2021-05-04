@@ -24,17 +24,20 @@ const footer = ({ isAuthed }) => {
     );
   });
   return (
-    <div className="w-full py-32 px-6 lg:px-64">
+    <div className="footer mt-24 w-full py-32 px-6 lg:px-64">
       <div className="max-w-1040 mx-auto">
         <Link href={isAuthed ? "/marketplace" : "/"}>
-          <img src="/loma.png" className="h-16 loma-logo cursor-pointer" />
+          <img
+            src="/loma-inverted.png"
+            className="h-16 loma-logo cursor-pointer"
+          />
         </Link>
       </div>
       <div className="flex flex-wrap justify-between mt-12 max-w-1040 mx-auto">
         <ul className="w-full pl-3 lg:w-64">{menuItems}</ul>
         <div className="w-full pl-3 mt-12 lg:w-auto lg:ml-32">
           <p>
-            <a href="mailto: contact@shoploma.ca" className="hover:text-black">
+            <a href="mailto: contact@shoploma.ca" className="hover:text-white">
               <AiOutlineMail className="inline ml-1" />
               <span className="ml-3">contact@shoploma.ca</span>
             </a>
@@ -43,21 +46,21 @@ const footer = ({ isAuthed }) => {
             <a
               href="https://instagram.com"
               target="_blank"
-              className="hover:text-black text-4xl mr-3"
+              className="hover:text-white text-4xl mr-3"
             >
               <AiOutlineInstagram className="inline" />
             </a>
             <a
               href="https://facebook.com"
               target="_blank"
-              className="hover:text-black text-4xl mx-3"
+              className="hover:text-white text-4xl mx-3"
             >
               <AiOutlineFacebook className="inline" />
             </a>
             <a
               href="https://twitter.com"
               target="_blank"
-              className="hover:text-black text-4xl mx-3"
+              className="hover:text-white text-4xl mx-3"
             >
               <AiOutlineTwitter className="inline" />
             </a>
@@ -73,4 +76,6 @@ const footer = ({ isAuthed }) => {
     </div>
   );
 };
+// Photo by <a href="https://unsplash.com/@kylethacker?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Kyle Thacker</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
 export default footer;

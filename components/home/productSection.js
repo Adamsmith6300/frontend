@@ -35,7 +35,7 @@ const productSection = ({
   }, []);
 
   return (
-    <div className="px-8 pb-4 pt-8">
+    <div className="md:px-8 pb-4 pt-8">
       <h2 className="max-w-1250 mx-auto text-center">
         <span className="text-4xl">{heading}</span>
       </h2>

@@ -5,6 +5,7 @@ import { withRouter } from "next/router";
 import { checkMerchant, isLoggedIn } from "../store/helpers";
 import actions from "../store/actions";
 import Banner from "../components/home/banner";
+import OffsetBanner from "../components/home/offsetBanner";
 import ProductSection from "../components/home/productSection";
 import MerchantSection from "../components/home/merchantSection";
 import SmallAboutSection from "../components/home/smallAboutSection";
@@ -27,13 +28,14 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
   }, []);
   return (
     <Layout>
-      <Banner
+      <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
-        heading={"Only Local"}
+        heading={"Support Local Merchants"}
         content={
-          "Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses!"
+          "Based out of Vancouver BC, Loma is an online marketplace for local merchants. Pick and choose a variety of items from different merchants, then have your order delivered for one low delivery fee."
         }
         link={"/signup"}
+        left
       />
       <ProductSection
         heading={"Featured Products"}
@@ -41,6 +43,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         addToCart={addToCart}
         cartData={cartData}
       />
+      <SmallAboutSection />
       <MerchantSection heading={"Featured Merchants"} link={"/merchants"} />
       <Banner
         bgSrc={"/secondBanner.jpg"}
@@ -50,7 +53,6 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         }
         link={"/signup"}
       />
-      <SmallAboutSection />
       <ProductSection
         heading={"Jewellery + Accessories"}
         category={1}
@@ -65,6 +67,10 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         addToCart={addToCart}
         cartData={cartData}
       />
+      {/* <iframe
+        className="w-full h-400"
+        src="https://cdn.forms-content.sg-form.com/102dc890-ab88-11eb-bc4e-9a7ef5f1d536"
+      /> */}
     </Layout>
   );
 };
