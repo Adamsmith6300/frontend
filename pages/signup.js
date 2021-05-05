@@ -45,14 +45,14 @@ const Page = ({
             <div className="w-full flex flex-wrap mt-6">
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"
-                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=https://shoploma.ca/login&response_type=TOKEN&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=http://localhost:3000/login&response_type=TOKEN&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
               >
                 <AiFillFacebook className="inline mr-2 color-fb" />
                 Continue With Facebook
               </a>
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"
-                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=https://shoploma.ca/login&response_type=TOKEN&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:3000/login&response_type=TOKEN&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
               >
                 <FcGoogle className="inline mr-2" /> Continue With Google
               </a>
