@@ -100,7 +100,7 @@ const Page = ({
             bannerImageName={myShop.info.bannerImage}
           />
           <div className="pt-6 px-6 lg:px-64 lg:pt-12">
-            {getStarted ? (
+            {/* {getStarted ? (
               <GetStarted showGetStarted={showGetStarted} />
             ) : (
               <p
@@ -109,7 +109,7 @@ const Page = ({
               >
                 Show setup instructions
               </p>
-            )}
+            )} */}
             <h1
               className={`text-5xl ${
                 getStarted ? "my-12" : "mt-3 mb-12"

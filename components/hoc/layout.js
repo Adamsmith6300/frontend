@@ -57,15 +57,13 @@ const Layout = ({
         <img src="/loma.png" className="absolute loma-logo cursor-pointer" />
       </Link>
       <SideMenu categories={categories} clearFlag={clearFlag} />
-      {/* {!isMerchant ? (
-        <Cart
-          toggleCart={toggleCart}
-          showCart={showCart}
-          cartData={cartData}
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
-        />
-      ) : null} */}
+      <Cart
+        toggleCart={toggleCart}
+        showCart={showCart}
+        cartData={cartData}
+        addToCart={addToCart}
+        removeFromCart={removeFromCart}
+      />
       {children}
       <Footer isAuthed={isAuthed} />
       <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">

@@ -40,12 +40,10 @@ const actions = {
         })
         .catch(function (error) {
           console.log(error.response);
-          if (error.response.data.includes("UsernameExistsException")) {
-            dispatch({
-              type: actionTypes.ERROR_SUBMIT_FORM_DATA,
-              payload: "Username exists!",
-            });
-          }
+          dispatch({
+            type: actionTypes.ERROR_SUBMIT_FORM_DATA,
+            payload: "Failed to signup!",
+          });
         });
     };
   },

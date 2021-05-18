@@ -1,5 +1,6 @@
 import jwt from "jwt-decode";
 import axios from "axios";
+import Querystring from "querystring";
 
 export const shuffleArray = (array) => {
   let curId = array.length;
@@ -25,15 +26,33 @@ export const saveLoginSession = (response) => {
       JSON.stringify(response.data["AuthenticationResult"])
     );
   }
-  if (response.id_token) {
-    const user = jwt(response.id_token);
+  if (response.IdToken) {
+    const user = jwt(response.IdToken);
     let authResults = {
       ...response,
-      IdToken: response.id_token,
       IdExp: user["exp"],
     };
     localStorage.setItem("AuthResults", JSON.stringify(authResults));
   }
+};
+
+export const getTokens = async ({ code, redirect }) => {
+  let body = Querystring["stringify"]({
+    client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
+    redirect_uri: window.location.origin + redirect,
+    grant_type: "authorization_code",
+    code: code,
+  });
+  const config = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  };
+  return axios.post(
+    "https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/token",
+    body,
+    config
+  );
 };
 
 export const isLoggedIn = () => {
@@ -127,6 +146,7 @@ export const fetchAccountData = async () => {
 
 export const refreshIdToken = async () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  console.log(authRes);
   const resp = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/people/refresh`,
     { refresh_token: authRes["RefreshToken"] },
@@ -281,7 +301,7 @@ export const submitSocialLogin = async (params) => {
   }
   const resp = await axios.get(req_url, {
     headers: {
-      Authorization: params["id_token"],
+      Authorization: params["IdToken"],
     },
   });
   localStorage.removeItem("shopify_params");
@@ -293,7 +313,7 @@ export const submitSocialLoginMerchant = async (params) => {
     `${process.env.NEXT_PUBLIC_API_URL}/people/login/social/merchant`,
     {
       headers: {
-        Authorization: params["id_token"],
+        Authorization: params["IdToken"],
       },
     }
   );

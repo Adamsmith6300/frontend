@@ -9,7 +9,8 @@ const index = ({
   setSelectedProducts,
   callDeleteProducts,
 }) => {
-  const imgSrc = product.image.src;
+  console.log(product);
+  const imgSrc = product.image ? product.image.src : "";
   categories = categories.map((cat, index) => {
     return {
       key: cat.name,
@@ -54,7 +55,7 @@ const index = ({
       <p>
         <span>{product.title}</span>
       </p>
-      <p>${product.variants[0].price}</p>
+      <p>${product.price}</p>
       <Dropdown
         className="mt-2"
         selection

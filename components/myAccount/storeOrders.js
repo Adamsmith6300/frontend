@@ -67,13 +67,6 @@ const storeOrders = ({ orders }) => {
             <p className="my-3">No previous orders</p>
           )}
         </>
-        {newOrders.length <= 0 && pastOrders.length <= 0 ? (
-          <div className="w-full">
-            <p className="w-full text-center text-3xl bolder mb-3">
-              You don't have any orders yet!
-            </p>
-          </div>
-        ) : null}
       </ul>
     );
   }

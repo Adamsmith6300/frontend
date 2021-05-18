@@ -36,6 +36,7 @@ const Page = ({
   const [showApplication, setShowApplication] = useState(successfulSignup);
   const [params, setParams] = useState(null);
   const [userPass, setUserPass] = useState(null);
+  const [merchantSignupSuccess, setMerchantSignupSuccess] = useState(false);
 
   const handleChange = (e) => {
     updateFormData({
@@ -51,9 +52,6 @@ const Page = ({
         try {
           let resp = await submitSocialLoginMerchant(params);
           savePersonInfo(resp.data);
-          // resp = await refreshIdToken();
-          // console.log(resp);
-          // await saveLoginSession(resp);
         } catch (err) {
           console.log(err);
         }
@@ -62,6 +60,9 @@ const Page = ({
         // pass shopify params from local storage (if exists)
         formData["shopify_params"] = localStorage.getItem("shopify_params");
         await submitMerchantApplication(formData);
+        let resp = await refreshIdToken();
+        await saveLoginSession(resp);
+        setMerchantSignupSuccess(true);
         router.push("/my-store");
         setLoading(false);
       } catch (err) {
@@ -80,19 +81,6 @@ const Page = ({
     setShowApplication(true);
   };
 
-  const socialParameters = (href) => {
-    const strippedDomain = href.split("#")[1];
-    const parameterList = strippedDomain.split("&");
-    const parameters = {};
-    parameterList.forEach((param) => {
-      const splitParam = param.split("=");
-      const key = splitParam[0];
-      const value = splitParam[1];
-      parameters[key] = value;
-    });
-    return parameters;
-  };
-
   useEffect(() => {
     const call = async () => {
       let queryParams = router.query;
@@ -109,13 +97,15 @@ const Page = ({
           return;
         localStorage.setItem("shopify_params", JSON.stringify(queryParams));
       }
-      if (window.location.href.includes("id_token")) {
-        const parameters = socialParameters(window.location.href);
-        if ("id_token" in parameters) {
-          console.log(parameters);
-          await saveLoginSession(parameters);
+      if ("code" in queryParams) {
+        let tokens = await getTokens({
+          code: queryParams["code"],
+          redirect: "/become-a-merchant",
+        });
+        if ("id_token" in tokens.data) {
+          await saveLoginSession(tokens.data);
           setShowApplication(true);
-          setParams(parameters);
+          setParams(tokens.data);
         }
       }
     };
@@ -137,6 +127,14 @@ const Page = ({
     //   }
     // }
   }, []);
+
+  if (merchantSignupSuccess) {
+    return (
+      <Layout>
+        <p>Successfully signed up as a merchant!</p>;
+      </Layout>
+    );
+  }
   return (
     <Layout>
       {loading ? (
@@ -224,14 +222,14 @@ const Page = ({
               <div className="w-full flex flex-wrap mt-6">
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"
-                  href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=http://localhost:3000/become-a-merchant&response_type=TOKEN&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                  href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=http://localhost:3000/become-a-merchant&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
                 >
                   <AiFillFacebook className="inline mr-2 color-fb" />
                   Continue With Facebook
                 </a>
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"
-                  href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:3000/become-a-merchant&response_type=TOKEN&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                  href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:3000/become-a-merchant&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
                 >
                   <FcGoogle className="inline mr-2" /> Continue With Google
                 </a>

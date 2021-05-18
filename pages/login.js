@@ -7,6 +7,7 @@ import {
   saveLoginSession,
   submitSocialLogin,
   isLoggedIn,
+  getTokens,
 } from "../store/helpers";
 import { withRouter } from "next/router";
 import LoginForm from "../components/loginForm";
@@ -29,34 +30,24 @@ const Page = ({
 
   if (successfulLogin) router.push("/marketplace");
 
-  const socialParameters = (href) => {
-    const strippedDomain = href.split("#")[1];
-    const parameterList = strippedDomain.split("&");
-    const parameters = {};
-    parameterList.forEach((param) => {
-      const splitParam = param.split("=");
-      const key = splitParam[0];
-      const value = splitParam[1];
-      parameters[key] = value;
-    });
-    return parameters;
-  };
-
   useEffect(() => {
     const call = async () => {
-      if (!window.location.href.includes("#")) {
-        return;
-      }
-      const parameters = socialParameters(window.location.href);
-      if ("id_token" in parameters) {
-        try {
-          let resp = await submitSocialLogin(parameters);
-          if (resp.status == 200) {
-            saveLoginSession(parameters);
-            savePersonInfo(resp.data);
+      let queryParams = router.query;
+      if ("code" in queryParams) {
+        let tokens = await getTokens({
+          code: queryParams["code"],
+          redirect: "/login",
+        });
+        if ("id_token" in tokens.data) {
+          try {
+            let resp = await submitSocialLogin(tokens.data);
+            if (resp.status == 200) {
+              saveLoginSession(tokens.data);
+              savePersonInfo(resp.data);
+            }
+          } catch (err) {
+            console.log(err);
           }
-        } catch (err) {
-          console.log(err);
         }
       }
     };
@@ -87,14 +78,14 @@ const Page = ({
             <div className="w-full flex flex-wrap mt-6">
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"
-                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=http://localhost:3000/login&response_type=token&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Facebook&redirect_uri=${window.location.origin}/login&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
               >
                 <AiFillFacebook className="inline mr-2 color-fb" />
                 Continue With Facebook
               </a>
               <a
                 className="social-btn w-full py-4 text-center my-3 text-xl"
-                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:3000/login&response_type=token&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                href={`https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=${window.location.origin}/login&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
               >
                 <FcGoogle className="inline mr-2" /> Continue With Google
               </a>
