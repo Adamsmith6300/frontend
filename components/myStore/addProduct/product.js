@@ -3,14 +3,16 @@ import { updateProductDetails } from "../../../store/helpers";
 import { Dropdown } from "semantic-ui-react";
 
 const index = ({
+  index,
   product,
   categories,
   selectedProducts,
   setSelectedProducts,
+  selectedProduct,
+  setSelectedProduct,
   callDeleteProducts,
 }) => {
-  console.log(product);
-  const imgSrc = product.image ? product.image.src : "";
+  const imgSrc = product.images[0].src;
   categories = categories.map((cat, index) => {
     return {
       key: cat.name,
@@ -35,7 +37,9 @@ const index = ({
   };
   return (
     <div
-      className={`w-250 m-2 cursor-pointer relative`}
+      className={`${
+        selected != -1 ? "border-red-300 border-2" : null
+      } w-250 p-2 m-2 cursor-pointer relative`}
       onClick={() => {
         if (selected == -1) {
           setSelectedProducts([...selectedProducts, product.ProductId]);
@@ -46,9 +50,6 @@ const index = ({
         }
       }}
     >
-      {selected != -1 ? (
-        <div className="bg-red-400 bg-opacity-25 w-full h-full absolute z-50"></div>
-      ) : null}
       <div className="grid place-content-end w-full h-150 overflow-hidden">
         <img className="w-full mb-2" src={imgSrc} alt="" align="top" />
       </div>
@@ -67,18 +68,29 @@ const index = ({
         }}
         value={curValue}
       />
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          callDeleteProducts({
-            products: [product.ProductId],
-            MerchantId: product.MerchantId,
-          });
-        }}
-        className="text-red-400 my-3"
-      >
-        Delete Product
-      </button>
+      <div className="flex justify-between my-3">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectedProduct(index);
+          }}
+          className="text-blue-400"
+        >
+          Edit
+        </button>
+        {/* <button
+          onClick={(e) => {
+            e.stopPropagation();
+            callDeleteProducts({
+              products: [product.ProductId],
+              MerchantId: product.MerchantId,
+            });
+          }}
+          className="text-red-400"
+        >
+          Delete
+        </button> */}
+      </div>
     </div>
   );
 };

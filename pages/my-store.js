@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import { BsFillCircleFill } from "react-icons/bs";
-
+import { TextArea, Input } from "semantic-ui-react";
 import actions from "../store/actions";
 import {
   isLoggedIn,
@@ -146,8 +146,8 @@ const Page = ({
                 <p className="font-bold">Website URL</p>
                 <div className="my-3">
                   <input
+                    className="w-full my-3 h-10"
                     value={website}
-                    className="w-full pl-3 py-1 h-10 bg-gray-200 mb-6"
                     name="website"
                     type="text"
                     onChange={(e) => updateWebsite(e.target.value)}
@@ -175,6 +175,7 @@ const Page = ({
                 </div>
                 <p className="font-bold">About</p>
                 <div className="my-3">
+                  {/* 1px solid rgba(34,36,38,.15) */}
                   <textarea
                     placeholder={
                       myShop.info.about && myShop.info.about.length > 0
@@ -182,7 +183,7 @@ const Page = ({
                         : "Tell your store visitors about " +
                           myShop.info.storename
                     }
-                    className="w-full pl-3 py-1 mb-6 h-20 bg-gray-200"
+                    className="w-full pl-3 py-1 mb-6 h-32"
                     label="about"
                     name="about"
                     value={about}

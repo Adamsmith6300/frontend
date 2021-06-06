@@ -123,15 +123,6 @@ const index = ({
             </button>
           ) : null}
         </div>
-        {/* <button
-          color="blue"
-          disabled={selectedImg == null || imageSrcs.length == 1}
-          onClick={() => {
-            setMainImage(currentIndex);
-          }}
-        >
-          <span className="mr-2">Set Main Image</span>
-        </button> */}
       </div>
     </>
   );

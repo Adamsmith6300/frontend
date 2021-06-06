@@ -34,20 +34,24 @@ const Page = ({
     const call = async () => {
       let queryParams = router.query;
       if ("code" in queryParams) {
-        let tokens = await getTokens({
-          code: queryParams["code"],
-          redirect: "/login",
-        });
-        if ("id_token" in tokens.data) {
-          try {
-            let resp = await submitSocialLogin(tokens.data);
-            if (resp.status == 200) {
-              saveLoginSession(tokens.data);
-              savePersonInfo(resp.data);
+        try {
+          let tokens = await getTokens({
+            code: queryParams["code"],
+            redirect: "/login",
+          });
+          if ("id_token" in tokens.data) {
+            try {
+              let resp = await submitSocialLogin(tokens.data);
+              if (resp.status == 200) {
+                saveLoginSession(tokens.data);
+                savePersonInfo(resp.data);
+              }
+            } catch (err) {
+              console.log(err);
             }
-          } catch (err) {
-            console.log(err);
           }
+        } catch (err) {
+          console.log(err);
         }
       }
     };

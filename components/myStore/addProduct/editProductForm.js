@@ -6,11 +6,11 @@ import { BsCheck } from "react-icons/bs";
 import { TextArea, Input, Button, Table } from "semantic-ui-react";
 import { LargeLoader } from "../../loaders";
 import {
-  postNewProduct,
+  updateProductDetails,
   getPresignedProductImgURL,
   postImageUpload,
 } from "../../../store/helpers";
-import ImageCarouselNewProd from "./imageCarouselNewProd";
+import ImageCarouselEditProd from "./imageCarouselNewProd";
 
 const requiredFields = [
   "MerchantId",
@@ -22,13 +22,10 @@ const requiredFields = [
   "mainImage",
 ];
 
-const index = ({ showNewProductForm, MerchantId }) => {
+const index = ({ setSelectedProduct, product, callFetchMerchData }) => {
   const [initialOptions, setInitialOptions] = useState([]);
-  const ProductId = uuidv4();
   const [formData, updateFormData] = useState({
-    category: 0,
-    MerchantId: MerchantId,
-    options: [],
+    ...product,
   });
   const [loading, setLoading] = useState(false);
   const [editAttr, setEditAttr] = useState(null);
@@ -36,8 +33,12 @@ const index = ({ showNewProductForm, MerchantId }) => {
   // const [editedOption, setEditedOption] = useState(null);
   const [deleteIndex, setDeleteIndex] = useState(null);
   const [mainImage, setMainImage] = useState(0);
-  const [newImages, setNewImages] = useState([]);
-  const [imageSrcs, setImageSrcs] = useState([]);
+  const [newImages, setNewImages] = useState([...product.images]);
+  const [imageSrcs, setImageSrcs] = useState(
+    product.images.map((img, index) => {
+      return img.src;
+    })
+  );
 
   const clearState = () => {
     setEditAttr(null);
@@ -47,7 +48,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
     updateFormData({ category: 0, MerchantId: MerchantId, options: [] });
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value.trim(),
@@ -71,57 +72,78 @@ const index = ({ showNewProductForm, MerchantId }) => {
 
   const addImagesToFormData = () => {
     formData["mainImage"] = mainImage;
+    formData["images"] = [];
     let images = [];
+    console.log("newImgs", newImages);
     for (let i = 0; i < newImages.length; ++i) {
-      images.push(newImages[i].name);
+      images.push({
+        src:
+          "https://loma-merchant-images.s3.amazonaws.com/" +
+          product["MerchantId"] +
+          "/products/" +
+          product["ProductId"] +
+          "/" +
+          newImages[i].name,
+        name: newImages[i].name,
+      });
     }
     formData["images"] = images;
   };
 
   const handleSubmit = async () => {
     setLoading(true);
-    let resp = await postNewProduct(formData);
-    if (resp.status == 200) {
-      await uploadImages(resp.data.ProductId, newImages, imageSrcs);
-      window.location.reload();
+    let ready = readyToSave();
+    console.log(ready);
+    if (ready) {
+      let resp = await updateProductDetails(product.ProductId, formData);
+      if (resp.status == 200) {
+        let uploaded = await uploadImages(
+          product.ProductId,
+          newImages,
+          imageSrcs
+        );
+        window.location.reload();
+      }
     }
   };
 
   const uploadImages = async (ProductId, newImages, imageSrcs) => {
     let failedImages = [];
     for (let i = 0; i < newImages.length; ++i) {
-      try {
-        let { data } = await getPresignedProductImgURL(
-          {
-            MerchantId: MerchantId,
-            name: newImages[i].name,
-          },
-          ProductId
-        );
-        if (data) {
-          let uploadImageResp = await postImageUpload(
-            newImages[i].uploadFile,
-            data
+      if ("uploadFile" in newImages[i])
+        try {
+          let { data } = await getPresignedProductImgURL(
+            {
+              MerchantId: product.MerchantId,
+              name: newImages[i].name,
+            },
+            ProductId
           );
-          console.log(uploadImageResp);
-        } else {
-          throw { resp, file };
+          if (data) {
+            let uploadImageResp = await postImageUpload(
+              newImages[i].uploadFile,
+              data
+            );
+            console.log(uploadImageResp);
+          } else {
+            throw { resp, file };
+          }
+        } catch (err) {
+          console.log(err);
+          failedImages.push(newImages[i].name);
+          console.log("FAILED TO UPLOAD", newImages[i].name);
+          // let resp = await updateProductDetails(ProductId, {
+          //   images: images,
+          //   MerchantId: MerchantId,
+          // });
         }
-      } catch (err) {
-        console.log(err);
-        failedImages.push(newImages[i].name);
-        console.log("FAILED TO UPLOAD", newImages[i].name);
-        // let resp = await updateProductDetails(ProductId, {
-        //   images: images,
-        //   MerchantId: MerchantId,
-        // });
-      }
     }
   };
 
   const readyToSave = () => {
     //CHECK THAT ALL FIELDS ARE FILLED
     addImagesToFormData();
+    console.log("form", formData);
     for (let i = 0; i < requiredFields.length; ++i) {
       if (!(requiredFields[i] in formData)) return false;
       if (
@@ -130,66 +152,67 @@ const index = ({ showNewProductForm, MerchantId }) => {
       )
         return false;
     }
-    let optionsOk = true;
-    if ("options" in formData) {
-      for (let i = 0; i < formData.options.length; ++i) {
-        if (
-          !("label" in formData.options[i]) ||
-          formData.options[i]["label"].length <= 0 ||
-          formData.options[i]["label"] == null ||
-          !("price" in formData.options[i]) ||
-          formData.options[i]["price"].length <= 0 ||
-          formData.options[i]["price"] == null
-        ) {
-          optionsOk = false;
-          break;
-        }
-      }
-    }
-    return optionsOk;
+    return true;
+    // let optionsOk = true;
+    // if ("options" in formData) {
+    //   for (let i = 0; i < formData.options.length; ++i) {
+    //     if (
+    //       !("label" in formData.options[i]) ||
+    //       formData.options[i]["label"].length <= 0 ||
+    //       formData.options[i]["label"] == null ||
+    //       !("price" in formData.options[i]) ||
+    //       formData.options[i]["price"].length <= 0 ||
+    //       formData.options[i]["price"] == null
+    //     ) {
+    //       optionsOk = false;
+    //       break;
+    //     }
+    //   }
+    // }
+    // return optionsOk;
   };
 
-  let options = initialOptions.map((ogOption, index) => {
-    const option = Object.assign({}, ogOption);
-    return (
-      <Table.Row key={index}>
-        <>
-          <Table.Cell negative={deleteIndex == index}>
-            {option.label}
-          </Table.Cell>
-          <Table.Cell negative={deleteIndex == index}>
-            ${option.price}
-          </Table.Cell>
-          <Table.Cell
-            className="flex justify-between"
-            negative={deleteIndex == index}
-          >
-            <span>
-              <MdDelete
-                onClick={() => {
-                  console.log("delete", index);
-                  initialOptions.splice(index, 1);
-                }}
-                className="inline cursor-pointer"
-              />
-            </span>
-          </Table.Cell>
-        </>
-      </Table.Row>
-    );
-  });
+  //   let options = initialOptions.map((ogOption, index) => {
+  //     const option = Object.assign({}, ogOption);
+  //     return (
+  //       <Table.Row key={index}>
+  //         <>
+  //           <Table.Cell negative={deleteIndex == index}>
+  //             {option.label}
+  //           </Table.Cell>
+  //           <Table.Cell negative={deleteIndex == index}>
+  //             ${option.price}
+  //           </Table.Cell>
+  //           <Table.Cell
+  //             className="flex justify-between"
+  //             negative={deleteIndex == index}
+  //           >
+  //             <span>
+  //               <MdDelete
+  //                 onClick={() => {
+  //                   console.log("delete", index);
+  //                   initialOptions.splice(index, 1);
+  //                 }}
+  //                 className="inline cursor-pointer"
+  //               />
+  //             </span>
+  //           </Table.Cell>
+  //         </>
+  //       </Table.Row>
+  //     );
+  //   });
   return loading ? (
     <LargeLoader />
   ) : (
     <div className="pl-2">
       <button
         className="btn-no-size-color bg-black px-6 py-2"
-        onClick={() => showNewProductForm(false)}
+        onClick={() => setSelectedProduct(null)}
       >
         Back
       </button>
       <div className="w-500 max-w-full mx-auto pt-12">
-        <ImageCarouselNewProd
+        <ImageCarouselEditProd
           mainImage={mainImage}
           setMainImage={setMainImage}
           newImages={newImages}
@@ -203,6 +226,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
             className="w-full my-3 h-10"
             name="title"
             type="text"
+            defaultValue={product.title}
             onChange={handleChange}
           />
         </div>
@@ -211,6 +235,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
           <input
             className="w-full my-3 h-10"
             name="price"
+            defaultValue={product.price}
             type="number"
             onChange={handleChange}
           />
@@ -221,6 +246,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
             className="w-full my-3 h-10"
             name="stock"
             type="number"
+            defaultValue={product.stock}
             min="1"
             onChange={handleChange}
           />
@@ -230,6 +256,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
           <textarea
             className="w-full my-3 h-24"
             name="description"
+            defaultValue={product.description}
             onChange={handleChange}
           />
         </div>
@@ -285,22 +312,17 @@ const index = ({ showNewProductForm, MerchantId }) => {
 
         <div className="mt-2 w-full text-center">
           <button
-            // onClick={() => {
-            //   clearState();
-            // }}
-            onClick={() => showNewProductForm(false)}
+            onClick={() => setSelectedProduct(null)}
             className="btn-no-size-color bg-black px-6 py-2 mr-2"
           >
             Cancel
           </button>
-          {readyToSave() ? (
-            <button
-              onClick={() => handleSubmit()}
-              className="btn-no-size-color bg-green-500 px-6 py-2 ml-2"
-            >
-              Save
-            </button>
-          ) : null}
+          <button
+            onClick={() => handleSubmit()}
+            className="btn-no-size-color bg-green-500 px-6 py-2 ml-2"
+          >
+            Save
+          </button>
         </div>
       </div>
     </div>

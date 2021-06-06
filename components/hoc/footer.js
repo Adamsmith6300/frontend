@@ -24,7 +24,7 @@ const footer = ({ isAuthed }) => {
     );
   });
   return (
-    <div className="footer mt-24 w-full py-32 px-6 lg:px-64">
+    <div className="footer mt-24 py-4 lg:pt-32 lg:pb-8 px-6 lg:px-64">
       <div className="max-w-1040 mx-auto">
         <Link href={isAuthed ? "/marketplace" : "/"}>
           <img

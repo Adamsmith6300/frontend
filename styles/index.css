@@ -85,6 +85,19 @@ p {
   line-height: 28px;
 }
 
+textarea,
+input {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.25rem;
+  padding-left: 10px;
+}
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  border-color: #000 !important;
+}
+
 button:focus {
   outline: none;
 }
@@ -523,12 +536,13 @@ button:focus {
 }
 
 .footer {
-  background-image: url("../public/loma-lions.png");
-  background-position: 50% 100%;
+  background-image: url("../public/loma-lions-gradient-1.png");
+  background-position: 50% 70%;
   background-size: cover;
   background-repeat: no-repeat;
   color: white;
-  background-color: #000;
+  /* width: 100%; */
+  /* background-color: #000; */
 }
 
 .offset-banner-image {

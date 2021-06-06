@@ -187,12 +187,13 @@
   }
 
   .footer {
-    background-image: url("../public/loma-lions.png");
-    background-position: 50% 0%;
-    background-size: contain;
+    background-image: url("../public/loma-lions-gradient-1.png");
+    background-position: 50% 70%;
+    background-size: cover;
     background-repeat: no-repeat;
     color: white;
-    background-color: #000;
+    height: 700px;
+    /* background-color: #000; */
   }
 }
 

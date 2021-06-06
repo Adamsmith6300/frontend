@@ -4,7 +4,7 @@ import { Button, Checkbox, Form, Input, Message } from "semantic-ui-react";
 import SuccessfulSignup from "./successfulSignup";
 
 const index = ({ submitSignup, successfulSignup }) => {
-  if (successfulSignup) return <SuccessfulSignup />;
+  if (successfulSignup) return <></>;
 
   const [isLoading, setLoading] = useState(false);
   const [formError, setFormError] = useState(null);
@@ -61,7 +61,7 @@ const index = ({ submitSignup, successfulSignup }) => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (formError != null) {
       setFormError(null);
     }
@@ -70,7 +70,8 @@ const index = ({ submitSignup, successfulSignup }) => {
       return;
     }
     console.log("SUBMITTED");
-    submitSignup(formData);
+    await submitSignup(formData);
+    setLoading(false);
   };
 
   return (
@@ -97,7 +98,6 @@ const index = ({ submitSignup, successfulSignup }) => {
           setLoading(true);
           e.preventDefault();
           handleSubmit();
-          setLoading(false);
         }}
       >
         {/* <Form.Input

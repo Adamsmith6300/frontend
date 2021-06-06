@@ -18,6 +18,7 @@ export const shuffleArray = (array) => {
 };
 
 export const saveLoginSession = (response) => {
+  console.log(response);
   if (response.data) {
     const user = jwt(response.data["AuthenticationResult"]["IdToken"]);
     response.data["AuthenticationResult"]["IdExp"] = user["exp"];
@@ -30,6 +31,16 @@ export const saveLoginSession = (response) => {
     const user = jwt(response.IdToken);
     let authResults = {
       ...response,
+      IdExp: user["exp"],
+    };
+    localStorage.setItem("AuthResults", JSON.stringify(authResults));
+  }
+  if (response.id_token) {
+    const user = jwt(response.id_token);
+    let authResults = {
+      ...response,
+      IdToken: response["id_token"],
+      RefreshToken: response["refresh_token"],
       IdExp: user["exp"],
     };
     localStorage.setItem("AuthResults", JSON.stringify(authResults));
@@ -286,6 +297,7 @@ export const deleteProducts = async (data) => {
 };
 
 export const submitSocialLogin = async (params) => {
+  console.log(params);
   let shopify_params = localStorage.getItem("shopify_params");
   let req_url = `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`;
   if (shopify_params) {
@@ -301,7 +313,7 @@ export const submitSocialLogin = async (params) => {
   }
   const resp = await axios.get(req_url, {
     headers: {
-      Authorization: params["IdToken"],
+      Authorization: params["id_token"],
     },
   });
   localStorage.removeItem("shopify_params");
@@ -401,4 +413,18 @@ export const reviewStore = async () => {
     }
   );
   return resp;
+};
+
+export const resetPasswordRequest = async (payload) => {
+  return await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/forgot-password`,
+    payload
+  );
+};
+
+export const resetPasswordConfirmation = async (payload) => {
+  return await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/forgot-password/confirm`,
+    payload
+  );
 };

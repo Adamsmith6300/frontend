@@ -28,6 +28,7 @@ export const getStatus = (status) => {
   }
 };
 const index = ({ order, setSelectedOrder }) => {
+  console.log(order.chargeDetails);
   let items = order.items.map((item, index) => {
     return (
       <div className="flex justify-start place-items-center mb-3">
@@ -95,7 +96,24 @@ const index = ({ order, setSelectedOrder }) => {
       </div>
 
       <p className="text-3xl my-3">Summary</p>
-      <div className="p-3 pb-0 border border-1 sm:max-w-screen-sm text-base"></div>
+      <div className="text-gray-600 p-3 pb-0 border border-1 sm:max-w-screen-sm text-base">
+        <p className="flex justify-between">
+          <span>Subtotal</span>
+          <span>${order.chargeDetails.subtotal}</span>
+        </p>
+        <p className="flex justify-between">
+          <span>Delivery Fee</span>
+          <span>${order.chargeDetails.deliveryFee}</span>
+        </p>
+        <p className="flex justify-between">
+          <span>Service Fee (10%)</span>
+          <span>${order.chargeDetails.serviceFee}</span>
+        </p>
+        <p className="flex justify-between text-black">
+          <span>Total</span>
+          <span>${order.chargeDetails.total}</span>
+        </p>
+      </div>
     </div>
   );
 };
