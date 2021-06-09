@@ -1,8 +1,15 @@
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
+import Terms from "../components/terms";
 
 const Page = ({}) => {
-  return <h1>Terms + Conditions</h1>;
+  return (
+    <Layout>
+      <div className="grid grid-cols-1 place-items-center">
+        <Terms />
+      </div>
+    </Layout>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => {

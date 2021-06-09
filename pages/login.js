@@ -33,6 +33,7 @@ const Page = ({
   useEffect(() => {
     const call = async () => {
       let queryParams = router.query;
+      console.log(queryParams);
       if ("code" in queryParams) {
         try {
           let tokens = await getTokens({
@@ -53,7 +54,9 @@ const Page = ({
         } catch (err) {
           console.log(err);
         }
+        return true;
       }
+      return false;
     };
     call().then((resp) => {
       let loggedIn = isLoggedIn();
@@ -65,7 +68,7 @@ const Page = ({
           router.push("/marketplace");
         }
       }
-      if (!window.location.href.includes("#")) {
+      if (!resp) {
         setLoading(false);
       }
     });

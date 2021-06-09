@@ -57,14 +57,16 @@ const Page = ({
         }
       }
       try {
-        // pass shopify params from local storage (if exists)
-        formData["shopify_params"] = localStorage.getItem("shopify_params");
         await submitMerchantApplication(formData);
         let resp = await refreshIdToken();
-        await saveLoginSession(resp);
-        setMerchantSignupSuccess(true);
-        router.push("/my-store");
-        setLoading(false);
+        if (resp) {
+          await saveLoginSession(resp);
+          setMerchantSignupSuccess(true);
+          router.push("/my-store");
+        } else {
+          //display error
+          router.push("/marketplace");
+        }
       } catch (err) {
         console.log(err);
       }
@@ -84,19 +86,19 @@ const Page = ({
   useEffect(() => {
     const call = async () => {
       let queryParams = router.query;
-      if (
-        "hmac" in queryParams &&
-        "shop" in queryParams &&
-        "timestamp" in queryParams
-      ) {
-        let shopify_state = localStorage.getItem("shopify_state");
-        if (
-          !shopify_state ||
-          queryParams.state != shopify_state.replace(/['"]+/g, "")
-        )
-          return;
-        localStorage.setItem("shopify_params", JSON.stringify(queryParams));
-      }
+      // if (
+      //   "hmac" in queryParams &&
+      //   "shop" in queryParams &&
+      //   "timestamp" in queryParams
+      // ) {
+      //   let shopify_state = localStorage.getItem("shopify_state");
+      //   if (
+      //     !shopify_state ||
+      //     queryParams.state != shopify_state.replace(/['"]+/g, "")
+      //   )
+      //     return;
+      //   localStorage.setItem("shopify_params", JSON.stringify(queryParams));
+      // }
       if ("code" in queryParams) {
         let tokens = await getTokens({
           code: queryParams["code"],
@@ -109,13 +111,17 @@ const Page = ({
         }
       }
     };
-    call().then((resp) => {
-      setLoading(false);
-    });
+    let isMerchant = checkMerchant();
     let loggedIn = isLoggedIn();
+    if (isMerchant) {
+      router.push("/my-store");
+    }
     if (loggedIn) {
       setShowApplication(true);
     }
+    call().then((resp) => {
+      setLoading(false);
+    });
     // let merchant = checkMerchant();
     // if (loggedIn) {
     //   if (merchant) {

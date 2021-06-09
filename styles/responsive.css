@@ -10,7 +10,15 @@
     max-width: 50%;
   }
 }
-
+@media only screen and (max-width: 640px) {
+  .policy-modal {
+    position: fixed;
+    top: 0rem;
+    left: 0;
+    z-index: 999999;
+    background-color: #fff;
+  }
+}
 @media only screen and (max-width: 600px) {
   .card {
     flex: 1 0 100%;

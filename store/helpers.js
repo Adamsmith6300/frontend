@@ -158,16 +158,18 @@ export const fetchAccountData = async () => {
 export const refreshIdToken = async () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   console.log(authRes);
-  const resp = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/people/refresh`,
-    { refresh_token: authRes["RefreshToken"] },
-    {
-      headers: {
-        Authorization: authRes["IdToken"],
-      },
-    }
-  );
-  return resp;
+  if ("RefreshToken" in authRes) {
+    const resp = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/people/refresh`,
+      { refresh_token: authRes["RefreshToken"] },
+      {
+        headers: {
+          Authorization: authRes["IdToken"],
+        },
+      }
+    );
+    return resp;
+  }
 };
 
 export const updateStoreDetails = async (payload) => {

@@ -2,16 +2,28 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Button, Checkbox, Form, Input, Message } from "semantic-ui-react";
 import SuccessfulSignup from "./successfulSignup";
+import Privacy from "../privacy";
+import Terms from "../terms";
 
 const index = ({ submitSignup, successfulSignup }) => {
   if (successfulSignup) return <></>;
 
   const [isLoading, setLoading] = useState(false);
   const [formError, setFormError] = useState(null);
-  const [modal, setModal] = useState(null);
+  const [modal, setModal] = useState("privacy");
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
   });
+  const policyModal = () => {
+    return (
+      <div className="policy-modal grid grid-cols-1 place-items-center border shadow-lg">
+        {modal == "privacy" ? <Privacy /> : <Terms />}
+        <button onClick={() => setModal(null)} className="standard-btn my-3">
+          CLOSE
+        </button>
+      </div>
+    );
+  };
 
   const validatePassword = (e) => {
     let val = e.target.value;
@@ -76,22 +88,7 @@ const index = ({ submitSignup, successfulSignup }) => {
 
   return (
     <>
-      {modal == "privacy" ? (
-        <div className="py-32 fixed z-50 w-full h-full bg-white top-0">
-          <p>Privacy</p>
-          <button onClick={() => setModal(null)} className="standard-btn">
-            CLOSE
-          </button>
-        </div>
-      ) : null}
-      {modal == "terms" ? (
-        <div className="py-32 fixed z-50 w-full h-full bg-white top-0">
-          <p>Terms</p>
-          <button onClick={() => setModal(null)} className="standard-btn">
-            CLOSE
-          </button>
-        </div>
-      ) : null}
+      {modal != null ? policyModal() : null}
       <Form
         error={formError != null}
         onSubmit={(e) => {

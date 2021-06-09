@@ -1,11 +1,11 @@
 import { memo, useRef } from "react";
 import { motion, useMotionValue } from "framer-motion";
-import { useInvertedBorderRadius } from "../../utils/use-inverted-border-radius";
 import { ContentPlaceholder } from "./contentPlaceholder";
 import { Image } from "./image";
 import { openSpring, closeSpring } from "../animations";
 import { useScrollConstraints } from "../../utils/use-scroll-constraints";
 import { useWheelScroll } from "../../utils/use-wheel-scroll";
+import Link from "next/link";
 const dismissDistance = 100;
 
 const productCard = memo(
@@ -15,9 +15,6 @@ const productCard = memo(
 
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
-
-    // Maintain the visual border radius when we perform the layoutTransition by inverting its scaleX/Y
-    const inverted = useInvertedBorderRadius(0);
 
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
@@ -101,16 +98,21 @@ const productCard = memo(
             <p className="text-black md:text-3xl my-2 mt-4">
               {title.length > 45 ? title.substring(0, 42) + "..." : title}
             </p>
-            <p className="text-black text-base md:text-xl my-2">
-              by {product.storename}
-            </p>
+            <Link href={`/vendors/${product.MerchantId}`}>
+              <p className="cursor-pointer text-black text-base md:text-xl my-2">
+                by {product.storename}
+              </p>
+            </Link>
             <p className="text-md">
               ${product.variants ? product.variants[0].price : product.price}
             </p>
           </>
         ) : null}
         {!isSelected && (
-          <a onClick={() => setSelectedId(id)} className={`card-open-link`}></a>
+          <a
+            onClick={() => setSelectedId(id)}
+            className={`card-open-link cursor-pointer`}
+          ></a>
         )}
       </li>
     );

@@ -24,7 +24,7 @@ const Page = ({ router }) => {
         let scopes = "read_products,write_inventory";
 
         window.location.replace(
-          `https://${shop}/admin/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_SHOPIFY_API_KEY}&scope=${scopes}&redirect_uri=${redir}/become-a-merchant&state=${new_uuid}`
+          `https://${shop}/admin/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_SHOPIFY_API_KEY}&scope=${scopes}&redirect_uri=${redir}/become-a-vendor&state=${new_uuid}`
         );
       });
     }

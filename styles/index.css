@@ -121,7 +121,11 @@ button:focus {
   width: 100%;
   position: relative;
 }
-
+.banner-overlay {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
 .bg-img {
   background-position: center;
   background-repeat: no-repeat;
@@ -551,4 +555,19 @@ button:focus {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.policy {
+  width: 100%;
+  max-width: 640px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 1rem;
+}
+.policy-modal {
+  position: fixed;
+  top: 1rem;
+  z-index: 999999;
+  background-color: #fff;
 }

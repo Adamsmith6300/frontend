@@ -32,7 +32,7 @@ const merchantSection = ({ heading, link }) => {
       <div className="text-center">
         <Link href={link}>
           <button className="btn-no-size-color px-12 py-4 bg-black">
-            View All Merchants
+            View All Vendors
           </button>
         </Link>
       </div>

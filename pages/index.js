@@ -30,9 +30,9 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
     <Layout>
       <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
-        heading={"Support Local Merchants"}
+        heading={"Support Local"}
         content={
-          "Based out of Vancouver BC, Loma is an online marketplace for local merchants. Pick and choose a variety of items from different merchants, then have your order delivered for one low delivery fee."
+          "Based out of Vancouver BC, Loma is an online marketplace for local vendors. Pick and choose a variety of items from different vendors, then have your order delivered for one low delivery fee."
         }
         link={"/signup"}
         left
@@ -44,7 +44,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         cartData={cartData}
       />
       <SmallAboutSection />
-      <MerchantSection heading={"Featured Merchants"} link={"/merchants"} />
+      <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
       <Banner
         bgSrc={"/secondBanner.jpg"}
         heading={"Started in Vancouver"}
@@ -67,10 +67,6 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         addToCart={addToCart}
         cartData={cartData}
       />
-      {/* <iframe
-        className="w-full h-400"
-        src="https://cdn.forms-content.sg-form.com/102dc890-ab88-11eb-bc4e-9a7ef5f1d536"
-      /> */}
     </Layout>
   );
 };

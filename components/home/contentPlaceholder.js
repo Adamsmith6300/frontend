@@ -151,13 +151,7 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
           </div>
         </div>
       ) : null}
-      <p>
-        {product.body_html ? (
-          <div dangerouslySetInnerHTML={{ __html: product.body_html }} />
-        ) : (
-          product.description
-        )}
-      </p>
+      <p>{product.description}</p>
     </div>
   );
 });
