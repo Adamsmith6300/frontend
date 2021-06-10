@@ -59,11 +59,7 @@ export const getTokens = async ({ code, redirect }) => {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   };
-  return axios.post(
-    "https://shoploma.auth.us-east-1.amazoncognito.com/oauth2/token",
-    body,
-    config
-  );
+  return axios.post("https://auth.shoploma.ca/oauth2/token", body, config);
 };
 
 export const isLoggedIn = () => {
