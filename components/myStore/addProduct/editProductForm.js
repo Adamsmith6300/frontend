@@ -9,6 +9,7 @@ import {
   updateProductDetails,
   getPresignedProductImgURL,
   postImageUpload,
+  roundToTwo,
 } from "../../../store/helpers";
 import ImageCarouselEditProd from "./imageCarouselNewProd";
 
@@ -18,8 +19,6 @@ const requiredFields = [
   "price",
   "description",
   "category",
-  "images",
-  "mainImage",
 ];
 
 const index = ({
@@ -75,7 +74,7 @@ const index = ({
   };
 
   const addImagesToFormData = () => {
-    formData["mainImage"] = mainImage;
+    // formData["mainImage"] = mainImage;
     formData["images"] = [];
     let images = [];
     console.log("newImgs", newImages);
@@ -98,20 +97,16 @@ const index = ({
     setLoading(true);
     let ready = readyToSave();
     if (ready) {
-      formData["price"] = parseFloat(formData["price"]).toFixed(2);
+      formData["price"] = roundToTwo(formData["price"]);
       let resp = await updateProductDetails(product.ProductId, formData);
       if (resp.status == 200) {
-        let uploaded = await uploadImages(
-          product.ProductId,
-          newImages,
-          imageSrcs
-        );
+        let uploaded = await uploadImages(product.ProductId, newImages);
       }
       callFetchMerchData();
     }
   };
 
-  const uploadImages = async (ProductId, newImages, imageSrcs) => {
+  const uploadImages = async (ProductId, newImages) => {
     let failedImages = [];
     for (let i = 0; i < newImages.length; ++i) {
       if ("uploadFile" in newImages[i])
@@ -147,7 +142,6 @@ const index = ({
   const readyToSave = () => {
     //CHECK THAT ALL FIELDS ARE FILLED
     addImagesToFormData();
-    console.log("form", formData);
     for (let i = 0; i < requiredFields.length; ++i) {
       if (!(requiredFields[i] in formData)) return false;
       if (

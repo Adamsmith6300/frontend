@@ -60,7 +60,7 @@ const Page = ({
       console.log(err);
     }
   };
-  useEffect(async () => {
+  useEffect(() => {
     let l = isLoggedIn();
     updateLoggedIn(l);
     let m = checkMerchant();
@@ -69,7 +69,7 @@ const Page = ({
       router.push("/");
     }
     if (!myShop) {
-      await callFetchMerchData();
+      callFetchMerchData();
     }
     if (categories == null) {
       getCategories();

@@ -9,6 +9,7 @@ import {
   postNewProduct,
   getPresignedProductImgURL,
   postImageUpload,
+  roundToTwo,
 } from "../../../store/helpers";
 import ImageCarouselNewProd from "./imageCarouselNewProd";
 
@@ -18,8 +19,6 @@ const requiredFields = [
   "price",
   "description",
   "category",
-  "images",
-  "mainImage",
 ];
 
 const index = ({
@@ -34,6 +33,8 @@ const index = ({
     category: 0,
     MerchantId: MerchantId,
     options: [],
+    images: [],
+    mainImage: 0,
   });
   const [editAttr, setEditAttr] = useState(null);
   const [newOption, setNewOption] = useState({});
@@ -42,7 +43,6 @@ const index = ({
   const [mainImage, setMainImage] = useState(0);
   const [newImages, setNewImages] = useState([]);
   const [imageSrcs, setImageSrcs] = useState([]);
-
   const clearState = () => {
     setEditAttr(null);
     // setNewOption(null);
@@ -74,7 +74,7 @@ const index = ({
   };
 
   const addImagesToFormData = () => {
-    formData["mainImage"] = mainImage;
+    // formData["mainImage"] = mainImage;
     let images = [];
     for (let i = 0; i < newImages.length; ++i) {
       images.push(newImages[i].name);
@@ -84,10 +84,14 @@ const index = ({
 
   const handleSubmit = async () => {
     setLoading(true);
-    formData["price"] = parseFloat(formData["price"]).toFixed(2);
-    let resp = await postNewProduct(formData);
-    if (resp.status == 200) {
-      await uploadImages(resp.data.ProductId, newImages, imageSrcs);
+    formData["price"] = roundToTwo(formData["price"]);
+    try {
+      let resp = await postNewProduct(formData);
+      if (resp.status == 200) {
+        await uploadImages(resp.data.ProductId, newImages, imageSrcs);
+      }
+    } catch (err) {
+      console.log(err);
     }
     callFetchMerchData();
   };
@@ -124,65 +128,69 @@ const index = ({
     }
   };
 
-  const readyToSave = () => {
+  let readyToSave = () => {
     //CHECK THAT ALL FIELDS ARE FILLED
     addImagesToFormData();
     for (let i = 0; i < requiredFields.length; ++i) {
-      if (!(requiredFields[i] in formData)) return false;
-      if (
-        formData[requiredFields[i]] == null ||
-        formData[requiredFields[i]].length < 1
-      )
+      if (!(requiredFields[i] in formData)) {
         return false;
-    }
-    let optionsOk = true;
-    if ("options" in formData) {
-      for (let i = 0; i < formData.options.length; ++i) {
-        if (
-          !("label" in formData.options[i]) ||
-          formData.options[i]["label"].length <= 0 ||
-          formData.options[i]["label"] == null ||
-          !("price" in formData.options[i]) ||
-          formData.options[i]["price"].length <= 0 ||
-          formData.options[i]["price"] == null
-        ) {
-          optionsOk = false;
-          break;
-        }
+      }
+      if (formData[requiredFields[i]] == null) {
+        return false;
+      }
+      if (Array.isArray(formData[requiredFields[i]])) {
+        if (formData[requiredFields[i]].length < 1) return false;
       }
     }
-    return optionsOk;
+    // let optionsOk = true;
+    // // if ("options" in formData) {
+    //   for (let i = 0; i < formData.options.length; ++i) {
+    //     if (
+    //       !("label" in formData.options[i]) ||
+    //       formData.options[i]["label"].length <= 0 ||
+    //       formData.options[i]["label"] == null ||
+    //       !("price" in formData.options[i]) ||
+    //       formData.options[i]["price"].length <= 0 ||
+    //       formData.options[i]["price"] == null
+    //     ) {
+    //       optionsOk = false;
+    //       break;
+    //     }
+    //   }
+    // }
+    // return optionsOk;
+    return true;
   };
 
-  let options = initialOptions.map((ogOption, index) => {
-    const option = Object.assign({}, ogOption);
-    return (
-      <Table.Row key={index}>
-        <>
-          <Table.Cell negative={deleteIndex == index}>
-            {option.label}
-          </Table.Cell>
-          <Table.Cell negative={deleteIndex == index}>
-            ${option.price}
-          </Table.Cell>
-          <Table.Cell
-            className="flex justify-between"
-            negative={deleteIndex == index}
-          >
-            <span>
-              <MdDelete
-                onClick={() => {
-                  console.log("delete", index);
-                  initialOptions.splice(index, 1);
-                }}
-                className="inline cursor-pointer"
-              />
-            </span>
-          </Table.Cell>
-        </>
-      </Table.Row>
-    );
-  });
+  // let options = initialOptions.map((ogOption, index) => {
+  //   const option = Object.assign({}, ogOption);
+  //   return (
+  //     <Table.Row key={index}>
+  //       <>
+  //         <Table.Cell negative={deleteIndex == index}>
+  //           {option.label}
+  //         </Table.Cell>
+  //         <Table.Cell negative={deleteIndex == index}>
+  //           ${option.price}
+  //         </Table.Cell>
+  //         <Table.Cell
+  //           className="flex justify-between"
+  //           negative={deleteIndex == index}
+  //         >
+  //           <span>
+  //             <MdDelete
+  //               onClick={() => {
+  //                 console.log("delete", index);
+  //                 initialOptions.splice(index, 1);
+  //               }}
+  //               className="inline cursor-pointer"
+  //             />
+  //           </span>
+  //         </Table.Cell>
+  //       </>
+  //     </Table.Row>
+  //   );
+  // });
   return (
     <div className="pl-2">
       <button
@@ -297,7 +305,7 @@ const index = ({
           >
             Cancel
           </button>
-          {readyToSave() ? (
+          {readyToSave() && newImages.length > 0 ? (
             <button
               onClick={() => handleSubmit()}
               className="btn-no-size-color bg-green-500 px-6 py-2 ml-2"
