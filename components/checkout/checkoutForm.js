@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import { CardElement } from "@stripe/react-stripe-js";
 import { Button, Form } from "semantic-ui-react";
 import axios from "axios";
-import { getAuth, getPersonId, confirmPayment } from "./../../store/helpers";
+import {
+  getAuth,
+  getPersonId,
+  confirmPayment,
+  roundToTwo,
+} from "./../../store/helpers";
 
 const calcFees = (cart) => {
   let fees = {
     subtotal: cart.total,
-    serviceFee: cart.total * 0.1,
-    deliveryFee: 7.5,
+    serviceFee: roundToTwo(cart.total * 0.1),
+    deliveryFee: roundToTwo(7.5),
   };
-  fees["total"] = fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"];
+  fees["total"] = roundToTwo(
+    fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"]
+  );
   return fees;
 };
 

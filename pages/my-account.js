@@ -17,11 +17,13 @@ const Page = ({ router, myShop, setMerchantData }) => {
   const [loggedIn, updateLoggedIn] = useState(null);
   const [accountData, setAccountData] = useState(null);
   const [isMerchant, updateIsMerchant] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function callFetchAccountData() {
     try {
       let resp = await fetchAccountData();
       setAccountData(resp.data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
       router.push("/");
@@ -32,6 +34,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
     try {
       let resp = await fetchMerchantData();
       setMerchantData(resp.data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -39,6 +42,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
 
   useEffect(() => {
     let l = isLoggedIn();
+    console.log(l);
     updateLoggedIn(l);
     let m = checkMerchant();
     updateIsMerchant(m);
@@ -54,7 +58,7 @@ const Page = ({ router, myShop, setMerchantData }) => {
   }, []);
 
   return (
-    <Layout>
+    <Layout loading={loading}>
       {loggedIn && accountData != null ? (
         <>
           <Account
@@ -63,11 +67,10 @@ const Page = ({ router, myShop, setMerchantData }) => {
             myShop={myShop}
             callFetchMerchData={callFetchMerchData}
             callFetchAccountData={callFetchAccountData}
+            setLoading={setLoading}
           />
         </>
-      ) : (
-        <LargeLoader />
-      )}
+      ) : null}
     </Layout>
   );
 };

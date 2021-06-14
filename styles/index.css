@@ -21,7 +21,6 @@
 .App {
   text-align: center;
 }
-
 body {
   margin: 0;
   padding: 0;
@@ -29,8 +28,8 @@ body {
   overflow-x: hidden !important;
   --secondary: #a1a1a1;
   --divider: #343434;
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw;
+  height: 100vh; */
   font-weight: 500;
   font-size: 1.2rem;
   /* font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif; */
@@ -53,6 +52,7 @@ body {
 #__next {
   display: flex;
   justify-content: center;
+  height: 100%;
 }
 
 h1,
@@ -540,13 +540,12 @@ button:focus {
 }
 
 .footer {
-  background-image: url("../public/loma-lions-gradient-1.png");
-  background-position: 50% 70%;
+  background-image: url("../public/loma-lions-gradient-desktop.png");
+  background-position: 50% 0%;
   background-size: cover;
   background-repeat: no-repeat;
   color: white;
-  /* width: 100%; */
-  /* background-color: #000; */
+  height: 650px;
 }
 
 .offset-banner-image {

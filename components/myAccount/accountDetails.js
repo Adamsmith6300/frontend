@@ -12,10 +12,10 @@ const index = ({
   callFetchMerchData,
   isMerchant,
   mId,
+  setLoading,
 }) => {
   const [formData, updateFormData] = useState({});
   const [edit, setEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     updateFormData({
@@ -102,56 +102,50 @@ const index = ({
 
   return (
     <div className="w-300 py-5 mx-auto">
-      {loading ? (
-        <LargeLoader />
-      ) : (
-        <>
-          <p className="text-3xl bolder text-center">Contact</p>
-          <ul className="list-reset py-3">{contactDetails}</ul>
-          <p className="text-3xl bolder text-center mt-5">Address</p>
-          <ul className="list-reset py-3 mb-5">{addressDetails}</ul>
-          {edit ? (
-            <div className="w-full flex flex-wrap justify-between text-center">
-              {/* <div className="w-full"> */}
-              <button
-                className="btn-no-size-color px-8 py-3 bg-black"
-                onClick={() => {
-                  setEdit(null);
-                  updateFormData({});
-                }}
-              >
-                Cancel
-              </button>
-              {/* </div> */}
-              {Object.keys(formData).length > 0 ? (
-                // <div className="w-full pt-3">
-                <button
-                  className="btn-no-size-color px-12 py-3 bg-green-600"
-                  onClick={() => {
-                    if (isMerchant) {
-                      handleSubmit(updateStoreDetails, callFetchMerchData);
-                    } else {
-                      handleSubmit(updateAccountDetails, callFetchAccountData);
-                    }
-                  }}
-                >
-                  Save
-                </button>
-              ) : // </div>
-              null}
-            </div>
-          ) : (
+      <p className="text-3xl bolder text-center">Contact</p>
+      <ul className="list-reset py-3">{contactDetails}</ul>
+      <p className="text-3xl bolder text-center mt-5">Address</p>
+      <ul className="list-reset py-3 mb-5">{addressDetails}</ul>
+      {edit ? (
+        <div className="w-full flex flex-wrap justify-between text-center">
+          {/* <div className="w-full"> */}
+          <button
+            className="btn-no-size-color px-8 py-3 bg-black"
+            onClick={() => {
+              setEdit(null);
+              updateFormData({});
+            }}
+          >
+            Cancel
+          </button>
+          {/* </div> */}
+          {Object.keys(formData).length > 0 ? (
+            // <div className="w-full pt-3">
             <button
-              className="btn-no-size-color px-8 py-3 bg-black"
+              className="btn-no-size-color px-12 py-3 bg-green-600"
               onClick={() => {
-                setEdit(true);
-                updateFormData({});
+                if (isMerchant) {
+                  handleSubmit(updateStoreDetails, callFetchMerchData);
+                } else {
+                  handleSubmit(updateAccountDetails, callFetchAccountData);
+                }
               }}
             >
-              Edit
+              Save
             </button>
-          )}
-        </>
+          ) : // </div>
+          null}
+        </div>
+      ) : (
+        <button
+          className="btn-no-size-color px-8 py-3 bg-black"
+          onClick={() => {
+            setEdit(true);
+            updateFormData({});
+          }}
+        >
+          Edit
+        </button>
       )}
     </div>
   );

@@ -8,6 +8,7 @@ import { SideMenu } from "./sideMenu";
 import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
 import Cart from "./cart";
 import Footer from "./footer";
+import { LargeLoader } from "../loaders";
 
 const Layout = ({
   children,
@@ -19,11 +20,11 @@ const Layout = ({
   setCart,
   clearFlag,
   getCategories,
+  loading,
   categories,
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
-
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
     if (cartString != undefined) {
@@ -64,13 +65,19 @@ const Layout = ({
         addToCart={addToCart}
         removeFromCart={removeFromCart}
       />
-      {children}
-      <Footer isAuthed={isAuthed} />
-      <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
+      {!loading ? (
+        <>
+          {children}
+          <Footer isAuthed={isAuthed} />
+        </>
+      ) : (
+        <LargeLoader />
+      )}
+      {/* <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
         Font made from{" "}
         <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
         by CC BY 3.0
-      </div>
+      </div> */}
     </div>
   );
 };

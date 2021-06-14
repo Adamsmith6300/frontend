@@ -22,12 +22,16 @@ const requiredFields = [
   "mainImage",
 ];
 
-const index = ({ setSelectedProduct, product, callFetchMerchData }) => {
+const index = ({
+  setSelectedProduct,
+  product,
+  callFetchMerchData,
+  setLoading,
+}) => {
   const [initialOptions, setInitialOptions] = useState([]);
   const [formData, updateFormData] = useState({
     ...product,
   });
-  const [loading, setLoading] = useState(false);
   const [editAttr, setEditAttr] = useState(null);
   const [newOption, setNewOption] = useState({});
   // const [editedOption, setEditedOption] = useState(null);
@@ -93,8 +97,8 @@ const index = ({ setSelectedProduct, product, callFetchMerchData }) => {
   const handleSubmit = async () => {
     setLoading(true);
     let ready = readyToSave();
-    console.log(ready);
     if (ready) {
+      formData["price"] = parseFloat(formData["price"]).toFixed(2);
       let resp = await updateProductDetails(product.ProductId, formData);
       if (resp.status == 200) {
         let uploaded = await uploadImages(
@@ -102,8 +106,8 @@ const index = ({ setSelectedProduct, product, callFetchMerchData }) => {
           newImages,
           imageSrcs
         );
-        window.location.reload();
       }
+      callFetchMerchData();
     }
   };
 
@@ -201,9 +205,7 @@ const index = ({ setSelectedProduct, product, callFetchMerchData }) => {
   //       </Table.Row>
   //     );
   //   });
-  return loading ? (
-    <LargeLoader />
-  ) : (
+  return (
     <div className="pl-2">
       <button
         className="btn-no-size-color bg-black px-6 py-2"
@@ -235,6 +237,7 @@ const index = ({ setSelectedProduct, product, callFetchMerchData }) => {
           <input
             className="w-full my-3 h-10"
             name="price"
+            step="1.00"
             defaultValue={product.price}
             type="number"
             onChange={handleChange}

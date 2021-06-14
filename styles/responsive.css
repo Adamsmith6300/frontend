@@ -9,6 +9,15 @@
     flex: 0 0 50%;
     max-width: 50%;
   }
+  .footer {
+    background-image: url("../public/loma-lions-gradient-mobile.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    height: 900px;
+    /* background-color: #000; */
+  }
 }
 @media only screen and (max-width: 640px) {
   .policy-modal {
@@ -194,15 +203,15 @@
     background-size: cover;
   }
 
-  .footer {
+  /* .footer {
     background-image: url("../public/loma-lions-gradient-1.png");
     background-position: 50% 70%;
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
     height: 700px;
-    /* background-color: #000; */
-  }
+    background-color: #000;
+  } */
 }
 
 @media only screen and (min-width: 500px) {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Form } from "semantic-ui-react";
+import { Form, Message } from "semantic-ui-react";
 
-const LoginForm = ({ loading, setLoading, submitLogin }) => {
+const LoginForm = ({ setLoading, submitLogin, formError }) => {
   let isValidEmail = true
     ? null
     : {
@@ -18,13 +18,12 @@ const LoginForm = ({ loading, setLoading, submitLogin }) => {
   };
 
   const handleSubmit = () => {
-    formData["shopify_params"] = localStorage.getItem("shopify_params");
     submitLogin(formData);
   };
 
   return (
     <Form
-      // loading={isLoading}
+      error={formError != null}
       onSubmit={(e) => {
         e.preventDefault();
         setLoading(true);
@@ -48,6 +47,7 @@ const LoginForm = ({ loading, setLoading, submitLogin }) => {
         required
         onChange={handleChange}
       />
+      <Message error content={formError} />
       <div className="flex justify-center">
         <button className="standard-btn" type="submit">
           Login

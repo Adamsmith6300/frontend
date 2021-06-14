@@ -16,7 +16,9 @@ export const shuffleArray = (array) => {
   }
   return array;
 };
-
+export const roundToTwo = (num) => {
+  return +(Math.round(num + "e+2") + "e-2");
+};
 export const saveLoginSession = (response) => {
   console.log(response);
   if (response.data) {
@@ -50,7 +52,7 @@ export const saveLoginSession = (response) => {
 export const getTokens = async ({ code, redirect }) => {
   let body = Querystring["stringify"]({
     client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID,
-    redirect_uri: window.location.origin + redirect,
+    redirect_uri: process.env.NEXT_PUBLIC_DOMAIN + redirect,
     grant_type: "authorization_code",
     code: code,
   });

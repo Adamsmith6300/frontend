@@ -22,7 +22,12 @@ const requiredFields = [
   "mainImage",
 ];
 
-const index = ({ showNewProductForm, MerchantId }) => {
+const index = ({
+  showNewProductForm,
+  MerchantId,
+  callFetchMerchData,
+  setLoading,
+}) => {
   const [initialOptions, setInitialOptions] = useState([]);
   const ProductId = uuidv4();
   const [formData, updateFormData] = useState({
@@ -30,7 +35,6 @@ const index = ({ showNewProductForm, MerchantId }) => {
     MerchantId: MerchantId,
     options: [],
   });
-  const [loading, setLoading] = useState(false);
   const [editAttr, setEditAttr] = useState(null);
   const [newOption, setNewOption] = useState({});
   // const [editedOption, setEditedOption] = useState(null);
@@ -80,11 +84,12 @@ const index = ({ showNewProductForm, MerchantId }) => {
 
   const handleSubmit = async () => {
     setLoading(true);
+    formData["price"] = parseFloat(formData["price"]).toFixed(2);
     let resp = await postNewProduct(formData);
     if (resp.status == 200) {
       await uploadImages(resp.data.ProductId, newImages, imageSrcs);
-      window.location.reload();
     }
+    callFetchMerchData();
   };
 
   const uploadImages = async (ProductId, newImages, imageSrcs) => {
@@ -178,9 +183,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
       </Table.Row>
     );
   });
-  return loading ? (
-    <LargeLoader />
-  ) : (
+  return (
     <div className="pl-2">
       <button
         className="btn-no-size-color bg-black px-6 py-2"
@@ -212,6 +215,7 @@ const index = ({ showNewProductForm, MerchantId }) => {
             className="w-full my-3 h-10"
             name="price"
             type="number"
+            step="1.00"
             onChange={handleChange}
           />
         </div>

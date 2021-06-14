@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button, Checkbox, Form, Input, Message } from "semantic-ui-react";
-import SuccessfulSignup from "./successfulSignup";
 import Privacy from "../privacy";
 import Terms from "../terms";
 
-const index = ({ submitSignup, successfulSignup }) => {
-  if (successfulSignup) return <></>;
-
-  const [isLoading, setLoading] = useState(false);
-  const [formError, setFormError] = useState(null);
-  const [modal, setModal] = useState("privacy");
+const index = ({ submitSignup, setLoading, formError, setFormError }) => {
+  const [modal, setModal] = useState(null);
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
   });
@@ -81,9 +76,7 @@ const index = ({ submitSignup, successfulSignup }) => {
       setFormError("Please agree to terms and privacy policy");
       return;
     }
-    console.log("SUBMITTED");
     await submitSignup(formData);
-    setLoading(false);
   };
 
   return (

@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import Link from "next/link";
-import { checkMerchant } from "../../store/helpers";
+import { checkMerchant, roundToTwo } from "../../store/helpers";
 import { Loader } from "semantic-ui-react";
 
 export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
@@ -18,7 +18,7 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
   let visiblePrice = product.variants
     ? product.variants[selectedVariant].price
     : product.price;
-
+  visiblePrice = roundToTwo(visiblePrice);
   let inventory = product.variants
     ? product.variants[selectedVariant].inventory_quantity
     : 1;
@@ -151,7 +151,7 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
           </div>
         </div>
       ) : null}
-      <p>{product.description}</p>
+      <p>{product.body_html ? product.body_html : product.description}</p>
     </div>
   );
 });

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { deleteProducts } from "../../store/helpers";
 import Product from "./addProduct/product";
-import SelectedProduct from "./addProduct/selectedProduct";
 import EditProductForm from "./addProduct/editProductForm";
 import NewProductForm from "./addProduct/newProductForm";
 import { BsPlusCircle } from "react-icons/bs";
@@ -13,6 +12,7 @@ const Products = ({
   setShowModal,
   setModalContent,
   categories,
+  setLoading,
 }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [newProductForm, showNewProductForm] = useState(false);
@@ -20,9 +20,9 @@ const Products = ({
 
   const callDeleteProducts = async (payload) => {
     try {
+      setLoading(true);
       let resp = await deleteProducts(payload);
-      console.log(resp);
-      window.location.reload();
+      callFetchMerchData();
     } catch (err) {
       console.log(err);
     }
@@ -48,6 +48,8 @@ const Products = ({
       <NewProductForm
         MerchantId={MerchantId}
         showNewProductForm={showNewProductForm}
+        callFetchMerchData={callFetchMerchData}
+        setLoading={setLoading}
       />
     );
   }
@@ -58,6 +60,7 @@ const Products = ({
         setSelectedProduct={setSelectedProduct}
         product={products[selectedProduct]}
         callFetchMerchData={callFetchMerchData}
+        setLoading={setLoading}
       />
     );
   } else {

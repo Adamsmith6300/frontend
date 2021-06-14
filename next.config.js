@@ -9,11 +9,6 @@ module.exports = {
     NEXT_PUBLIC_SHOPIFY_API_KEY: "f7507170fd60a142f2492150bc998c79",
     NEXT_PUBLIC_COGNITO_CLIENT_ID: "30hugvldg3a1grgui3c8bt5k20",
     NEXT_PUBLIC_COGNITO_DOMAIN: "https://auth.shoploma.ca/oauth2/authorize",
+    NEXT_PUBLIC_DOMAIN: "http://localhost:3000",
   },
 };
-// {
-// 	"grant_type":"authorization_code",
-// 	"client_id":"30hugvldg3a1grgui3c8bt5k20",
-// 	"code":"37249cd5-f4e5-4fcf-a8e4-bcadb6f468f0",
-// 	"redirect_uri":"http://localhost:3000/login"
-// }

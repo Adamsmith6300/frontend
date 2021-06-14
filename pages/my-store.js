@@ -33,7 +33,7 @@ const Page = ({
   const [loggedIn, updateLoggedIn] = useState(false);
   const [website, updateWebsite] = useState(myShop ? myShop.info.website : "");
   const [about, updateAbout] = useState(myShop ? myShop.info.about : "");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(myShop == null);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [getStarted, showGetStarted] = useState(false);
@@ -49,18 +49,18 @@ const Page = ({
       setMerchantData(resp.data);
       updateAbout(resp.data.info.about);
       updateWebsite(resp.data.info.website);
-      if (
-        !("hasLoggedIn" in resp.data.info) ||
-        !resp.data.info["hasLoggedIn"]
-      ) {
-        showGetStarted(true);
-      }
+      // if (
+      //   !("hasLoggedIn" in resp.data.info) ||
+      //   !resp.data.info["hasLoggedIn"]
+      // ) {
+      //   showGetStarted(true);
+      // }
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
+  useEffect(async () => {
     let l = isLoggedIn();
     updateLoggedIn(l);
     let m = checkMerchant();
@@ -69,7 +69,7 @@ const Page = ({
       router.push("/");
     }
     if (!myShop) {
-      callFetchMerchData();
+      await callFetchMerchData();
     }
     if (categories == null) {
       getCategories();
@@ -91,8 +91,8 @@ const Page = ({
   };
 
   return (
-    <Layout>
-      {myShop ? (
+    <Layout loading={loading}>
+      {myShop && categories ? (
         <div>
           <Banner
             MerchantId={myShop.info.MerchantId}
@@ -110,11 +110,7 @@ const Page = ({
                 Show setup instructions
               </p>
             )} */}
-            <h1
-              className={`text-5xl ${
-                getStarted ? "my-12" : "mt-3 mb-12"
-              } flex justify-between`}
-            >
+            <h1 className={`text-5xl mt-3 mb-12 flex justify-between`}>
               <span>{myShop.info.storename}</span>
             </h1>
             <p className="text-2xl font-bold">
@@ -139,79 +135,74 @@ const Page = ({
                 Change
               </button>
             </p>
-            {loading ? (
-              <LargeLoader />
-            ) : (
-              <div className="my-12">
-                <p className="font-bold">Website URL</p>
-                <div className="my-3">
-                  <input
-                    className="w-full my-3 h-10"
-                    value={website}
-                    name="website"
-                    type="text"
-                    onChange={(e) => updateWebsite(e.target.value)}
-                  />
-                  {website != myShop.info.website ? (
-                    <>
-                      <button
-                        className="btn-no-size-color px-12 py-3 bg-green-600 mr-2"
-                        onClick={() => {
-                          handleUpdateStore({ website: website });
-                        }}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="btn-no-size-color px-8 py-3 bg-black ml-2"
-                        onClick={() => {
-                          updateWebsite(myShop.info.website);
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  ) : null}
-                </div>
-                <p className="font-bold">About</p>
-                <div className="my-3">
-                  {/* 1px solid rgba(34,36,38,.15) */}
-                  <textarea
-                    placeholder={
-                      myShop.info.about && myShop.info.about.length > 0
-                        ? myShop.info.about
-                        : "Tell your store visitors about " +
-                          myShop.info.storename
-                    }
-                    className="w-full pl-3 py-1 mb-6 h-32"
-                    label="about"
-                    name="about"
-                    value={about}
-                    onChange={(e) => updateAbout(e.target.value)}
-                  />
-                  {about != myShop.info.about ? (
-                    <>
-                      <button
-                        className="btn-no-size-color px-12 py-3 bg-green-600 mr-2"
-                        onClick={() => {
-                          handleUpdateStore({ about: about });
-                        }}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="btn-no-size-color px-8 py-3 bg-black ml-2"
-                        onClick={() => {
-                          updateAbout(myShop.info.about);
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  ) : null}
-                </div>
+            <div className="my-12">
+              <p className="font-bold">Website URL</p>
+              <div className="my-3">
+                <input
+                  className="w-full my-3 h-10"
+                  value={website}
+                  name="website"
+                  type="text"
+                  onChange={(e) => updateWebsite(e.target.value)}
+                />
+                {website != myShop.info.website ? (
+                  <>
+                    <button
+                      className="btn-no-size-color px-12 py-3 bg-green-600 mr-2"
+                      onClick={() => {
+                        handleUpdateStore({ website: website });
+                      }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn-no-size-color px-8 py-3 bg-black ml-2"
+                      onClick={() => {
+                        updateWebsite(myShop.info.website);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : null}
               </div>
-            )}
+              <p className="font-bold">About</p>
+              <div className="my-3">
+                <textarea
+                  placeholder={
+                    myShop.info.about && myShop.info.about.length > 0
+                      ? myShop.info.about
+                      : "Tell your store visitors about " +
+                        myShop.info.storename
+                  }
+                  className="w-full pl-3 py-1 mb-6 h-32"
+                  label="about"
+                  name="about"
+                  value={about}
+                  onChange={(e) => updateAbout(e.target.value)}
+                />
+                {about != myShop.info.about ? (
+                  <>
+                    <button
+                      className="btn-no-size-color px-12 py-3 bg-green-600 mr-2"
+                      onClick={() => {
+                        handleUpdateStore({ about: about });
+                      }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn-no-size-color px-8 py-3 bg-black ml-2"
+                      onClick={() => {
+                        updateAbout(myShop.info.about);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : null}
+              </div>
+            </div>
             <Products
               MerchantId={myShop.info.MerchantId}
               products={myShop.products}
@@ -219,12 +210,11 @@ const Page = ({
               setShowModal={setShowModal}
               setModalContent={setModalContent}
               categories={categories}
+              setLoading={setLoading}
             />
           </div>
         </div>
-      ) : (
-        <LargeLoader />
-      )}
+      ) : null}
       {showModal && myShop != null && modalContent != null ? (
         <Modal
           close={() => {
@@ -255,13 +245,13 @@ const Page = ({
               </svg>
             </button>
           </div>
-          {modalContent == "shopifyImport" ? (
+          {/* {modalContent == "shopifyImport" ? (
             <ShopifyImportModal
               closeModal={closeModal}
               myShop={myShop}
               callFetchMerchData={callFetchMerchData}
             />
-          ) : null}
+          ) : null} */}
           {modalContent == "changeListed" ? (
             <ChangeListedModal
               closeModal={closeModal}

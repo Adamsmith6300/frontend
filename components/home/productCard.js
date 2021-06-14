@@ -6,13 +6,15 @@ import { openSpring, closeSpring } from "../animations";
 import { useScrollConstraints } from "../../utils/use-scroll-constraints";
 import { useWheelScroll } from "../../utils/use-wheel-scroll";
 import Link from "next/link";
+import { roundToTwo } from "../../store/helpers";
 const dismissDistance = 100;
 
 const productCard = memo(
   ({ isSelected, setSelectedId, product, addToCart, cartData }) => {
     const id = product.ProductId;
     const title = product.title;
-
+    let price = product.variants ? product.variants[0].price : product.price;
+    price = roundToTwo(price);
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
 
@@ -103,9 +105,7 @@ const productCard = memo(
                 by {product.storename}
               </p>
             </Link>
-            <p className="text-md">
-              ${product.variants ? product.variants[0].price : product.price}
-            </p>
+            <p className="text-md">${price}</p>
           </>
         ) : null}
         {!isSelected && (

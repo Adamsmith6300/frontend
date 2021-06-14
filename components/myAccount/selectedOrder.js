@@ -38,7 +38,7 @@ const index = ({ order, setSelectedOrder }) => {
         <div className="w-200 pl-3">
           <p className="text-lg">{item.title}</p>
 
-          <Link href={`/merchants/${item.MerchantId}`}>
+          <Link href={`/vendors/${item.MerchantId}`}>
             <p className="cursor-pointer text-lg">by {item.storename}</p>
           </Link>
           <p className="text-lg">Price: ${item.variants[0].price}</p>

@@ -5,6 +5,7 @@ import {
   getAuth,
   checkMerchant,
   getPersonId,
+  roundToTwo,
 } from "./helpers";
 
 const actionTypes = {
@@ -192,7 +193,7 @@ const actions = {
     } else {
       newCart.items[product.ProductId] = { ...product, qty: qty };
     }
-    newCart.total += Number(price) * qty;
+    newCart.total += price * qty;
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     return {
@@ -207,7 +208,7 @@ const actions = {
       : product.price;
     if (newCart.items[product.ProductId]) {
       newCart.items[product.ProductId].qty -= qty;
-      newCart.total -= Number(price) * qty;
+      newCart.total -= roundToTwo(price * qty);
       if (newCart.items[product.ProductId].qty <= 0) {
         delete newCart.items[product.ProductId];
       }

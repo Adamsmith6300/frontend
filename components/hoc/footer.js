@@ -24,7 +24,7 @@ const footer = ({ isAuthed }) => {
     );
   });
   return (
-    <div className="footer mt-24 py-4 lg:pt-32 lg:pb-8 px-6 lg:px-64">
+    <div className="footer mt-24 py-4 pt-48 md:pt-32 md:pb-8 px-6 md:px-32">
       <div className="max-w-1040 mx-auto">
         <Link href={isAuthed ? "/marketplace" : "/"}>
           <img
@@ -33,16 +33,16 @@ const footer = ({ isAuthed }) => {
           />
         </Link>
       </div>
-      <div className="flex flex-wrap justify-between mt-12 max-w-1040 mx-auto">
-        <ul className="w-full pl-3 lg:w-64">{menuItems}</ul>
-        <div className="w-full pl-3 mt-12 lg:w-auto lg:ml-32">
+      <div className="flex flex-wrap justify-between mt-12 lg:mt-4 max-w-1040 mx-auto">
+        <ul className="w-full pl-5 md:w-64">{menuItems}</ul>
+        <div className="w-full pl-5 mt-12 md:w-72">
           <p>
             <a href="mailto: contact@shoploma.ca" className="hover:text-white">
               <AiOutlineMail className="inline ml-1" />
               <span className="ml-3">contact@shoploma.ca</span>
             </a>
           </p>
-          <div className="flex my-12">
+          <div className="flex my-6">
             <a
               href="https://instagram.com"
               target="_blank"
