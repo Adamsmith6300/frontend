@@ -3,8 +3,8 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { MdModeEdit, MdDelete } from "react-icons/md";
 import { BsCheck } from "react-icons/bs";
-import { TextArea, Input, Button, Table } from "semantic-ui-react";
-import { LargeLoader } from "../../loaders";
+import Modal from "../../modal";
+import VariantsModal from "./variantsModal";
 import {
   postNewProduct,
   getPresignedProductImgURL,
@@ -35,6 +35,7 @@ const index = ({
     options: [],
     images: [],
     mainImage: 0,
+    variants: [],
   });
   const [editAttr, setEditAttr] = useState(null);
   const [newOption, setNewOption] = useState({});
@@ -43,13 +44,14 @@ const index = ({
   const [mainImage, setMainImage] = useState(0);
   const [newImages, setNewImages] = useState([]);
   const [imageSrcs, setImageSrcs] = useState([]);
-  const clearState = () => {
-    setEditAttr(null);
-    // setNewOption(null);
-    // setEditedOption(null);
-    setDeleteIndex(null);
-    updateFormData({ category: 0, MerchantId: MerchantId, options: [] });
-  };
+  const [showModal, setShowModal] = useState(false);
+  // const clearState = () => {
+  //   setEditAttr(null);
+  //   // setNewOption(null);
+  //   // setEditedOption(null);
+  //   setDeleteIndex(null);
+  //   updateFormData({ category: 0, MerchantId: MerchantId, options: [] });
+  // };
 
   const handleChange = (e) => {
     updateFormData({
@@ -224,6 +226,7 @@ const index = ({
             name="price"
             type="number"
             step="1.00"
+            min="1"
             onChange={handleChange}
           />
         </div>
@@ -233,6 +236,7 @@ const index = ({
             className="w-full my-3 h-10"
             name="stock"
             type="number"
+            step="1"
             min="1"
             onChange={handleChange}
           />
@@ -245,6 +249,49 @@ const index = ({
             onChange={handleChange}
           />
         </div>
+        <div>
+          <p className="text-2xl font-bold">
+            {formData["variants"].length} Variants
+          </p>
+          <button onClick={() => setShowModal(true)}>Add Variant</button>
+        </div>
+        {showModal ? (
+          <Modal
+            close={() => {
+              setShowModal(false);
+            }}
+          >
+            <div className="flex justify-end">
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                <svg width="23" height="23" viewBox="0 0 23 23">
+                  <path
+                    d="M 3 16.5 L 17 2.5"
+                    fill="transparent"
+                    strokeWidth="2"
+                    stroke="hsl(0, 0%, 0%)"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M 3 2.5 L 17 16.346"
+                    fill="transparent"
+                    strokeWidth="2"
+                    stroke="hsl(0, 0%, 0%)"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <VariantsModal
+              formData={formData}
+              updateFormData={updateFormData}
+              closeModal={() => setShowModal(false)}
+            />
+          </Modal>
+        ) : null}
         {/* <div>
           <p className="text-2xl font-bold">Options:</p>
           <Table unstackable>
