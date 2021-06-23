@@ -3,6 +3,7 @@ import Modal from "../../modal";
 import VariantsModal from "./variantsModal";
 import { updateProductDetails, roundToTwo } from "../../../store/helpers";
 import ImageCarouselEditProd from "./imageCarouselNewProd";
+import { Radio } from "semantic-ui-react";
 
 const requiredFields = [
   "MerchantId",
@@ -120,14 +121,30 @@ const index = ({
         </div>
         <div>
           <p className="text-2xl font-bold">Stock:</p>
-          <input
-            className="w-full my-3 h-10"
-            name="stock"
-            type="number"
-            defaultValue={product.stock}
-            min="1"
-            onChange={handleChange}
-          />
+          <p className="flex justify-between">
+            <span>Unlimited</span>
+            <Radio
+              onChange={(e) => {
+                console.log(e);
+                updateFormData({
+                  ...formData,
+                  stockUnlimited: !formData["stockUnlimited"],
+                });
+              }}
+              defaultChecked
+              toggle
+            />
+          </p>
+          {!formData["stockUnlimited"] ? (
+            <input
+              className="w-full my-3 h-10"
+              name="stock"
+              type="number"
+              step="1"
+              min="1"
+              onChange={handleChange}
+            />
+          ) : null}
         </div>
         <div>
           <p className="text-2xl font-bold">Description:</p>

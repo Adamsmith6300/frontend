@@ -188,10 +188,11 @@
   }
   .modal-content-container {
     max-width: 90vw;
-    max-height: 80vh;
+    max-height: 90vh;
     min-height: 200px;
     padding: 1rem 1rem 2rem 1rem;
     background-color: #fff;
+    overflow-y: auto;
     box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px;
   }
 
@@ -201,6 +202,14 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+  .variants-table {
+    width: 100%;
+    max-height: 300px;
+    /* max-width: 300px; */
+    overflow: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   /* .footer {
@@ -217,7 +226,7 @@
 @media only screen and (min-width: 500px) {
   .modal-content-container {
     max-width: 90vw;
-    max-height: 80vh;
+    max-height: 90vh;
     min-width: 450px;
     min-height: 300px;
     padding: 1rem 2rem;

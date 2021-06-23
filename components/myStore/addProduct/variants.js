@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Table } from "semantic-ui-react";
+import { useState, useReducer } from "react";
+import { Table, Radio } from "semantic-ui-react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import ImageSelect from "./imageSelect";
 
@@ -11,16 +11,16 @@ const index = ({
   newImages,
   setStep,
 }) => {
-  console.log(newVariants);
   const [selectImage, setSelectImage] = useState(null);
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const handleVariantChange = (e, index, key) => {
     newVariants[index][key] = e.target.value;
   };
   let newVariantInputs = newVariants.map((val, index) => {
-    let values = val.optionValues.map((value, index) => {
+    let values = val.optionValues.map((value, i) => {
       return (
         <span
-          key={index + value}
+          key={i + value}
           className="border rounded-3xl bg-gray-300 p-1 px-3 mx-1 inline h-10"
         >
           {value.value}
@@ -45,8 +45,20 @@ const index = ({
           )}
         </Table.Cell>
         <Table.Cell>{values}</Table.Cell>
+        <Table.Cell>
+          <Radio
+            onChange={(e) => {
+              newVariants[index]["stockUnlimited"] =
+                !newVariants[index]["stockUnlimited"];
+              forceUpdate();
+            }}
+            defaultChecked
+            toggle
+          />
+        </Table.Cell>
         <Table.Cell className="">
           <input
+            disabled={val.stockUnlimited}
             className="h-10"
             name="stock"
             type="number"
@@ -82,18 +94,21 @@ const index = ({
   return (
     <>
       <p className="text-3xl font-bold">Edit Variants</p>
-      <Table unstackable>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Image</Table.HeaderCell>
-            <Table.HeaderCell>Variation</Table.HeaderCell>
-            <Table.HeaderCell>Stock</Table.HeaderCell>
-            <Table.HeaderCell>Price</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>{newVariantInputs}</Table.Body>
-      </Table>
+      <div className="variants-table">
+        <Table unstackable>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell></Table.HeaderCell>
+              <Table.HeaderCell>Image</Table.HeaderCell>
+              <Table.HeaderCell>Variation</Table.HeaderCell>
+              <Table.HeaderCell>Unlimited Stock</Table.HeaderCell>
+              <Table.HeaderCell>Stock</Table.HeaderCell>
+              <Table.HeaderCell>Price</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{newVariantInputs}</Table.Body>
+        </Table>
+      </div>
       {error != null && error.step == "variants" ? (
         <p className="text-red-400">{error.value}</p>
       ) : null}

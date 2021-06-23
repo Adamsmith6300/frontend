@@ -21,7 +21,7 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
       return (
         <span
           key={i + value}
-          className="cursor-pointer border rounded-3xl bg-gray-300 p-1 px-2 mx-1 inline place-items-center h-10 grid grid-cols-2"
+          className="cursor-pointer border rounded-3xl bg-gray-300 p-1 px-2 m-1 place-items-center h-10 grid grid-cols-2"
         >
           {value}{" "}
           <AiFillCloseCircle
@@ -35,17 +35,18 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
       );
     });
     return (
-      <Table.Row key={val.id}>
+      <Table.Row key={val.id} className="">
         <>
           <Table.Cell
+            verticalAlign="top"
             onClick={() => {
               setNewOptions(newOptions.filter((item) => item.id !== val.id));
             }}
-            className="grid grid-cols-1 place-content-center m-3 text-red-400"
+            className="grid grid-cols-1 place-content-center text-red-400"
           >
-            <RiDeleteBin2Line className="cursor-pointer" />
+            <RiDeleteBin2Line className="cursor-pointer mt-2" />
           </Table.Cell>
-          <Table.Cell className="">
+          <Table.Cell verticalAlign="top">
             <input
               className="h-10"
               onChange={(e) => {
@@ -58,12 +59,13 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
             />
           </Table.Cell>
           <Table.Cell
-            className={`${values.length > 0 ? "flex flex-wrap " : ""} "w-150"`}
+            verticalAlign="top"
+            className={`${values.length > 0 ? "flex flex-wrap" : ""} min-w-200`}
           >
             {values}
             {values.length < 4 ? (
               <input
-                className="h-10 inline"
+                className="h-10"
                 name="optionValues"
                 type="text"
                 onChange={(e) => handleValueChange(e, index)}
@@ -95,16 +97,18 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
           Option limit reached ({newOptions.length}/2)
         </p>
       )}
-      <Table unstackable>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell></Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Values (separate by commas)</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>{newOptionInputs}</Table.Body>
-      </Table>
+      <div className="variants-table">
+        <Table unstackable>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell></Table.HeaderCell>
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Values (separate by commas)</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{newOptionInputs}</Table.Body>
+        </Table>
+      </div>
       {error != null && error.step == "options" ? (
         <p className="text-red-400">{error.value}</p>
       ) : null}

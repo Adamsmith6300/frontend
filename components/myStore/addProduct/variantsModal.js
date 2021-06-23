@@ -22,7 +22,7 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
           optionValues: [],
           price: formData["price"] != null ? formData["price"] : "0",
           stock: formData["stock"] != null ? formData["stock"] : "0",
-          unlimited: false,
+          stockUnlimited: true,
         };
 
         for (let j = 0; j < optionsValues.length; ++j) {

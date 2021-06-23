@@ -3,7 +3,7 @@ const modal = ({ children, close }) => {
     <div onClick={() => close()} className="overlay grid place-items-center">
       <div
         onClick={(e) => e.stopPropagation()}
-        className="modal-content-container overflow-scroll"
+        className="modal-content-container bg-white"
       >
         {children}
       </div>
