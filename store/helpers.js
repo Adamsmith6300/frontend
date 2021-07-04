@@ -250,11 +250,11 @@ export const updateProductDetails = async (productId, payload) => {
   return resp;
 };
 
-export const getPresignedProductImgURL = async (payload, ProductId) => {
+export const getPresignedProductImgURL = async (payload) => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const user = jwt(authRes["IdToken"]);
   return axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/product/${ProductId}/upload`,
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/product/image/upload`,
     payload,
     {
       headers: {

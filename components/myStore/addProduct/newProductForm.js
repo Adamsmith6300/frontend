@@ -1,16 +1,9 @@
-// const { defineLocale } = require("moment");
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { MdModeEdit, MdDelete } from "react-icons/md";
-import { BsCheck } from "react-icons/bs";
-import { TextArea, Input, Button, Table } from "semantic-ui-react";
-import { LargeLoader } from "../../loaders";
-import {
-  postNewProduct,
-  getPresignedProductImgURL,
-  postImageUpload,
-} from "../../../store/helpers";
+import Modal from "../../modal";
+import VariantsModal from "./variantsModal";
+import { postNewProduct, roundToTwo } from "../../../store/helpers";
 import ImageCarouselNewProd from "./imageCarouselNewProd";
+import { Radio } from "semantic-ui-react";
 
 const requiredFields = [
   "MerchantId",
@@ -18,8 +11,6 @@ const requiredFields = [
   "price",
   "description",
   "category",
-  "images",
-  "mainImage",
 ];
 
 const index = ({
@@ -28,28 +19,18 @@ const index = ({
   callFetchMerchData,
   setLoading,
 }) => {
-  const [initialOptions, setInitialOptions] = useState([]);
-  const ProductId = uuidv4();
   const [formData, updateFormData] = useState({
     category: 0,
     MerchantId: MerchantId,
     options: [],
+    images: [],
+    mainImage: 0,
+    variants: [],
+    stockUnlimited: true,
   });
-  const [editAttr, setEditAttr] = useState(null);
-  const [newOption, setNewOption] = useState({});
-  // const [editedOption, setEditedOption] = useState(null);
-  const [deleteIndex, setDeleteIndex] = useState(null);
   const [mainImage, setMainImage] = useState(0);
   const [newImages, setNewImages] = useState([]);
-  const [imageSrcs, setImageSrcs] = useState([]);
-
-  const clearState = () => {
-    setEditAttr(null);
-    // setNewOption(null);
-    // setEditedOption(null);
-    setDeleteIndex(null);
-    updateFormData({ category: 0, MerchantId: MerchantId, options: [] });
-  };
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     updateFormData({
@@ -58,23 +39,7 @@ const index = ({
     });
   };
 
-  //   const handleOptionChange = (e, index, key) => {
-  //     setEditedOption([
-  //       index,
-  //       { ...product.options[index], [key]: e.target.value.trim() },
-  //     ]);
-  //   };
-
-  const handleNewOptionChange = (e, key) => {
-    let newNewOption = { ...newOption, [key]: e.target.value };
-    updateFormData({
-      options: [...initialOptions, newNewOption],
-    });
-    setNewOption(newNewOption);
-  };
-
   const addImagesToFormData = () => {
-    formData["mainImage"] = mainImage;
     let images = [];
     for (let i = 0; i < newImages.length; ++i) {
       images.push(newImages[i].name);
@@ -84,105 +49,31 @@ const index = ({
 
   const handleSubmit = async () => {
     setLoading(true);
-    formData["price"] = parseFloat(formData["price"]).toFixed(2);
-    let resp = await postNewProduct(formData);
-    if (resp.status == 200) {
-      await uploadImages(resp.data.ProductId, newImages, imageSrcs);
+    formData["price"] = roundToTwo(formData["price"]);
+    try {
+      await postNewProduct(formData);
+    } catch (err) {
+      console.log(err);
     }
     callFetchMerchData();
   };
 
-  const uploadImages = async (ProductId, newImages, imageSrcs) => {
-    let failedImages = [];
-    for (let i = 0; i < newImages.length; ++i) {
-      try {
-        let { data } = await getPresignedProductImgURL(
-          {
-            MerchantId: MerchantId,
-            name: newImages[i].name,
-          },
-          ProductId
-        );
-        if (data) {
-          let uploadImageResp = await postImageUpload(
-            newImages[i].uploadFile,
-            data
-          );
-          console.log(uploadImageResp);
-        } else {
-          throw { resp, file };
-        }
-      } catch (err) {
-        console.log(err);
-        failedImages.push(newImages[i].name);
-        console.log("FAILED TO UPLOAD", newImages[i].name);
-        // let resp = await updateProductDetails(ProductId, {
-        //   images: images,
-        //   MerchantId: MerchantId,
-        // });
-      }
-    }
-  };
-
-  const readyToSave = () => {
-    //CHECK THAT ALL FIELDS ARE FILLED
+  let readyToSave = () => {
     addImagesToFormData();
     for (let i = 0; i < requiredFields.length; ++i) {
-      if (!(requiredFields[i] in formData)) return false;
-      if (
-        formData[requiredFields[i]] == null ||
-        formData[requiredFields[i]].length < 1
-      )
+      if (!(requiredFields[i] in formData)) {
         return false;
-    }
-    let optionsOk = true;
-    if ("options" in formData) {
-      for (let i = 0; i < formData.options.length; ++i) {
-        if (
-          !("label" in formData.options[i]) ||
-          formData.options[i]["label"].length <= 0 ||
-          formData.options[i]["label"] == null ||
-          !("price" in formData.options[i]) ||
-          formData.options[i]["price"].length <= 0 ||
-          formData.options[i]["price"] == null
-        ) {
-          optionsOk = false;
-          break;
-        }
+      }
+      if (formData[requiredFields[i]] == null) {
+        return false;
+      }
+      if (Array.isArray(formData[requiredFields[i]])) {
+        if (formData[requiredFields[i]].length < 1) return false;
       }
     }
-    return optionsOk;
+    return true;
   };
 
-  let options = initialOptions.map((ogOption, index) => {
-    const option = Object.assign({}, ogOption);
-    return (
-      <Table.Row key={index}>
-        <>
-          <Table.Cell negative={deleteIndex == index}>
-            {option.label}
-          </Table.Cell>
-          <Table.Cell negative={deleteIndex == index}>
-            ${option.price}
-          </Table.Cell>
-          <Table.Cell
-            className="flex justify-between"
-            negative={deleteIndex == index}
-          >
-            <span>
-              <MdDelete
-                onClick={() => {
-                  console.log("delete", index);
-                  initialOptions.splice(index, 1);
-                }}
-                className="inline cursor-pointer"
-              />
-            </span>
-          </Table.Cell>
-        </>
-      </Table.Row>
-    );
-  });
   return (
     <div className="pl-2">
       <button
@@ -197,12 +88,12 @@ const index = ({
           setMainImage={setMainImage}
           newImages={newImages}
           setNewImages={setNewImages}
-          imageSrcs={imageSrcs}
-          setImageSrcs={setImageSrcs}
+          MerchantId={MerchantId}
         />
         <div>
           <p className="text-2xl font-bold">Title:</p>
           <input
+            maxLength="50"
             className="w-full my-3 h-10"
             name="title"
             type="text"
@@ -216,88 +107,99 @@ const index = ({
             name="price"
             type="number"
             step="1.00"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <p className="text-2xl font-bold">Stock:</p>
-          <input
-            className="w-full my-3 h-10"
-            name="stock"
-            type="number"
             min="1"
             onChange={handleChange}
           />
         </div>
         <div>
+          <p className="text-2xl font-bold">Stock:</p>
+          <p className="flex justify-between">
+            <span>Unlimited</span>
+            <Radio
+              onChange={(e) => {
+                console.log(e);
+                updateFormData({
+                  ...formData,
+                  stockUnlimited: !formData["stockUnlimited"],
+                });
+              }}
+              defaultChecked
+              toggle
+            />
+          </p>
+          {!formData["stockUnlimited"] ? (
+            <input
+              className="w-full my-3 h-10"
+              name="stock"
+              type="number"
+              step="1"
+              min="1"
+              onChange={handleChange}
+            />
+          ) : null}
+        </div>
+        <div>
           <p className="text-2xl font-bold">Description:</p>
           <textarea
+            maxlength="500"
             className="w-full my-3 h-24"
             name="description"
             onChange={handleChange}
           />
         </div>
-        {/* <div>
-          <p className="text-2xl font-bold">Options:</p>
-          <Table unstackable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Label</Table.HeaderCell>
-                <Table.HeaderCell>Price</Table.HeaderCell>
-                <Table.HeaderCell></Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {options}
-              <Table.Row>
-                <>
-                  <Table.Cell>
-                    <Input
-                      name="optionLabel"
-                      value={newOption.label || ""}
-                      type="text"
-                      className="w-125"
-                      onChange={(e) => handleNewOptionChange(e, "label")}
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Input
-                      name="optionPrice"
-                      value={newOption.price || ""}
-                      type="number"
-                      className="w-75"
-                      onChange={(e) => handleNewOptionChange(e, "price")}
-                    />
-                  </Table.Cell>
-                  <Table.Cell className="flex justify-between">
-                    <span className="">
-                      <BsCheck
-                        onClick={() => {
-                          console.log("Save this option");
-                          initialOptions.push(newOption);
-                          setNewOption({});
-                        }}
-                        className="inline cursor-pointer"
-                      />
-                    </span>
-                  </Table.Cell>
-                </>
-              </Table.Row>
-            </Table.Body>
-          </Table>
-        </div> */}
+        <div>
+          <p className="text-2xl font-bold">
+            {formData["variants"].length} Variants
+          </p>
+          <button onClick={() => setShowModal(true)}>Edit Variants</button>
+        </div>
+        {showModal ? (
+          <Modal
+            close={() => {
+              setShowModal(false);
+            }}
+          >
+            <div className="flex justify-end">
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                <svg width="23" height="23" viewBox="0 0 23 23">
+                  <path
+                    d="M 3 16.5 L 17 2.5"
+                    fill="transparent"
+                    strokeWidth="2"
+                    stroke="hsl(0, 0%, 0%)"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M 3 2.5 L 17 16.346"
+                    fill="transparent"
+                    strokeWidth="2"
+                    stroke="hsl(0, 0%, 0%)"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <VariantsModal
+              formData={formData}
+              updateFormData={updateFormData}
+              closeModal={() => setShowModal(false)}
+              newImages={newImages}
+            />
+          </Modal>
+        ) : null}
 
         <div className="mt-2 w-full text-center">
           <button
-            // onClick={() => {
-            //   clearState();
-            // }}
             onClick={() => showNewProductForm(false)}
             className="btn-no-size-color bg-black px-6 py-2 mr-2"
           >
             Cancel
           </button>
-          {readyToSave() ? (
+          {readyToSave() && newImages.length > 0 ? (
             <button
               onClick={() => handleSubmit()}
               className="btn-no-size-color bg-green-500 px-6 py-2 ml-2"
