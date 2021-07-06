@@ -13,7 +13,8 @@ const productCard = memo(
   ({ isSelected, setSelectedId, product, addToCart, cartData }) => {
     const id = product.ProductId;
     const title = product.title;
-    let price = product.variants ? product.variants[0].price : product.price;
+    let price =
+      product.variants.length > 0 ? product.variants[0].price : product.price;
     price = roundToTwo(price);
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
