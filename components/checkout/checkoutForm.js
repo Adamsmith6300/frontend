@@ -39,6 +39,7 @@ const index = ({ stripe, elements, cartData, setOrderNo, personInfo }) => {
       return {
         ProductId: item.ProductId,
         MerchantId: item.MerchantId,
+        chosenVariant: item.chosenVariant ? item.chosenVariant : null,
         qty: item.qty,
       };
     });
