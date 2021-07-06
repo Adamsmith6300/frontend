@@ -12,7 +12,7 @@ const Products = ({
   setShowModal,
   setModalContent,
   categories,
-  setLoading,
+  setLoading,storename
 }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [newProductForm, showNewProductForm] = useState(false);
@@ -50,6 +50,7 @@ const Products = ({
         showNewProductForm={showNewProductForm}
         callFetchMerchData={callFetchMerchData}
         setLoading={setLoading}
+        storename={storename}
       />
     );
   }

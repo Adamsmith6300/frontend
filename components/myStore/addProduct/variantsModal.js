@@ -2,6 +2,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Variants from "./variants";
 import Options from "./options";
+import { roundToTwo } from "../../../store/helpers";
 
 const index = ({ formData, updateFormData, closeModal, newImages }) => {
   const [step, setStep] = useState(
@@ -20,8 +21,8 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
           id: uuidv4(),
           image: null,
           optionValues: [],
-          price: formData["price"] != null ? formData["price"] : "0",
-          stock: formData["stock"] != null ? formData["stock"] : "0",
+          price: formData["price"] != null ? formData["price"] : 0,
+          stock: formData["stock"] != null ? formData["stock"] : 0,
           stockUnlimited: true,
         };
 
@@ -122,6 +123,11 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
     setStep("variants");
   };
   const saveVariants = () => {
+    for (let i = 0; i < newVariants.length; ++i) {
+      newVariants[i].price = roundToTwo(newVariants[i].price);
+      newVariants[i].stock = parseInt(newVariants[i].stock);
+    }
+    console.log(newVariants);
     updateFormData({ ...formData, variants: [...newVariants] });
     closeModal();
   };

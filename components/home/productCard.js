@@ -1,4 +1,4 @@
-import { memo, useRef } from "react";
+import { memo, useRef, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 import { ContentPlaceholder } from "./contentPlaceholder";
 import { Image } from "./image";
@@ -18,7 +18,7 @@ const productCard = memo(
     price = roundToTwo(price);
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
-
+    const [currentIndex, setCurrentIndex] = useState(0);
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
@@ -87,12 +87,15 @@ const productCard = memo(
               MerchantId={product.MerchantId}
               ProductId={product.ProductId}
               images={product.images}
-              mainImageIndex={0}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
             />
             <ContentPlaceholder
               product={product}
               addToCart={addToCart}
               cartData={cartData}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
             />
           </motion.div>
         </div>

@@ -180,12 +180,14 @@ const actions = {
   },
   addToCart: (product, oldCart, qty = 1) => {
     let newCart = { ...oldCart };
-    let price = product.chosenVariant
-      ? product.chosenVariant.price
-      : product.price;
-    let inventory = product.chosenVariant
-      ? product.chosenVariant.inventory_quantity
-      : Number.MAX_VALUE;
+    let price = product.price;
+    let inventory = product.stockUnlimited ? Number.MAX_VALUE : product.stock;
+    if (product.chosenVariant) {
+      price = product.chosenVariant.price;
+      inventory = product.chosenVariant.stockUnlimited
+        ? Number.MAX_VALUE
+        : product.chosenVariant.stock;
+    }
     if (newCart.items[product.ProductId]) {
       if (newCart.items[product.ProductId].qty + qty <= inventory) {
         newCart.items[product.ProductId].qty += qty;
@@ -193,7 +195,10 @@ const actions = {
     } else {
       newCart.items[product.ProductId] = { ...product, qty: qty };
     }
-    newCart.total += price * qty;
+    console.log("NEWNEW", newCart);
+    console.log(newCart.total);
+    newCart.total = newCart.total + price * qty;
+    console.log(newCart.total);
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     return {

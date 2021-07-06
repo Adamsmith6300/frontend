@@ -4,8 +4,13 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
   if (!cartData || !cartData.items) return null;
   return Object.entries(cartData.items).map((entry, index) => {
     let item = entry[1];
-    let mainImageUrl = item.images[0].src;
-    let visiblePrice = item.price || item.chosenVariant.price;
+    let mainImageUrl =
+      item.chosenVariant && item.chosenVariant.image != null
+        ? item.images[item.chosenVariant.image.displayIndex].src
+        : item.images[0].src;
+    let visiblePrice = item.chosenVariant
+      ? item.chosenVariant.price
+      : item.price;
     visiblePrice = roundToTwo(visiblePrice);
     return (
       <div key={entry[0]} className="flex justify-start w-full my-6">

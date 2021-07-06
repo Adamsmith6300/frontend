@@ -211,6 +211,7 @@ const Page = ({
               setModalContent={setModalContent}
               categories={categories}
               setLoading={setLoading}
+              storename={myShop.info.storename}
             />
           </div>
         </div>
