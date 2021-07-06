@@ -366,7 +366,7 @@ button:focus {
 }
 
 .overlay {
-  z-index: 9999999;
+  z-index: 998;
   position: fixed;
   background: rgba(255, 255, 255, 0.8);
   will-change: opacity;
@@ -539,8 +539,6 @@ button:focus {
   display: block;
   background-color: #fff;
   color: #000;
-  width: 300px;
-  padding: 5px 0;
 }
 
 .footer {

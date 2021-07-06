@@ -52,20 +52,24 @@ const index = ({
                 !newVariants[index]["stockUnlimited"];
               forceUpdate();
             }}
-            defaultChecked
+            defaultChecked={newVariants[index]["stockUnlimited"]}
             toggle
           />
         </Table.Cell>
         <Table.Cell className="">
-          <input
-            disabled={val.stockUnlimited}
-            className="h-10"
-            name="stock"
-            type="number"
-            min="1"
-            defaultValue={val.stock}
-            onChange={(e) => handleVariantChange(e, index, "stock")}
-          />
+          {val.stockUnlimited ? (
+            <span>Unlimited</span>
+          ) : (
+            <input
+              disabled={val.stockUnlimited}
+              className="h-10"
+              name="stock"
+              type="number"
+              min="1"
+              defaultValue={val.stock}
+              onChange={(e) => handleVariantChange(e, index, "stock")}
+            />
+          )}
         </Table.Cell>
         <Table.Cell>
           <input

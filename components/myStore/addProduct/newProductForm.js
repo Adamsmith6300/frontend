@@ -17,7 +17,7 @@ const index = ({
   showNewProductForm,
   MerchantId,
   callFetchMerchData,
-  setLoading,
+  setLoading,storename
 }) => {
   const [formData, updateFormData] = useState({
     category: 0,
@@ -27,6 +27,7 @@ const index = ({
     mainImage: 0,
     variants: [],
     stockUnlimited: true,
+    storename:storename
   });
   const [mainImage, setMainImage] = useState(0);
   const [newImages, setNewImages] = useState([]);

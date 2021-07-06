@@ -3,84 +3,94 @@ import Link from "next/link";
 import { checkMerchant, roundToTwo } from "../../store/helpers";
 import { Loader } from "semantic-ui-react";
 
-export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
-  const isMerchant = checkMerchant();
-  const [selectedVariant, setSelectedVariant] = useState(0);
-  const [loading, setLoading] = useState(false);
-  let s = {};
-  if (product.options) {
-    for (let k = 0; k < product.options.length; ++k) {
-      s["option" + (k + 1)] = product.options[k].values[0];
+export const ContentPlaceholder = memo(
+  ({ product, addToCart, cartData, currentIndex, setCurrentIndex }) => {
+    const isMerchant = checkMerchant();
+    const [selectedVariant, setSelectedVariant] = useState(
+      product.variants.length > 0 ? 0 : null
+    );
+    const [loading, setLoading] = useState(false);
+    let s = {};
+    if (product.options) {
+      for (let k = 0; k < product.options.length; ++k) {
+        s["option_" + product.options[k].id] = product.options[k].values[0];
+      }
     }
-  }
-  const [selectedOptions, setSelectedOptions] = useState({ ...s });
-  const [qty, setQty] = useState(1);
-  let visiblePrice = product.variants
-    ? product.variants[selectedVariant].price
-    : product.price;
-  visiblePrice = roundToTwo(visiblePrice);
-  let inventory = product.variants
-    ? product.variants[selectedVariant].inventory_quantity
-    : 1;
-  let options = null;
-  if (product.options) {
-    options = product.options.map((option, index) => {
-      let vals = option.values.map((val, ind) => {
-        return (
-          <option key={ind + val} value={val}>
-            {val}
-          </option>
-        );
-      });
+    const [selectedOptions, setSelectedOptions] = useState({ ...s });
+    const [qty, setQty] = useState(1);
+    let visiblePrice =
+      selectedVariant != null
+        ? product.variants[selectedVariant].price
+        : product.price;
+    visiblePrice = roundToTwo(visiblePrice);
+    let inventory =
+      selectedVariant != null
+        ? product.variants[selectedVariant].stock
+        : product.stock;
+    let options = null;
+    if (product.options) {
+      options = product.options.map((option, index) => {
+        let vals = option.values.map((val, ind) => {
+          return (
+            <option key={ind + val} value={val}>
+              {val}
+            </option>
+          );
+        });
 
-      return (
-        <div key={option.name} className="w-300 mx-auto">
-          <p className="text-left">{option.name}</p>
-          <select
-            onChange={(e) => {
-              let newOptions = {
-                ...selectedOptions,
-                ["option" + (index + 1)]: e.target.value,
-              };
-              for (let i = 0; i < product.variants.length; ++i) {
-                let variant = product.variants[i];
-                let correctOptionCount = 0;
-                for (let k = 0; k < Object.values(newOptions).length; ++k) {
-                  if (
-                    variant["option" + (k + 1)] ==
-                    newOptions["option" + (k + 1)]
-                  ) {
-                    correctOptionCount++;
+        return (
+          <div key={option.name} className="w-300 mx-auto ">
+            <p className="text-left">{option.name}</p>
+            <select
+              onChange={(e) => {
+                let newOptions = {
+                  ...selectedOptions,
+                  ["option_" + option.id]: e.target.value,
+                };
+                console.log(newOptions);
+                let newOptionVals = Object.values(newOptions);
+                for (let i = 0; i < product.variants.length; ++i) {
+                  let variant = product.variants[i];
+                  let correctOptionCount = 0;
+                  for (let k = 0; k < newOptionVals.length; ++k) {
+                    for (let j = 0; j < variant.optionValues.length; ++j) {
+                      if (variant.optionValues[j].value == newOptionVals[k]) {
+                        correctOptionCount++;
+                      }
+                    }
+                  }
+                  if (correctOptionCount == newOptionVals.length) {
+                    setSelectedVariant(i);
+                    console.log(variant);
+                    if (variant.image != null) {
+                      setCurrentIndex(variant.image.displayIndex);
+                    }
+                    break;
                   }
                 }
-                if (correctOptionCount == Object.values(newOptions).length) {
-                  setSelectedVariant(i);
-                  break;
-                }
-              }
-              setSelectedOptions({ ...newOptions });
-            }}
-            name="options"
-            className="product-options"
-          >
-            {vals}
-          </select>
-        </div>
-      );
-    });
-  }
-  return (
-    <div className="content-container">
-      <p className="text-3xl flex justify-between">
-        <span>{product.title}</span>
-        <span className="w-150 text-center">${visiblePrice}</span>
-      </p>
-      <Link href={`/merchants/${product.MerchantId}`}>
-        <p className="cursor-pointer text-black text-xl my-2">
-          by {product.storename}
+                setSelectedOptions({ ...newOptions });
+              }}
+              name="options"
+              className="product-options  p-2"
+            >
+              {vals}
+            </select>
+          </div>
+        );
+      });
+    }
+    return (
+      <div className="content-container">
+        <p className="text-3xl flex justify-between">
+          <span>{product.title}</span>
+          <span className="w-150 text-center">${visiblePrice}</span>
         </p>
-      </Link>
-      {!isMerchant ? (
+        <Link href={`/merchants/${product.MerchantId}`}>
+          <p className="cursor-pointer text-black text-xl my-2">
+            by {product.storename}
+          </p>
+        </Link>
+        {/* {!isMerchant ? ( */}
         <div className="my-6 mx-auto">
           {options != null ? <div className="">{options}</div> : null}
           <div className="flex justify-between w-150 mx-auto my-2">
@@ -110,7 +120,7 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
                   }}
                 >
                   +
-                </button>{" "}
+                </button>
               </>
             ) : (
               <p className="text-red-500">OUT OF STOCK</p>
@@ -120,13 +130,6 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
             <button
               className="standard-btn my-2"
               onClick={async () => {
-                // let title = product.title;
-                // if (
-                //   product.variants[selectedVariant].title &&
-                //   product.variants[selectedVariant].title != "Default Title"
-                // ) {
-                //   title = product.variants[selectedVariant].title;
-                // }
                 setLoading(true);
                 setTimeout(() => {
                   setLoading(false);
@@ -134,8 +137,10 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
                 addToCart(
                   {
                     ...product,
-                    chosenVariant: product.variants[selectedVariant],
-                    // title: title,
+                    chosenVariant:
+                      selectedVariant != null
+                        ? product.variants[selectedVariant]
+                        : null,
                   },
                   cartData,
                   qty
@@ -150,8 +155,9 @@ export const ContentPlaceholder = memo(({ product, addToCart, cartData }) => {
             </button>
           </div>
         </div>
-      ) : null}
-      <p>{product.body_html ? product.body_html : product.description}</p>
-    </div>
-  );
-});
+        {/* ) : null} */}
+        <p>{product.description}</p>
+      </div>
+    );
+  }
+);

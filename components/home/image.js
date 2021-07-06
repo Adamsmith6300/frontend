@@ -6,14 +6,10 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 export const Image = ({
   isSelected,
-  source,
-  MerchantId,
-  ProductId,
   images,
-  mainImageIndex,
+  currentIndex,
+  setCurrentIndex,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(mainImageIndex);
-
   let imgSrc = images[currentIndex].src
     ? images[currentIndex].src
     : images[currentIndex];
