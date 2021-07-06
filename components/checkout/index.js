@@ -16,7 +16,7 @@ const index = ({
   const [activeCheckoutStep, setActiveCheckout] = useState(2);
 
   return (
-    <div className="w-1/2 mx-auto text-center">
+    <div className="w-full lg:w-1/2 mx-auto text-center">
       <Email
         activeCheckoutStep={activeCheckoutStep}
         setActiveCheckout={setActiveCheckout}
