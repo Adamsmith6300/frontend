@@ -47,7 +47,6 @@ export const ContentPlaceholder = memo(
                   ...selectedOptions,
                   ["option_" + option.id]: e.target.value,
                 };
-                console.log(newOptions);
                 let newOptionVals = Object.values(newOptions);
                 for (let i = 0; i < product.variants.length; ++i) {
                   let variant = product.variants[i];
