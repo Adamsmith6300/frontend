@@ -44,10 +44,10 @@ const Layout = ({
         <title>Loma</title>
         <link rel="icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
+        {/* <link
           href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
           rel="stylesheet"
-        />
+        /> */}
         <link
           href="https://db.onlinewebfonts.com/c/9550467e9991316a81acde7241010891?family=TeeFranklinW01-Light"
           rel="stylesheet"

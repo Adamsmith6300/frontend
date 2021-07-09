@@ -28,12 +28,8 @@ body {
   overflow-x: hidden !important;
   --secondary: #a1a1a1;
   --divider: #343434;
-  /* width: 100vw;
-  height: 100vh; */
   font-weight: 500;
   font-size: 1.2rem;
-  /* font-family: "TeeFranklinW01-Light", Arial, Helvetica, sans-serif; */
-  /* font-family: "Work Sans", Arial, Helvetica, sans-serif; */
 }
 
 .vibes {
@@ -119,7 +115,6 @@ button:focus {
 .banner {
   background-position: 100% 40%;
   background-repeat: no-repeat;
-  /* background-size: cover; */
   background-image: url("../public/secondBanner.jpg");
   height: 450px;
   width: 100%;
@@ -128,7 +123,7 @@ button:focus {
 .banner-overlay {
   height: 100%;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .bg-img {
   background-position: center;
@@ -249,12 +244,10 @@ button:focus {
   background-size: cover;
 }
 .card-image--products {
-  /* width: 300px; */
   height: 250px;
 }
 .card-image--mProducts {
   width: 100%;
-  /* height: 80px; */
 }
 
 .card-content-container {
@@ -278,7 +271,6 @@ button:focus {
 .card-content {
   pointer-events: auto;
   position: relative;
-  /* border-radius: 10px; */
   background: #fff;
   overflow: hidden;
   width: 100%;
@@ -290,7 +282,6 @@ button:focus {
 .card-content--mProducts {
   pointer-events: auto;
   position: relative;
-  /* border-radius: 10px; */
   background: #1c1c1e;
   overflow: hidden;
   width: 100%;
@@ -355,9 +346,6 @@ button:focus {
   left: 0;
   max-width: 300px;
 }
-/* .title-container h2 {
-  color: black !important;
-} */
 
 .category {
   color: #fff;
@@ -383,9 +371,7 @@ button:focus {
   top: 0;
   bottom: 0;
   left: 0;
-  /* transform: translateX(-50%); */
   width: 100vw;
-  /* max-width: 1000px; */
 }
 .overlay a {
   display: block;
@@ -397,7 +383,6 @@ button:focus {
   transform: translateX(-50%);
 }
 .overlay--mProducts a {
-  /* z-index: 2; */
   display: block;
   position: fixed;
   top: 0;
