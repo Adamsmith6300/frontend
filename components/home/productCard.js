@@ -101,8 +101,8 @@ const productCard = memo(
         </div>
         {!isSelected ? (
           <>
-            <p className="text-black md:text-3xl my-2 mt-4">
-              {title.length > 45 ? title.substring(0, 42) + "..." : title}
+            <p className="text-black text-xl md:text-3xl my-2 mt-4">
+              {title.length > 40 ? title.substring(0, 37) + "..." : title}
             </p>
             <Link href={`/vendors/${product.MerchantId}`}>
               <p className="cursor-pointer text-black text-base md:text-xl my-2">

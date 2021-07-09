@@ -6,7 +6,7 @@ import CartContent from "./cartContent";
 
 const sidebar = {
   open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 80px 80px)`,
+    clipPath: `circle(3200px at 80px 80px)`,
     transition: {
       type: "spring",
       stiffness: 20,

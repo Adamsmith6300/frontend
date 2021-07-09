@@ -17,7 +17,8 @@ const index = ({
   showNewProductForm,
   MerchantId,
   callFetchMerchData,
-  setLoading,storename
+  setLoading,
+  storename,
 }) => {
   const [formData, updateFormData] = useState({
     category: 0,
@@ -27,7 +28,7 @@ const index = ({
     mainImage: 0,
     variants: [],
     stockUnlimited: true,
-    storename:storename
+    storename: storename,
   });
   const [mainImage, setMainImage] = useState(0);
   const [newImages, setNewImages] = useState([]);
@@ -94,7 +95,7 @@ const index = ({
         <div>
           <p className="text-2xl font-bold">Title:</p>
           <input
-            maxLength="50"
+            maxLength="40"
             className="w-full my-3 h-10"
             name="title"
             type="text"

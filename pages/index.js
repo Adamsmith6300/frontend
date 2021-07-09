@@ -30,7 +30,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
     <Layout>
       <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
-        heading={"Support Local"}
+        heading={"Shop Local With Loma"}
         content={
           "Based out of Vancouver BC, Loma is an online marketplace for local vendors. Pick and choose a variety of items from different vendors, then have your order delivered for one low delivery fee."
         }
@@ -47,9 +47,9 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
       <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
       <Banner
         bgSrc={"/secondBanner.jpg"}
-        heading={"Started in Vancouver"}
+        heading={"A Sustainable Solution"}
         content={
-          "Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses! Support your local businesses!"
+          "Shopping local helps reduce emmissions! At Loma we prioritize ethical and sustainably conscious businesses. We only deliver with hybrid or electric vehicles, and all our packaging is biodegradable."
         }
         link={"/signup"}
       />
