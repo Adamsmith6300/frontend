@@ -19,7 +19,7 @@ const Page = ({}) => {
           feedback and we'll get back to you as soon as we can.
         </p>
         <p>
-          <a href="mailto: contact@shoploma.ca" className="hover:text-black">
+          <a href="mailto:contact@shoploma.ca" className="hover:text-black">
             <AiOutlineMail className="inline ml-1" />
             <span className="ml-3">contact@shoploma.ca</span>
           </a>

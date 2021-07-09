@@ -6,7 +6,7 @@ const index = ({}) => {
       title: "We Love Local",
       subtitle:
         "We can't say it enough...we love our local shops and want to keep them around!",
-      img: "./mountain.jpg",
+      img: "./firstBanner.jpg",
     },
     {
       title: "Fast + Affordable Delivery",
@@ -18,16 +18,27 @@ const index = ({}) => {
       title: "High Quality Products",
       subtitle:
         "We carefully select our merchants to make sure you get the best products possible.",
-      img: "./mountain.jpg",
+      img: "./5stars.jpg",
     },
   ];
   points = points.map((point, index) => {
+    let imageStyle = {
+      height: "150px",
+      width: "150px",
+      margin: "0 auto",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundImage: `url(${point.img})`,
+      borderRadius: "9999px",
+    };
     return (
       <div
         key={point.title + index}
         className="w-300 text-center mx-12 my-5 lg:my-auto"
       >
-        <img className="h-150 w-150 rounded-full mx-auto" src={point.img} />
+        <div style={imageStyle}></div>
+        {/* <img className="h-150 w-150 rounded-full mx-auto" src={point.img} /> */}
         <h4 className="text-3xl my-5">{point.title}</h4>
         <p>{point.subtitle}</p>
       </div>
