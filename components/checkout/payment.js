@@ -15,6 +15,7 @@ const payment = ({
   setOrderNo,
   personInfo,
   step,
+  setCart,
 }) => {
   const isActive = activeCheckoutStep == step;
   return (
@@ -44,6 +45,7 @@ const payment = ({
               cartData={cartData}
               setOrderNo={setOrderNo}
               personInfo={personInfo}
+              setCart={setCart}
             />
           </Elements>
         </>

@@ -21,7 +21,14 @@ const calcFees = (cart) => {
   return fees;
 };
 
-const index = ({ stripe, elements, cartData, setOrderNo, personInfo }) => {
+const index = ({
+  stripe,
+  elements,
+  cartData,
+  setOrderNo,
+  personInfo,
+  setCart,
+}) => {
   const [isLoading, updateIsLoading] = useState(false);
   const [chargeDetails, setChargeDetails] = useState(calcFees(cartData));
 
@@ -34,6 +41,10 @@ const index = ({ stripe, elements, cartData, setOrderNo, personInfo }) => {
     const payload = { ...personInfo };
     if ("username" in payload) {
       delete payload["username"];
+    }
+    if (cartData.items.length <= 0) {
+      updateIsLoading(false);
+      return;
     }
     payload.items = Object.values(cartData.items).map((item, index) => {
       return {
@@ -68,10 +79,14 @@ const index = ({ stripe, elements, cartData, setOrderNo, personInfo }) => {
         if (result.paymentIntent.status === "succeeded") {
           try {
             let orderResp = await confirmPayment(resp.data.OrderId);
-            if (orderResp.status == 200) {
-              localStorage.removeItem("cart");
-              setOrderNo(resp.data.OrderId);
-            }
+            // if (orderResp.status == 200) {
+            localStorage.removeItem("cart");
+            setCart({
+              items: {},
+              total: 0,
+            });
+            setOrderNo(resp.data.OrderId);
+            // }
           } catch (err) {
             console.log(err);
           }
