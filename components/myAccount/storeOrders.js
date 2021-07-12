@@ -8,6 +8,11 @@ const storeOrders = ({ orders }) => {
 
   const genOrders = (orders) => {
     return orders.map((order, index) => {
+      console.log(order);
+      let image =
+        order.items[0].chosenVariant && order.items[0].chosenVariant != null
+          ? order.items[0].chosenVariant.image.src
+          : order.items[0].images[0].src;
       return (
         <li
           onClick={() =>
@@ -17,7 +22,7 @@ const storeOrders = ({ orders }) => {
           className="cursor-pointer flex justify-start place-items-center p-3 border border-1 w-350 max-w-screen m-2 text-base"
         >
           <div className="w-100 h-75 overflow-hidden">
-            <img src={order.items[0].image.src} className="h-full" />
+            <img src={image} className="h-full" />
           </div>
           <div className="w-200 pl-3">
             <p className="text-lg">{order.items.length} Item(s)</p>

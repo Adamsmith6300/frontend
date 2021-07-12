@@ -27,6 +27,9 @@ export const ContentPlaceholder = memo(
       selectedVariant != null
         ? product.variants[selectedVariant].stock
         : product.stock;
+    if (product.stockUnlimited) {
+      inventory = Number.MAX_VALUE;
+    }
     let options = null;
     if (product.options) {
       options = product.options.map((option, index) => {
@@ -60,7 +63,6 @@ export const ContentPlaceholder = memo(
                   }
                   if (correctOptionCount == newOptionVals.length) {
                     setSelectedVariant(i);
-                    console.log(variant);
                     if (variant.image != null) {
                       setCurrentIndex(variant.image.displayIndex);
                     }

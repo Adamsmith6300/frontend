@@ -29,15 +29,33 @@ export const getStatus = (status) => {
 
 const index = ({ order, setSelectedOrder }) => {
   let items = order.items.map((item, index) => {
+    let chosenVariant = item.chosenVariant && item.chosenVariant != null;
+    let image = item.images[0].src,
+      price = item.price,
+      optionValues = null;
+    if (chosenVariant) {
+      image = item.chosenVariant.image.src;
+      price = item.chosenVariant.price;
+      optionValues = item.chosenVariant.optionValues.map((option, index) => {
+        return (
+          <span
+            key={index + option.value}
+            className="border rounded-3xl bg-gray-300 p-1 px-3 mr-1 my-1 inline h-10"
+          >
+            {option.value}
+          </span>
+        );
+      });
+    }
     return (
       <div className="flex justify-start place-items-center mb-3">
         <div className="w-100 h-75 overflow-hidden">
-          <img src={item.image.src} className="h-full" />
+          <img src={image} className="h-full" />
         </div>
         <div className="w-200 pl-3">
           <p className="text-lg">{item.title}</p>
-          <p className="text-lg">Price: ${item.variants[0].price}</p>
-
+          {optionValues ? <p className="text-lg">{optionValues}</p> : null}
+          <p className="text-lg">Price: ${price}</p>
           <p className="text-lg">Quantity: {item.qty}</p>
         </div>
       </div>
@@ -56,7 +74,7 @@ const index = ({ order, setSelectedOrder }) => {
       <div className=" p-3 border border-1 w-350 text-base">
         <p className="text-lg">{order.items.length} Item(s)</p>
         <p className="text-lg">Status: {getStatus(order.status)}</p>
-        <p className="text-lg">Order # {order.OrderId.slice(-12)}</p>
+        <p className="text-lg">Order # {order.OrderId}</p>
         <p className="text-lg">
           Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
         </p>
