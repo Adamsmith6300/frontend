@@ -7,6 +7,10 @@ import { getStatus } from "./selectedOrder";
 const myOrders = ({ orders }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   let orderList = orders.map((order, index) => {
+    let image =
+      order.items[0].chosenVariant && order.items[0].chosenVariant != null
+        ? order.items[0].chosenVariant.image.src
+        : order.items[0].images[0].src;
     return (
       <li
         onClick={() => setSelectedOrder(selectedOrder == index ? null : index)}
@@ -14,7 +18,7 @@ const myOrders = ({ orders }) => {
         className="cursor-pointer flex justify-start place-items-center p-3 border border-1 w-350 max-w-full my-2 md:m-2 text-base"
       >
         <div className="w-100 h-75 overflow-hidden">
-          <img src={order.items[0].image.src} className="h-full" />
+          <img src={image} className="h-full" />
         </div>
         <div className="w-200 pl-3">
           <p className="text-lg">{order.items.length} Product(s)</p>
