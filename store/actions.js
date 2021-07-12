@@ -195,10 +195,7 @@ const actions = {
     } else {
       newCart.items[product.ProductId] = { ...product, qty: qty };
     }
-    console.log("NEWNEW", newCart);
-    console.log(newCart.total);
     newCart.total = newCart.total + price * qty;
-    console.log(newCart.total);
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     return {

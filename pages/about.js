@@ -34,7 +34,7 @@ const Page = ({}) => {
             competitors.
           </p>
           <p className="mt-4">
-            Sustainability is really improtant to us. There are not many online
+            Sustainability is really important to us. There are not many online
             markets that have delivery services focused on sustainability and
             many of them do not focus on local businesses or deliver locally.
           </p>

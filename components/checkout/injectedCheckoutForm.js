@@ -6,6 +6,7 @@ const InjectedCheckoutForm = ({
   cartData,
   setOrderNo,
   personInfo,
+  setCart,
 }) => {
   return (
     <ElementsConsumer>
@@ -17,6 +18,7 @@ const InjectedCheckoutForm = ({
           cartData={cartData}
           setOrderNo={setOrderNo}
           personInfo={personInfo}
+          setCart={setCart}
         />
       )}
     </ElementsConsumer>

@@ -12,6 +12,7 @@ const index = ({
   setPersonInfo,
   billingInfo,
   setBillingInfo,
+  setCart,
 }) => {
   const [activeCheckoutStep, setActiveCheckout] = useState(2);
 
@@ -49,6 +50,7 @@ const index = ({
         confirmPayment={confirmPayment}
         cartData={cartData}
         step={4}
+        setCart={setCart}
       />
     </div>
   );

@@ -16,6 +16,7 @@ const Page = ({
   personInfo,
   addToCart,
   removeFromCart,
+  setCart,
 }) => {
   //reroute if carts empty or show msg
   const [personInfoCheckout, setPersonInfo] = useState(personInfo);
@@ -60,6 +61,7 @@ const Page = ({
                 cartData={cartData}
                 billingInfo={billingInfo}
                 setBillingInfo={setBillingInfo}
+                setCart={setCart}
               />
             </>
           ) : (
@@ -80,6 +82,7 @@ const mapDispatchToProps = (dispatch) => {
     removeFromCart: (product, oldcart, qty) =>
       dispatch(actions.removeFromCart(product, oldcart, qty)),
     confirmPayment: (OrderId) => dispatch(actions.confirmPayment(OrderId)),
+    setCart: (cart) => dispatch(actions.setCart(cart)),
   };
 };
 
