@@ -41,7 +41,7 @@ const Page = ({}) => {
           <p className="mt-4 mb-8">
             We value our employees. Unlike many delivery services, we want to
             ensure that our employees are treated with respect and properly
-            compensated for their time (our drivers are our employees with all
+            compensated for their time (our drivers are our employees, with all
             the rights that entitles them to).
           </p>
         </div>
