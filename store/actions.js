@@ -178,11 +178,12 @@ const actions = {
       payload: showCart,
     };
   },
-  addToCart: (product, oldCart, qty = 1) => {
+  addToCart: (product, oldCart, qty) => {
+    console.log(qty);
     let newCart = { ...oldCart };
     let price = product.price;
     let inventory = product.stockUnlimited ? Number.MAX_VALUE : product.stock;
-    if (product.chosenVariant) {
+    if (product.chosenVariant != null) {
       price = product.chosenVariant.price;
       inventory = product.chosenVariant.stockUnlimited
         ? Number.MAX_VALUE

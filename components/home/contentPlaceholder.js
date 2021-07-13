@@ -18,18 +18,18 @@ export const ContentPlaceholder = memo(
     }
     const [selectedOptions, setSelectedOptions] = useState({ ...s });
     const [qty, setQty] = useState(1);
-    let visiblePrice =
-      selectedVariant != null
-        ? product.variants[selectedVariant].price
-        : product.price;
-    visiblePrice = roundToTwo(visiblePrice);
-    let inventory =
-      selectedVariant != null
-        ? product.variants[selectedVariant].stock
-        : product.stock;
+    let visiblePrice = product.price;
+    let inventory = product.stock;
     if (product.stockUnlimited) {
       inventory = Number.MAX_VALUE;
     }
+    if (selectedVariant != null) {
+      visiblePrice = product.variants[selectedVariant].price;
+      inventory = product.variants[selectedVariant]["stockUnlimited"]
+        ? Number.MAX_VALUE
+        : product.variants[selectedVariant].stock;
+    }
+    visiblePrice = roundToTwo(visiblePrice);
     let options = null;
     if (product.options) {
       options = product.options.map((option, index) => {
@@ -131,10 +131,11 @@ export const ContentPlaceholder = memo(
             <button
               className="standard-btn my-2"
               onClick={async () => {
+                console.log(qty);
                 setLoading(true);
                 setTimeout(() => {
                   setLoading(false);
-                }, 300);
+                }, 400);
                 addToCart(
                   {
                     ...product,

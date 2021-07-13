@@ -61,7 +61,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMerchants: () => dispatch(actions.getMerchants()),
-    addToCart: (product, oldCart, qty = 1) =>
+    addToCart: (product, oldCart, qty) =>
       dispatch(actions.addToCart(product, oldCart, qty)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
     getCategories: () => dispatch(actions.getCategories()),

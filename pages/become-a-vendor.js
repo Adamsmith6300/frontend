@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Link from "next/link";
-import { Form } from "semantic-ui-react";
+import { Form, Checkbox } from "semantic-ui-react";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 
@@ -25,7 +24,6 @@ import { LargeLoader } from "../components/loaders";
 const Page = ({
   formError,
   successfulSignup,
-  clearFlag,
   router,
   submitMerchantApplication,
   successfulMerchantApplication,
@@ -35,8 +33,10 @@ const Page = ({
   const [formData, updateFormData] = useState({});
   const [showApplication, setShowApplication] = useState(successfulSignup);
   const [params, setParams] = useState(null);
-  const [userPass, setUserPass] = useState(null);
+  // const [userPass, setUserPass] = useState(null);
   const [merchantSignupSuccess, setMerchantSignupSuccess] = useState(false);
+  const [showTerms, setShowTerms] = useState(true);
+  const [agreedTerms, setAgreedTerms] = useState(false);
 
   const handleChange = (e) => {
     updateFormData({
@@ -86,19 +86,6 @@ const Page = ({
   useEffect(() => {
     const call = async () => {
       let queryParams = router.query;
-      // if (
-      //   "hmac" in queryParams &&
-      //   "shop" in queryParams &&
-      //   "timestamp" in queryParams
-      // ) {
-      //   let shopify_state = localStorage.getItem("shopify_state");
-      //   if (
-      //     !shopify_state ||
-      //     queryParams.state != shopify_state.replace(/['"]+/g, "")
-      //   )
-      //     return;
-      //   localStorage.setItem("shopify_params", JSON.stringify(queryParams));
-      // }
       if ("code" in queryParams) {
         let tokens = await getTokens({
           code: queryParams["code"],
@@ -137,7 +124,7 @@ const Page = ({
   if (merchantSignupSuccess) {
     return (
       <Layout>
-        <p>Successfully signed up as a merchant!</p>;
+        <LargeLoader />
       </Layout>
     );
   }
@@ -150,78 +137,133 @@ const Page = ({
           <h1 className="text-3xl text-center">Merchant Signup</h1>
           {showApplication ? (
             <div className="my-account-container">
-              <Form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setLoading(true);
-                  handleSubmit();
-                }}
-              >
-                <Form.Input
-                  label="Store Name"
-                  onChange={handleChange}
-                  name="storename"
-                  required
-                  placeholder="Store Name"
-                />
-                <Form.Input
-                  label="Contact Name"
-                  onChange={handleChange}
-                  name="fullname"
-                  required
-                  placeholder="Contact Name"
-                />
-                <Form.Input
-                  label="Contact Phone"
-                  onChange={handleChange}
-                  name="phone"
-                  required
-                  placeholder="(604)-123-1234"
-                  type="tel"
-                />
-                <Form.Input
-                  required
-                  label="Address"
-                  name="address"
-                  type="address"
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  label="Address 2"
-                  name="address2"
-                  type="address"
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  required
-                  label="City"
-                  name="city"
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  required
-                  label="Province"
-                  name="province"
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  required
-                  label="Postal Code"
-                  name="postalcode"
-                  onChange={handleChange}
-                />
-                <Form.Input
-                  label="Website URL"
-                  type="url"
-                  onChange={handleChange}
-                  name="website"
-                />
-                <div className="flex justify-center mt-4">
-                  <button className="standard-btn" type="submit">
-                    Submit
+              {showTerms ? (
+                <div>
+                  <h2 className="text-3xl mb-2">
+                    Thank you for wanting to become a vendor!
+                  </h2>
+                  <p className="font-bold mb-2">
+                    Before continuing, please confirm:
+                  </p>
+                  <ul className="">
+                    <li className="my-3">
+                      1. Your business is based out of Greater Vancouver, B.C.
+                    </li>
+                    <li className="my-3">
+                      2. You can prepare orders for pickup within 24 hours. (we
+                      want to deliver as fast as possible)
+                    </li>
+                    <li className="my-3">
+                      3. Your product pricing must not be greater than anywhere
+                      else your products are sold online. We don't charge
+                      commission fees, so we want our customers to be offered
+                      fair prices.
+                    </li>
+                    <li className="my-3">
+                      4. Work with us and communicate! This is a beta release,
+                      so we really appreciate your feedback and will work hard
+                      to improve the platform as we continue.
+                    </li>
+                  </ul>
+                  <p className="font-bold">
+                    Note: We aim to be as transparent as possible. The platform
+                    is currently free, but in the future we plan to implement a
+                    small monthly fee to help us cover our costs. We will work
+                    with our vendors to make sure it's an appropriate amount.
+                  </p>
+                  <div>
+                    <p>VENDOR TOS HERE</p>
+                    <Checkbox
+                      onChange={(e) => setAgreedTerms(!agreedTerms)}
+                      label="I agree to the Terms and Conditions above."
+                    />
+                  </div>
+                  <button
+                    disabled={!agreedTerms}
+                    onClick={() => setShowTerms(false)}
+                    className={`${
+                      agreedTerms
+                        ? "bg-black"
+                        : "bg-gray-400 cursor-not-allowed"
+                    } btn-no-size-color px-6 py-2 my-3`}
+                  >
+                    Apply to be a vendor
                   </button>
                 </div>
-              </Form>
+              ) : (
+                <Form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setLoading(true);
+                    handleSubmit();
+                  }}
+                >
+                  <Form.Input
+                    label="Store Name"
+                    onChange={handleChange}
+                    name="storename"
+                    required
+                    placeholder="Store Name"
+                  />
+                  <Form.Input
+                    label="Contact Name"
+                    onChange={handleChange}
+                    name="fullname"
+                    required
+                    placeholder="Contact Name"
+                  />
+                  <Form.Input
+                    label="Contact Phone"
+                    onChange={handleChange}
+                    name="phone"
+                    required
+                    placeholder="(604)-123-1234"
+                    type="tel"
+                  />
+                  <Form.Input
+                    required
+                    label="Address"
+                    name="address"
+                    type="address"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    label="Address 2"
+                    name="address2"
+                    type="address"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    required
+                    label="City"
+                    name="city"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    required
+                    label="Province"
+                    name="province"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    required
+                    label="Postal Code"
+                    name="postalcode"
+                    onChange={handleChange}
+                  />
+                  <Form.Input
+                    label="Website URL"
+                    type="url"
+                    onChange={handleChange}
+                    name="website"
+                  />
+                  <div className="flex justify-center mt-4">
+                    <button className="standard-btn" type="submit">
+                      Submit
+                    </button>
+                  </div>
+                </Form>
+              )}
             </div>
           ) : (
             <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
