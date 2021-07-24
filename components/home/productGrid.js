@@ -4,8 +4,13 @@ import { Loader } from "semantic-ui-react";
 
 const productGrid = ({ products, addToCart, cartData }) => {
   const [selectedId, setSelectedId] = useState(null);
-  if (products == null || products.length < 1)
-    return <Loader inline="centered" active />;
+  if (products == null) return <Loader inline="centered" active />;
+  if (products.length < 1)
+    return (
+      <div className="mb-12">
+        <p>No Products</p>
+      </div>
+    );
   return products.map((product, index) => {
     let isSelected = selectedId == product.ProductId;
     return (
