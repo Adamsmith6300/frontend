@@ -1,7 +1,13 @@
 import MerchantCard from "./merchantCard";
-import { LargeLoader } from "../loaders";
+import { Loader } from "semantic-ui-react";
 const merchantGrid = ({ merchants }) => {
-  if (merchants == null || merchants.length < 1) return <LargeLoader />;
+  if (merchants == null) return <Loader inline="centered" active />;
+  if (merchants.length < 1)
+    return (
+      <div className="mb-12">
+        <p>No Vendors</p>
+      </div>
+    );
   return merchants.map((merchant, index) => {
     return <MerchantCard key={index} merchant={merchant} />;
   });
