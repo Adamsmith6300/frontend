@@ -86,7 +86,7 @@ export const ContentPlaceholder = memo(
           <span>{product.title}</span>
           <span className="w-150 text-center">${visiblePrice}</span>
         </p>
-        <Link href={`/merchants/${product.MerchantId}`}>
+        <Link href={`/vendors/${product.MerchantId}`}>
           <p className="cursor-pointer text-black text-xl my-2">
             by {product.storename}
           </p>
