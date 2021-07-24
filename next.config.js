@@ -11,6 +11,6 @@ module.exports = {
     NEXT_PUBLIC_COGNITO_CLIENT_ID: "7u26j8tu1169n8s7sp3v4kc1vv",
     NEXT_PUBLIC_COGNITO_DOMAIN: "https://auth.dev.shoploma.ca/oauth2/authorize",
     // NEXT_PUBLIC_DOMAIN: "https://shoploma.ca",
-    NEXT_PUBLIC_DOMAIN: "http://localhost:3000",
+    NEXT_PUBLIC_DOMAIN: "https://dev.shoploma.ca",
   },
 };

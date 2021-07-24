@@ -89,7 +89,7 @@ const Page = ({
       if ("code" in queryParams) {
         let tokens = await getTokens({
           code: queryParams["code"],
-          redirect: "/become-a-merchant",
+          redirect: "/become-a-vendor",
         });
         if ("id_token" in tokens.data) {
           await saveLoginSession(tokens.data);
@@ -270,14 +270,14 @@ const Page = ({
               <div className="w-full flex flex-wrap mt-6">
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"
-                  href={`${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}?identity_provider=Facebook&redirect_uri=${process.env.NEXT_PUBLIC_DOMAIN}/become-a-merchant&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                  href={`${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}?identity_provider=Facebook&redirect_uri=${process.env.NEXT_PUBLIC_DOMAIN}/become-a-vendor&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
                 >
                   <AiFillFacebook className="inline mr-2 color-fb" />
                   Continue With Facebook
                 </a>
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"
-                  href={`${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}?identity_provider=Google&redirect_uri=${process.env.NEXT_PUBLIC_DOMAIN}/become-a-merchant&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
+                  href={`${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}?identity_provider=Google&redirect_uri=${process.env.NEXT_PUBLIC_DOMAIN}/become-a-vendor&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
                 >
                   <FcGoogle className="inline mr-2" /> Continue With Google
                 </a>
