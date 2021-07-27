@@ -28,7 +28,7 @@ body {
   overflow-x: hidden !important;
   --secondary: #a1a1a1;
   --divider: #343434;
-  font-weight: 100;
+  font-weight: 300;
   font-size: 1.2rem;
 }
 
@@ -58,9 +58,9 @@ h4,
 h5,
 h6 {
   font-family: "Roboto", Arial, Helvetica, sans-serif !important;
+  font-weight: 400 !important;
 }
 h2 {
-  font-weight: 400;
   font-size: 3rem;
 }
 
