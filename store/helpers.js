@@ -20,6 +20,7 @@ export const roundToTwo = (num) => {
   return +(Math.round(num + "e+2") + "e-2");
 };
 export const saveLoginSession = (response) => {
+  console.log("SAVING...");
   console.log(response);
   if (response.data) {
     const user = jwt(response.data["AuthenticationResult"]["IdToken"]);
