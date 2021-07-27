@@ -30,7 +30,8 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
 
   return (
     <Layout>
-      <ProductSection
+      <h1>Coming Soon...</h1>
+      {/* <ProductSection
         heading={"Featured Products"}
         link={"/products"}
         addToCart={addToCart}
@@ -53,7 +54,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
         })
       ) : (
         <LargeLoader />
-      )}
+      )} */}
     </Layout>
   );
 };

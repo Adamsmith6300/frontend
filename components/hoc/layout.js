@@ -58,13 +58,13 @@ const Layout = ({
         <img src="/loma.png" className="absolute loma-logo cursor-pointer" />
       </Link>
       <SideMenu categories={categories} clearFlag={clearFlag} />
-      <Cart
+      {/* <Cart
         toggleCart={toggleCart}
         showCart={showCart}
         cartData={cartData}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
-      />
+      /> */}
       {!loading ? (
         <>
           {children}

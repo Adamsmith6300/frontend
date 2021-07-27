@@ -75,13 +75,13 @@ export const Navigation = ({ isOpen, clearFlag, categories }) => {
 
   navItems = [
     { title: "home", link: homeLink, linkStyle: "primary" },
-    { title: "vendors", link: "/vendors", linkStyle: "primary" },
-    {
-      title: "products",
-      link: "/products",
-      linkStyle: "primary",
-      categories: categories,
-    },
+    // { title: "vendors", link: "/vendors", linkStyle: "primary" },
+    // {
+    //   title: "products",
+    //   link: "/products",
+    //   linkStyle: "primary",
+    //   categories: categories,
+    // },
     { title: "about", link: "/about", linkStyle: "primary" },
   ];
 

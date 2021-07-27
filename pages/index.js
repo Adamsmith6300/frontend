@@ -37,14 +37,14 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         link={"/signup"}
         left
       />
-      <ProductSection
+      {/* <ProductSection
         heading={"Featured Products"}
         link={"/products"}
         addToCart={addToCart}
         cartData={cartData}
-      />
+      /> */}
       <SmallAboutSection />
-      <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
+      {/* <MerchantSection heading={"Featured Vendors"} link={"/vendors"} /> */}
       <Banner
         bgSrc={"/secondBanner.jpg"}
         heading={"A Sustainable Solution"}
@@ -53,7 +53,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         }
         link={"/signup"}
       />
-      <ProductSection
+      {/* <ProductSection
         heading={"Jewellery + Accessories"}
         category={1}
         link={"/products?category=1"}
@@ -66,7 +66,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         link={"/products?category=2"}
         addToCart={addToCart}
         cartData={cartData}
-      />
+      /> */}
     </Layout>
   );
 };
