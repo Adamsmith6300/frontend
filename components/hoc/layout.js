@@ -43,15 +43,14 @@ const Layout = ({
       <Head>
         <title>Loma</title>
         <link rel="icon" href="/favicon.png" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        {/* <link
-          href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
-          rel="stylesheet"
-        /> */}
         <link
           href="https://db.onlinewebfonts.com/c/9550467e9991316a81acde7241010891?family=TeeFranklinW01-Light"
-          rel="stylesheet"
-          type="text/css"
+          type="font/woff2"
+          // media="none"
+          // onload="this.media='all';"
+          rel="preload"
+          as="font"
+          crossorigin="anonymous"
         />
       </Head>
       <Link href={isAuthed ? "/marketplace" : "/"}>
