@@ -43,7 +43,7 @@ const Layout = ({
       <Head>
         <title>Loma</title>
         <link rel="icon" href="/favicon.png" />
-        <link
+        {/* <link
           href="https://db.onlinewebfonts.com/c/9550467e9991316a81acde7241010891?family=TeeFranklinW01-Light"
           type="font/woff2"
           // media="none"
@@ -51,6 +51,12 @@ const Layout = ({
           rel="preload"
           as="font"
           crossorigin="anonymous"
+        /> */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap"
+          rel="stylesheet"
         />
       </Head>
       <Link href={isAuthed ? "/marketplace" : "/"}>
