@@ -44,7 +44,7 @@ const index = ({ setMainImage, newImages, setNewImages, MerchantId }) => {
       }
     } catch (err) {
       console.log(err);
-      console.log("FAILED TO UPLOAD", newImages.name);
+      console.log("FAILED TO UPLOAD", newImage.name);
       return null;
     }
   };

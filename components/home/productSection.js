@@ -17,12 +17,13 @@ const productSection = ({
   useEffect(() => {
     const getProducts = async () => {
       let url = `${process.env.NEXT_PUBLIC_API_URL}/market/products?lim=${lim}`;
-      if (category) {
+      if (category != null) {
         url += "&category=" + category;
       }
       if (start) {
         url += "&start=" + start;
       }
+      console.log(url);
       return await axios.get(url);
     };
     getProducts()

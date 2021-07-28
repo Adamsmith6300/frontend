@@ -10,7 +10,14 @@ export const getStatus = (status) => {
           <BsFillCircleFill className="inline text-yellow-300 ml-1" />
         </span>
       );
-    case "out_for_delivery":
+    case "ready_for_pickup":
+      return (
+        <span>
+          ready for pickup
+          <BsFillCircleFill className="inline text-orange-400 ml-2" />
+        </span>
+      );
+    case "picked_up":
       return (
         <span>
           picked up
@@ -27,14 +34,21 @@ export const getStatus = (status) => {
   }
 };
 
-const index = ({ order, setSelectedOrder }) => {
+const index = ({
+  order,
+  setSelectedOrder,
+  setShowModal,
+  setModalContent,
+  setSelectedOrderId,
+}) => {
   let items = order.items.map((item, index) => {
     let chosenVariant = item.chosenVariant && item.chosenVariant != null;
     let image = item.images[0].src,
       price = item.price,
       optionValues = null;
     if (chosenVariant) {
-      image = item.chosenVariant.image.src;
+      image =
+        item.chosenVariant.image != null ? item.chosenVariant.image.src : image;
       price = item.chosenVariant.price;
       optionValues = item.chosenVariant.optionValues.map((option, index) => {
         return (
@@ -73,7 +87,7 @@ const index = ({ order, setSelectedOrder }) => {
       <p className="text-3xl my-3">Order Details</p>
       <div className=" p-3 border border-1 w-350 text-base">
         <p className="text-lg">{order.items.length} Item(s)</p>
-        <p className="text-lg">Status: {getStatus(order.status)}</p>
+        <p className="text-lg">Status: {getStatus(order.orderStatus)}</p>
         <p className="text-lg">Order # {order.OrderId}</p>
         <p className="text-lg">
           Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
@@ -81,6 +95,20 @@ const index = ({ order, setSelectedOrder }) => {
       </div>
       <p className="text-3xl my-3">Items</p>
       <div className=" p-3 pb-0 border border-1 w-350 text-base">{items}</div>
+      {order.orderStatus == "ordered" ? (
+        <div className="my-3">
+          <button
+            onClick={() => {
+              setModalContent("updateOrderStatus");
+              setSelectedOrderId(order.OrderId);
+              setShowModal(true);
+            }}
+            className="btn-no-size-color px-12 py-3 bg-green-600"
+          >
+            Ready for Pickup?
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 };

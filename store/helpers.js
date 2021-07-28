@@ -302,7 +302,6 @@ export const deleteProducts = async (data) => {
 };
 
 export const submitSocialLogin = async (params) => {
-  console.log(params);
   let shopify_params = localStorage.getItem("shopify_params");
   let req_url = `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`;
   if (shopify_params) {
@@ -432,4 +431,20 @@ export const resetPasswordConfirmation = async (payload) => {
     `${process.env.NEXT_PUBLIC_API_URL}/people/forgot-password/confirm`,
     payload
   );
+};
+
+export const updateMerchantOrderStatus = async (payload) => {
+  console.log(payload);
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/order/${payload.OrderId}`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
 };

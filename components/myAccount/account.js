@@ -12,6 +12,9 @@ const index = ({
   callFetchAccountData,
   callFetchMerchData,
   setLoading,
+  setModalContent,
+  setShowModal,
+  setSelectedOrderId,
 }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
   let info = myShop ? myShop.info : accountData.info;
@@ -64,7 +67,12 @@ const index = ({
                 Store Orders
               </Accordion.Title>
               <Accordion.Content active={activeIndex === 2}>
-                <StoreOrders orders={myShop.orders} />
+                <StoreOrders
+                  orders={myShop.orders}
+                  setModalContent={setModalContent}
+                  setShowModal={setShowModal}
+                  setSelectedOrderId={setSelectedOrderId}
+                />
               </Accordion.Content>
               <Accordion.Title
                 active={activeIndex === 3}
