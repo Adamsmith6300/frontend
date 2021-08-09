@@ -58,7 +58,6 @@ const index = ({ MerchantId, name, bannerImageName }) => {
       });
       if (data && uploadFile) {
         let postBannerResp = await postImageUpload(uploadFile, data);
-        console.log(postBannerResp);
         setEditing(false);
         setLoading(false);
         // window.location.reload();

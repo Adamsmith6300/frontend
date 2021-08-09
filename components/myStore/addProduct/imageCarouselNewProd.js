@@ -31,7 +31,6 @@ const index = ({ setMainImage, newImages, setNewImages, MerchantId }) => {
       });
       if (data) {
         let uploadImageResp = await postImageUpload(newImage.uploadFile, data);
-        console.log(uploadImageResp);
         return (
           process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL +
           "/" +

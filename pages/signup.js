@@ -51,7 +51,7 @@ const Page = ({ clearFlag, router }) => {
   };
 
   return (
-    <Layout loading={loading}>
+    <Layout loading={loading} termly>
       <h1 className="text-3xl text-center">Signup</h1>
 
       <div className="max-w-full md:max-w-screen-sm mx-auto px-6">

@@ -23,7 +23,6 @@ const productSection = ({
       if (start) {
         url += "&start=" + start;
       }
-      console.log(url);
       return await axios.get(url);
     };
     getProducts()

@@ -17,7 +17,6 @@ const index = ({
         OrderId: selectedOrderId,
         MerchantId: MerchantId,
       });
-      console.log(resp);
       await callFetchMerchData();
       setSuccessMsg("Successfully updated order status.");
       setLoading(false);

@@ -20,8 +20,6 @@ export const roundToTwo = (num) => {
   return +(Math.round(num + "e+2") + "e-2");
 };
 export const saveLoginSession = (response) => {
-  console.log("SAVING...");
-  console.log(response);
   if (response.data) {
     const user = jwt(response.data["AuthenticationResult"]["IdToken"]);
     response.data["AuthenticationResult"]["IdExp"] = user["exp"];
@@ -160,7 +158,6 @@ export const fetchAccountData = async () => {
 
 export const refreshIdToken = async () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
-  console.log(authRes);
   if ("RefreshToken" in authRes) {
     const resp = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/people/refresh`,
@@ -434,7 +431,6 @@ export const resetPasswordConfirmation = async (payload) => {
 };
 
 export const updateMerchantOrderStatus = async (payload) => {
-  console.log(payload);
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const user = jwt(authRes["IdToken"]);
   const resp = await axios.post(

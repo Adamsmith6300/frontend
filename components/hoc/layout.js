@@ -43,15 +43,6 @@ const Layout = ({
       <Head>
         <title>Loma</title>
         <link rel="icon" href="/favicon.png" />
-        {/* <link
-          href="https://db.onlinewebfonts.com/c/9550467e9991316a81acde7241010891?family=TeeFranklinW01-Light"
-          type="font/woff2"
-          // media="none"
-          // onload="this.media='all';"
-          rel="preload"
-          as="font"
-          crossorigin="anonymous"
-        /> */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -78,11 +69,6 @@ const Layout = ({
       ) : (
         <LargeLoader />
       )}
-      {/* <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
-        Font made from{" "}
-        <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
-        by CC BY 3.0
-      </div> */}
     </div>
   );
 };

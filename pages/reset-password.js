@@ -85,7 +85,6 @@ const Page = ({ router }) => {
     if (email != null) {
       try {
         let resp = await resetPasswordRequest({ email: email });
-        console.log(resp);
         if (resp.status == 200) {
           setSuccessfulRequest(true);
           setLoading(false);
@@ -104,7 +103,6 @@ const Page = ({ router }) => {
     ) {
       try {
         let resp = await resetPasswordConfirmation(formData);
-        console.log(resp);
         if (resp.status == 200) {
           setSuccessfulConfirmation(true);
           setLoading(false);

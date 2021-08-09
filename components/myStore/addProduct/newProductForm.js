@@ -41,17 +41,6 @@ const index = ({
       value: cat.CategoryIndex,
     };
   });
-  // const updateCategory = async (value) => {
-  //   try {
-  //     let resp = await updateProductDetails(product.ProductId, {
-  //       category: value,
-  //       MerchantId: product.MerchantId,
-  //     });
-  //     console.log(resp);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const handleChange = (e) => {
     updateFormData({

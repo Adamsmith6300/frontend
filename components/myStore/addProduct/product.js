@@ -13,28 +13,7 @@ const index = ({
   callDeleteProducts,
 }) => {
   const imgSrc = product.images[0].src;
-  // categories = categories.map((cat, index) => {
-  //   return {
-  //     key: cat.name,
-  //     text: cat.name,
-  //     value: cat.CategoryIndex,
-  //   };
-  // });
-  // const [curValue, setCurValue] = useState(
-  //   product.category ? product.category : null
-  // );
   let selected = selectedProducts.indexOf(product.ProductId);
-  // const updateCategory = async (value) => {
-  //   try {
-  //     let resp = await updateProductDetails(product.ProductId, {
-  //       category: value,
-  //       MerchantId: product.MerchantId,
-  //     });
-  //     console.log(resp);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
   return (
     <div
       className={`${
