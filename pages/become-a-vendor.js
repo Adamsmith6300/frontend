@@ -160,7 +160,11 @@ const Page = ({
                       fair prices.
                     </li>
                     <li className="my-3">
-                      4. Work with us and communicate! This is a beta release,
+                      4. You agree to handle all returns, refunds and exchanges
+                      for your products.
+                    </li>
+                    <li className="my-3">
+                      5. Work with us and communicate! This is a beta release,
                       so we really appreciate your feedback and will work hard
                       to improve the platform as we continue.
                     </li>
@@ -171,11 +175,10 @@ const Page = ({
                     small monthly fee to help us cover our costs. We will work
                     with our vendors to make sure it's an appropriate amount.
                   </p>
-                  <div>
-                    <p>VENDOR TOS HERE</p>
+                  <div className="mt-3">
                     <Checkbox
                       onChange={(e) => setAgreedTerms(!agreedTerms)}
-                      label="I agree to the Terms and Conditions above."
+                      label="I agree to the Vendor Terms and Conditions above."
                     />
                   </div>
                   <button
