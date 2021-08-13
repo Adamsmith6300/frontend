@@ -43,15 +43,11 @@ const Layout = ({
       <Head>
         <title>Loma</title>
         <link rel="icon" href="/favicon.png" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        {/* <link
-          href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
-          rel="stylesheet"
-        /> */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-          href="https://db.onlinewebfonts.com/c/9550467e9991316a81acde7241010891?family=TeeFranklinW01-Light"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
           rel="stylesheet"
-          type="text/css"
         />
       </Head>
       <Link href={isAuthed ? "/marketplace" : "/"}>
@@ -73,11 +69,6 @@ const Layout = ({
       ) : (
         <LargeLoader />
       )}
-      {/* <div className="text-transparent text-xxs w-3 h-3 absolute bottom-0">
-        Font made from{" "}
-        <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a>is licensed
-        by CC BY 3.0
-      </div> */}
     </div>
   );
 };

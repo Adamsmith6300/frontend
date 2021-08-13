@@ -107,7 +107,6 @@ const actions = {
           formData
         )
         .then(function (response) {
-          console.log(response);
           dispatch({ type: actionTypes.RESEND_SUCCESS });
         })
         .catch(function (error) {
@@ -179,7 +178,6 @@ const actions = {
     };
   },
   addToCart: (product, oldCart, qty) => {
-    console.log(qty);
     let newCart = { ...oldCart };
     let price = product.price;
     let inventory = product.stockUnlimited ? Number.MAX_VALUE : product.stock;
@@ -248,7 +246,6 @@ const actions = {
           }
         )
         .then(function (response) {
-          console.log(response);
           dispatch({
             type: actionTypes.POST_NEW_ORDER,
           });

@@ -131,7 +131,6 @@ export const ContentPlaceholder = memo(
             <button
               className="standard-btn my-2"
               onClick={async () => {
-                console.log(qty);
                 setLoading(true);
                 setTimeout(() => {
                   setLoading(false);

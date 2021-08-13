@@ -26,7 +26,6 @@ const index = ({
 
   const handleSubmit = async (update, fetchDetails) => {
     setLoading(true);
-    console.log(formData);
     if (isMerchant && mId) {
       formData["MerchantId"] = mId;
     }

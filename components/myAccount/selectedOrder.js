@@ -30,7 +30,9 @@ export const getStatus = (status) => {
 const index = ({ order, setSelectedOrder }) => {
   let items = order.items.map((item, index) => {
     let image =
-      item.chosenVariant && item.chosenVariant != null
+      item.chosenVariant &&
+      item.chosenVariant != null &&
+      item.chosenVariant.image != null
         ? item.chosenVariant.image.src
         : item.images[0].src;
     let price =
@@ -65,7 +67,7 @@ const index = ({ order, setSelectedOrder }) => {
       <p className="text-3xl my-3">Order Details</p>
       <div className="p-3 border border-1 sm:max-w-screen-sm text-base">
         <p className="text-lg">{order.items.length} Product(s)</p>
-        <p className="text-lg">Status: {getStatus(order.status)}</p>
+        <p className="text-lg">Status: {getStatus(order.orderStatus)}</p>
         <p className="text-lg">Order # {order.OrderId}</p>
         <p className="text-lg">
           Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}

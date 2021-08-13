@@ -8,7 +8,9 @@ const myOrders = ({ orders }) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   let orderList = orders.map((order, index) => {
     let image =
-      order.items[0].chosenVariant && order.items[0].chosenVariant != null
+      order.items[0].chosenVariant &&
+      order.items[0].chosenVariant != null &&
+      order.items[0].chosenVariant.image != null
         ? order.items[0].chosenVariant.image.src
         : order.items[0].images[0].src;
     return (
@@ -22,7 +24,7 @@ const myOrders = ({ orders }) => {
         </div>
         <div className="w-200 pl-3">
           <p className="text-lg">{order.items.length} Product(s)</p>
-          <p className="text-lg">Status: {getStatus(order.status)}</p>
+          <p className="text-lg">Status: {getStatus(order.orderStatus)}</p>
           <p className="text-lg">
             Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
           </p>

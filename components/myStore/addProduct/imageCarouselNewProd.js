@@ -31,7 +31,6 @@ const index = ({ setMainImage, newImages, setNewImages, MerchantId }) => {
       });
       if (data) {
         let uploadImageResp = await postImageUpload(newImage.uploadFile, data);
-        console.log(uploadImageResp);
         return (
           process.env.NEXT_PUBLIC_MERCHANT_IMAGE_URL +
           "/" +
@@ -44,7 +43,7 @@ const index = ({ setMainImage, newImages, setNewImages, MerchantId }) => {
       }
     } catch (err) {
       console.log(err);
-      console.log("FAILED TO UPLOAD", newImages.name);
+      console.log("FAILED TO UPLOAD", newImage.name);
       return null;
     }
   };

@@ -5,7 +5,7 @@ import Privacy from "../components/privacy";
 
 const Page = ({}) => {
   return (
-    <Layout>
+    <Layout termly>
       <div className="grid grid-cols-1 place-items-center">
         <Privacy />
       </div>

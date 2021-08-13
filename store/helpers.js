@@ -20,7 +20,6 @@ export const roundToTwo = (num) => {
   return +(Math.round(num + "e+2") + "e-2");
 };
 export const saveLoginSession = (response) => {
-  console.log(response);
   if (response.data) {
     const user = jwt(response.data["AuthenticationResult"]["IdToken"]);
     response.data["AuthenticationResult"]["IdExp"] = user["exp"];
@@ -159,7 +158,6 @@ export const fetchAccountData = async () => {
 
 export const refreshIdToken = async () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
-  console.log(authRes);
   if ("RefreshToken" in authRes) {
     const resp = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/people/refresh`,
@@ -301,7 +299,6 @@ export const deleteProducts = async (data) => {
 };
 
 export const submitSocialLogin = async (params) => {
-  console.log(params);
   let shopify_params = localStorage.getItem("shopify_params");
   let req_url = `${process.env.NEXT_PUBLIC_API_URL}/people/login/social`;
   if (shopify_params) {
@@ -431,4 +428,19 @@ export const resetPasswordConfirmation = async (payload) => {
     `${process.env.NEXT_PUBLIC_API_URL}/people/forgot-password/confirm`,
     payload
   );
+};
+
+export const updateMerchantOrderStatus = async (payload) => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  const user = jwt(authRes["IdToken"]);
+  const resp = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/merchant/${user["sub"]}/order/${payload.OrderId}`,
+    payload,
+    {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    }
+  );
+  return resp;
 };

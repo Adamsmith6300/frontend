@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import actions from "../store/actions";
 import { withRouter } from "next/router";
 import Link from "next/link";
-import { LargeLoader } from "../components/loaders";
 import Account from "../components/myAccount/account";
+import UpdateOrderStatusModal from "../components/myAccount/updateOrderStatusModal";
+import Modal from "../components/modal";
 import {
   isLoggedIn,
   checkMerchant,
@@ -18,6 +19,15 @@ const Page = ({ router, myShop, setMerchantData }) => {
   const [accountData, setAccountData] = useState(null);
   const [isMerchant, updateIsMerchant] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+
+  const closeModal = () => {
+    setShowModal(false);
+    setModalContent(null);
+    setSelectedOrderId(null);
+  };
 
   async function callFetchAccountData() {
     try {
@@ -68,8 +78,51 @@ const Page = ({ router, myShop, setMerchantData }) => {
             callFetchMerchData={callFetchMerchData}
             callFetchAccountData={callFetchAccountData}
             setLoading={setLoading}
+            setShowModal={setShowModal}
+            setModalContent={setModalContent}
+            setSelectedOrderId={setSelectedOrderId}
           />
         </>
+      ) : null}
+      {showModal && myShop != null && modalContent != null ? (
+        <Modal
+          close={() => {
+            closeModal();
+          }}
+        >
+          <div className="flex justify-end">
+            <button
+              onClick={() => {
+                closeModal();
+              }}
+            >
+              <svg width="23" height="23" viewBox="0 0 23 23">
+                <path
+                  d="M 3 16.5 L 17 2.5"
+                  fill="transparent"
+                  strokeWidth="2"
+                  stroke="hsl(0, 0%, 0%)"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 3 2.5 L 17 16.346"
+                  fill="transparent"
+                  strokeWidth="2"
+                  stroke="hsl(0, 0%, 0%)"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+          {modalContent == "updateOrderStatus" ? (
+            <UpdateOrderStatusModal
+              closeModal={closeModal}
+              callFetchMerchData={callFetchMerchData}
+              selectedOrderId={selectedOrderId}
+              MerchantId={myShop.info.MerchantId}
+            />
+          ) : null}
+        </Modal>
       ) : null}
     </Layout>
   );

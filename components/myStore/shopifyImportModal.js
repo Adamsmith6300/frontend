@@ -19,7 +19,6 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
 
   const connectShopifyStore = async () => {
     let auth_url = await getAuthUrl(shopifyStoreName);
-    console.log(auth_url);
     setStep(1);
   };
 

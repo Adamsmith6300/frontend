@@ -3,7 +3,7 @@ import Modal from "../../modal";
 import VariantsModal from "./variantsModal";
 import { updateProductDetails, roundToTwo } from "../../../store/helpers";
 import ImageCarouselEditProd from "./imageCarouselNewProd";
-import { Radio } from "semantic-ui-react";
+import { Radio, Dropdown } from "semantic-ui-react";
 
 const requiredFields = [
   "MerchantId",
@@ -18,6 +18,7 @@ const index = ({
   product,
   callFetchMerchData,
   setLoading,
+  categories,
 }) => {
   const [formData, updateFormData] = useState({
     ...product,
@@ -30,7 +31,13 @@ const index = ({
     })
   );
   const [showModal, setShowModal] = useState(false);
-
+  categories = categories.map((cat, index) => {
+    return {
+      key: cat.name,
+      text: cat.name,
+      value: cat.CategoryIndex,
+    };
+  });
   const handleChange = async (e) => {
     updateFormData({
       ...formData,
@@ -120,9 +127,9 @@ const index = ({
             onChange={handleChange}
           />
         </div>
-        <div>
+        <div className="mb-3">
           <p className="text-2xl font-bold">Stock:</p>
-          <p className="flex justify-between">
+          <p className="flex justify-between my-3">
             <span>Unlimited</span>
             <Radio
               onChange={(e) => {
@@ -161,7 +168,25 @@ const index = ({
           <p className="text-2xl font-bold">
             {formData["variants"].length} Variants
           </p>
-          <button onClick={() => setShowModal(true)}>Edit Variants</button>
+          <button className="my-3" onClick={() => setShowModal(true)}>
+            Edit Variants
+          </button>
+        </div>
+        <div>
+          <p className="text-2xl font-bold">Category:</p>
+          <Dropdown
+            className="w-full my-3"
+            selection
+            placeholder="Select a Category"
+            options={categories}
+            onChange={(e, { value }) => {
+              updateFormData({
+                ...formData,
+                category: value,
+              });
+            }}
+            value={formData["category"]}
+          />
         </div>
         {showModal ? (
           <Modal

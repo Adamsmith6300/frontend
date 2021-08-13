@@ -1,6 +1,5 @@
 import { useState } from "react";
 const index = ({ selectImage, setSelectImage, newVariants, newImages }) => {
-  console.log(newImages);
   const [selected, setSelected] = useState(null);
   const saveSelected = () => {
     newVariants[selectImage].image = {

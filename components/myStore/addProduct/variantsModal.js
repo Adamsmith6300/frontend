@@ -127,7 +127,6 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
       newVariants[i].price = roundToTwo(newVariants[i].price);
       newVariants[i].stock = parseInt(newVariants[i].stock);
     }
-    console.log(newVariants);
     updateFormData({ ...formData, variants: [...newVariants] });
     closeModal();
   };

@@ -3,14 +3,20 @@ import { useState } from "react";
 import SelectedStoreOrder from "./selectedStoreOrder";
 import { getStatus } from "./selectedStoreOrder";
 
-const storeOrders = ({ orders }) => {
+const storeOrders = ({
+  orders,
+  setShowModal,
+  setModalContent,
+  setSelectedOrderId,
+}) => {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const genOrders = (orders) => {
     return orders.map((order, index) => {
-      console.log(order);
       let image =
-        order.items[0].chosenVariant && order.items[0].chosenVariant != null
+        order.items[0].chosenVariant &&
+        order.items[0].chosenVariant != null &&
+        order.items[0].chosenVariant.image != null
           ? order.items[0].chosenVariant.image.src
           : order.items[0].images[0].src;
       return (
@@ -26,7 +32,7 @@ const storeOrders = ({ orders }) => {
           </div>
           <div className="w-200 pl-3">
             <p className="text-lg">{order.items.length} Item(s)</p>
-            <p className="text-lg">Status: {getStatus(order.status)}</p>
+            <p className="text-lg">Status: {getStatus(order.orderStatus)}</p>
             <p className="text-lg">
               Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
             </p>
@@ -36,10 +42,10 @@ const storeOrders = ({ orders }) => {
     });
   };
   let pastOrders = orders.filter((order) => {
-    return order.status == "delivered";
+    return order.orderStatus == "delivered";
   });
   let newOrders = orders.filter((order) => {
-    return order.status != "delivered";
+    return order.orderStatus != "delivered";
   });
   newOrders = genOrders(newOrders);
   pastOrders = genOrders(pastOrders);
@@ -51,6 +57,9 @@ const storeOrders = ({ orders }) => {
         key={order.OrderId}
         order={order}
         setSelectedOrder={setSelectedOrder}
+        setShowModal={setShowModal}
+        setModalContent={setModalContent}
+        setSelectedOrderId={setSelectedOrderId}
       />
     );
   } else {

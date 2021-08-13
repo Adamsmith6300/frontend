@@ -7,7 +7,7 @@ import { withRouter } from "next/router";
 import SignupForm from "../components/signupForm/index";
 import Link from "next/link";
 import { LargeLoader } from "../components/loaders";
-import { checkMerchant, isLoggedIn } from "../store/helpers";
+import { checkMerchant, isLoggedIn, saveLoginSession } from "../store/helpers";
 
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
@@ -35,12 +35,10 @@ const Page = ({ clearFlag, router }) => {
     let resp = await axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/people/signup`, formData)
       .then(function (response) {
-        console.log(response);
         saveLoginSession(response);
         router.push("/marketplace");
       })
       .catch(function (error) {
-        console.log(error.response);
         if (error.response.data == "User Exists") {
           setFormError(
             "Account already exists with this email. Try logging in."
@@ -53,7 +51,7 @@ const Page = ({ clearFlag, router }) => {
   };
 
   return (
-    <Layout loading={loading}>
+    <Layout loading={loading} termly>
       <h1 className="text-3xl text-center">Signup</h1>
 
       <div className="max-w-full md:max-w-screen-sm mx-auto px-6">

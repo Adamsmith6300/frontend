@@ -120,7 +120,6 @@ const index = ({
       <Form
         loading={isLoading}
         onSubmit={(e) => {
-          console.log("ordered!");
           handleSubmit(e);
         }}
         className="w-3/4 mx-auto pt-6"
