@@ -5,7 +5,7 @@ import Head from "next/head";
 import Link from "next/link";
 import actions from "../../store/actions";
 import { SideMenu } from "./sideMenu";
-import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
+import { isLoggedIn, checkMerchant } from "../../store/helpers";
 import Cart from "./cart";
 import Footer from "./footer";
 import { LargeLoader } from "../loaders";
@@ -22,6 +22,7 @@ const Layout = ({
   getCategories,
   loading,
   categories,
+  logoutPerson,
 }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
@@ -53,7 +54,11 @@ const Layout = ({
       <Link href={isAuthed ? "/marketplace" : "/"}>
         <img src="/loma.png" className="absolute loma-logo cursor-pointer" />
       </Link>
-      <SideMenu categories={categories} clearFlag={clearFlag} />
+      <SideMenu
+        categories={categories}
+        clearFlag={clearFlag}
+        logoutPerson={logoutPerson}
+      />
       <Cart
         toggleCart={toggleCart}
         showCart={showCart}
@@ -83,6 +88,7 @@ const mapDispatchToProps = (dispatch) => {
     setCart: (cart) => dispatch(actions.setCart(cart)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
     getCategories: () => dispatch(actions.getCategories()),
+    logoutPerson: () => dispatch(actions.logoutPerson()),
   };
 };
 

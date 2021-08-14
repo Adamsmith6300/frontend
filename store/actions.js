@@ -6,6 +6,7 @@ import {
   checkMerchant,
   getPersonId,
   roundToTwo,
+  logoutSession,
 } from "./helpers";
 
 const actionTypes = {
@@ -27,6 +28,7 @@ const actionTypes = {
   MERCHANT_APPLICATION_SUCCESS: "MERCHANT_APPLICATION_SUCCESS",
   SET_MERCHANT_DATA: "SET_MERCHANT_DATA",
   SAVE_PERSON_INFO: "SAVE_PERSON_INFO",
+  LOGOUT_PERSON: "LOGOUT_PERSON",
 };
 
 const actions = {
@@ -300,6 +302,12 @@ const actions = {
     return {
       type: actionTypes.SAVE_PERSON_INFO,
       payload: info,
+    };
+  },
+  logoutPerson: () => {
+    logoutSession();
+    return {
+      type: actionTypes.LOGOUT_PERSON,
     };
   },
 };
