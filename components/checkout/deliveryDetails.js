@@ -28,9 +28,7 @@ const deliveryDetails = ({
     } catch (err) {
       console.log(err);
       setLoading(false);
-      setError(
-        "We currently only deliver to Vancouver, North Vancouver and West Vancouver."
-      );
+      setError("We currently only deliver to Vancouver and Burnaby");
     }
   };
 

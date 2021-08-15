@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import { logoutSession, isLoggedIn, checkMerchant } from "../../store/helpers";
+import { isLoggedIn, checkMerchant } from "../../store/helpers";
 import { MenuItem, menuItemVariants } from "./menuItem";
 
 const variants = {
@@ -22,7 +22,7 @@ const variants = {
   },
 };
 
-export const Navigation = ({ isOpen, clearFlag, categories }) => {
+export const Navigation = ({ isOpen, clearFlag, categories, logoutPerson }) => {
   const router = useRouter();
 
   ////////////////// PASS THIS DOWN FROM LAYOUT ////////////////////
@@ -47,7 +47,7 @@ export const Navigation = ({ isOpen, clearFlag, categories }) => {
     secondaryNavItems.push({
       title: "logout",
       action: () => {
-        logoutSession();
+        logoutPerson();
         clearFlag("successfulLogin");
         router.push("/");
       },

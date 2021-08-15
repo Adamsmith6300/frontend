@@ -65,6 +65,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, myShop: action.payload };
     case actionTypes.SAVE_PERSON_INFO:
       return { ...state, personInfo: action.payload };
+    case actionTypes.LOGOUT_PERSON:
+      return { ...state, myShop: null, personInfo: null };
     default:
       return state;
   }

@@ -29,8 +29,8 @@ const index = ({
         }
       }}
     >
-      <div className="grid place-content-end w-full h-150 overflow-hidden">
-        <img className="w-full mb-2" src={imgSrc} alt="" align="top" />
+      <div className="h-250 w-full">
+        <img className="h-full mb-2" src={imgSrc} alt="" align="top" />
       </div>
       <p>
         <span>{product.title}</span>
