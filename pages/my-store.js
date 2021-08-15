@@ -114,26 +114,57 @@ const Page = ({
               <span>{myShop.info.storename}</span>
             </h1>
             <p className="text-2xl font-bold">
+              {myShop.info.status == "new_merchant" ? (
+                <>
+                  <BsFillCircleFill className="inline text-red-400 mr-2" />
+                  Needs Approval
+                  <button
+                    onClick={() => {
+                      setModalContent("changeListed");
+                      setShowModal(true);
+                    }}
+                    className="btn-no-size-color bg-black px-4 py-2 ml-4"
+                  >
+                    Apply
+                  </button>
+                </>
+              ) : null}
+              {myShop.info.status == "pending_approval" ? (
+                <>
+                  <BsFillCircleFill className="inline text-orange-400 mr-2" />
+                  Pending Approval
+                </>
+              ) : null}
               {myShop.info.listed ? (
                 <>
                   <BsFillCircleFill className="inline text-green-400 mr-2" />
                   Listed
+                  <button
+                    onClick={() => {
+                      setModalContent("changeListed");
+                      setShowModal(true);
+                    }}
+                    className="btn-no-size-color bg-black px-4 py-2 ml-4"
+                  >
+                    Change
+                  </button>
                 </>
-              ) : (
+              ) : null}
+              {!myShop.info.listed && myShop.info.status == "approved" ? (
                 <>
                   <BsFillCircleFill className="inline text-yellow-400 mr-2" />
                   Not Listed
+                  <button
+                    onClick={() => {
+                      setModalContent("changeListed");
+                      setShowModal(true);
+                    }}
+                    className="btn-no-size-color bg-black px-4 py-2 ml-4"
+                  >
+                    Change
+                  </button>
                 </>
-              )}
-              <button
-                onClick={() => {
-                  setModalContent("changeListed");
-                  setShowModal(true);
-                }}
-                className="btn-no-size-color bg-black px-4 py-2 ml-4"
-              >
-                Change
-              </button>
+              ) : null}
             </p>
             <div className="my-12">
               <p className="font-bold">Website URL</p>
