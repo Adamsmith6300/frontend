@@ -12,8 +12,8 @@ import {
 const calcFees = (cart) => {
   let fees = {
     subtotal: cart.total,
-    serviceFee: roundToTwo(cart.total * 0.1),
-    deliveryFee: roundToTwo(7.5),
+    serviceFee: roundToTwo(cart.total * 0.07),
+    deliveryFee: roundToTwo(7),
   };
   fees["total"] = roundToTwo(
     fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"]
@@ -109,7 +109,7 @@ const index = ({
           <span>${chargeDetails.deliveryFee}</span>
         </p>
         <p className="flex justify-between">
-          <span>Service Fee (10%)</span>
+          <span>Service Fee (7%)</span>
           <span>${chargeDetails.serviceFee}</span>
         </p>
         <p className="flex justify-between text-black">
