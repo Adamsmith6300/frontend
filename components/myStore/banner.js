@@ -23,11 +23,6 @@ const index = ({ MerchantId, name, bannerImageName }) => {
 
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [crop, setCrop] = useState({
-    unit: "px",
-    width: 800,
-    height: 450,
-  });
 
   function imageExists(url, callback) {
     var img = new Image();
@@ -82,7 +77,7 @@ const index = ({ MerchantId, name, bannerImageName }) => {
             fileReader.onloadend = () => {
               setBannerUpload(fileReader.result);
             };
-            setBannerName(e.target.files[0].name);
+            setBannerName(e.target.files[0].name.replace(/[^0-9a-z]/gi, ""));
             setUploadFile(e.target.files[0]);
             fileReader.readAsDataURL(e.target.files[0]);
             setEditing(true);
