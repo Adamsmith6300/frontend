@@ -19,8 +19,8 @@ const Page = ({}) => {
             There are so many businesses around Vancouver that we were not aware
             of, so we wanted to build a platform to bring these vendors together
             online. We wanted to make it easy for other Vancouverites to find
-            theses amazing vendors and at the same time offering vendors an
-            easy, low-cost way to deliver locally.
+            these amazing vendors and at the same time offering vendors an easy,
+            low-cost way to deliver locally.
           </p>
         </div>
       </div>
