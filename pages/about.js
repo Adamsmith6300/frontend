@@ -8,7 +8,7 @@ const Page = ({}) => {
       <Banner bgSrc={"/passion.jpg"} empty />
       <div className="text-center my-24">
         <h2>Our Story</h2>
-        <div className="mt-4 w-50p mx-auto">
+        <div className="mt-4 lg:w-1/2 w-3/4 mx-auto">
           <p className="">
             It started with our appreciation for the incredible vendors in our
             neighborhood. Mid-pandemic we were visiting farmers markets and
@@ -27,7 +27,7 @@ const Page = ({}) => {
       <Banner bgSrc={"/lions.jpg"} empty />
       <div className="text-center my-24 px-6 lg:px-4">
         <h2>Our Mission</h2>
-        <div className="mt-4 w-50p mx-auto">
+        <div className="mt-4 lg:w-1/2 w-3/4 mx-auto">
           <p className="">
             Support local vendors, work with vendors to build a platform that
             really helps them succeed and compete with all the larger

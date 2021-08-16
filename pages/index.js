@@ -32,7 +32,7 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         bgSrc={"/firstBanner.jpg"}
         heading={"Shop Local With Loma"}
         content={
-          "Based out of Vancouver BC, Loma is an online marketplace for local vendors. Pick and choose a variety of items from different vendors, then have your order delivered for one low delivery fee."
+          "Based out of Vancouver BC, Loma is an online marketplace for local vendors. Pick and choose a variety of items from different vendors and have your order delivered to your door for one delivery fee."
         }
         link={"/signup"}
         left
