@@ -52,7 +52,6 @@ const Page = ({ router, myShop, setMerchantData }) => {
 
   useEffect(() => {
     let l = isLoggedIn();
-    console.log(l);
     updateLoggedIn(l);
     let m = checkMerchant();
     updateIsMerchant(m);

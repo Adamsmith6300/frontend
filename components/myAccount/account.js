@@ -16,7 +16,6 @@ const index = ({
   setShowModal,
   setSelectedOrderId,
 }) => {
-  console.log(accountData);
   const [activeIndex, setActiveIndex] = useState(-1);
   let info = myShop ? myShop.info : accountData.info;
   let mId = myShop ? myShop.info.MerchantId : null;
