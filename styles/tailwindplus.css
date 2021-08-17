@@ -95,6 +95,9 @@
 .h-500 {
   height: 500px;
 }
+.h-600 {
+  height: 600px;
+}
 
 /* min-height */
 .min-h-40 {
