@@ -51,6 +51,7 @@ const index = ({ order, setSelectedOrder }) => {
             <p className="cursor-pointer text-lg">by {item.storename}</p>
           </Link>
           <p className="text-lg">Price: ${price}</p>
+          <p className="text-lg">Quantity: ${item.qty}</p>
         </div>
       </div>
     );
