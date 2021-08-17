@@ -82,6 +82,7 @@ const index = ({
         ) {
           setFormError(result.error.message);
         }
+        console.log(result.error);
       } else {
         // The payment has been processed!
         if (result.paymentIntent.status === "succeeded") {
@@ -102,6 +103,9 @@ const index = ({
       }
     } else {
       console.log("Failed to make payment intent!", resp);
+      setFormError(
+        "An error occurred while processing your order. Try again in a little bit."
+      );
     }
     updateIsLoading(false);
   };
