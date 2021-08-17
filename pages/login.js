@@ -87,7 +87,7 @@ const Page = ({ router, savePersonInfo }) => {
     <Layout loading={loading} termly>
       <h1 className="text-3xl text-center">Login</h1>
       <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
-        <div className="w-full flex flex-wrap mt-6">
+        {/* <div className="w-full flex flex-wrap mt-6">
           <a
             className="social-btn w-full py-4 text-center my-3 text-xl"
             href={`${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}?identity_provider=Facebook&redirect_uri=${process.env.NEXT_PUBLIC_DOMAIN}/login&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
@@ -102,7 +102,7 @@ const Page = ({ router, savePersonInfo }) => {
             <FcGoogle className="inline mr-2" /> Continue With Google
           </a>
         </div>
-        <p className="my-6 text-center">OR</p>
+        <p className="my-6 text-center">OR</p> */}
         <LoginForm
           submitLogin={submitLogin}
           formError={formError}
