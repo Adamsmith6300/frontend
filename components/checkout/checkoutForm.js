@@ -8,6 +8,7 @@ import {
   confirmPayment,
   roundToTwo,
 } from "./../../store/helpers";
+import { defaultEvent } from "../../utils/gtag";
 
 const calcFees = (cart) => {
   let fees = {
@@ -98,6 +99,18 @@ const index = ({
             total: 0,
           });
           setOrderNo(resp.data.OrderId);
+          defaultEvent({
+            action: "purchase",
+            data: {
+              transaction_id: resp.data.OrderId,
+              affiliation: "LOMA",
+              value: chargeDetails.total,
+              currency: "CAD",
+              tax: 0,
+              shipping: chargeDetails.deliveryFee,
+              items: payload.items,
+            },
+          });
         }
       }
     } else {
