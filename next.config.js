@@ -12,5 +12,6 @@ module.exports = {
     NEXT_PUBLIC_COGNITO_DOMAIN: "https://auth.shoploma.ca/oauth2/authorize",
     NEXT_PUBLIC_DOMAIN: "https://shoploma.ca",
     NEXT_PUBLIC_AUTH_DOMAIN: "https://auth.shoploma.ca",
+    NEXT_PUBLIC_GA: "G-08FXZXDGBB",
   },
 };

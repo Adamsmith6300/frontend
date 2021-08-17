@@ -28,7 +28,12 @@ const Page = ({ router, savePersonInfo }) => {
       })
       .then(function (response) {
         saveLoginSession(response);
-        router.push("/marketplace");
+        let merchant = checkMerchant();
+        if (merchant) {
+          router.push("/my-store");
+        } else {
+          router.push("/marketplace");
+        }
       })
       .catch(function (error) {
         setFormError("Login Failed.");

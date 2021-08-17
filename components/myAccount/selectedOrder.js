@@ -51,6 +51,7 @@ const index = ({ order, setSelectedOrder }) => {
             <p className="cursor-pointer text-lg">by {item.storename}</p>
           </Link>
           <p className="text-lg">Price: ${price}</p>
+          <p className="text-lg">Quantity: ${item.qty}</p>
         </div>
       </div>
     );
@@ -72,7 +73,7 @@ const index = ({ order, setSelectedOrder }) => {
         <p className="text-lg">
           Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
         </p>
-        <p className="text-lg">Total: ${order.total / 100}</p>
+        <p className="text-lg">Total: ${order.chargeDetails.total}</p>
       </div>
       <p className="text-3xl my-3">Delivery</p>
       <div className="p-3 border border-1 sm:max-w-screen-sm text-base">

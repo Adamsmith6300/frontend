@@ -50,7 +50,7 @@ export const Image = ({
           />
         </div>
       ) : null}
-      <img className={"h-full"} src={imgSrc} alt="" align="center" />
+      <img className="h-full no-max-width" src={imgSrc} alt="" align="center" />
       {isSelected ? (
         <div
           className="h-full w-32 flex justify-center cursor-pointer"

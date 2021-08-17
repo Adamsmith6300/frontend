@@ -29,8 +29,13 @@ const index = ({
         }
       }}
     >
-      <div className="h-250 w-full">
-        <img className="h-full mb-2" src={imgSrc} alt="" align="top" />
+      <div className="h-250 w-full overflow-hidden flex justify-center">
+        <img
+          className="h-full mb-2 no-max-width"
+          src={imgSrc}
+          alt=""
+          align="top"
+        />
       </div>
       <p>
         <span>{product.title}</span>

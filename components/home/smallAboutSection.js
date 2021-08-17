@@ -12,7 +12,7 @@ const index = ({}) => {
       title: "Fast Delivery",
       subtitle:
         "Shop from multiple stores and only pay for one delivery. Because we only pickup and deliver locally, your order comes faster!",
-      img: "./mountain.jpg",
+      img: "./loma-car-back.jpg",
     },
     {
       title: "High Quality Products",

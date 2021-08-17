@@ -71,8 +71,12 @@ const deliveryDetails = ({
           <Input
             required
             className="w-full my-3 mb-6"
-            value={personInfo.fullname}
-            name="fullname"
+            value={
+              personInfo.deliverto != null
+                ? personInfo.deliverto
+                : personInfo.fullname
+            }
+            name="deliverto"
             type="name"
             onChange={handleChange}
           />

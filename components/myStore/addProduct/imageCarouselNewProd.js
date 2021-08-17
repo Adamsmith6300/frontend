@@ -56,7 +56,7 @@ const index = ({ setMainImage, newImages, setNewImages, MerchantId }) => {
           if (FileReader && e.target.files && e.target.files.length) {
             let newImage = {
               uploadFile: e.target.files[0],
-              name: e.target.files[0].name,
+              name: e.target.files[0].name.replace(/[^0-9a-z]/gi, ""),
             };
             let uploadSrc = await uploadImage(newImage);
             if (uploadSrc) {

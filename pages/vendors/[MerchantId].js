@@ -71,7 +71,9 @@ const Page = ({ addToCart, cartData }) => {
             </div> */}
             {merchant.info.about != null && merchant.info.about.length > 0 ? (
               <div className="pt-12">
-                <p>About {merchant.info.storename}</p>
+                <p className="font-medium mb-3">
+                  About {merchant.info.storename}:
+                </p>
                 <p>{merchant.info.about}</p>
               </div>
             ) : null}

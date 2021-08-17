@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CardElement } from "@stripe/react-stripe-js";
-import { Button, Form } from "semantic-ui-react";
+import { Form, Message } from "semantic-ui-react";
 import axios from "axios";
 import {
   getAuth,
@@ -21,6 +21,8 @@ const calcFees = (cart) => {
   return fees;
 };
 
+const codes = ["incorrect_cvc", "processing_error", "invalid_number"];
+
 const index = ({
   stripe,
   elements,
@@ -31,6 +33,7 @@ const index = ({
 }) => {
   const [isLoading, updateIsLoading] = useState(false);
   const [chargeDetails, setChargeDetails] = useState(calcFees(cartData));
+  const [formError, setFormError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -73,27 +76,35 @@ const index = ({
         },
       });
       if (result.error) {
-        console.log(result.error.message);
+        if (
+          result.error.code == "card_declined" ||
+          codes.indexOf(result.error.code) > -1
+        ) {
+          setFormError(result.error.message);
+        }
+        console.log(result.error);
       } else {
         // The payment has been processed!
         if (result.paymentIntent.status === "succeeded") {
+          setFormError(null);
           try {
             let orderResp = await confirmPayment(resp.data.OrderId);
-            // if (orderResp.status == 200) {
-            localStorage.removeItem("cart");
-            setCart({
-              items: {},
-              total: 0,
-            });
-            setOrderNo(resp.data.OrderId);
-            // }
           } catch (err) {
             console.log(err);
           }
+          localStorage.removeItem("cart");
+          setCart({
+            items: {},
+            total: 0,
+          });
+          setOrderNo(resp.data.OrderId);
         }
       }
     } else {
       console.log("Failed to make payment intent!", resp);
+      setFormError(
+        "An error occurred while processing your order. Try again in a little bit."
+      );
     }
     updateIsLoading(false);
   };
@@ -118,6 +129,7 @@ const index = ({
         </p>
       </div>
       <Form
+        error={formError != null}
         loading={isLoading}
         onSubmit={(e) => {
           handleSubmit(e);
@@ -140,6 +152,7 @@ const index = ({
             },
           }}
         />
+        <Message error content={formError} />
         <button
           className={`btn-no-size-color px-12 py-3 ${
             chargeDetails.total == 0 || !stripe

@@ -81,6 +81,10 @@ p {
   line-height: 28px;
 }
 
+.no-max-width {
+  max-width: none !important;
+}
+
 textarea,
 input {
   border: 1px solid rgba(34, 36, 38, 0.15);
