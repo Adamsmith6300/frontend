@@ -1,13 +1,11 @@
 import axios from "axios";
-import { useRouter } from "next/router";
 import {
   saveLoginSession,
   getAuth,
-  checkMerchant,
-  getPersonId,
   roundToTwo,
   logoutSession,
 } from "./helpers";
+import { defaultEvent } from "../utils/gtag";
 
 const actionTypes = {
   ERROR: "ERROR",
@@ -199,6 +197,7 @@ const actions = {
     newCart.total = newCart.total + price * qty;
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
+    // defaultEvent({ action: "add_to_cart" });
     return {
       type: actionTypes.UPDATE_CART,
       payload: newCart,

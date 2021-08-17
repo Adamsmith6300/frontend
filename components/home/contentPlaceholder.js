@@ -91,7 +91,6 @@ export const ContentPlaceholder = memo(
             by {product.storename}
           </p>
         </Link>
-        {/* {!isMerchant ? ( */}
         <div className="my-6 mx-auto">
           {options != null ? <div className="">{options}</div> : null}
           <div className="flex justify-between w-150 mx-auto my-2">
@@ -156,7 +155,6 @@ export const ContentPlaceholder = memo(
             </button>
           </div>
         </div>
-        {/* ) : null} */}
         <p>{product.description}</p>
       </div>
     );

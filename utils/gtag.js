@@ -15,3 +15,7 @@ export const event = ({ action, category, label, value }) => {
     value: value,
   });
 };
+
+export const defaultEvent = ({ action, data }) => {
+  window.gtag("event", action, data);
+};
