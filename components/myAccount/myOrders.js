@@ -5,7 +5,6 @@ import Link from "next/link";
 import { getStatus } from "./selectedOrder";
 
 const myOrders = ({ orders }) => {
-  console.log(orders);
   const [selectedOrder, setSelectedOrder] = useState(null);
   let orderList = orders.map((order, index) => {
     let image =
