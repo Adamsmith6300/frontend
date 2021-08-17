@@ -86,19 +86,18 @@ const index = ({
       } else {
         // The payment has been processed!
         if (result.paymentIntent.status === "succeeded") {
+          setFormError(null);
           try {
             let orderResp = await confirmPayment(resp.data.OrderId);
-            // if (orderResp.status == 200) {
-            localStorage.removeItem("cart");
-            setCart({
-              items: {},
-              total: 0,
-            });
-            setOrderNo(resp.data.OrderId);
-            // }
           } catch (err) {
             console.log(err);
           }
+          localStorage.removeItem("cart");
+          setCart({
+            items: {},
+            total: 0,
+          });
+          setOrderNo(resp.data.OrderId);
         }
       }
     } else {
