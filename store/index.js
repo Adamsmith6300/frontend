@@ -44,6 +44,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_CART:
       let newTotal = state.cartData.total + action.payload.totalChange;
       return { ...state, cartData: { ...action.payload, total: newTotal } };
+    case actionTypes.SET_CART:
+      return { ...state, cartData: action.payload };
     case actionTypes.SET_ACTIVE_CHECKOUT:
       return {
         ...state,

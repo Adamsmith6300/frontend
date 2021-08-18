@@ -27,6 +27,7 @@ const actionTypes = {
   SET_MERCHANT_DATA: "SET_MERCHANT_DATA",
   SAVE_PERSON_INFO: "SAVE_PERSON_INFO",
   LOGOUT_PERSON: "LOGOUT_PERSON",
+  SET_CART: "SET_CART",
 };
 
 const actions = {
@@ -197,6 +198,8 @@ const actions = {
       newCart.items[cartItemKey] = { ...product, qty: qty };
     }
     newCart.totalChange = roundToTwo(price * qty);
+
+    console.log("add", newCart.totalChange);
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     // defaultEvent({ action: "add_to_cart" });
@@ -222,6 +225,7 @@ const actions = {
       //save cart to local storage
       localStorage.setItem("cart", JSON.stringify(newCart));
     }
+    console.log("remove", newCart.totalChange);
     return {
       type: actionTypes.UPDATE_CART,
       payload: newCart,
@@ -229,7 +233,7 @@ const actions = {
   },
   setCart: (cart) => {
     return {
-      type: actionTypes.UPDATE_CART,
+      type: actionTypes.SET_CART,
       payload: cart,
     };
   },
