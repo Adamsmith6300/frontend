@@ -87,11 +87,15 @@ const Page = ({ router }) => {
         let resp = await resetPasswordRequest({ email: email });
         if (resp.status == 200) {
           setSuccessfulRequest(true);
-          setLoading(false);
         }
       } catch (err) {
-        console.log(err);
+        if (err.response.data.includes("UserNotFoundException")) {
+          setFormError("We can't find anyone with that email.");
+        } else {
+          setFormError("Failed to submit password reset request.");
+        }
       }
+      setLoading(false);
     }
   };
   const submitResetConfirmation = async () => {
@@ -105,11 +109,18 @@ const Page = ({ router }) => {
         let resp = await resetPasswordConfirmation(formData);
         if (resp.status == 200) {
           setSuccessfulConfirmation(true);
-          setLoading(false);
         }
       } catch (err) {
-        console.log(err);
+        if (err.response.data.includes("ExpiredCodeException")) {
+          setShowResetForm(false);
+          setFormError(
+            "Password reset request expired. Please request a new reset."
+          );
+        } else {
+          setFormError("Failed to reset password.");
+        }
       }
+      setLoading(false);
     }
   };
 
@@ -174,6 +185,7 @@ const Page = ({ router }) => {
                 </Form>
               ) : (
                 <Form
+                  error={formError != null}
                   onSubmit={(e) => {
                     e.preventDefault();
                     setLoading(true);
@@ -188,6 +200,7 @@ const Page = ({ router }) => {
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                  <Message error content={formError} />
                   <div className="flex justify-center">
                     <button className="standard-btn" type="submit">
                       Reset
