@@ -4,13 +4,18 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
   if (!cartData || !cartData.items) return null;
   return Object.entries(cartData.items).map((entry, index) => {
     let item = entry[1];
-    let mainImageUrl =
-      item.chosenVariant && item.chosenVariant.image != null
-        ? item.images[item.chosenVariant.image.displayIndex].src
-        : item.images[0].src;
-    let visiblePrice = item.chosenVariant
-      ? item.chosenVariant.price
-      : item.price;
+    let mainImageUrl = item.images[0].src;
+    let visiblePrice = item.price;
+    let optionVals = [];
+    if (item.chosenVariant && item.chosenVariant != null) {
+      if (item.chosenVariant.image != null) {
+        mainImageUrl = item.images[item.chosenVariant.image.displayIndex].src;
+      }
+      visiblePrice = item.chosenVariant.price;
+      optionVals = item.chosenVariant.optionValues.map((option, index) => {
+        return option.value;
+      });
+    }
     visiblePrice = roundToTwo(visiblePrice);
     return (
       <div key={entry[0]} className="flex justify-start w-full my-6">
@@ -23,6 +28,17 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
               ? item.title.substring(0, 67) + "..."
               : item.title}
           </p>
+          {optionVals.length > 0 ? (
+            <p className="text-sm">
+              {optionVals.map((val, index) => {
+                return (
+                  <span className="border rounded-3xl bg-gray-300 p-1 px-3 mr-1 my-1 inline h-10">
+                    {val}
+                  </span>
+                );
+              })}
+            </p>
+          ) : null}
           <p className="text-base text-grey-300 mb-1">${visiblePrice}</p>
           <button
             className="btn-no-size p-2 px-5"

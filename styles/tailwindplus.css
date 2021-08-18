@@ -98,6 +98,9 @@
 .h-600 {
   height: 600px;
 }
+.h-70vh {
+  height: 70vh;
+}
 
 /* min-height */
 .min-h-40 {

@@ -42,7 +42,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.TOGGLE_CART:
       return { ...state, showCart: action.payload };
     case actionTypes.UPDATE_CART:
-      return { ...state, cartData: action.payload };
+      let newTotal = state.cartData.total + action.payload.totalChange;
+      return { ...state, cartData: { ...action.payload, total: newTotal } };
     case actionTypes.SET_ACTIVE_CHECKOUT:
       return {
         ...state,

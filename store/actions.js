@@ -181,20 +181,22 @@ const actions = {
     let newCart = { ...oldCart };
     let price = product.price;
     let inventory = product.stockUnlimited ? Number.MAX_VALUE : product.stock;
+    let cartItemKey = product.ProductId;
     if (product.chosenVariant != null) {
       price = product.chosenVariant.price;
       inventory = product.chosenVariant.stockUnlimited
         ? Number.MAX_VALUE
         : product.chosenVariant.stock;
+      cartItemKey = product.ProductId + "_var_" + product.chosenVariant.id;
     }
-    if (newCart.items[product.ProductId]) {
-      if (newCart.items[product.ProductId].qty + qty <= inventory) {
-        newCart.items[product.ProductId].qty += qty;
+    if (newCart.items[cartItemKey]) {
+      if (newCart.items[cartItemKey].qty + qty <= inventory) {
+        newCart.items[cartItemKey].qty += qty;
       }
     } else {
-      newCart.items[product.ProductId] = { ...product, qty: qty };
+      newCart.items[cartItemKey] = { ...product, qty: qty };
     }
-    newCart.total = newCart.total + price * qty;
+    newCart.totalChange = roundToTwo(price * qty);
     //save cart to local storage
     localStorage.setItem("cart", JSON.stringify(newCart));
     // defaultEvent({ action: "add_to_cart" });
@@ -205,14 +207,17 @@ const actions = {
   },
   removeFromCart: (product, oldCart, qty) => {
     let newCart = { ...oldCart };
-    let price = product.chosenVariant
-      ? product.chosenVariant.price
-      : product.price;
-    if (newCart.items[product.ProductId]) {
-      newCart.items[product.ProductId].qty -= qty;
-      newCart.total -= roundToTwo(price * qty);
-      if (newCart.items[product.ProductId].qty <= 0) {
-        delete newCart.items[product.ProductId];
+    let price = product.price;
+    let cartItemKey = product.ProductId;
+    if (product.chosenVariant != null) {
+      price = product.chosenVariant.price;
+      cartItemKey = product.ProductId + "_var_" + product.chosenVariant.id;
+    }
+    if (newCart.items[cartItemKey]) {
+      newCart.items[cartItemKey].qty -= qty;
+      newCart.totalChange = -roundToTwo(price * qty);
+      if (newCart.items[cartItemKey].qty <= 0) {
+        delete newCart.items[cartItemKey];
       }
       //save cart to local storage
       localStorage.setItem("cart", JSON.stringify(newCart));
