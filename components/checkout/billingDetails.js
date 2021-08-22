@@ -21,7 +21,7 @@ const billingDetails = ({
   const handleChange = (e) => {
     setBillingInfo({
       ...billingInfo,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 

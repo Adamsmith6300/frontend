@@ -15,7 +15,7 @@ const email = ({
   const handleChange = (e) => {
     setPersonInfo({
       ...personInfo,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 

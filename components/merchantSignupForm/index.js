@@ -56,7 +56,7 @@ const index = ({ handleUserPassSubmit }) => {
     }
     updateFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 
