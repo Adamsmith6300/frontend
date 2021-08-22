@@ -48,7 +48,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
   }, [path]);
 
   return (
-    <Layout>
+    <Layout loading={products == null}>
       <div className="flex flex-wrap justify-center xl:justify-start max-w-1250 mx-auto">
         {products != null ? (
           <>
@@ -88,9 +88,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
               </div>
             ) : null}
           </>
-        ) : (
-          <LargeLoader />
-        )}
+        ) : null}
       </div>
     </Layout>
   );

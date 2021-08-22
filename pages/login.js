@@ -84,7 +84,7 @@ const Page = ({ router, savePersonInfo }) => {
   }, []);
 
   return (
-    <Layout loading={loading} termly>
+    <Layout loading={loading}>
       <h1 className="text-3xl text-center">Login</h1>
       <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
         <div className="w-full flex flex-wrap mt-6">

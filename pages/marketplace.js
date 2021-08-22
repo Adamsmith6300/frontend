@@ -29,7 +29,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
   }, []);
 
   return (
-    <Layout>
+    <Layout loading={categories == null}>
       <ProductSection
         heading={"Featured Products"}
         link={"/products"}
@@ -38,22 +38,20 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
       />
       <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
       <SmallAboutSection />
-      {categories != null ? (
-        categories.map((cat, index) => {
-          return (
-            <ProductSection
-              key={cat.CategoryIndex + cat.name}
-              heading={cat.name}
-              category={cat.CategoryIndex}
-              link={"/products?category=" + cat.CategoryIndex}
-              addToCart={addToCart}
-              cartData={cartData}
-            />
-          );
-        })
-      ) : (
-        <LargeLoader />
-      )}
+      {categories != null
+        ? categories.map((cat, index) => {
+            return (
+              <ProductSection
+                key={cat.CategoryIndex + cat.name}
+                heading={cat.name}
+                category={cat.CategoryIndex}
+                link={"/products?category=" + cat.CategoryIndex}
+                addToCart={addToCart}
+                cartData={cartData}
+              />
+            );
+          })
+        : null}
     </Layout>
   );
 };

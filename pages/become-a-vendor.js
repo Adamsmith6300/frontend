@@ -129,10 +129,8 @@ const Page = ({
     );
   }
   return (
-    <Layout>
-      {loading ? (
-        <LargeLoader />
-      ) : (
+    <Layout loading={loading}>
+      {loading ? null : (
         <>
           <h1 className="text-3xl text-center">Merchant Signup</h1>
           {showApplication ? (

@@ -5,6 +5,11 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width; initial-scale=1; maximum-scale=1;"
+          />
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA}`}

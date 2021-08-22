@@ -198,11 +198,6 @@ const actions = {
       newCart.items[cartItemKey] = { ...product, qty: qty };
     }
     newCart.totalChange = roundToTwo(price * qty);
-
-    console.log("add", newCart.totalChange);
-    //save cart to local storage
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    // defaultEvent({ action: "add_to_cart" });
     return {
       type: actionTypes.UPDATE_CART,
       payload: newCart,
@@ -222,10 +217,7 @@ const actions = {
       if (newCart.items[cartItemKey].qty <= 0) {
         delete newCart.items[cartItemKey];
       }
-      //save cart to local storage
-      localStorage.setItem("cart", JSON.stringify(newCart));
     }
-    console.log("remove", newCart.totalChange);
     return {
       type: actionTypes.UPDATE_CART,
       payload: newCart,
