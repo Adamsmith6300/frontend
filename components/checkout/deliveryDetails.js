@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FcCheckmark } from "react-icons/fc";
 import { Form, Input, TextArea, Checkbox, Message } from "semantic-ui-react";
 import { verifyAddress } from "../../store/helpers";
+import { useRouter } from "next/router";
 
 const deliveryDetails = ({
   activeCheckoutStep,
@@ -13,6 +14,7 @@ const deliveryDetails = ({
   const isActive = activeCheckoutStep == step;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   const verifyAddressToContinue = async (personInfo) => {
     let postalcode = personInfo["postalcode"].trim().toUpperCase().slice(0, 3);
@@ -39,7 +41,7 @@ const deliveryDetails = ({
     });
   };
   return (
-    <div className="p-3 m-3">
+    <div className="p-3 m-3" id="deliveryDetails">
       <p className="flex justify-between border-b">
         <span>
           {step}. Delivery Details
@@ -64,6 +66,7 @@ const deliveryDetails = ({
             e.preventDefault();
             setLoading(true);
             verifyAddressToContinue(personInfo);
+            router.push("#billingDetails");
           }}
           className="flex flex-wrap text-left pt-4"
         >

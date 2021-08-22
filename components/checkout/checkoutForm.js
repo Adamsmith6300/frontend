@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { CardElement } from "@stripe/react-stripe-js";
+import {
+  CardCvcElement,
+  CardElement,
+  CardExpiryElement,
+  CardNumberElement,
+} from "@stripe/react-stripe-js";
 import { Form, Message } from "semantic-ui-react";
 import axios from "axios";
 import {
@@ -70,10 +75,10 @@ const index = ({
       }
     );
     if (resp.status == 200) {
-      const cardElement = elements.getElement(CardElement);
+      const cardNumberElement = elements.getElement(CardNumberElement);
       const result = await stripe.confirmCardPayment(resp.data.client_secret, {
         payment_method: {
-          card: cardElement,
+          card: cardNumberElement,
         },
       });
       if (result.error) {
@@ -147,9 +152,41 @@ const index = ({
         onSubmit={(e) => {
           handleSubmit(e);
         }}
-        className="w-3/4 mx-auto pt-6"
+        className="w-full mx-auto pt-6"
       >
-        <CardElement
+        <CardNumberElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
+              },
+            },
+          }}
+        />
+        <CardExpiryElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
+              },
+            },
+          }}
+        />
+        <CardCvcElement
           options={{
             style: {
               base: {

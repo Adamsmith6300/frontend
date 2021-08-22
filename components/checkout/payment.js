@@ -19,7 +19,7 @@ const payment = ({
 }) => {
   const isActive = activeCheckoutStep == step;
   return (
-    <div className="p-3 m-3">
+    <div className="p-3 m-3" id="paymentDetails">
       <p className="flex justify-between border-b">
         <span>
           {step}. Confirm & Pay
