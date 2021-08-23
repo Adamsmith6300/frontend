@@ -1,11 +1,14 @@
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
-import actions from "../store/actions";
 import Privacy from "../components/privacy";
+import Head from "next/head";
 
 const Page = ({}) => {
   return (
-    <Layout termly>
+    <Layout>
+      <Head>
+        <title>Privacy Policy - Loma</title>
+      </Head>
       <div className="grid grid-cols-1 place-items-center">
         <Privacy />
       </div>

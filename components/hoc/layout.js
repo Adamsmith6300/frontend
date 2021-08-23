@@ -46,7 +46,7 @@ const Layout = ({
         <title>Loma</title>
         <link rel="icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta
           name="viewport"
           content="width=device-width; initial-scale=1; maximum-scale=1;"

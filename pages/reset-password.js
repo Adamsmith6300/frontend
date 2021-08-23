@@ -11,6 +11,7 @@ import {
   resetPasswordRequest,
   resetPasswordConfirmation,
 } from "../store/helpers";
+import Head from "next/head";
 
 const Page = ({ router }) => {
   const [loading, setLoading] = useState(false);
@@ -126,6 +127,9 @@ const Page = ({ router }) => {
 
   return (
     <Layout>
+      <Head>
+        <title>Reset Password - Loma</title>
+      </Head>
       {loading ? (
         <LargeLoader />
       ) : (

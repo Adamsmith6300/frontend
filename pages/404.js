@@ -5,8 +5,8 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>LOMA</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>404 - LOMA</title>
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main>
@@ -15,8 +15,6 @@ export default function Home() {
           Back to homepage
         </Link>
       </main>
-
-      <footer></footer>
     </div>
   );
 }

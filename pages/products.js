@@ -9,6 +9,7 @@ import actions from "../store/actions";
 import Layout from "../components/hoc/layout";
 import { LargeLoader } from "../components/loaders";
 import ProductGrid from "../components/home/productGrid";
+import Head from "next/head";
 
 const Page = ({ addToCart, cartData, clearFlag }) => {
   const [products, setProducts] = useState(null);
@@ -49,6 +50,9 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
 
   return (
     <Layout loading={products == null}>
+      <Head>
+        <title>Products - Loma</title>
+      </Head>
       <div className="flex flex-wrap justify-center xl:justify-start max-w-1250 mx-auto">
         {products != null ? (
           <>

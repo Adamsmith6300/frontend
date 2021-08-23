@@ -10,6 +10,7 @@ import ProductSection from "../components/home/productSection";
 import MerchantSection from "../components/home/merchantSection";
 import SmallAboutSection from "../components/home/smallAboutSection";
 import { LargeLoader } from "../components/loaders";
+import Head from "next/head";
 
 const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
   const [isMerchant, updateIsMerchant] = useState(false);
@@ -30,6 +31,9 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
 
   return (
     <Layout>
+      <Head>
+        <title>Marketplace - Loma</title>
+      </Head>
       <div className="h-500 w-500 max-w-full mx-auto pt-5 text-center">
         <h1 className="text-center text-4xl font-bold">
           Thank you for signing up!

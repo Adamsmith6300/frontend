@@ -10,6 +10,7 @@ import { LargeLoader } from "../components/loaders";
 import { checkMerchant, isLoggedIn, saveLoginSession } from "../store/helpers";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
+import Head from "next/head";
 
 const Page = ({ clearFlag, router }) => {
   const [loading, setLoading] = useState(true);
@@ -51,6 +52,9 @@ const Page = ({ clearFlag, router }) => {
 
   return (
     <Layout loading={loading}>
+      <Head>
+        <title>Signup - Loma</title>
+      </Head>
       <h1 className="text-3xl text-center">Signup</h1>
 
       <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
