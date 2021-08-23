@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FcCheckmark } from "react-icons/fc";
-import { Form, Input, TextArea, Checkbox, Message } from "semantic-ui-react";
-// import { verifyAddress } from "../../store/helpers";
+import { Form, Input, Checkbox } from "semantic-ui-react";
+import { useRouter } from "next/router";
 
 const billingDetails = ({
   activeCheckoutStep,
@@ -16,16 +16,17 @@ const billingDetails = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [same, setSame] = useState(true);
+  const router = useRouter();
 
   const handleChange = (e) => {
     setBillingInfo({
       ...billingInfo,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
-    <div className="p-3 m-3">
+    <div className="p-3 m-3" id="billingDetails">
       <p className="flex justify-between border-b">
         <span>
           {step}. Billing Details
@@ -70,6 +71,7 @@ const billingDetails = ({
               });
             }
             setActiveCheckout(activeCheckoutStep + 1);
+            router.push("#paymentDetails");
           }}
           className="flex flex-wrap text-left pt-4"
         >

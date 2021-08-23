@@ -41,7 +41,7 @@ const Page = ({
   const handleChange = (e) => {
     updateFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -129,12 +129,10 @@ const Page = ({
     );
   }
   return (
-    <Layout>
-      {loading ? (
-        <LargeLoader />
-      ) : (
+    <Layout loading={loading}>
+      {loading ? null : (
         <>
-          <h1 className="text-3xl text-center">Merchant Signup</h1>
+          <h1 className="text-3xl text-center">Vendor Signup</h1>
           {showApplication ? (
             <div className="my-account-container">
               {showTerms ? (
@@ -270,7 +268,7 @@ const Page = ({
             </div>
           ) : (
             <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
-              <div className="w-full flex flex-wrap mt-6">
+              {/* <div className="w-full flex flex-wrap mt-6">
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"
                   href={`${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}?identity_provider=Facebook&redirect_uri=${process.env.NEXT_PUBLIC_DOMAIN}/become-a-vendor&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
@@ -285,7 +283,7 @@ const Page = ({
                   <FcGoogle className="inline mr-2" /> Continue With Google
                 </a>
               </div>
-              <p className="my-6 text-center">OR</p>
+              <p className="my-6 text-center">OR</p> */}
               <MerchantSignupForm
                 handleUserPassSubmit={handleUserPassSubmit}
                 formError={formError}
@@ -293,7 +291,7 @@ const Page = ({
               <p className="mt-12 text-center">
                 <Link href="/login">
                   <span className="cursor-pointer">
-                    Already a merchant? Login
+                    Already a vendor? Login
                   </span>
                 </Link>
               </p>

@@ -45,7 +45,7 @@ const Page = ({ addToCart, cartData, clearFlag, router }) => {
   }, []);
 
   return (
-    <Layout>
+    <Layout loading={merchants == null}>
       <div className="flex flex-wrap justify-start max-w-1040 mx-auto">
         {merchants != null ? (
           <>
@@ -84,9 +84,7 @@ const Page = ({ addToCart, cartData, clearFlag, router }) => {
               </div>
             ) : null}
           </>
-        ) : (
-          <LargeLoader />
-        )}
+        ) : null}
       </div>
     </Layout>
   );

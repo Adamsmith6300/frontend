@@ -24,6 +24,7 @@ const Layout = ({
   categories,
   logoutPerson,
 }) => {
+  // loading = true;
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
   useEffect(() => {

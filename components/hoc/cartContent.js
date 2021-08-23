@@ -63,7 +63,7 @@ const index = ({ toggle, cartData, addToCart, removeFromCart }) => {
       </p>
       {Object.entries(cartData.items).length > 0 ? (
         <>
-          <div className="w-full h-400 overflow-y-auto text-center">
+          <div className="w-full h-70vh overflow-y-auto text-center">
             <CartItems
               cartData={cartData}
               addToCart={addToCart}

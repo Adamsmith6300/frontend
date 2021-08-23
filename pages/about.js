@@ -42,7 +42,7 @@ const Page = ({}) => {
               sustainability and many of them do not focus on local businesses.
             </p>
             <p className="mt-4 mb-8">
-              We value our employees! We want to ensure that they are treated
+              We value our team! We want to ensure that they are treated
               with respect and properly compensated for their time. We also aim
               to keep our team as diverse as possible!
             </p>

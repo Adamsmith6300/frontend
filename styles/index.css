@@ -439,7 +439,9 @@ button:focus {
   line-height: 17px;
   display: flex;
 }
-
+.ui.dimmer {
+  height: 100vh !important;
+}
 .save-banner-btns {
   position: absolute;
   bottom: 3rem;

@@ -13,7 +13,7 @@ const LoginForm = ({ setLoading, submitLogin, formError }) => {
   const handleChange = (e) => {
     updateFormData({
       ...formData,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 

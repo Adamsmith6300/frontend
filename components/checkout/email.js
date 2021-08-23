@@ -1,5 +1,6 @@
 import { FcCheckmark } from "react-icons/fc";
 import { Input } from "semantic-ui-react";
+import { useRouter } from "next/router";
 
 const email = ({
   activeCheckoutStep,
@@ -9,11 +10,12 @@ const email = ({
   step,
 }) => {
   const isActive = activeCheckoutStep == step;
+  const router = useRouter();
 
   const handleChange = (e) => {
     setPersonInfo({
       ...personInfo,
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -40,6 +42,7 @@ const email = ({
           onSubmit={(e) => {
             e.preventDefault();
             setActiveCheckout(activeCheckoutStep + 1);
+            router.push("#deliveryDetails");
           }}
         >
           <Input

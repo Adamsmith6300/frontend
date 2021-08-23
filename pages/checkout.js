@@ -42,7 +42,7 @@ const Page = ({
   }, []);
 
   return (
-    <Layout>
+    <Layout loading={!personInfoCheckout}>
       {!orderNo ? (
         <>
           {personInfoCheckout ? (
@@ -64,9 +64,7 @@ const Page = ({
                 setCart={setCart}
               />
             </>
-          ) : (
-            <LargeLoader />
-          )}
+          ) : null}
         </>
       ) : (
         <OrderConfirmation orderNo={orderNo} />
