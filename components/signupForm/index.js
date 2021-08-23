@@ -90,13 +90,6 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
           handleSubmit();
         }}
       >
-        {/* <Form.Input
-          label="Full Name"
-          onChange={handleChange}
-          name="fullname"
-          required
-          placeholder="Full Name"
-        /> */}
         <Form.Input
           label="Email"
           onChange={handleChange}
@@ -114,7 +107,7 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
           placeholder="Password123!"
         />
         <Form.Input
-          label="Re-enter Password"
+          label="Confirm Password"
           type="password"
           onChange={handleChange}
           name="repassword"
