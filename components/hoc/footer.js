@@ -51,7 +51,7 @@ const footer = ({ isAuthed }) => {
               <AiOutlineInstagram className="inline" />
             </a>
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/LOMAyvr"
               target="_blank"
               className="hover:text-white text-4xl mx-3"
             >
