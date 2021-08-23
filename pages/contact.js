@@ -8,10 +8,14 @@ import {
   AiOutlineCopyrightCircle,
 } from "react-icons/ai";
 import Banner from "../components/home/banner";
+import Head from "next/head";
 
 const Page = ({}) => {
   return (
     <Layout>
+      <Head>
+        <title>Contact - Loma</title>
+      </Head>
       <div className="text-center my-24 px-8">
         <h2>Contact Us</h2>
         <p className="mt-4 mb-8 max-w-500 mx-auto">

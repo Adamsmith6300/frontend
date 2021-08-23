@@ -13,6 +13,7 @@ import {
   fetchAccountData,
   fetchMerchantData,
 } from "../store/helpers";
+import Head from "next/head";
 
 const Page = ({ router, myShop, setMerchantData }) => {
   const [loggedIn, updateLoggedIn] = useState(null);
@@ -68,6 +69,9 @@ const Page = ({ router, myShop, setMerchantData }) => {
 
   return (
     <Layout loading={loading}>
+      <Head>
+        <title>My Account - Loma</title>
+      </Head>
       {loggedIn && accountData != null ? (
         <>
           <Account

@@ -9,6 +9,7 @@ import actions from "../store/actions";
 import Layout from "../components/hoc/layout";
 import MerchantGrid from "../components/home/merchantGrid";
 import { LargeLoader } from "../components/loaders";
+import Head from "next/head";
 
 const Page = ({ addToCart, cartData, clearFlag, router }) => {
   const [merchants, setMerchants] = useState(null);
@@ -46,6 +47,9 @@ const Page = ({ addToCart, cartData, clearFlag, router }) => {
 
   return (
     <Layout loading={merchants == null}>
+      <Head>
+        <title>Vendors - Loma</title>
+      </Head>
       <div className="flex flex-wrap justify-start max-w-1040 mx-auto">
         {merchants != null ? (
           <>

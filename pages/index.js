@@ -9,6 +9,7 @@ import OffsetBanner from "../components/home/offsetBanner";
 import ProductSection from "../components/home/productSection";
 import MerchantSection from "../components/home/merchantSection";
 import SmallAboutSection from "../components/home/smallAboutSection";
+import Head from "next/head";
 
 const Page = ({ addToCart, cartData, router, clearFlag }) => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,9 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
   }, []);
   return (
     <Layout>
+      <Head>
+        <title>Home - Loma</title>
+      </Head>
       <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
         heading={"Shop Local With Loma"}

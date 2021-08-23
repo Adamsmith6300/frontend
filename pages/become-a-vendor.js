@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Form, Checkbox } from "semantic-ui-react";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
-
+import Head from "next/head";
 import actions from "../store/actions";
 import {
   checkMerchant,
@@ -135,6 +135,9 @@ const Page = ({
   }
   return (
     <Layout loading={loading}>
+      <Head>
+        <title>Become a Vendor - Loma</title>
+      </Head>
       {loading ? null : (
         <>
           <h1 className="text-3xl text-center">Vendor Signup</h1>

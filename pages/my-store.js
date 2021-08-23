@@ -21,6 +21,7 @@ import {
 } from "../components/myStore";
 import { LargeLoader } from "../components/loaders";
 import Modal from "../components/modal";
+import Head from "next/head";
 
 const Page = ({
   router,
@@ -92,6 +93,9 @@ const Page = ({
 
   return (
     <Layout loading={loading}>
+      <Head>
+        <title>My Store - Loma</title>
+      </Head>
       {myShop && categories ? (
         <div>
           <Banner

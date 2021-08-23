@@ -8,6 +8,7 @@ import { LargeLoader } from "../components/loaders";
 import Checkout from "../components/checkout/index";
 import OrderSummary from "../components/checkout/orderSummary";
 import OrderConfirmation from "../components/checkout/orderConfirmation";
+import Head from "next/head";
 
 const Page = ({
   router,
@@ -43,6 +44,9 @@ const Page = ({
 
   return (
     <Layout loading={!personInfoCheckout}>
+      <Head>
+        <title>Checkout - Loma</title>
+      </Head>
       {!orderNo ? (
         <>
           {personInfoCheckout ? (

@@ -1,10 +1,14 @@
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 import Banner from "../components/home/banner";
+import Head from "next/head";
 
 const Page = ({}) => {
   return (
     <Layout>
+      <Head>
+        <title>About - Loma</title>
+      </Head>
       <Banner bgSrc={"/lions.jpg"} empty />
       <div className="text-center my-12 md:my-24 pb-12">
         <h2>Our Story</h2>
@@ -42,9 +46,9 @@ const Page = ({}) => {
               sustainability and many of them do not focus on local businesses.
             </p>
             <p className="mt-4 mb-8">
-              We value our team! We want to ensure that they are treated
-              with respect and properly compensated for their time. We also aim
-              to keep our team as diverse as possible!
+              We value our team! We want to ensure that they are treated with
+              respect and properly compensated for their time. We also aim to
+              keep our team as diverse as possible!
             </p>
           </div>
         </div>

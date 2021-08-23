@@ -17,6 +17,7 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import { VscDebugBreakpointData } from "react-icons/vsc";
+import Head from "next/head";
 
 const Page = ({ router, savePersonInfo }) => {
   const [loading, setLoading] = useState(true);
@@ -85,6 +86,9 @@ const Page = ({ router, savePersonInfo }) => {
 
   return (
     <Layout loading={loading}>
+      <Head>
+        <title>Login - Loma</title>
+      </Head>
       <h1 className="text-3xl text-center">Login</h1>
       <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
         {/* <div className="w-full flex flex-wrap mt-6">

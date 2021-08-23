@@ -5,6 +5,7 @@ import actions from "../../store/actions";
 import { useRouter } from "next/router";
 import axios from "axios";
 import ProductGrid from "../../components/home/productGrid";
+import Head from "next/head";
 
 const Page = ({ addToCart, cartData }) => {
   const [merchant, setMerchant] = useState(null);
@@ -38,6 +39,11 @@ const Page = ({ addToCart, cartData }) => {
 
   return (
     <Layout loading={merchant == null}>
+      <Head>
+        <title>
+          {merchant != null ? merchant.info.storename : "Vendor"} - Loma
+        </title>
+      </Head>
       {merchant != null ? (
         <>
           <div style={bgStyle} className="bg-img merchant--banner" />
