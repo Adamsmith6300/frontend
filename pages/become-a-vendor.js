@@ -20,6 +20,7 @@ import {
 import Layout from "../components/hoc/layout";
 import MerchantSignupForm from "../components/merchantSignupForm/index";
 import { LargeLoader } from "../components/loaders";
+import BlockSignup from "../components/blockSignup";
 
 const Page = ({
   formError,
@@ -29,11 +30,15 @@ const Page = ({
   successfulMerchantApplication,
   savePersonInfo,
 }) => {
+  return (
+    <Layout>
+      <BlockSignup signupLink="https://shoploma.ca/become-a-vendor" />
+    </Layout>
+  );
   const [loading, setLoading] = useState(true);
   const [formData, updateFormData] = useState({});
   const [showApplication, setShowApplication] = useState(successfulSignup);
   const [params, setParams] = useState(null);
-  // const [userPass, setUserPass] = useState(null);
   const [merchantSignupSuccess, setMerchantSignupSuccess] = useState(false);
   const [showTerms, setShowTerms] = useState(true);
   const [agreedTerms, setAgreedTerms] = useState(false);
