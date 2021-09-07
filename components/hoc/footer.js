@@ -57,13 +57,6 @@ const footer = ({ isAuthed }) => {
             >
               <AiOutlineFacebook className="inline" />
             </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              className="hover:text-white text-4xl mx-3"
-            >
-              <AiOutlineTwitter className="inline" />
-            </a>
           </div>
           <p className="text-base mt-4">
             <AiOutlineCopyrightCircle className="inline ml-1" />

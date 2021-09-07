@@ -63,7 +63,7 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
             className={`${values.length > 0 ? "flex flex-wrap" : ""} min-w-200`}
           >
             {values}
-            {values.length < 4 ? (
+            {values.length < 8 ? (
               <input
                 className="h-10"
                 name="optionValues"
@@ -80,7 +80,7 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
     <>
       <p className="text-3xl font-bold">Add Options</p>
       <p>Options allow you to create different variations of a product.</p>
-      {newOptions.length <= 1 ? (
+      {newOptions.length <= 2 ? (
         <button
           onClick={() =>
             setNewOptions([
@@ -90,11 +90,11 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
           }
           className="font-bold mt-2"
         >
-          + Add Option ({newOptions.length}/2)
+          + Add Option ({newOptions.length}/3)
         </button>
       ) : (
         <p className="font-bold mt-2 text-xl">
-          Option limit reached ({newOptions.length}/2)
+          Option limit reached ({newOptions.length}/3)
         </p>
       )}
       <div className="variants-table">

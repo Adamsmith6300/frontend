@@ -34,6 +34,9 @@ const Page = ({
   const [loggedIn, updateLoggedIn] = useState(false);
   const [website, updateWebsite] = useState(myShop ? myShop.info.website : "");
   const [about, updateAbout] = useState(myShop ? myShop.info.about : "");
+  const [liquorLicense, updateLiquorLicense] = useState(
+    myShop ? myShop.info.liquorLicense : ""
+  );
   const [loading, setLoading] = useState(myShop == null);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -230,6 +233,38 @@ const Page = ({
                       className="btn-no-size-color px-8 py-3 bg-black ml-2"
                       onClick={() => {
                         updateAbout(myShop.info.about);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : null}
+              </div>
+              <p className="font-bold">
+                Liquor License # (only required if selling liquor)
+              </p>
+              <div className="my-3">
+                <input
+                  className="w-full my-3 h-10"
+                  value={liquorLicense}
+                  name="liquorLicense"
+                  type="text"
+                  onChange={(e) => updateLiquorLicense(e.target.value)}
+                />
+                {liquorLicense != myShop.info.liquorLicense ? (
+                  <>
+                    <button
+                      className="btn-no-size-color px-12 py-3 bg-green-600 mr-2"
+                      onClick={() => {
+                        handleUpdateStore({ liquorLicense: liquorLicense });
+                      }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="btn-no-size-color px-8 py-3 bg-black ml-2"
+                      onClick={() => {
+                        updateLiquorLicense(myShop.info.liquorLicense);
                       }}
                     >
                       Cancel

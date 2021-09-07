@@ -43,13 +43,6 @@ const Page = ({}) => {
           >
             <AiOutlineFacebook className="inline" />
           </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            className="hover:text-black text-4xl mx-3"
-          >
-            <AiOutlineTwitter className="inline" />
-          </a>
         </div>
       </div>
       <Banner bgSrc={"/passion.jpg"} empty />

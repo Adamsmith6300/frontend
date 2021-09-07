@@ -13,8 +13,8 @@ const index = ({ selectImage, setSelectImage, newVariants, newImages }) => {
     return (
       <img
         onClick={() => setSelected(selected == index ? null : index)}
-        className={`cursor-pointer w-100 m-2 ${
-          selected == index ? "border border-green-200 shadow-lg" : ""
+        className={`cursor-pointer h-100 m-2 ${
+          selected == index ? "border-4 border-green-500 shadow-xl" : ""
         }`}
         key={index}
         src={image.src}
@@ -30,7 +30,7 @@ const index = ({ selectImage, setSelectImage, newVariants, newImages }) => {
         Back
       </button>
       {images.length > 0 ? (
-        <div className="mt-3 flex flex-wrap">{images}</div>
+        <div className="mt-3 w-350 flex flex-wrap">{images}</div>
       ) : (
         <p className="my-3 text-center ">No images uploaded</p>
       )}
