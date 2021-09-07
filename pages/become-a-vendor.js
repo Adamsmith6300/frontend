@@ -150,7 +150,7 @@ const Page = ({
                       1. Your business is based out of Greater Vancouver, B.C.
                     </li>
                     <li className="my-3">
-                      2. You can prepare orders for pickup within 24 hours. (we
+                      2. You can prepare orders for pickup within 48 hours. (this is flexible, we understand some products are made to order and managing inventory isn't simple, but we
                       want to deliver as fast as possible)
                     </li>
                     <li className="my-3">
