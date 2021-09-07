@@ -44,7 +44,7 @@ const footer = ({ isAuthed }) => {
           </p>
           <div className="flex my-6">
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/shoploma.ca/"
               target="_blank"
               className="hover:text-white text-4xl mr-3"
             >

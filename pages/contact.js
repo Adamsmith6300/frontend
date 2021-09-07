@@ -30,7 +30,7 @@ const Page = ({}) => {
         </p>
         <div className="flex my-12 justify-center">
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/shoploma.ca/"
             target="_blank"
             className="hover:text-black text-4xl mr-3"
           >
