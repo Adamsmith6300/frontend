@@ -30,7 +30,9 @@ const deliveryDetails = ({
     } catch (err) {
       console.log(err);
       setLoading(false);
-      setError("We currently only deliver to Vancouver and Burnaby");
+      setError(
+        "Please check your postal code. We currently only deliver to Vancouver and Burnaby."
+      );
     }
   };
 
