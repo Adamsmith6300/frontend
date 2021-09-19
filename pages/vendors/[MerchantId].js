@@ -36,7 +36,7 @@ const Page = ({ addToCart, cartData }) => {
   }
 
   let bgStyle = { backgroundImage: `url(${bannerUrl})` };
-
+  console.log(merchant);
   return (
     <Layout loading={merchant == null}>
       <Head>
@@ -51,13 +51,19 @@ const Page = ({ addToCart, cartData }) => {
             <h1 className="text-5xl lg:my-12 flex justify-center lg:justify-between">
               <span>{merchant.info.storename}</span>
             </h1>
-            <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
-              <ProductGrid
-                products={merchant.products}
-                addToCart={addToCart}
-                cartData={cartData}
-              />
-            </div>
+            {merchant.info.listed ? (
+              <div className="flex flex-wrap justify-start max-w-1250 mx-auto">
+                <ProductGrid
+                  products={merchant.products}
+                  addToCart={addToCart}
+                  cartData={cartData}
+                />
+              </div>
+            ) : (
+              <p className="text-red-500">
+                This store is currently unavailable. Please check back later.
+              </p>
+            )}
             {merchant.info.about != null && merchant.info.about.length > 0 ? (
               <div className="pt-12">
                 <p className="font-medium mb-3">
