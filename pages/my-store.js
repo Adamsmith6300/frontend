@@ -32,7 +32,7 @@ const Page = ({
   const [website, updateWebsite] = useState(myShop ? myShop.info.website : "");
   const [about, updateAbout] = useState(myShop ? myShop.info.about : "");
   const [liquorLicense, updateLiquorLicense] = useState(
-    myShop && myShop.info.liquorLicense ? myShop.info.liquorLicense : ""
+    myShop ? myShop.info.liquorLicense : ""
   );
   const [loading, setLoading] = useState(myShop == null);
   const [showModal, setShowModal] = useState(false);
@@ -49,6 +49,7 @@ const Page = ({
       setMerchantData(resp.data);
       updateAbout(resp.data.info.about);
       updateWebsite(resp.data.info.website);
+      updateLiquorLicense(resp.data.info.liquorLicense);
       // if (
       //   !("hasLoggedIn" in resp.data.info) ||
       //   !resp.data.info["hasLoggedIn"]
