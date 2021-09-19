@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import { BsFillCircleFill } from "react-icons/bs";
-import { TextArea, Input } from "semantic-ui-react";
 import actions from "../store/actions";
 import {
   isLoggedIn,
@@ -15,11 +14,9 @@ import Layout from "../components/hoc/layout";
 import {
   Products,
   Banner,
-  ShopifyImportModal,
   ChangeListedModal,
-  GetStarted,
+  PickupHoursModal,
 } from "../components/myStore";
-import { LargeLoader } from "../components/loaders";
 import Modal from "../components/modal";
 import Head from "next/head";
 
@@ -35,12 +32,11 @@ const Page = ({
   const [website, updateWebsite] = useState(myShop ? myShop.info.website : "");
   const [about, updateAbout] = useState(myShop ? myShop.info.about : "");
   const [liquorLicense, updateLiquorLicense] = useState(
-    myShop ? myShop.info.liquorLicense : ""
+    myShop && myShop.info.liquorLicense ? myShop.info.liquorLicense : ""
   );
   const [loading, setLoading] = useState(myShop == null);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const [getStarted, showGetStarted] = useState(false);
 
   const closeModal = () => {
     setShowModal(false);
@@ -107,16 +103,6 @@ const Page = ({
             bannerImageName={myShop.info.bannerImage}
           />
           <div className="pt-6 px-6 lg:px-64 lg:pt-12">
-            {/* {getStarted ? (
-              <GetStarted showGetStarted={showGetStarted} />
-            ) : (
-              <p
-                className="cursor-pointer"
-                onClick={() => showGetStarted(true)}
-              >
-                Show setup instructions
-              </p>
-            )} */}
             <h1 className={`text-5xl mt-3 mb-12 flex justify-between`}>
               <span>{myShop.info.storename}</span>
             </h1>
@@ -174,11 +160,27 @@ const Page = ({
               ) : null}
             </p>
             <div className="my-12">
+              <p className="my-3 mb-6">
+                <button
+                  className="btn-no-size-color px-8 py-3 bg-black"
+                  onClick={() => {
+                    setModalContent("setPickupHours");
+                    setShowModal(true);
+                  }}
+                >
+                  Set Pickup Hours
+                </button>
+              </p>
               <p className="font-bold">Website URL</p>
               <div className="my-3">
                 <input
                   className="w-full my-3 h-10"
                   value={website}
+                  placeholder={
+                    myShop.info.website && myShop.info.website.length > 0
+                      ? myShop.info.website
+                      : ""
+                  }
                   name="website"
                   type="text"
                   onChange={(e) => updateWebsite(e.target.value)}
@@ -247,6 +249,12 @@ const Page = ({
                 <input
                   className="w-full my-3 h-10"
                   value={liquorLicense}
+                  placeholder={
+                    myShop.info.liquorLicense &&
+                    myShop.info.liquorLicense.length > 0
+                      ? myShop.info.liquorLicense
+                      : ""
+                  }
                   name="liquorLicense"
                   type="text"
                   onChange={(e) => updateLiquorLicense(e.target.value)}
@@ -325,6 +333,13 @@ const Page = ({
           ) : null} */}
           {modalContent == "changeListed" ? (
             <ChangeListedModal
+              closeModal={closeModal}
+              myShop={myShop}
+              callFetchMerchData={callFetchMerchData}
+            />
+          ) : null}
+          {modalContent == "setPickupHours" ? (
+            <PickupHoursModal
               closeModal={closeModal}
               myShop={myShop}
               callFetchMerchData={callFetchMerchData}

@@ -91,6 +91,11 @@ export const ContentPlaceholder = memo(
             by {product.storename}
           </p>
         </Link>
+        {product.category == 8 || product.category == 9 ? (
+          <p className="text-gray-600 text-xl my-2">
+            Must be 19+ and not intoxicated to order.
+          </p>
+        ) : null}
         <div className="my-6 mx-auto">
           {options != null ? <div className="">{options}</div> : null}
           <div className="flex justify-between w-150 mx-auto my-2">
