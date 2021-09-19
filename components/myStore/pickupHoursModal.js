@@ -35,7 +35,15 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
   const [successMsg, setSuccessMsg] = useState(null);
   const [days, setDays] = useState(
     myShop.info.pickupDays
-      ? myShop.info.pickupDays
+      ? {
+          sunday: { ...myShop.info.pickupDays["sunday"] },
+          monday: { ...myShop.info.pickupDays["monday"] },
+          tuesday: { ...myShop.info.pickupDays["tuesday"] },
+          wednesday: { ...myShop.info.pickupDays["wednesday"] },
+          thursday: { ...myShop.info.pickupDays["thursday"] },
+          friday: { ...myShop.info.pickupDays["friday"] },
+          saturday: { ...myShop.info.pickupDays["saturday"] },
+        }
       : {
           sunday: { closed: true, start: "9:00AM", end: "5:00PM" },
           monday: { closed: true, start: "9:00AM", end: "5:00PM" },
@@ -49,8 +57,11 @@ const index = ({ myShop, closeModal, callFetchMerchData }) => {
 
   const savePickupHours = async () => {
     try {
-      //   let resp = await reviewStore();
-      //   await callFetchMerchData();
+      let resp = await updateStoreDetails({
+        pickupDays: days,
+        MerchantId: myShop.info.MerchantId,
+      });
+      await callFetchMerchData();
       setSuccessMsg("Successfully updated pickup hours.");
       setLoading(false);
     } catch (err) {

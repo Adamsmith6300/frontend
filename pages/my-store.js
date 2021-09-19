@@ -32,11 +32,11 @@ const Page = ({
   const [website, updateWebsite] = useState(myShop ? myShop.info.website : "");
   const [about, updateAbout] = useState(myShop ? myShop.info.about : "");
   const [liquorLicense, updateLiquorLicense] = useState(
-    myShop ? myShop.info.liquorLicense : ""
+    myShop && myShop.info.liquorLicense ? myShop.info.liquorLicense : ""
   );
   const [loading, setLoading] = useState(myShop == null);
-  const [showModal, setShowModal] = useState(true);
-  const [modalContent, setModalContent] = useState("setPickupHours");
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   const closeModal = () => {
     setShowModal(false);
@@ -176,6 +176,11 @@ const Page = ({
                 <input
                   className="w-full my-3 h-10"
                   value={website}
+                  placeholder={
+                    myShop.info.website && myShop.info.website.length > 0
+                      ? myShop.info.website
+                      : ""
+                  }
                   name="website"
                   type="text"
                   onChange={(e) => updateWebsite(e.target.value)}
@@ -244,6 +249,12 @@ const Page = ({
                 <input
                   className="w-full my-3 h-10"
                   value={liquorLicense}
+                  placeholder={
+                    myShop.info.liquorLicense &&
+                    myShop.info.liquorLicense.length > 0
+                      ? myShop.info.liquorLicense
+                      : ""
+                  }
                   name="liquorLicense"
                   type="text"
                   onChange={(e) => updateLiquorLicense(e.target.value)}

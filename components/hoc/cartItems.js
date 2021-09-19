@@ -32,7 +32,10 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
             <p className="text-sm">
               {optionVals.map((val, index) => {
                 return (
-                  <span className="border rounded-3xl bg-gray-300 p-1 px-3 mr-1 my-1 inline h-10">
+                  <span
+                    key={val}
+                    className="border rounded-3xl bg-gray-300 p-1 px-3 mr-1 my-1 inline h-10"
+                  >
                     {val}
                   </span>
                 );

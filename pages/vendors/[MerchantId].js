@@ -66,6 +66,14 @@ const Page = ({ addToCart, cartData }) => {
                 <p>{merchant.info.about}</p>
               </div>
             ) : null}
+            {merchant.info.liquorLicense != null &&
+            merchant.info.liquorLicense.length > 0 ? (
+              <div className="pt-12">
+                <p className="font-medium mb-3">
+                  Liquor License #{merchant.info.liquorLicense}
+                </p>
+              </div>
+            ) : null}
           </div>
         </>
       ) : null}
