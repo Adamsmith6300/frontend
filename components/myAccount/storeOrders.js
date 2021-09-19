@@ -22,7 +22,9 @@ const storeOrders = ({
       return (
         <li
           onClick={() =>
-            setSelectedOrder(selectedOrder == index ? null : index)
+            setSelectedOrder(
+              selectedOrder == order.OrderId ? null : order.OrderId
+            )
           }
           key={order.OrderId}
           className="cursor-pointer flex justify-start place-items-center p-3 border border-1 w-350 max-w-screen m-2 text-base"
@@ -33,6 +35,13 @@ const storeOrders = ({
           <div className="w-200 pl-3">
             <p className="text-lg">{order.items.length} Item(s)</p>
             <p className="text-lg">Status: {getStatus(order.orderStatus)}</p>
+            {order.orderStatus == "delivered" ? (
+              order.Paid == 1 ? (
+                <p className="text-lg text-green-500">PAID OUT</p>
+              ) : (
+                <p className="text-lg text-orange-500">NOT PAID OUT YET</p>
+              )
+            ) : null}
             <p className="text-lg">
               Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
             </p>
@@ -51,7 +60,12 @@ const storeOrders = ({
   pastOrders = genOrders(pastOrders);
 
   if (selectedOrder != null) {
-    let order = orders[selectedOrder];
+    let order = orders[0];
+    for (let i = 0; i < orders.length; ++i) {
+      if (orders[i]["OrderId"] == selectedOrder) {
+        order = orders[i];
+      }
+    }
     return (
       <SelectedStoreOrder
         key={order.OrderId}

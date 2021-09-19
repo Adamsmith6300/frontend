@@ -88,6 +88,13 @@ const index = ({
       <div className=" p-3 border border-1 w-350 text-base">
         <p className="text-lg">{order.items.length} Item(s)</p>
         <p className="text-lg">Status: {getStatus(order.orderStatus)}</p>
+        {order.orderStatus == "delivered" ? (
+          order.Paid == 1 ? (
+            <p className="text-lg text-green-500">PAID OUT</p>
+          ) : (
+            <p className="text-lg text-orange-500">NOT PAID OUT YET</p>
+          )
+        ) : null}
         <p className="text-lg">Order # {order.OrderId}</p>
         <p className="text-lg">
           Ordered: {moment.unix(order.created).format("MMMM Do YYYY")}
