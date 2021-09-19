@@ -15,7 +15,11 @@ const myOrders = ({ orders }) => {
         : order.items[0].images[0].src;
     return (
       <li
-        onClick={() => setSelectedOrder(selectedOrder == index ? null : index)}
+        onClick={() =>
+          setSelectedOrder(
+            selectedOrder == order.OrderId ? null : order.OrderId
+          )
+        }
         key={order.OrderId}
         className="cursor-pointer flex justify-start place-items-center p-3 border border-1 w-350 max-w-full my-2 md:m-2 text-base"
       >
@@ -34,7 +38,12 @@ const myOrders = ({ orders }) => {
   });
 
   if (selectedOrder != null) {
-    let order = orders[selectedOrder];
+    let order = orders[0];
+    for (let i = 0; i < orders.length; ++i) {
+      if (orders[i]["OrderId"] == selectedOrder) {
+        order = orders[i];
+      }
+    }
     return (
       <SelectedOrder
         key={order.OrderId}
