@@ -107,7 +107,20 @@ const index = ({
       <ul className="list-reset py-3 mb-5">{addressDetails}</ul>
       {edit ? (
         <div className="w-full flex flex-wrap justify-between text-center">
-          {/* <div className="w-full"> */}
+          {Object.keys(formData).length > 0 ? (
+            <button
+              className="btn-no-size-color px-12 py-3 bg-green-600"
+              onClick={() => {
+                // if (isMerchant) {
+                //   handleSubmit(updateStoreDetails, callFetchMerchData);
+                // } else {
+                handleSubmit(updateAccountDetails, callFetchAccountData);
+                // }
+              }}
+            >
+              Save
+            </button>
+          ) : null}
           <button
             className="btn-no-size-color px-8 py-3 bg-black"
             onClick={() => {
@@ -117,23 +130,6 @@ const index = ({
           >
             Cancel
           </button>
-          {/* </div> */}
-          {Object.keys(formData).length > 0 ? (
-            // <div className="w-full pt-3">
-            <button
-              className="btn-no-size-color px-12 py-3 bg-green-600"
-              onClick={() => {
-                if (isMerchant) {
-                  handleSubmit(updateStoreDetails, callFetchMerchData);
-                } else {
-                  handleSubmit(updateAccountDetails, callFetchAccountData);
-                }
-              }}
-            >
-              Save
-            </button>
-          ) : // </div>
-          null}
         </div>
       ) : (
         <button
