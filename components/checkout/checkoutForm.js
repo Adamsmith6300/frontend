@@ -27,6 +27,23 @@ const calcFees = (cart) => {
   return fees;
 };
 
+const mutateItemsGA = (items) => {
+  console.log(items);
+  return items.map((item, ind) => {
+    return {
+      item_id: item["ProductId"],
+      item_name: item["title"],
+      item_brand: item["storename"],
+      item_category: item["category"].toString(),
+      item_variant: item["chosenVariant"] ? item["chosenVariant"]["id"] : null,
+      price: item["chosenVariant"]
+        ? item["chosenVariant"]["price"]
+        : item["price"],
+      quantity: item["qty"],
+    };
+  });
+};
+
 const codes = ["incorrect_cvc", "processing_error", "invalid_number"];
 
 const index = ({
@@ -98,30 +115,34 @@ const index = ({
           } catch (err) {
             console.log(err);
           }
+          try {
+            defaultEvent({
+              action: "purchase",
+              data: {
+                transaction_id: resp.data.OrderId,
+                affiliation: "LOMA",
+                value: chargeDetails.total,
+                currency: "CAD",
+                tax: 0,
+                shipping: chargeDetails.deliveryFee,
+                items: mutateItemsGA(Object.values(cartData.items)),
+              },
+            });
+          } catch (err) {
+            console.log(err);
+          }
           localStorage.removeItem("cart");
           setCart({
             items: {},
             total: 0,
           });
           setOrderNo(resp.data.OrderId);
-          defaultEvent({
-            action: "purchase",
-            data: {
-              transaction_id: resp.data.OrderId,
-              affiliation: "LOMA",
-              value: chargeDetails.total,
-              currency: "CAD",
-              tax: 0,
-              shipping: chargeDetails.deliveryFee,
-              items: payload.items,
-            },
-          });
         }
       }
     } else {
       console.log("Failed to make payment intent!", resp);
       setFormError(
-        "An error occurred while processing your order. Try again in a little bit."
+        "An error occurred while processing your order. Please try again later."
       );
     }
     updateIsLoading(false);
