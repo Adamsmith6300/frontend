@@ -68,6 +68,7 @@ const index = ({
     let ready = readyToSave();
     if (ready) {
       formData["price"] = roundToTwo(formData["price"]);
+      console.log("saving...", formData);
       await updateProductDetails(product.ProductId, formData);
       callFetchMerchData();
     }
@@ -139,7 +140,7 @@ const index = ({
                   stockUnlimited: !formData["stockUnlimited"],
                 });
               }}
-              defaultChecked
+              defaultChecked={formData["stockUnlimited"]}
               toggle
             />
           </p>
@@ -148,6 +149,7 @@ const index = ({
               className="w-full my-3 h-10"
               name="stock"
               type="number"
+              defaultValue={product.stock}
               step="1"
               min="1"
               onChange={handleChange}
@@ -159,13 +161,16 @@ const index = ({
           <textarea
             className="w-full my-3 h-24"
             name="description"
-            maxlength="500"
+            maxLength="500"
             defaultValue={product.description}
             onChange={handleChange}
           />
         </div>
         <div>
-          <p className="text-2xl font-bold">
+          <p
+            onClick={() => console.log(formData)}
+            className="text-2xl font-bold"
+          >
             {formData["variants"].length} Variants
           </p>
           <button className="my-3" onClick={() => setShowModal(true)}>

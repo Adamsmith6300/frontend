@@ -90,6 +90,7 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
   };
   const saveOptions = () => {
     let options = [];
+    console.log(newOptions);
     for (let i = 0; i < newOptions.length; ++i) {
       let option = newOptions[i];
       if (option.name.length <= 0 || option.values.length <= 0) {
@@ -112,7 +113,14 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
       }
       options.push(option);
     }
-    setNewOptions(options);
+    if (options.length == 0) {
+      updateFormData({ ...formData, variants: [], options: [] });
+      setNewOptions([]);
+      setNewVariants([]);
+      closeModal();
+      return;
+    }
+    setNewOptions([...options]);
     updateFormData({ ...formData, options: [...options] });
     if (compareOptions(options, ogOptions)) {
       setStep("variants");
@@ -126,6 +134,12 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
     for (let i = 0; i < newVariants.length; ++i) {
       newVariants[i].price = roundToTwo(newVariants[i].price);
       newVariants[i].stock = parseInt(newVariants[i].stock);
+    }
+    if (newVariants.length == 0) {
+      setNewOptions([]);
+      updateFormData({ ...formData, options: [], variants: [] });
+      closeModal();
+      return;
     }
     updateFormData({ ...formData, variants: [...newVariants] });
     closeModal();
