@@ -123,14 +123,12 @@ const index = ({
         >
           Edit Options
         </button>
-        {newVariants.length > 0 ? (
-          <button
-            className="mx-2 btn-no-size-color bg-green-500 px-6 py-2"
-            onClick={() => saveVariants()}
-          >
-            Save
-          </button>
-        ) : null}
+        <button
+          className="mx-2 btn-no-size-color bg-green-500 px-6 py-2"
+          onClick={() => saveVariants()}
+        >
+          Save
+        </button>
       </div>
     </>
   );

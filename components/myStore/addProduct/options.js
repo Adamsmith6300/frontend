@@ -112,16 +112,14 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
       {error != null && error.step == "options" ? (
         <p className="text-red-400">{error.value}</p>
       ) : null}
-      {newOptions.length > 0 ? (
-        <div className="text-center">
-          <button
-            className="btn-no-size-color bg-green-500 px-6 py-2"
-            onClick={() => saveOptions()}
-          >
-            Save
-          </button>
-        </div>
-      ) : null}
+      <div className="text-center">
+        <button
+          className="btn-no-size-color bg-green-500 px-6 py-2"
+          onClick={() => saveOptions()}
+        >
+          Save
+        </button>
+      </div>
     </>
   );
 };
