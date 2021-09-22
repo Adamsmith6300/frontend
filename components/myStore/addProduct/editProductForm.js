@@ -111,7 +111,7 @@ const index = ({
           <input
             className="w-full my-3 h-10"
             name="title"
-            maxLength="40"
+            maxLength="60"
             type="text"
             defaultValue={product.title}
             onChange={handleChange}
@@ -161,7 +161,7 @@ const index = ({
           <textarea
             className="w-full my-3 h-24"
             name="description"
-            maxLength="500"
+            maxLength="1200"
             defaultValue={product.description}
             onChange={handleChange}
           />
