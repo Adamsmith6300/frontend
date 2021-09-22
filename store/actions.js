@@ -5,7 +5,7 @@ import {
   roundToTwo,
   logoutSession,
 } from "./helpers";
-import { defaultEvent } from "../utils/gtag";
+import { event } from "../utils/gtag";
 
 const actionTypes = {
   ERROR: "ERROR",
@@ -77,21 +77,23 @@ const actions = {
     };
   },
   submitLogin: (formData) => {
-    let shopify_params = JSON.parse(localStorage.getItem("shopify_params"));
     return async (dispatch) => {
       const resp = await axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/people/login`, {
           ...formData,
-          shopify_params: shopify_params,
         })
         .then(function (response) {
-          localStorage.removeItem("shopify_params");
           saveLoginSession(response);
           dispatch({ type: actionTypes.LOGIN_SUCCESS });
         })
         .catch(function (error) {
-          console.log(error);
           if (error) {
+            // event({
+            //   action: "error",
+            //   category: "auth",
+            //   label: "login",
+            //   value: error.response,
+            // });
             dispatch({
               type: actionTypes.ERROR_SUBMIT_FORM_DATA,
               payload: "Email or password are invalid!",
