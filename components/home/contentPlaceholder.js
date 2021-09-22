@@ -31,7 +31,6 @@ export const ContentPlaceholder = memo(
           const resp = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/market/merchants/${product.MerchantId}`
           );
-          console.log(resp.data);
           const today = moment().format("dddd").toLowerCase();
           if (!("pickupDays" in resp.data.info)) {
             setStoreOpen(false);

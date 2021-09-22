@@ -16,6 +16,13 @@ export const event = ({ action, category, label, value }) => {
   });
 };
 
+export const errorEvent = ({ category, label }) => {
+  window.gtag("event", "error", {
+    event_category: category,
+    event_label: label,
+  });
+};
+
 export const defaultEvent = ({ action, data }) => {
   window.gtag("event", action, data);
 };

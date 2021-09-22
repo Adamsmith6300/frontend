@@ -103,7 +103,7 @@ const index = ({
         <div>
           <p className="text-2xl font-bold">Title:</p>
           <input
-            maxLength="40"
+            maxLength="60"
             className="w-full my-3 h-10"
             name="title"
             type="text"
@@ -152,7 +152,7 @@ const index = ({
         <div>
           <p className="text-2xl font-bold">Description:</p>
           <textarea
-            maxlength="500"
+            maxlength="1200"
             className="w-full my-3 h-24"
             name="description"
             onChange={handleChange}

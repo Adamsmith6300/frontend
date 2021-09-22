@@ -18,6 +18,7 @@ import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import { VscDebugBreakpointData } from "react-icons/vsc";
 import Head from "next/head";
+import { errorEvent } from "../utils/gtag";
 
 const Page = ({ router, savePersonInfo }) => {
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,10 @@ const Page = ({ router, savePersonInfo }) => {
       })
       .catch(function (error) {
         setFormError("Login Failed.");
+        errorEvent({
+          category: "auth",
+          label: "login",
+        });
         setLoading(false);
       });
   };
