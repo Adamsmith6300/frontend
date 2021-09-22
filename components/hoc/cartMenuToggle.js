@@ -16,13 +16,16 @@ const variants = {
   },
 };
 
-export const CartMenuToggle = ({ toggle, isOpen }) => (
+export const CartMenuToggle = ({ toggle, isOpen, itemCount }) => (
   <motion.button
     className={`cart-menu-toggle-btn ${isOpen ? "" : ""}`}
     onClick={toggle}
     variants={variants}
   >
     <span className="text-black text-3xl">
+      <span className="text-sm cart-item-count">
+        {itemCount > 9 ? "9+" : itemCount}
+      </span>
       <AiOutlineShoppingCart className="inline cursor-pointer" />
     </span>
   </motion.button>
