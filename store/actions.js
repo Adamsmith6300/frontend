@@ -192,6 +192,7 @@ const actions = {
         : product.chosenVariant.stock;
       cartItemKey = product.ProductId + "_var_" + product.chosenVariant.id;
     }
+    if (price == 0) price = product.price;
     if (newCart.items[cartItemKey]) {
       if (newCart.items[cartItemKey].qty + qty <= inventory) {
         newCart.items[cartItemKey].qty += qty;

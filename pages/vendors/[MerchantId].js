@@ -36,7 +36,7 @@ const Page = ({ addToCart, cartData }) => {
   }
 
   let bgStyle = { backgroundImage: `url(${bannerUrl})` };
-  console.log(merchant);
+
   return (
     <Layout loading={merchant == null}>
       <Head>

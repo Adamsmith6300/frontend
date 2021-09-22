@@ -11,6 +11,7 @@ const productGrid = ({ products, addToCart, cartData }) => {
         <p>No Products</p>
       </div>
     );
+  products = products.filter((product) => product.price >= 1);
   return products.map((product, index) => {
     let isSelected = selectedId == product.ProductId;
     return (

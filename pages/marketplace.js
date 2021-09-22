@@ -34,7 +34,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
       <Head>
         <title>Marketplace - Loma</title>
       </Head>
-      <div className="h-500 w-500 max-w-full mx-auto pt-5 text-center">
+      {/* <div className="h-500 w-500 max-w-full mx-auto pt-5 text-center">
         <h1 className="text-center text-4xl font-bold">
           Thank you for signing up!
         </h1>
@@ -71,8 +71,8 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
             </p>
           </>
         )}
-      </div>
-      {/* <ProductSection
+      </div> */}
+      <ProductSection
         heading={"Featured Products"}
         link={"/products"}
         addToCart={addToCart}
@@ -95,7 +95,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
         })
       ) : (
         <LargeLoader />
-      )} */}
+      )}
     </Layout>
   );
 };

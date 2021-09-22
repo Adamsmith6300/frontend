@@ -15,6 +15,7 @@ const productCard = memo(
     const title = product.title;
     let price =
       product.variants.length > 0 ? product.variants[0].price : product.price;
+    if (price < 1) price = product.price;
     price = roundToTwo(price);
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);

@@ -10,8 +10,16 @@ import ProductSection from "../components/home/productSection";
 import MerchantSection from "../components/home/merchantSection";
 import SmallAboutSection from "../components/home/smallAboutSection";
 import Head from "next/head";
+import { LargeLoader } from "../components/loaders";
 
-const Page = ({ addToCart, cartData, router, clearFlag }) => {
+const Page = ({
+  addToCart,
+  cartData,
+  router,
+  getCategories,
+  categories,
+  clearFlag,
+}) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const loggedIn = isLoggedIn();
@@ -24,6 +32,9 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         router.push("/marketplace");
         clearFlag("successfulLogin");
       }
+    }
+    if (categories == null) {
+      getCategories();
     }
     setLoading(false);
   }, []);
@@ -41,14 +52,14 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         link={"/signup"}
         left
       />
-      {/* <ProductSection
+      <ProductSection
         heading={"Featured Products"}
         link={"/products"}
         addToCart={addToCart}
         cartData={cartData}
-      /> */}
+      />
       <SmallAboutSection />
-      {/* <MerchantSection heading={"Featured Vendors"} link={"/vendors"} /> */}
+      <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
       <Banner
         bgSrc={"/secondBanner.jpg"}
         heading={"A Sustainable Solution"}
@@ -57,20 +68,22 @@ const Page = ({ addToCart, cartData, router, clearFlag }) => {
         }
         link={"/signup"}
       />
-      {/* <ProductSection
-        heading={"Jewellery + Accessories"}
-        category={1}
-        link={"/products?category=1"}
-        addToCart={addToCart}
-        cartData={cartData}
-      />
-      <ProductSection
-        heading={"Home + Living"}
-        category={2}
-        link={"/products?category=2"}
-        addToCart={addToCart}
-        cartData={cartData}
-      /> */}
+      {categories != null ? (
+        categories.map((cat, index) => {
+          return (
+            <ProductSection
+              key={cat.CategoryIndex + cat.name}
+              heading={cat.name}
+              category={cat.CategoryIndex}
+              link={"/products?category=" + cat.CategoryIndex}
+              addToCart={addToCart}
+              cartData={cartData}
+            />
+          );
+        })
+      ) : (
+        <LargeLoader />
+      )}
     </Layout>
   );
 };
@@ -81,6 +94,7 @@ const mapDispatchToProps = (dispatch) => {
     addToCart: (product, oldCart, qty) =>
       dispatch(actions.addToCart(product, oldCart, qty)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    getCategories: () => dispatch(actions.getCategories()),
   };
 };
 
