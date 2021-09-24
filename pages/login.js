@@ -39,10 +39,10 @@ const Page = ({ router, savePersonInfo }) => {
       })
       .catch(function (error) {
         setFormError("Login Failed.");
-        errorEvent({
-          category: "auth",
-          label: "login",
-        });
+        // errorEvent({
+        //   category: "auth",
+        //   label: "login",
+        // });
         setLoading(false);
       });
   };

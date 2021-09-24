@@ -34,7 +34,10 @@ const Cart = ({
   const [isOpen, toggleOpen] = useCycle(false, true);
   const cartContainerRef = useRef(null);
   const { height } = useDimensions(cartContainerRef);
-
+  let itemCount = 0;
+  for (let i = 0; i < Object.entries(cartData.items).length; ++i) {
+    itemCount += Object.entries(cartData.items)[i][1].qty;
+  }
   return (
     <motion.nav
       initial={false}
@@ -54,7 +57,11 @@ const Cart = ({
         addToCart={addToCart}
         removeFromCart={removeFromCart}
       />
-      <CartMenuToggle toggle={() => toggleOpen()} isOpen={isOpen} />
+      <CartMenuToggle
+        itemCount={itemCount}
+        toggle={() => toggleOpen()}
+        isOpen={isOpen}
+      />
     </motion.nav>
   );
 };

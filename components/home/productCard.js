@@ -102,7 +102,13 @@ const productCard = memo(
         </div>
         {!isSelected ? (
           <>
-            <p className="text-black text-xl md:text-3xl my-2 mt-4">
+            <p
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedId(id);
+              }}
+              className="text-black text-xl md:text-3xl my-2 mt-4"
+            >
               {title.length > 40 ? title.substring(0, 37) + "..." : title}
             </p>
             <Link href={`/vendors/${product.MerchantId}`}>
@@ -115,7 +121,10 @@ const productCard = memo(
         ) : null}
         {!isSelected && (
           <a
-            onClick={() => setSelectedId(id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedId(id);
+            }}
             className={`card-open-link cursor-pointer`}
           ></a>
         )}
