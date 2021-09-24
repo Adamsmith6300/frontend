@@ -54,6 +54,37 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
       }
     }
   };
+  const finalValidatePasswords = () => {
+    let p1 = formData["password"];
+    let p2 = formData["repassword"];
+    if (p1 != p2) {
+      setFormError("Passwords don't match!");
+      return false;
+    }
+    if (p1.length < 10) {
+      setFormError("Password must be 10 characters long");
+      return false;
+    }
+    if (p1.toLowerCase() == p1) {
+      setFormError("Password must contain at least 1 uppercase");
+      return false;
+    }
+    if (p1.toUpperCase() == p1) {
+      setFormError("Password must contain at least 1 lowercase");
+      return false;
+    }
+    let digits = /[0-9]/;
+    if (!digits.test(p1)) {
+      setFormError("Password must contain at least 1 number");
+      return false;
+    }
+    let symbols = /\W|_/;
+    if (!symbols.test(p1)) {
+      setFormError("Password must contain at least 1 symbol");
+      return false;
+    }
+    return true;
+  };
 
   const handleChange = (e) => {
     if (formError != null) {
@@ -69,14 +100,19 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
   };
 
   const handleSubmit = async () => {
-    if (formError != null) {
-      setFormError(null);
-    }
     if (formData["agreeTermsPrivacy"] == "disagree") {
       setFormError("Please agree to terms and privacy policy");
+      setLoading(false);
+      return;
+    }
+    if (!finalValidatePasswords()) {
+      setLoading(false);
       return;
     }
     await submitSignup(formData);
+    if (formError != null) {
+      setFormError(null);
+    }
   };
 
   return (

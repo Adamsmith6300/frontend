@@ -3,7 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Link from "next/link";
-import { Form, Checkbox } from "semantic-ui-react";
+import { Form, Checkbox, Message } from "semantic-ui-react";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import Head from "next/head";
@@ -36,6 +36,7 @@ const Page = ({
   const [merchantSignupSuccess, setMerchantSignupSuccess] = useState(false);
   const [showTerms, setShowTerms] = useState(true);
   const [agreedTerms, setAgreedTerms] = useState(false);
+  const [formErrorSubmit, setFormErrorSubmit] = useState(null);
 
   const handleChange = (e) => {
     updateFormData({
@@ -56,19 +57,17 @@ const Page = ({
         }
       }
       try {
-        await submitMerchantApplication(formData);
+        let res = await submitMerchantApplication(formData);
         let resp = await refreshIdToken();
         if (resp) {
           await saveLoginSession(resp);
           setMerchantSignupSuccess(true);
           router.push("/my-store");
-        } else {
-          //display error
-          router.push("/marketplace");
         }
       } catch (err) {
         console.log(err);
       }
+      setLoading(false);
     }
   };
 
@@ -99,9 +98,9 @@ const Page = ({
     };
     let isMerchant = checkMerchant();
     let loggedIn = isLoggedIn();
-    if (isMerchant) {
-      router.push("/my-store");
-    }
+    // if (isMerchant) {
+    //   router.push("/my-store");
+    // }
     if (loggedIn) {
       setShowApplication(true);
     }
@@ -195,6 +194,7 @@ const Page = ({
                 </div>
               ) : (
                 <Form
+                  error={formError == "You are already signed up as a vendor."}
                   onSubmit={(e) => {
                     e.preventDefault();
                     setLoading(true);
@@ -259,6 +259,10 @@ const Page = ({
                     type="url"
                     onChange={handleChange}
                     name="website"
+                  />
+                  <Message
+                    error
+                    content={"You are already signed up as a vendor."}
                   />
                   <div className="flex justify-center mt-4">
                     <button className="standard-btn" type="submit">

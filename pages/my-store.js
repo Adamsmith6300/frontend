@@ -58,6 +58,7 @@ const Page = ({
       // }
       setLoading(false);
     } catch (err) {
+      router.push("/become-a-vendor");
       console.log(err);
     }
   };

@@ -285,11 +285,14 @@ const actions = {
           dispatch({ type: actionTypes.MERCHANT_APPLICATION_SUCCESS });
         })
         .catch(function (error) {
-          console.log(error.response);
           if (error) {
+            let payload = "Failed to submit merchant application!";
+            if (error.response.data == "Already a merchant") {
+              payload = "You are already signed up as a vendor.";
+            }
             dispatch({
               type: actionTypes.ERROR_SUBMIT_FORM_DATA,
-              payload: "Failed to submit merchant application!",
+              payload: payload,
             });
           }
         });
