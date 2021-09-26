@@ -60,6 +60,11 @@ const index = ({
   const handleSubmit = async () => {
     setLoading(true);
     formData["price"] = roundToTwo(formData["price"]);
+    for (let i = 0; i < formData["variants"].length; ++i) {
+      if (formData["variants"][i]["price"] <= 0) {
+        formData["variants"][i]["price"] = formData["price"];
+      }
+    }
     try {
       await postNewProduct(formData);
     } catch (err) {

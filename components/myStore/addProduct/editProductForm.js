@@ -69,6 +69,11 @@ const index = ({
     if (ready) {
       formData["price"] = roundToTwo(formData["price"]);
       console.log("saving...", formData);
+      for (let i = 0; i < formData["variants"].length; ++i) {
+        if (formData["variants"][i]["price"] <= 0) {
+          formData["variants"][i]["price"] = formData["price"];
+        }
+      }
       await updateProductDetails(product.ProductId, formData);
       callFetchMerchData();
     }
