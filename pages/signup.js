@@ -10,15 +10,9 @@ import { LargeLoader } from "../components/loaders";
 import { checkMerchant, isLoggedIn, saveLoginSession } from "../store/helpers";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
-import BlockSignup from "../components/blockSignup";
 import Head from "next/head";
 
 const Page = ({ clearFlag, router }) => {
-  return (
-    <Layout>
-      <BlockSignup signupLink="https://shoploma.ca/signup" />
-    </Layout>
-  );
   const [loading, setLoading] = useState(true);
   const [formError, setFormError] = useState(null);
   useEffect(() => {
@@ -64,7 +58,7 @@ const Page = ({ clearFlag, router }) => {
       <h1 className="text-3xl text-center">Signup</h1>
 
       <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
-        <div className="w-full flex flex-wrap mt-6">
+        {/* <div className="w-full flex flex-wrap mt-6">
           <a
             className="social-btn w-full py-4 text-center my-3 text-xl"
             href={`${process.env.NEXT_PUBLIC_COGNITO_DOMAIN}?identity_provider=Facebook&redirect_uri=${process.env.NEXT_PUBLIC_DOMAIN}/login&response_type=code&client_id=${process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID}&scope=email openid profile`}
@@ -78,8 +72,8 @@ const Page = ({ clearFlag, router }) => {
           >
             <FcGoogle className="inline mr-2" /> Continue With Google
           </a>
-        </div>
-        <p className="my-6 text-center">OR</p>
+        </div> 
+        <p className="my-6 text-center">OR</p>*/}
         <SignupForm
           submitSignup={submitSignup}
           formError={formError}
