@@ -11,14 +11,8 @@ import { checkMerchant, isLoggedIn, saveLoginSession } from "../store/helpers";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import Head from "next/head";
-import BlockSignup from "../components/blockSignup";
 
 const Page = ({ clearFlag, router }) => {
-  return (
-    <Layout>
-      <BlockSignup signupLink="https://shoploma.ca/become-a-vendor" />
-    </Layout>
-  );
   const [loading, setLoading] = useState(true);
   const [formError, setFormError] = useState(null);
   useEffect(() => {
