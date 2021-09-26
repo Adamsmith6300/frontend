@@ -16,6 +16,7 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
         return option.value;
       });
     }
+    if (visiblePrice < 1) visiblePrice = item.price;
     visiblePrice = roundToTwo(visiblePrice);
     return (
       <div key={entry[0]} className="flex justify-start w-full my-6">

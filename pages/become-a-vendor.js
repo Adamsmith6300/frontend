@@ -20,6 +20,7 @@ import {
 import Layout from "../components/hoc/layout";
 import MerchantSignupForm from "../components/merchantSignupForm/index";
 import { LargeLoader } from "../components/loaders";
+import BlockSignup from "../components/blockSignup";
 
 const Page = ({
   formError,
@@ -29,6 +30,11 @@ const Page = ({
   successfulMerchantApplication,
   savePersonInfo,
 }) => {
+  return (
+    <Layout>
+      <BlockSignup signupLink="https://shoploma.ca/become-a-vendor" />
+    </Layout>
+  );
   const [loading, setLoading] = useState(true);
   const [formData, updateFormData] = useState({});
   const [showApplication, setShowApplication] = useState(successfulSignup);
@@ -149,8 +155,10 @@ const Page = ({
                       1. Your business is based out of Greater Vancouver, B.C.
                     </li>
                     <li className="my-3">
-                      2. You can prepare orders for pickup within 48 hours. (this is flexible, we understand some products are made to order and managing inventory isn't simple, but we
-                      want to deliver as fast as possible)
+                      2. You can prepare orders for pickup within 48 hours.
+                      (this is flexible, we understand some products are made to
+                      order and managing inventory isn't simple, but we want to
+                      deliver as fast as possible)
                     </li>
                     <li className="my-3">
                       3. Your product pricing must not be greater than anywhere
