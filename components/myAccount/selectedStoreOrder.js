@@ -61,6 +61,7 @@ const index = ({
         );
       });
     }
+    if (price < 1) price = item.price;
     return (
       <div className="flex justify-start place-items-center mb-3">
         <div className="w-100 h-75 overflow-hidden">
