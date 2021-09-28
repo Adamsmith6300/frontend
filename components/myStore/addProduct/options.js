@@ -21,7 +21,7 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
       return (
         <span
           key={i + value}
-          className="cursor-pointer border rounded-3xl bg-gray-300 p-1 px-2 m-1 h-10"
+          className="cursor-pointer border text-nowrap rounded-3xl bg-gray-300 p-1 px-2 m-1 h-10"
         >
           {value}
           <AiFillCloseCircle
