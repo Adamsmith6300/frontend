@@ -130,20 +130,17 @@ const index = ({ setMainImage, newImages, setNewImages, MerchantId }) => {
             </div>
           </div>
         )}
-        <p>Uploaded ({newImages.length}/4)</p>
+        <p>Uploaded ({newImages.length})</p>
         <div className="flex justify-center my-3">
-          {newImages.length < 5 ? (
-            <button
-              className="btn-no-size-color bg-black px-6 py-2 mx-3"
-              onClick={() => {
-                imageInput.current.click();
-              }}
-            >
-              Upload Image
-            </button>
-          ) : (
-            <span>Image limit reached ({newImages.length}/4)</span>
-          )}
+          <button
+            className="btn-no-size-color bg-black px-6 py-2 mx-3"
+            onClick={() => {
+              imageInput.current.click();
+            }}
+          >
+            Upload Image
+          </button>
+
           {selectedImg != null ? (
             <button
               className="btn-no-size-color bg-red-500 px-6 py-2 mx-3"
