@@ -21,7 +21,7 @@ const index = ({
       return (
         <span
           key={i + value}
-          className="border rounded-3xl bg-gray-300 p-1 px-3 mx-1 inline h-10"
+          className="border rounded-3xl bg-gray-300 p-1 px-3 mx-1 h-10"
         >
           {value.value}
         </span>

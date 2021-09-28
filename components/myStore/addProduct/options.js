@@ -21,15 +21,15 @@ const index = ({ setNewOptions, newOptions, error, saveOptions }) => {
       return (
         <span
           key={i + value}
-          className="cursor-pointer border rounded-3xl bg-gray-300 p-1 px-2 m-1 place-items-center h-10 grid grid-cols-2"
+          className="cursor-pointer border rounded-3xl bg-gray-300 p-1 px-2 m-1 h-10"
         >
-          {value}{" "}
+          {value}
           <AiFillCloseCircle
             onClick={() => {
               newOptions[index].values.splice(i, 1);
               forceUpdate();
             }}
-            className="ml-1"
+            className="ml-1 inline"
           />
         </span>
       );

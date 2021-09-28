@@ -76,6 +76,10 @@ li {
   margin: 0;
 }
 
+span {
+  white-space: nowrap;
+}
+
 p {
   font-size: 20px;
   line-height: 28px;
