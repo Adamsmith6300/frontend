@@ -13,5 +13,9 @@ module.exports = {
     NEXT_PUBLIC_DOMAIN: "https://shoploma.ca",
     NEXT_PUBLIC_AUTH_DOMAIN: "https://auth.shoploma.ca",
     NEXT_PUBLIC_GA: "G-V6QK9KNTPE",
+    NEXT_PUBLIC_GST: 0.05,
+    NEXT_PUBLIC_PST: 0.07,
+    NEXT_PUBLIC_DELIVERY_FEE: 7,
+    NEXT_PUBLIC_SERVICE_FEE: 0.05,
   },
 };

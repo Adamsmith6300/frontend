@@ -113,12 +113,18 @@ const index = ({ order, setSelectedOrder }) => {
           <span>${order.chargeDetails.subtotal}</span>
         </p>
         <p className="flex justify-between">
+          <span>
+            Service Fee ({process.env.NEXT_PUBLIC_SERVICE_FEE * 100}%)
+          </span>
+          <span>${order.chargeDetails.serviceFee}</span>
+        </p>
+        <p className="flex justify-between">
           <span>Delivery Fee</span>
           <span>${order.chargeDetails.deliveryFee}</span>
         </p>
         <p className="flex justify-between">
-          <span>Service Fee (10%)</span>
-          <span>${order.chargeDetails.serviceFee}</span>
+          <span>Taxes</span>
+          <span>${order.chargeDetails.tax}</span>
         </p>
         <p className="flex justify-between text-black">
           <span>Total</span>
