@@ -18,11 +18,13 @@ import { defaultEvent } from "../../utils/gtag";
 const calcFees = (cart) => {
   let fees = {
     subtotal: cart.total,
-    serviceFee: roundToTwo(cart.total * process.env.NEXT_PUBLIC_SERVICE_FEE),
     deliveryFee: roundToTwo(process.env.NEXT_PUBLIC_DELIVERY_FEE),
   };
-  fees["totalBeforeTax"] =
-    fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"];
+  (fees["serviceFee"] = roundToTwo(
+    (cart.total + fees["deliveryFee"]) * process.env.NEXT_PUBLIC_SERVICE_FEE
+  )),
+    (fees["totalBeforeTax"] =
+      fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"]);
   fees["tax"] = roundToTwo(
     fees["totalBeforeTax"] *
       (process.env.NEXT_PUBLIC_GST + process.env.NEXT_PUBLIC_PST)
@@ -158,14 +160,14 @@ const index = ({
           <span>${chargeDetails.subtotal}</span>
         </p>
         <p className="flex justify-between">
+          <span>Delivery Fee</span>
+          <span>${chargeDetails.deliveryFee}</span>
+        </p>
+        <p className="flex justify-between">
           <span>
             Service Fee ({process.env.NEXT_PUBLIC_SERVICE_FEE * 100}%)
           </span>
           <span>${chargeDetails.serviceFee}</span>
-        </p>
-        <p className="flex justify-between">
-          <span>Delivery Fee</span>
-          <span>${chargeDetails.deliveryFee}</span>
         </p>
         <p className="flex justify-between">
           <span>Taxes</span>
