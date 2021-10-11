@@ -20,11 +20,11 @@ const calcFees = (cart) => {
     subtotal: cart.total,
     deliveryFee: roundToTwo(process.env.NEXT_PUBLIC_DELIVERY_FEE),
   };
-  (fees["serviceFee"] = roundToTwo(
+  fees["serviceFee"] = roundToTwo(
     (cart.total + fees["deliveryFee"]) * process.env.NEXT_PUBLIC_SERVICE_FEE
-  )),
-    (fees["totalBeforeTax"] =
-      fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"]);
+  );
+  fees["totalBeforeTax"] =
+    fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"];
   fees["tax"] = roundToTwo(
     fees["totalBeforeTax"] *
       (process.env.NEXT_PUBLIC_GST + process.env.NEXT_PUBLIC_PST)
