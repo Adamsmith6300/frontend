@@ -69,13 +69,13 @@ const Layout = ({
         clearFlag={clearFlag}
         logoutPerson={logoutPerson}
       />
-      {/* <Cart
+      <Cart
         toggleCart={toggleCart}
         showCart={showCart}
         cartData={cartData}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
-      /> */}
+      />
       {!loading ? (
         <>
           {children}

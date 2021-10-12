@@ -90,7 +90,6 @@ const index = ({ formData, updateFormData, closeModal, newImages }) => {
   };
   const saveOptions = () => {
     let options = [];
-    console.log(newOptions);
     for (let i = 0; i < newOptions.length; ++i) {
       let option = newOptions[i];
       if (option.name.length <= 0 || option.values.length <= 0) {
