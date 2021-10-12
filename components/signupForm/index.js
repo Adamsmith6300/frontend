@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Link from "next/link";
 import { Button, Checkbox, Form, Input, Message } from "semantic-ui-react";
 import Privacy from "../privacy";
@@ -6,6 +7,9 @@ import Terms from "../terms";
 
 const index = ({ submitSignup, setLoading, formError, setFormError }) => {
   const [modal, setModal] = useState(null);
+  const [showPwd, setShowPwd] = useState(false);
+  const [showRePwd, setShowRePwd] = useState(false);
+
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
   });
@@ -134,22 +138,49 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
           placeholder="adam@email.com"
           type="email"
         />
-        <Form.Input
-          label="Enter Password"
-          type="password"
-          onChange={handleChange}
-          name="password"
-          required
-          placeholder="Password123!"
-        />
-        <Form.Input
-          label="Confirm Password"
-          type="password"
-          onChange={handleChange}
-          name="repassword"
-          required
-          placeholder="Password123!"
-        />
+        <fieldset className="flex">
+          <Form.Input
+            className="w-full"
+            label="Enter Password"
+            type={showPwd ? "text" : "password"}
+            onChange={handleChange}
+            name="password"
+            required
+            placeholder="Password123!"
+          />
+          <span
+            onClick={() => setShowPwd(!showPwd)}
+            className="pt-2 w-50 grid place-items-center"
+          >
+            {showPwd ? (
+              <AiOutlineEye className="text-2xl" />
+            ) : (
+              <AiOutlineEyeInvisible className="text-2xl" />
+            )}
+          </span>
+        </fieldset>
+        <fieldset className="flex">
+          <Form.Input
+            className="w-full"
+            label="Confirm Password"
+            type={showRePwd ? "text" : "password"}
+            onChange={handleChange}
+            name="repassword"
+            required
+            placeholder="Password123!"
+          />
+          <span
+            onClick={() => setShowRePwd(!showRePwd)}
+            className="pt-2 w-50 grid place-items-center"
+          >
+            {showRePwd ? (
+              <AiOutlineEye className="text-2xl" />
+            ) : (
+              <AiOutlineEyeInvisible className="text-2xl" />
+            )}
+          </span>
+        </fieldset>
+
         <Form.Field>
           <Checkbox
             onChange={() =>

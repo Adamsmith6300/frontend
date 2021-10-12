@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Form, Message } from "semantic-ui-react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const LoginForm = ({ setLoading, submitLogin, formError }) => {
   let isValidEmail = true
@@ -9,6 +10,7 @@ const LoginForm = ({ setLoading, submitLogin, formError }) => {
         pointing: "below",
       };
   const [formData, updateFormData] = useState({});
+  const [showPwd, setShowPwd] = useState(false);
 
   const handleChange = (e) => {
     updateFormData({
@@ -39,14 +41,28 @@ const LoginForm = ({ setLoading, submitLogin, formError }) => {
         type="email"
         onChange={handleChange}
       />
-      <Form.Input
-        label="Enter Password"
-        name="password"
-        type="password"
-        placeholder="Password123!"
-        required
-        onChange={handleChange}
-      />
+      <fieldset className="flex">
+        <Form.Input
+          className="w-full"
+          label="Enter Password"
+          name="password"
+          type={showPwd ? "text" : "password"}
+          placeholder="Password123!"
+          required
+          onChange={handleChange}
+        />
+        <span
+          onClick={() => setShowPwd(!showPwd)}
+          className="pt-2 w-50 grid place-items-center"
+        >
+          {showPwd ? (
+            <AiOutlineEye className="text-2xl" />
+          ) : (
+            <AiOutlineEyeInvisible className="text-2xl" />
+          )}
+        </span>
+      </fieldset>
+
       <Message error content={formError} />
       <div className="flex justify-center">
         <button className="standard-btn" type="submit">
