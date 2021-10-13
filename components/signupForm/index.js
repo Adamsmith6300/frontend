@@ -12,6 +12,7 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
 
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
+    agreeToMarketing: true,
   });
   const policyModal = () => {
     return (
@@ -209,6 +210,21 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
               Privacy Policy
             </span>
           </p>
+        </Form.Field>
+        <Form.Field>
+          <Checkbox
+            checked={formData["agreeToMarketing"]}
+            onChange={() =>
+              handleChange({
+                target: {
+                  value: !formData["agreeToMarketing"],
+                  name: "agreeToMarketing",
+                },
+              })
+            }
+            className="pt-1 mr-2"
+          />
+          <p className="inline text-base">Email me with news and promotions</p>
         </Form.Field>
         <Message error content={formError} />
         <div className="flex justify-center">

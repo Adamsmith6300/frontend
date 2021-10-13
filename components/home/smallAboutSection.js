@@ -3,21 +3,21 @@ const index = ({}) => {
   let mainTitle = "What We Offer";
   let points = [
     {
-      title: "We Love Local",
+      title: "Sustainable",
       subtitle:
-        "We can't say it enough...we love our local shops and want to keep them around!",
-      img: "./firstBanner.jpg",
+        "We ONLY deliver in hybrid or electric vehicles and use sustainable packaging materials!",
+      img: "./sustainable-packaging.jpg",
     },
     {
       title: "Fast Delivery",
       subtitle:
-        "Shop from multiple stores and only pay for one delivery. Because we only pickup and deliver locally, your order comes faster!",
-      img: "./loma-car-back.jpg",
+        "We pickup and deliver locally, which helps your order arrive faster!",
+      img: "./time.jpg",
     },
     {
       title: "High Quality Products",
       subtitle:
-        "We carefully select our merchants to make sure you get the best products possible.",
+        "We carefully select our vendors to make sure you get the best products possible.",
       img: "./5stars.jpg",
     },
   ];
