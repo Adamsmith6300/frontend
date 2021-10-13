@@ -38,7 +38,6 @@ const Cart = ({
   for (let i = 0; i < Object.entries(cartData.items).length; ++i) {
     itemCount += Object.entries(cartData.items)[i][1].qty;
   }
-  console.log(cartData);
   return (
     <motion.nav
       initial={false}

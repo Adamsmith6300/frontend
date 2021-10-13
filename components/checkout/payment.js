@@ -3,8 +3,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import InjectedCheckoutForm from "./injectedCheckoutForm";
 import { FcCheckmark } from "react-icons/fc";
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_API_KEY);
 
 const payment = ({
@@ -36,7 +34,6 @@ const payment = ({
           </span>
         ) : null}
       </p>
-
       {isActive ? (
         <>
           <Elements stripe={stripePromise}>

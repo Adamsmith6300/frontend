@@ -122,6 +122,13 @@ const index = ({ order, setSelectedOrder }) => {
           <span>Delivery Fee</span>
           <span>${order.chargeDetails.deliveryFee}</span>
         </p>
+        {order.chargeDetails.discountDollars != null &&
+        order.discount != null ? (
+          <p className="flex justify-between text-green-600">
+            <span>Discount ({order.discount.discountCode})</span>
+            <span>$-{order.chargeDetails.discountDollars}</span>
+          </p>
+        ) : null}
         <p className="flex justify-between">
           <span>Taxes</span>
           <span>${order.chargeDetails.tax}</span>

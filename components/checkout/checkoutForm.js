@@ -5,7 +5,7 @@ import {
   CardExpiryElement,
   CardNumberElement,
 } from "@stripe/react-stripe-js";
-import { Form, Message } from "semantic-ui-react";
+import { Form, Message, Input } from "semantic-ui-react";
 import axios from "axios";
 import {
   getAuth,
@@ -15,21 +15,37 @@ import {
 } from "./../../store/helpers";
 import { defaultEvent } from "../../utils/gtag";
 
-const calcFees = (cart) => {
+const calcFees = (cart, discount = null) => {
+  let discountDollars = 0;
   let fees = {
     subtotal: cart.total,
     deliveryFee: roundToTwo(process.env.NEXT_PUBLIC_DELIVERY_FEE),
   };
+  if (discount != null) {
+    if (discount["discountValueType"] == "freeDelivery")
+      discountDollars = fees["deliveryFee"];
+    if (discount["discountValueType"] == "percentage")
+      discountDollars = subtotal * discount["discountValue"];
+    if (discount["discountValueType"] == "dollars")
+      discountDollars = discount["discountValue"];
+  }
+  discountDollars = roundToTwo(discountDollars);
+  fees["discountDollars"] = discountDollars;
   fees["serviceFee"] = roundToTwo(
-    (cart.total + fees["deliveryFee"]) * process.env.NEXT_PUBLIC_SERVICE_FEE
+    (cart.total + fees["deliveryFee"] - discountDollars) *
+      process.env.NEXT_PUBLIC_SERVICE_FEE
   );
   fees["totalBeforeTax"] =
-    fees["subtotal"] + fees["serviceFee"] + fees["deliveryFee"];
+    fees["subtotal"] +
+    fees["serviceFee"] +
+    fees["deliveryFee"] -
+    discountDollars;
   fees["tax"] = roundToTwo(
     fees["totalBeforeTax"] *
       (process.env.NEXT_PUBLIC_GST + process.env.NEXT_PUBLIC_PST)
   );
   fees["total"] = roundToTwo(fees["totalBeforeTax"] + fees["tax"]);
+  console.log("FEES:", fees);
   return fees;
 };
 
@@ -62,6 +78,44 @@ const index = ({
   const [isLoading, updateIsLoading] = useState(false);
   const [chargeDetails, setChargeDetails] = useState(calcFees(cartData));
   const [formError, setFormError] = useState(null);
+  const [discount, setDiscount] = useState(null);
+  const [discountCode, setDiscountCode] = useState(null);
+  const [discountError, setDiscountError] = useState(null);
+  const [applyingDiscount, setApplyingDiscount] = useState(false);
+
+  const applyDiscount = async () => {
+    setApplyingDiscount(true);
+    setDiscountError(null);
+    setDiscount(null);
+    //fetch discount here
+    if (discountCode.trim().length > 0) {
+      const authorization = getAuth();
+      try {
+        let payload = {
+          PersonId: personInfo.PersonId,
+          discountCode: discountCode.trim(),
+        };
+        const resp = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/market/discount`,
+          payload,
+          {
+            headers: {
+              Authorization: authorization,
+            },
+          }
+        );
+        console.log(resp);
+        setChargeDetails(calcFees(cartData, resp.data));
+        setDiscount(resp.data);
+      } catch (err) {
+        console.log("err:", err.response.data);
+        setDiscountError(err.response.data);
+        setChargeDetails(calcFees(cartData));
+      }
+    }
+    //display error or apply discount
+    setApplyingDiscount(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,6 +140,7 @@ const index = ({
       };
     });
     payload["chargeDetails"] = chargeDetails;
+    payload["discount"] = discount;
     const authorization = getAuth();
     const resp = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/market/order`,
@@ -155,6 +210,30 @@ const index = ({
   return (
     <>
       <div className="text-gray-600 px-6 py-6">
+        <Form
+          error={discountError != null}
+          loading={applyingDiscount}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (discountCode != null) applyDiscount();
+          }}
+          className="text-left pb-3"
+        >
+          <Input
+            className="w-200 mt-3 h-10 mr-2"
+            name="discountCode"
+            type="text"
+            placeholder="Enter discount code"
+            onChange={(e) => setDiscountCode(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="btn-no-size-color px-6 py-3 bg-black"
+          >
+            Apply
+          </button>
+          <Message error content={discountError} />
+        </Form>
         <p className="flex justify-between">
           <span>Subtotal</span>
           <span>${chargeDetails.subtotal}</span>
@@ -163,6 +242,12 @@ const index = ({
           <span>Delivery Fee</span>
           <span>${chargeDetails.deliveryFee}</span>
         </p>
+        {discount != null ? (
+          <p className="flex justify-between text-green-600">
+            <span>Discount ({discount.discountCode})</span>
+            <span>$-{chargeDetails.discountDollars}</span>
+          </p>
+        ) : null}
         <p className="flex justify-between">
           <span>
             Service Fee ({process.env.NEXT_PUBLIC_SERVICE_FEE * 100}%)
