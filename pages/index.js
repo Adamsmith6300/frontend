@@ -47,7 +47,7 @@ const Page = ({
         bgSrc={"/firstBanner.jpg"}
         heading={"Shop Local With Loma"}
         content={
-          "Based out of Vancouver BC, Loma is an online marketplace for local vendors. Pick and choose a variety of items from different vendors and have your order delivered to your door for one delivery fee."
+          "Based out of Vancouver BC, Loma is a marketplace for local vendors with sustainable delivery. Pick and choose a variety of items from different vendors and have your order delivered to your door. We deliver in hybrid/electric vehicles with sustainable packaging materials!"
         }
         link={"/signup"}
         left
@@ -64,7 +64,7 @@ const Page = ({
         bgSrc={"/secondBanner.jpg"}
         heading={"A Sustainable Solution"}
         content={
-          "Shopping local helps reduce emmissions! At Loma we prioritize ethical and sustainably conscious businesses. We only deliver with hybrid or electric vehicles, and all our packaging is biodegradable."
+          "Shopping local helps reduce emmissions! At Loma we prioritize ethical and sustainably conscious businesses. We only deliver with hybrid or electric vehicles, and all our packaging is sustainable."
         }
         link={"/signup"}
       />
