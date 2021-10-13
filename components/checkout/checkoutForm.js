@@ -104,7 +104,6 @@ const index = ({
             },
           }
         );
-        console.log(resp);
         setChargeDetails(calcFees(cartData, resp.data));
         setDiscount(resp.data);
       } catch (err) {
