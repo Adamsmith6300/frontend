@@ -45,7 +45,6 @@ const calcFees = (cart, discount = null) => {
       (process.env.NEXT_PUBLIC_GST + process.env.NEXT_PUBLIC_PST)
   );
   fees["total"] = roundToTwo(fees["totalBeforeTax"] + fees["tax"]);
-  console.log("FEES:", fees);
   return fees;
 };
 
@@ -93,6 +92,7 @@ const index = ({
       try {
         let payload = {
           PersonId: personInfo.PersonId,
+          email: personInfo.email,
           discountCode: discountCode.trim(),
         };
         const resp = await axios.post(
@@ -227,7 +227,7 @@ const index = ({
           />
           <button
             type="submit"
-            className="btn-no-size-color px-6 py-3 bg-black"
+            className="btn-no-size-color px-6 py-3 bg-black mt-3 lg:mt-0"
           >
             Apply
           </button>
