@@ -14,7 +14,7 @@ const index = ({
   setBillingInfo,
   setCart,
 }) => {
-  const [activeCheckoutStep, setActiveCheckout] = useState(2);
+  const [activeCheckoutStep, setActiveCheckout] = useState(1);
 
   return (
     <div className="w-full lg:w-1/2 mx-auto text-center">
