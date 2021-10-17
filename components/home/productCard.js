@@ -45,10 +45,10 @@ const productCard = memo(
       checkSwipeToDismiss,
       isSelected
     );
-
+    console.log(y);
     return (
       <li ref={containerRef} className={`card--products`}>
-        <Overlay isSelected={isSelected} setSelectedId={setSelectedId} />
+        <Overlay y={y} isSelected={isSelected} setSelectedId={setSelectedId} />
         <div className={`card-content-container ${isSelected && "open"}`}>
           <motion.div
             ref={cardRef}
@@ -62,7 +62,11 @@ const productCard = memo(
           >
             <button
               className={`close-card-btn ${!isSelected ? "hidden" : ""}`}
-              onClick={() => setSelectedId(-1)}
+              onClick={() => {
+                setSelectedId(-1);
+                y.set(0);
+                zIndex.set(0);
+              }}
             >
               <svg width="23" height="23" viewBox="0 0 23 23">
                 <path
@@ -119,7 +123,7 @@ const productCard = memo(
             <p className="text-md">${price}</p>
           </>
         ) : null}
-        {!isSelected && (
+        {!isSelected ? (
           <a
             onClick={(e) => {
               e.stopPropagation();
@@ -127,14 +131,14 @@ const productCard = memo(
             }}
             className={`card-open-link cursor-pointer`}
           ></a>
-        )}
+        ) : null}
       </li>
     );
   },
   (prev, next) => prev.isSelected === next.isSelected
 );
 
-const Overlay = ({ isSelected, setSelectedId }) => (
+const Overlay = ({ y, isSelected, setSelectedId }) => (
   <motion.div
     initial={false}
     animate={{ opacity: isSelected ? 1 : 0 }}
@@ -142,11 +146,11 @@ const Overlay = ({ isSelected, setSelectedId }) => (
     style={{ pointerEvents: isSelected ? "auto" : "none" }}
     className="overlay"
   >
-    <a
+    {/* <a
       onClick={() => {
         setSelectedId(-1);
       }}
-    ></a>
+    ></a> */}
   </motion.div>
 );
 
