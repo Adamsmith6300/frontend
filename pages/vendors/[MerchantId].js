@@ -69,7 +69,9 @@ const Page = ({ addToCart, cartData }) => {
                 <p className="font-medium mb-3">
                   About {merchant.info.storename}:
                 </p>
-                <p>{merchant.info.about}</p>
+                <p className="whitespace-pre-wrap pb-6">
+                  {merchant.info.about}
+                </p>
               </div>
             ) : null}
             {merchant.info.liquorLicense != null &&

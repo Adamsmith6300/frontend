@@ -222,7 +222,7 @@ export const ContentPlaceholder = memo(
               : null}
           </p>
         )}
-        <p>{product.description}</p>
+        <p className="whitespace-pre-wrap pb-6">{product.description}</p>
       </div>
     );
   }
