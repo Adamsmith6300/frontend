@@ -222,7 +222,15 @@ export const ContentPlaceholder = memo(
               : null}
           </p>
         )}
-        <p className="whitespace-pre-wrap pb-6">{product.description}</p>
+        {product.html_description ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: product.description,
+            }}
+          ></div>
+        ) : (
+          <p className="whitespace-pre-wrap pb-6">{product.description}</p>
+        )}
       </div>
     );
   }
