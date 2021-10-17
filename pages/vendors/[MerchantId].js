@@ -66,7 +66,7 @@ const Page = ({ addToCart, cartData }) => {
             )}
             {merchant.info.about != null && merchant.info.about.length > 0 ? (
               <div className="pt-12">
-                <p className="font-medium mb-3">
+                <p className="font-medium mb-2">
                   About {merchant.info.storename}:
                 </p>
                 <p className="whitespace-pre-wrap pb-6">
