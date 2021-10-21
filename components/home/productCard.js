@@ -45,7 +45,6 @@ const productCard = memo(
       checkSwipeToDismiss,
       isSelected
     );
-    console.log(y);
     return (
       <li ref={containerRef} className={`card--products`}>
         <Overlay y={y} isSelected={isSelected} setSelectedId={setSelectedId} />
