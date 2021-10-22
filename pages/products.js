@@ -39,6 +39,7 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
         setProducts(resp.data.Products);
         if (resp.data.LastEvaluatedKey) {
           setStartKey([resp.data.LastEvaluatedKey.ProductId]);
+          setMoreProducts(true);
         } else {
           setMoreProducts(false);
         }
