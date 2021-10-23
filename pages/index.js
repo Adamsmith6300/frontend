@@ -45,7 +45,7 @@ const Page = ({
       </Head>
       <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
-        heading={"Local Shopping, Sustainably Delivered"}
+        heading={"Local Shopping, Sustainable Delivery"}
         content={
           "Based out of Vancouver BC, Loma is a marketplace for local vendors with sustainable delivery. Pick and choose a variety of items from different vendors and have your order delivered to your door. We deliver in hybrid/electric vehicles with sustainable packaging materials!"
         }
