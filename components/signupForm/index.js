@@ -12,7 +12,7 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
 
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
-    agreeToMarketing: true,
+    agreeToMarketing: false,
   });
   const policyModal = () => {
     return (
