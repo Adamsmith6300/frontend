@@ -36,9 +36,8 @@ export const MenuItem = ({ item, isOpen, asPath }) => {
       let catStyle = subCatStyle;
       catStyle += asPath == link ? "text-black" : "text-gray-600";
       return (
-        <Link href={link} passHref>
+        <Link key={index} href={link} passHref>
           <motion.li
-            key={index}
             className={catStyle}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3 }}

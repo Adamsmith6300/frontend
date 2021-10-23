@@ -11,7 +11,7 @@ import { LargeLoader } from "../components/loaders";
 import ProductGrid from "../components/home/productGrid";
 import Head from "next/head";
 
-const Page = ({ addToCart, cartData, clearFlag }) => {
+const Page = ({ categories, addToCart, cartData, clearFlag }) => {
   const [products, setProducts] = useState(null);
   const [startKey, setStartKey] = useState(null);
   const [moreProducts, setMoreProducts] = useState(true);
@@ -19,7 +19,6 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
   const router = useRouter();
   let path = router.asPath;
   const lim = 8;
-
   const getProducts = async (start = null) => {
     const { category } = router.query;
     let url = `${process.env.NEXT_PUBLIC_API_URL}/market/products?lim=${lim}`;
@@ -31,7 +30,6 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
     }
     return await axios.get(url);
   };
-
   useEffect(() => {
     setProducts(null);
     getProducts()
@@ -54,6 +52,15 @@ const Page = ({ addToCart, cartData, clearFlag }) => {
       <Head>
         <title>Products - Loma</title>
       </Head>
+      {categories != null && router.query.category != null ? (
+        <h2 className="text-3xl text-center">
+          {
+            categories.filter((cat) => {
+              return cat.CategoryIndex == router.query.category;
+            })[0]["name"]
+          }
+        </h2>
+      ) : null}
       <div className="flex flex-wrap justify-center xl:justify-start max-w-1250 mx-auto">
         {products != null ? (
           <>
@@ -105,6 +112,7 @@ const mapDispatchToProps = (dispatch) => {
     addToCart: (product, oldCart, qty) =>
       dispatch(actions.addToCart(product, oldCart, qty)),
     clearFlag: (flag) => dispatch(actions.clearFlag(flag)),
+    getCategories: () => dispatch(actions.getCategories()),
   };
 };
 
