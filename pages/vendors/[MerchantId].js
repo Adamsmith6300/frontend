@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import ProductGrid from "../../components/home/productGrid";
 import Head from "next/head";
+import { AiOutlineLink } from "react-icons/ai";
 
 const Page = ({ addToCart, cartData }) => {
   const [merchant, setMerchant] = useState(null);
@@ -71,6 +72,20 @@ const Page = ({ addToCart, cartData }) => {
                 </p>
                 <p className="whitespace-pre-wrap pb-6">
                   {merchant.info.about}
+                </p>
+              </div>
+            ) : null}
+            {merchant.info.website != null &&
+            merchant.info.website.length > 0 ? (
+              <div className="pt-12">
+                <p className="font-medium mb-3">
+                  <a
+                    target="_blank"
+                    href={merchant.info.website}
+                    className="hover:text-gray-500"
+                  >
+                    Website <AiOutlineLink className="inline pb-1" />
+                  </a>
                 </p>
               </div>
             ) : null}

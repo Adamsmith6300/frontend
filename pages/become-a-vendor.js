@@ -276,6 +276,10 @@ const Page = ({
             </div>
           ) : (
             <div className="max-w-full md:max-w-screen-sm mx-auto px-6">
+              <p className="py-3">
+                Create an account before applying to be a vendor. Vendor terms
+                will be on the next page.
+              </p>
               {/* <div className="w-full flex flex-wrap mt-6">
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"
@@ -299,7 +303,7 @@ const Page = ({
               <p className="mt-12 text-center">
                 <Link href="/login">
                   <span className="cursor-pointer">
-                    Already a vendor? Login
+                    Already signed up? Login
                   </span>
                 </Link>
               </p>
