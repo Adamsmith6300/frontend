@@ -61,7 +61,7 @@ const Page = ({ addToCart, cartData }) => {
                 />
               </div>
             ) : (
-              <p className="text-red-500">
+              <p className="mt-2 text-red-500">
                 This store is currently unavailable. Please check back later.
               </p>
             )}
