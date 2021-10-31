@@ -82,6 +82,7 @@ const Page = ({ addToCart, cartData, getCategories, categories, router }) => {
       <SmallAboutSection />
       {categories != null ? (
         categories.map((cat, index) => {
+          if (cat.product_count <= 0) return null;
           return (
             <ProductSection
               key={cat.CategoryIndex + cat.name}

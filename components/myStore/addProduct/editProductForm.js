@@ -22,6 +22,7 @@ const index = ({
 }) => {
   const [formData, updateFormData] = useState({
     ...product,
+    ogCategory: product["category"],
   });
   const [mainImage, setMainImage] = useState(0);
   const [newImages, setNewImages] = useState([...product.images]);

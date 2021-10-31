@@ -31,6 +31,7 @@ export const MenuItem = ({ item, isOpen, asPath }) => {
   if (item.categories) {
     let subCatStyle = "my-5 hover:text-black ";
     let cats = item.categories.map((cat, index) => {
+      if (cat.product_count <= 0) return null;
       let link = `/${item.title}?category=${cat.CategoryIndex}`;
       if (cat.CategoryIndex == -1) link = `/${item.title}`;
       let catStyle = subCatStyle;

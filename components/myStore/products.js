@@ -22,6 +22,18 @@ const Products = ({
   const callDeleteProducts = async (payload) => {
     try {
       setLoading(true);
+      let products_to_delete = [];
+      for (let i = 0; i < payload["products"].length; ++i) {
+        for (let j = 0; j < products.length; ++j) {
+          if (products[j]["ProductId"] == payload["products"][i]) {
+            products_to_delete.push({
+              ProductId: payload["products"][i],
+              category: products[j]["category"],
+            });
+          }
+        }
+      }
+      payload["products"] = products_to_delete;
       let resp = await deleteProducts(payload);
       callFetchMerchData();
     } catch (err) {
