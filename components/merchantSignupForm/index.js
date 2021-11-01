@@ -10,6 +10,7 @@ const index = ({ handleUserPassSubmit }) => {
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
     merchant: true,
+    agreeToMarketing: false,
   });
   const policyModal = () => {
     return (
