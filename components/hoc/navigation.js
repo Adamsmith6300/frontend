@@ -84,6 +84,13 @@ export const Navigation = ({ isOpen, clearFlag, categories, logoutPerson }) => {
     },
     { title: "about", link: "/about", linkStyle: "primary" },
   ];
+  if (!isMerchant) {
+    navItems.push({
+      title: "become a vendor",
+      link: "/become-a-vendor",
+      linkStyle: "primary",
+    });
+  }
 
   return (
     <motion.ul

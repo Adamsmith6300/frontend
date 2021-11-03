@@ -30,11 +30,11 @@ const Page = ({
   successfulMerchantApplication,
   savePersonInfo,
 }) => {
-  return (
-    <Layout>
-      <BlockSignup signupLink="https://shoploma.ca/become-a-vendor" />
-    </Layout>
-  );
+  // return (
+  //   <Layout>
+  //     <BlockSignup signupLink="https://shoploma.ca/become-a-vendor" />
+  //   </Layout>
+  // );
   const [loading, setLoading] = useState(true);
   const [formData, updateFormData] = useState({});
   const [showApplication, setShowApplication] = useState(successfulSignup);
@@ -85,6 +85,7 @@ const Page = ({
     );
     await saveLoginSession(resp);
     setShowApplication(true);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -171,9 +172,9 @@ const Page = ({
                       for your products.
                     </li>
                     <li className="my-3">
-                      5. Work with us and communicate! This is a beta release,
-                      so we really appreciate your feedback and will work hard
-                      to improve the platform as we continue.
+                      5. Work with us and communicate! We really appreciate your
+                      feedback and will work hard to improve the platform as we
+                      continue.
                     </li>
                   </ul>
                   <p className="font-bold">
@@ -195,7 +196,7 @@ const Page = ({
                       agreedTerms
                         ? "bg-black"
                         : "bg-gray-400 cursor-not-allowed"
-                    } btn-no-size-color px-6 py-2 my-3`}
+                    } btn-no-size-color px-6 py-2 my-3 mt-6`}
                   >
                     Apply to be a vendor
                   </button>
@@ -305,6 +306,7 @@ const Page = ({
               <MerchantSignupForm
                 handleUserPassSubmit={handleUserPassSubmit}
                 formError={formError}
+                setLoading={setLoading}
               />
               <p className="mt-12 text-center">
                 <Link href="/login">

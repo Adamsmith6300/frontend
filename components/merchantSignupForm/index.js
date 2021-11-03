@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Checkbox, Form, Message } from "semantic-ui-react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Privacy from "../privacy";
 import Terms from "../terms";
 
-const index = ({ handleUserPassSubmit }) => {
-  const [isLoading, setLoading] = useState(false);
+const index = ({ handleUserPassSubmit, setLoading }) => {
   const [formError, setFormError] = useState(null);
+  const [showPwd, setShowPwd] = useState(false);
+  const [showRePwd, setShowRePwd] = useState(false);
   const [modal, setModal] = useState(null);
   const [formData, updateFormData] = useState({
     agreeTermsPrivacy: "disagree",
     merchant: true,
     agreeToMarketing: false,
   });
+
   const policyModal = () => {
     return (
       <div className="policy-modal grid grid-cols-1 place-items-center border shadow-lg">
@@ -90,7 +93,6 @@ const index = ({ handleUserPassSubmit }) => {
           setLoading(true);
           e.preventDefault();
           handleSubmit();
-          setLoading(false);
         }}
       >
         <Form.Input
@@ -101,22 +103,48 @@ const index = ({ handleUserPassSubmit }) => {
           placeholder="adam@email.com"
           type="email"
         />
-        <Form.Input
-          label="Enter Password"
-          type="password"
-          onChange={handleChange}
-          name="password"
-          required
-          placeholder="Password123!"
-        />
-        <Form.Input
-          label="Re-enter Password"
-          type="password"
-          onChange={handleChange}
-          name="repassword"
-          required
-          placeholder="Password123!"
-        />
+        <fieldset className="flex">
+          <Form.Input
+            className="w-full"
+            label="Enter Password"
+            type={showPwd ? "text" : "password"}
+            onChange={handleChange}
+            name="password"
+            required
+            placeholder="Password123!"
+          />
+          <span
+            onClick={() => setShowPwd(!showPwd)}
+            className="pt-2 w-50 grid place-items-center"
+          >
+            {showPwd ? (
+              <AiOutlineEye className="text-2xl" />
+            ) : (
+              <AiOutlineEyeInvisible className="text-2xl" />
+            )}
+          </span>
+        </fieldset>
+        <fieldset className="flex">
+          <Form.Input
+            className="w-full"
+            label="Confirm Password"
+            type={showRePwd ? "text" : "password"}
+            onChange={handleChange}
+            name="repassword"
+            required
+            placeholder="Password123!"
+          />
+          <span
+            onClick={() => setShowRePwd(!showRePwd)}
+            className="pt-2 w-50 grid place-items-center"
+          >
+            {showRePwd ? (
+              <AiOutlineEye className="text-2xl" />
+            ) : (
+              <AiOutlineEyeInvisible className="text-2xl" />
+            )}
+          </span>
+        </fieldset>
         <Form.Field>
           <Checkbox
             onChange={() =>
@@ -145,6 +173,21 @@ const index = ({ handleUserPassSubmit }) => {
               Privacy Policy
             </span>
           </p>
+        </Form.Field>
+        <Form.Field>
+          <Checkbox
+            checked={formData["agreeToMarketing"]}
+            onChange={() =>
+              handleChange({
+                target: {
+                  value: !formData["agreeToMarketing"],
+                  name: "agreeToMarketing",
+                },
+              })
+            }
+            className="pt-1 mr-2"
+          />
+          <p className="inline text-base">Email me with news and promotions</p>
         </Form.Field>
         <Message error content={formError} />
         <div className="flex justify-center">
