@@ -228,7 +228,7 @@ const Page = ({
                   />
                   <Form.Input
                     required
-                    label="Address"
+                    label="Address (For Order Pickups)"
                     name="address"
                     type="address"
                     onChange={handleChange}
