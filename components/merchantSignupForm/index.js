@@ -79,6 +79,7 @@ const index = ({ handleUserPassSubmit, setLoading }) => {
     }
     if (formData["agreeTermsPrivacy"] == "disagree") {
       setFormError("Please agree to terms and privacy policy");
+      setLoading(false);
       return;
     }
     handleUserPassSubmit(formData);
