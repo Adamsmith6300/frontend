@@ -22,6 +22,7 @@ export default class MyDocument extends Document {
                   `,
             }}
           />
+          <meta name="robots" content="noindex" />
         </Head>
         <body>
           <Main />
