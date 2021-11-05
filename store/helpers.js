@@ -102,6 +102,15 @@ export const checkMerchant = () => {
   return false;
 };
 
+export const checkGuest = () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  if (authRes != null) {
+    const user = jwt(authRes["IdToken"]);
+    return "cognito:groups" in user && user["cognito:groups"].includes("Guest");
+  }
+  return false;
+};
+
 export const checkPerson = () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   if (authRes != null) {

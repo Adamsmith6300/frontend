@@ -13,7 +13,7 @@ import {
   confirmPayment,
   roundToTwo,
 } from "./../../store/helpers";
-import { defaultEvent } from "../../utils/gtag";
+import { defaultEvent, mutateItemsGA } from "../../utils/gtag";
 
 const calcFees = (cart, discount = null) => {
   let discountDollars = 0;
@@ -48,21 +48,21 @@ const calcFees = (cart, discount = null) => {
   return fees;
 };
 
-const mutateItemsGA = (items) => {
-  return items.map((item, ind) => {
-    return {
-      item_id: item["ProductId"],
-      item_name: item["title"],
-      item_brand: item["storename"],
-      item_category: item["category"].toString(),
-      item_variant: item["chosenVariant"] ? item["chosenVariant"]["id"] : null,
-      price: item["chosenVariant"]
-        ? item["chosenVariant"]["price"]
-        : item["price"],
-      quantity: item["qty"],
-    };
-  });
-};
+// const mutateItemsGA = (items) => {
+//   return items.map((item, ind) => {
+//     return {
+//       item_id: item["ProductId"],
+//       item_name: item["title"],
+//       item_brand: item["storename"],
+//       item_category: item["category"].toString(),
+//       item_variant: item["chosenVariant"] ? item["chosenVariant"]["id"] : null,
+//       price: item["chosenVariant"]
+//         ? item["chosenVariant"]["price"]
+//         : item["price"],
+//       quantity: item["qty"],
+//     };
+//   });
+// };
 
 const codes = ["incorrect_cvc", "processing_error", "invalid_number"];
 

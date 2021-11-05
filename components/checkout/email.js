@@ -8,6 +8,7 @@ const email = ({
   setPersonInfo,
   personInfo,
   step,
+  isGuest,
 }) => {
   const isActive = activeCheckoutStep == step;
   const router = useRouter();
@@ -48,7 +49,7 @@ const email = ({
           <Input
             className="w-full my-3 mb-6"
             required
-            value={personInfo.email}
+            value={isGuest ? null : personInfo.email}
             placeholder="adam@email.com"
             name="email"
             type="email"

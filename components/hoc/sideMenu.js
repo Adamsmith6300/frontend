@@ -24,7 +24,7 @@ const sidebar = {
   },
 };
 
-export const SideMenu = ({ clearFlag, categories, logoutPerson }) => {
+export const SideMenu = ({ clearFlag, categories, logoutPerson, isGuest }) => {
   const [isOpen, toggleOpen] = useCycle(false, true);
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -49,6 +49,7 @@ export const SideMenu = ({ clearFlag, categories, logoutPerson }) => {
         isOpen={isOpen}
         clearFlag={clearFlag}
         logoutPerson={logoutPerson}
+        isGuest={isGuest}
       />
       <MenuToggle isOpen={isOpen} toggle={() => toggleOpen()} />
     </motion.nav>

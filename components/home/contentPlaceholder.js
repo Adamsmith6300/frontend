@@ -4,6 +4,7 @@ import { roundToTwo } from "../../store/helpers";
 import { Loader } from "semantic-ui-react";
 import axios from "axios";
 import moment from "moment";
+import { add_to_cart_event } from "../../utils/gtag";
 const daysOfWeek = [
   "sunday",
   "monday",
@@ -129,6 +130,7 @@ export const ContentPlaceholder = memo(
         );
       });
     }
+
     return (
       <div className="content-container">
         <p className="text-3xl flex justify-between">
@@ -152,67 +154,79 @@ export const ContentPlaceholder = memo(
         ) : displayCartButtons ? (
           <div className="my-6 mx-auto">
             {options != null ? <div className="">{options}</div> : null}
-            <div className="flex justify-between w-150 mx-auto my-2">
-              {inventory >= qty ? (
-                <>
+            {inventory >= qty ? (
+              <>
+                <div className="flex justify-between w-150 mx-auto my-2">
+                  <>
+                    <button
+                      className="btn-no-size p-2 px-5"
+                      onClick={() => setQty(Math.max(1, qty - 1))}
+                    >
+                      -
+                    </button>
+                    <span className="leading-loose mx-3 text-2xl">{qty}</span>
+                    <button
+                      disabled={qty + 1 > inventory}
+                      className={`btn-no-size-color p-2 px-4 ${
+                        qty + 1 > inventory
+                          ? "bg-gray-300 cursor-not-allowed"
+                          : "bg-black"
+                      }`}
+                      onClick={() => {
+                        setQty(
+                          Math.min(
+                            inventory ? Number.MAX_VALUE : inventory,
+                            qty + 1
+                          )
+                        );
+                      }}
+                    >
+                      +
+                    </button>
+                  </>
+                </div>
+                <div className="w-full text-center">
                   <button
-                    className="btn-no-size p-2 px-5"
-                    onClick={() => setQty(Math.max(1, qty - 1))}
-                  >
-                    -
-                  </button>
-                  <span className="leading-loose mx-3 text-2xl">{qty}</span>
-                  <button
-                    disabled={qty + 1 > inventory}
-                    className={`btn-no-size-color p-2 px-4 ${
-                      qty + 1 > inventory
-                        ? "bg-gray-300 cursor-not-allowed"
-                        : "bg-black"
-                    }`}
-                    onClick={() => {
-                      setQty(
-                        Math.min(
-                          inventory ? Number.MAX_VALUE : inventory,
-                          qty + 1
-                        )
+                    className="standard-btn my-2"
+                    onClick={async () => {
+                      setLoading(true);
+                      setTimeout(() => {
+                        setLoading(false);
+                      }, 400);
+                      addToCart(
+                        {
+                          ...product,
+                          chosenVariant:
+                            selectedVariant != null
+                              ? product.variants[selectedVariant]
+                              : null,
+                        },
+                        cartData,
+                        qty
+                      );
+                      add_to_cart_event(
+                        {
+                          ...product,
+                          chosenVariant:
+                            selectedVariant != null
+                              ? product.variants[selectedVariant]
+                              : null,
+                        },
+                        qty
                       );
                     }}
                   >
-                    +
+                    {loading ? (
+                      <Loader className="inline" active size="mini" inverted />
+                    ) : (
+                      "Add To Cart"
+                    )}
                   </button>
-                </>
-              ) : (
-                "Add To Cart"
-              )}
-            </div>
-            <div className="w-full text-center">
-              <button
-                className="standard-btn my-2"
-                onClick={async () => {
-                  setLoading(true);
-                  setTimeout(() => {
-                    setLoading(false);
-                  }, 400);
-                  addToCart(
-                    {
-                      ...product,
-                      chosenVariant:
-                        selectedVariant != null
-                          ? product.variants[selectedVariant]
-                          : null,
-                    },
-                    cartData,
-                    qty
-                  );
-                }}
-              >
-                {loading ? (
-                  <Loader className="inline" active size="mini" inverted />
-                ) : (
-                  "Add To Cart"
-                )}
-              </button>
-            </div>
+                </div>
+              </>
+            ) : (
+              <p className="text-red-500 text-center">Sold Out</p>
+            )}
           </div>
         ) : (
           <p className="text-red-500 my-3">

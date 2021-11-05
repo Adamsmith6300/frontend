@@ -3,7 +3,7 @@ import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 import actions from "../store/actions";
 import { withRouter } from "next/router";
-import { isLoggedIn, fetchAccountData } from "../store/helpers";
+import { isLoggedIn, fetchAccountData, checkGuest } from "../store/helpers";
 import { LargeLoader } from "../components/loaders";
 import Checkout from "../components/checkout/index";
 import OrderSummary from "../components/checkout/orderSummary";
@@ -18,30 +18,58 @@ const Page = ({
   addToCart,
   removeFromCart,
   setCart,
+  submitLogin,
 }) => {
   //reroute if carts empty or show msg
   const [personInfoCheckout, setPersonInfo] = useState(personInfo);
   const [billingInfo, setBillingInfo] = useState({});
   const [orderNo, setOrderNo] = useState(null);
+  const [isGuest, setIsGuest] = useState(false);
 
   useEffect(() => {
-    let loggedIn = isLoggedIn();
-    if (!loggedIn) {
-      router.push("/");
-    }
-    const call = async () => {
+    const call = async (loggedInAsGuest = false) => {
       try {
         let resp = await fetchAccountData();
-        setPersonInfo({ ...resp.data.info, saveDeliveryDetails: true });
+        setPersonInfo({
+          ...resp.data.info,
+          saveDeliveryDetails: !loggedInAsGuest,
+        });
       } catch (err) {
         console.log("Error fetching person info", err);
       }
     };
+    if ("guest" in router.query && router.query["guest"]) {
+      //login as guest
+      const loginGuest = async () => {
+        try {
+          let resp = await submitLogin({
+            email: "guest@shoploma.ca",
+            password: "Lomaguest123!",
+          });
+          setIsGuest(true);
+        } catch (err) {
+          console.log("Logging in Guest", err);
+        }
+        try {
+          let resp = await fetchAccountData();
+          setPersonInfo({ ...resp.data.info, saveDeliveryDetails: false });
+        } catch (err) {
+          console.log("Error fetching person info", err);
+        }
+      };
+      loginGuest();
+      return;
+    }
+    let loggedIn = isLoggedIn();
+    let loggedInAsGuest = checkGuest();
+    setIsGuest(loggedInAsGuest);
+    if (!loggedIn) {
+      router.push("/");
+    }
     if (!personInfo && loggedIn) {
-      call();
+      call(loggedInAsGuest);
     }
   }, []);
-
   return (
     <Layout loading={!personInfoCheckout}>
       <Head>
@@ -66,6 +94,7 @@ const Page = ({
                 billingInfo={billingInfo}
                 setBillingInfo={setBillingInfo}
                 setCart={setCart}
+                isGuest={isGuest}
               />
             </>
           ) : null}
@@ -79,6 +108,7 @@ const Page = ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    submitLogin: (formData) => dispatch(actions.submitLogin(formData)),
     addToCart: (product, oldCart, qty = 1) =>
       dispatch(actions.addToCart(product, oldCart, qty)),
     removeFromCart: (product, oldcart, qty) =>

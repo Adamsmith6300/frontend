@@ -10,6 +10,7 @@ const deliveryDetails = ({
   personInfo,
   setPersonInfo,
   step,
+  isGuest,
 }) => {
   const isActive = activeCheckoutStep == step;
   const [loading, setLoading] = useState(false);
@@ -150,22 +151,24 @@ const deliveryDetails = ({
             value={personInfo.notes}
             onChange={handleChange}
           />
-          <div className="my-3">
-            <Checkbox
-              onChange={() => {
-                setPersonInfo({
-                  ...personInfo,
-                  saveDeliveryDetails: !personInfo["saveDeliveryDetails"],
-                });
-              }}
-              defaultChecked
-              label="Save delivery details for later"
-            />
-          </div>
+          {!isGuest ? (
+            <div className="mt-3">
+              <Checkbox
+                onChange={() => {
+                  setPersonInfo({
+                    ...personInfo,
+                    saveDeliveryDetails: !personInfo["saveDeliveryDetails"],
+                  });
+                }}
+                defaultChecked
+                label="Save delivery details for later"
+              />
+            </div>
+          ) : null}
           {error != null ? (
             <Message error header="Invalid Address!" content={error} />
           ) : null}
-          <div className="w-full text-center">
+          <div className="w-full text-center mt-3">
             <button className="standard-btn" type="submit">
               Continue
             </button>
