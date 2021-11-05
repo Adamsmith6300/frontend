@@ -5,7 +5,7 @@ import Head from "next/head";
 import Link from "next/link";
 import actions from "../../store/actions";
 import { SideMenu } from "./sideMenu";
-import { isLoggedIn, checkMerchant } from "../../store/helpers";
+import { isLoggedIn, checkMerchant, checkGuest } from "../../store/helpers";
 import Cart from "./cart";
 import Footer from "./footer";
 import { LargeLoader } from "../loaders";
@@ -27,6 +27,7 @@ const Layout = ({
   // loading = true;
   const [isMerchant, updateIsMerchant] = useState(false);
   const [isAuthed, setIsAuthed] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
   useEffect(() => {
     const cartString = localStorage.getItem("cart");
     if (cartString != undefined) {
@@ -35,6 +36,7 @@ const Layout = ({
     }
     updateIsMerchant(checkMerchant());
     setIsAuthed(isLoggedIn());
+    setIsGuest(checkGuest());
     if (categories == null) {
       getCategories();
     }
@@ -68,6 +70,7 @@ const Layout = ({
         categories={categories}
         clearFlag={clearFlag}
         logoutPerson={logoutPerson}
+        isGuest={isGuest}
       />
       <Cart
         toggleCart={toggleCart}
@@ -79,7 +82,7 @@ const Layout = ({
       {!loading ? (
         <>
           {children}
-          <Footer isAuthed={isAuthed} />
+          <Footer isAuthed={isAuthed} isGuest={isGuest} />
         </>
       ) : (
         <LargeLoader />

@@ -13,6 +13,7 @@ const index = ({
   billingInfo,
   setBillingInfo,
   setCart,
+  isGuest,
 }) => {
   const [activeCheckoutStep, setActiveCheckout] = useState(1);
 
@@ -23,6 +24,7 @@ const index = ({
         setActiveCheckout={setActiveCheckout}
         setPersonInfo={setPersonInfo}
         personInfo={personInfo}
+        isGuest={isGuest}
         step={1}
       />
       <DeliveryDetails
@@ -31,6 +33,7 @@ const index = ({
         activeCheckoutStep={activeCheckoutStep}
         setActiveCheckout={setActiveCheckout}
         step={2}
+        isGuest={isGuest}
       />
       <BillingDetails
         personInfo={personInfo}
@@ -40,6 +43,7 @@ const index = ({
         activeCheckoutStep={activeCheckoutStep}
         setActiveCheckout={setActiveCheckout}
         step={3}
+        isGuest={isGuest}
       />
       <Payment
         setOrderNo={setOrderNo}
@@ -51,6 +55,7 @@ const index = ({
         cartData={cartData}
         step={4}
         setCart={setCart}
+        isGuest={isGuest}
       />
     </div>
   );

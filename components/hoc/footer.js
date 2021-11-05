@@ -7,7 +7,7 @@ import {
   AiOutlineCopyrightCircle,
 } from "react-icons/ai";
 
-const footer = ({ isAuthed }) => {
+const footer = ({ isAuthed, isGuest }) => {
   let menuItems = [
     { title: "About", link: "/about" },
     { title: "Contact", link: "/contact" },
@@ -17,6 +17,7 @@ const footer = ({ isAuthed }) => {
   ];
 
   menuItems = menuItems.map((item, index) => {
+    if (isGuest && item.title == "Become a Vendor") return null;
     return (
       <Link key={item.link + index} href={item.link}>
         <li className="text-2xl py-3 cursor-pointer">{item.title}</li>

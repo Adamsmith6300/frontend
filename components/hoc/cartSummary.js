@@ -21,18 +21,27 @@ const index = ({ cartData, toggle }) => {
           </Link>
         ) : (
           <>
-            <p className="">Must have an account to order.</p>
-            <Link href="/login">
-              <button className="my-2 standard-btn" onClick={toggle}>
-                Login
-              </button>
-            </Link>
-            <p>OR</p>
-            <Link href="/signup">
-              <button className="my-2 standard-btn" onClick={toggle}>
-                Signup
-              </button>
-            </Link>
+            <div>
+              <Link href="/checkout?guest=true">
+                <button className="my-2 btn-no-size px-6 py-4" onClick={toggle}>
+                  Guest Checkout
+                </button>
+              </Link>
+            </div>
+            {/* <div>
+              <Link href="/login">
+                <button className="my-2 standard-btn" onClick={toggle}>
+                  Login
+                </button>
+              </Link>
+            </div>
+            <div>
+              <Link href="/signup">
+                <button className="my-2 standard-btn" onClick={toggle}>
+                  Signup
+                </button>
+              </Link>
+            </div> */}
           </>
         )}
       </div>

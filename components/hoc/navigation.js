@@ -22,7 +22,13 @@ const variants = {
   },
 };
 
-export const Navigation = ({ isOpen, clearFlag, categories, logoutPerson }) => {
+export const Navigation = ({
+  isOpen,
+  clearFlag,
+  categories,
+  logoutPerson,
+  isGuest,
+}) => {
   const router = useRouter();
 
   ////////////////// PASS THIS DOWN FROM LAYOUT ////////////////////
@@ -39,11 +45,13 @@ export const Navigation = ({ isOpen, clearFlag, categories, logoutPerson }) => {
 
   if (loggedIn) {
     homeLink = "/marketplace";
-    secondaryNavItems.unshift({
-      title: "my account",
-      link: "/my-account",
-      linkStyle: "secondary",
-    });
+    if (!isGuest) {
+      secondaryNavItems.unshift({
+        title: "my account",
+        link: "/my-account",
+        linkStyle: "secondary",
+      });
+    }
     secondaryNavItems.push({
       title: "logout",
       action: () => {
@@ -84,7 +92,7 @@ export const Navigation = ({ isOpen, clearFlag, categories, logoutPerson }) => {
     },
     { title: "about", link: "/about", linkStyle: "primary" },
   ];
-  if (!isMerchant) {
+  if (!isMerchant && !isGuest) {
     navItems.push({
       title: "become a vendor",
       link: "/become-a-vendor",
