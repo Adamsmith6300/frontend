@@ -45,7 +45,6 @@ const Layout = ({
   return (
     <div className="loma-container">
       <Head>
-        <title>Loma</title>
         <link rel="icon" href="/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
