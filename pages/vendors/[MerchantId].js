@@ -10,12 +10,14 @@ import { AiOutlineLink } from "react-icons/ai";
 
 const Page = ({ addToCart, cartData }) => {
   const [merchant, setMerchant] = useState(null);
+  const [initialProdId, setInitialProdId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     async function fetchMerchant() {
       try {
-        const { MerchantId } = router.query;
+        const { MerchantId, prod } = router.query;
+        if (prod != null) setInitialProdId(prod);
         const resp = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/market/merchants/${MerchantId}`
         );
@@ -58,6 +60,7 @@ const Page = ({ addToCart, cartData }) => {
                   products={merchant.products}
                   addToCart={addToCart}
                   cartData={cartData}
+                  initialProdId={initialProdId}
                 />
               </div>
             ) : (

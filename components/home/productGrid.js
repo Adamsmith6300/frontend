@@ -2,8 +2,10 @@ import { useState } from "react";
 import ProductCard from "./productCard";
 import { Loader } from "semantic-ui-react";
 
-const productGrid = ({ products, addToCart, cartData }) => {
-  const [selectedId, setSelectedId] = useState(null);
+const productGrid = ({ products, addToCart, cartData, initialProdId }) => {
+  const [selectedId, setSelectedId] = useState(
+    initialProdId != null ? initialProdId : null
+  );
   if (products == null) return <Loader inline="centered" active />;
   if (products.length < 1)
     return (
