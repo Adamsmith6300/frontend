@@ -43,6 +43,11 @@ const Page = ({
       <Head>
         <title>Home - Loma</title>
       </Head>
+      <div className="py-1 hidden lg:block w-full">
+        <h2 className="text-center text-3xl py-6 px-2 shadow-lg border border-1">
+          Free delivery on your first order! Use code FIRSTFREE at checkout.
+        </h2>
+      </div>
       <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
         heading={"Local Shopping, Sustainable Delivery"}
