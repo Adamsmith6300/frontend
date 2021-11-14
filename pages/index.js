@@ -90,6 +90,15 @@ const Page = ({
       ) : (
         <LargeLoader />
       )}
+      <div className="w-full mt-24 text-center">
+        <p className="font-bold text-2xl">
+          Subscribe to hear about special updates from Loma
+        </p>
+        <iframe
+          className="w-full h-400"
+          src="https://cdn.forms-content.sg-form.com/102dc890-ab88-11eb-bc4e-9a7ef5f1d536"
+        />
+      </div>
     </Layout>
   );
 };
