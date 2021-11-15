@@ -453,3 +453,10 @@ export const updateMerchantOrderStatus = async (payload) => {
   );
   return resp;
 };
+
+export const createContactSendgrid = async (payload) => {
+  return await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/people/contact`,
+    payload
+  );
+};
