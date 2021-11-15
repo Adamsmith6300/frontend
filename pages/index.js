@@ -11,6 +11,7 @@ import MerchantSection from "../components/home/merchantSection";
 import SmallAboutSection from "../components/home/smallAboutSection";
 import Head from "next/head";
 import { LargeLoader } from "../components/loaders";
+import MailingListSignup from "../components/mailingListSignup";
 
 const Page = ({
   addToCart,
@@ -91,13 +92,10 @@ const Page = ({
         <LargeLoader />
       )}
       <div className="w-full mt-24 text-center">
-        <p className="font-bold text-2xl">
-          Subscribe to hear about special updates from Loma
+        <p className="font-bold text-3xl px-6 pb-6 w-full md:w-300 mx-auto">
+          Subscribe to hear about special updates from Loma!
         </p>
-        <iframe
-          className="w-full h-400"
-          src="https://cdn.forms-content.sg-form.com/102dc890-ab88-11eb-bc4e-9a7ef5f1d536"
-        />
+        <MailingListSignup />
       </div>
     </Layout>
   );

@@ -11,6 +11,7 @@ const footer = ({ isAuthed, isGuest }) => {
   let menuItems = [
     { title: "About", link: "/about" },
     { title: "Contact", link: "/contact" },
+    { title: "FAQ", link: "/faq" },
     { title: "Become a Vendor", link: "/become-a-vendor" },
     { title: "Terms + Conditions", link: "/terms" },
     { title: "Privacy Policy", link: "/privacy" },
@@ -25,7 +26,7 @@ const footer = ({ isAuthed, isGuest }) => {
     );
   });
   return (
-    <div className="footer mt-24 py-4 pt-48 md:pt-32 md:pb-8 px-6 md:px-32">
+    <div className="footer py-4 pt-48 md:pt-32 md:pb-8 px-6 md:px-32">
       <div className="max-w-1040 mx-auto">
         <Link href={isAuthed ? "/marketplace" : "/"}>
           <img
@@ -59,6 +60,11 @@ const footer = ({ isAuthed, isGuest }) => {
               <AiOutlineFacebook className="inline" />
             </a>
           </div>
+          <p>
+            We respectfully acknowledge that we operate on the traditional and
+            unceded territories of the šxʷməθkʷəy̓əmaɁɬ təməxʷ (Musqueam) and
+            səl̓ilwətaɁɬ təməxʷ (Tsleil-Waututh) Coast Salish people.
+          </p>
           <p className="text-base mt-4">
             <AiOutlineCopyrightCircle className="inline ml-1" />
             <span className="ml-3">
