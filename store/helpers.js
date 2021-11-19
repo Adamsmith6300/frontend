@@ -70,6 +70,8 @@ export const getTokens = async ({ code, redirect }) => {
 export const isLoggedIn = () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   const nowUnix = Math.floor(Date.now() / 1000);
+  if (authRes !== undefined && authRes !== null && authRes["IdExp"] <= nowUnix)
+    logoutSession();
   return (
     authRes !== undefined && authRes !== null && authRes["IdExp"] > nowUnix
   );

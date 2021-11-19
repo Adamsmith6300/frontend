@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Link from "next/link";
 import { Form, Checkbox, Message } from "semantic-ui-react";
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle, FcCheckmark } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import Head from "next/head";
 import actions from "../store/actions";
@@ -287,6 +287,20 @@ const Page = ({
                 Create an account before applying to be a vendor. Vendor terms
                 will be on the next page.
               </p>
+              <div className="py-6">
+                <p>
+                  <FcCheckmark className="inline mr-3 mb-1" />
+                  No commissions
+                </p>
+                <p>
+                  <FcCheckmark className="inline mr-3 mb-1" />
+                  No monthly fees
+                </p>
+                <p>
+                  <FcCheckmark className="inline mr-3 mb-1" />
+                  Pickup + delivery included
+                </p>
+              </div>
               {/* <div className="w-full flex flex-wrap mt-6">
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"

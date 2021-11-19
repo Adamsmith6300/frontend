@@ -5,13 +5,13 @@ const index = ({}) => {
     {
       title: "Sustainable",
       subtitle:
-        "We ONLY deliver in hybrid or electric vehicles and use sustainable packaging materials!",
+        "We only deliver in hybrid or electric vehicles and use sustainable packaging materials!",
       img: "./sustainable-packaging.jpg",
     },
     {
       title: "Fast Delivery",
       subtitle:
-        "We pickup and deliver locally, which helps your order arrive faster!",
+        "We pickup and deliver locally, which means faster delivery! (1-2 days)",
       img: "./time.jpg",
     },
     {
@@ -48,9 +48,9 @@ const index = ({}) => {
     <div className="text-center my-12 px-2 lg:px-auto">
       <h2 className="text-4xl mb-8">{mainTitle}</h2>
       <div className="flex flex-wrap justify-center">{points}</div>
-      <Link href="/signup">
+      {/* <Link href="/signup">
         <button className="standard-btn mt-8">Get Started</button>
-      </Link>
+      </Link> */}
     </div>
   );
 };

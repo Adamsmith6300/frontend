@@ -92,6 +92,7 @@ export const Navigation = ({
     },
     { title: "about", link: "/about", linkStyle: "primary" },
   ];
+  // { title: "how it works", link: "/how-it-works", linkStyle: "primary" },
   if (!isMerchant && !isGuest) {
     navItems.push({
       title: "become a vendor",

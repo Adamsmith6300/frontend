@@ -23,11 +23,13 @@ const banner = ({ bgSrc, heading, content, link, left }) => {
         </h2>
       </div>
       <div className="text-center w-full py-10 lg:py-16 px-8 sm:w-1/2 grid grid-cols-1 place-items-center">
-        <h2 className="text-black text-4xl">{heading}</h2>
-        <p className="my-6">{content}</p>
-        <Link href={link}>
+        <div>
+          <h2 className="text-black text-4xl">{heading}</h2>
+          <p className="my-6">{content}</p>
+        </div>
+        {/* <Link href={link}>
           <button className="standard-btn">Signup</button>
-        </Link>
+        </Link> */}
       </div>
       <Image />
     </div>

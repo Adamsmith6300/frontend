@@ -18,6 +18,14 @@
     height: 1000px;
   }
 }
+@media (min-width: 768px) {
+  .md-h-500 {
+    height: 500px;
+  }
+  .md-h-400 {
+    height: 400px;
+  }
+}
 @media only screen and (max-width: 640px) {
   .policy-modal {
     position: fixed;

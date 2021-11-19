@@ -1,19 +1,19 @@
+import { useState } from "react";
 import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
-import Banner from "../components/home/banner";
 import Head from "next/head";
-import { OurMission, OurStory, OurEthos } from "../components/about";
 
 const Page = ({}) => {
   return (
     <Layout>
       <Head>
-        <title>About - Loma</title>
+        <title>How It Works - Loma</title>
       </Head>
-      <OurMission />
-      <OurEthos />
-      <Banner bgSrc={"/lions.jpg"} empty />
-      <OurStory />
+      <div className="my-account-container">
+        <>
+          <h3 className="text-3xl">How It Works</h3>
+        </>
+      </div>
     </Layout>
   );
 };

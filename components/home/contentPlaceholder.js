@@ -187,7 +187,7 @@ export const ContentPlaceholder = memo(
                 </div>
                 <div className="w-full text-center">
                   <button
-                    className="standard-btn my-2"
+                    className="btn-no-size-color py-4 px-5 bg-green-500 my-2"
                     onClick={async () => {
                       setLoading(true);
                       setTimeout(() => {
