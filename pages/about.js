@@ -2,7 +2,12 @@ import Layout from "../components/hoc/layout";
 import { connect } from "react-redux";
 import Banner from "../components/home/banner";
 import Head from "next/head";
-import { OurMission, OurStory, OurEthos } from "../components/about";
+import {
+  OurMission,
+  OurStory,
+  OurEthos,
+  OurFounders,
+} from "../components/about";
 
 const Page = ({}) => {
   return (
@@ -14,6 +19,7 @@ const Page = ({}) => {
       <OurEthos />
       <Banner bgSrc={"/lions.jpg"} empty />
       <OurStory />
+      <OurFounders />
     </Layout>
   );
 };
