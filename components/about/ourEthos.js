@@ -45,7 +45,7 @@ const index = ({}) => {
           <p>
             We believe in ‘Return of Surplus’. We feel that a sustainable
             economic system should reinvest profits back into the local
-            community. We return at least 10% of profits back to our community
+            community. We return at least 10% of profits back into our community
             through local causes.
           </p>
         </div>

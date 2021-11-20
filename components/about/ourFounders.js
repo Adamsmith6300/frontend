@@ -1,7 +1,10 @@
 const index = ({}) => {
   return (
     <div className="flex flex-wrap">
-      <div className="bg-green-900 text-white w-full md:w-1/2 text-center grid lg:place-content-center place-content-start pt-12 md:pt-0">
+      <div className="w-full max-h-500 xl:hidden overflow-hidden grid place-content-center">
+        <img className="w-full" src="/Tal-and-Adam.jpg" />
+      </div>
+      <div className="bg-green-900 text-white w-full xl:w-1/2 text-center grid lg:place-content-center place-content-start py-8 lg:pb-16">
         <h2>Our Founders</h2>
         <div className="mt-4 mx-auto px-12 lg:px-24">
           <p className="">
@@ -25,8 +28,8 @@ const index = ({}) => {
           </p>
         </div>
       </div>
-      <div className="w-full h-500 md:w-1/2 overflow-hidden">
-        <img className="w-full" src="/Tal-and-Adam.jpg" />
+      <div className="w-full hidden xl:block xl:w-1/2 overflow-hidden">
+        <img className="h-full" src="/Tal-and-Adam.jpg" />
       </div>
     </div>
   );

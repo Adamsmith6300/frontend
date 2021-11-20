@@ -19,6 +19,9 @@
   }
 }
 @media (min-width: 768px) {
+  .md-h-600 {
+    height: 500px;
+  }
   .md-h-500 {
     height: 500px;
   }
