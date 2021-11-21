@@ -1,9 +1,23 @@
 const index = ({}) => {
+  const founderImgStyle = {
+    height: "auto",
+    width: "50%",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundImage: `url(/Tal-and-Adam.jpg)`,
+  };
+  const founderImgStyleFullWidth = {
+    height: "500px",
+    width: "100%",
+    backgroundPosition: "left",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundImage: `url(/Tal-and-Adam.jpg)`,
+  };
   return (
     <div className="flex flex-wrap">
-      <div className="w-full max-h-500 xl:hidden overflow-hidden grid place-content-center">
-        <img className="w-full" src="/Tal-and-Adam.jpg" />
-      </div>
+      <div style={founderImgStyleFullWidth} className="xl:hidden"></div>
       <div className="bg-green-900 text-white w-full xl:w-1/2 text-center grid lg:place-content-center place-content-start py-8 lg:pb-16">
         <h2>Our Founders</h2>
         <div className="mt-4 mx-auto px-12 lg:px-24">
@@ -28,9 +42,7 @@ const index = ({}) => {
           </p>
         </div>
       </div>
-      <div className="w-full hidden xl:block xl:w-1/2 overflow-hidden">
-        <img className="h-full" src="/Tal-and-Adam.jpg" />
-      </div>
+      <div style={founderImgStyle} className="hidden xl:block"></div>
     </div>
   );
 };

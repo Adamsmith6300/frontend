@@ -1,9 +1,15 @@
 const index = ({}) => {
+  const missionImgStyle = {
+    height: "auto",
+    minHeight: "400px",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundImage: `url(/our-mission.png)`,
+  };
   return (
     <div className="flex flex-wrap">
-      <div className="w-full max-h-500 xl:w-1/2 overflow-hidden ">
-        <img className="w-full" src="/our-mission.png" />
-      </div>
+      <div style={missionImgStyle} className="w-full xl:w-1/2"></div>
       <div className="bg-green-900 text-white w-full xl:w-1/2 text-center grid lg:place-content-center place-content-start py-8 lg:pb-16">
         <h2>Our Mission</h2>
         <div className="mt-4 mx-auto px-12 lg:px-24">

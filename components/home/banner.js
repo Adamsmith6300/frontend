@@ -1,10 +1,9 @@
 import Link from "next/link";
-import moment from "moment";
 
 const banner = ({ bgSrc, heading, content, link, overlay, empty }) => {
   if (empty) {
     let bannerStyle = {
-      height: "500px",
+      height: "400px",
       width: "100%",
       backgroundPosition: "center",
       backgroundSize: "cover",
@@ -14,10 +13,7 @@ const banner = ({ bgSrc, heading, content, link, overlay, empty }) => {
     return <div style={bannerStyle}></div>;
   }
   return (
-    <div
-      className="banner"
-      onClick={() => console.log(moment().format("dddd").toLowerCase())}
-    >
+    <div className="banner">
       <div className="banner-overlay">
         <div className="banner-content">
           <div>
