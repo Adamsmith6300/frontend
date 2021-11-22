@@ -10,7 +10,7 @@ const Page = ({}) => {
       <Head>
         <title>How It Works - Loma</title>
       </Head>
-      <Banner bgSrc={"/passion.jpg"} empty />
+      <Banner bgSrc={"/holiday-packages.jpg"} empty />
       <div className="text-center mt-12 mb-24 px-8 md:px-20">
         <div className="flex flex-wrap justify-center max-w-1040 mx-auto py-12">
           <div className="text-left w-full md:w-1/2 max-w-700">

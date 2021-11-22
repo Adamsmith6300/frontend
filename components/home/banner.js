@@ -1,16 +1,15 @@
 import Link from "next/link";
 
-const banner = ({ bgSrc, heading, content, link, overlay, empty }) => {
+const banner = ({ bgSrc, heading, content, link, empty }) => {
   if (empty) {
     let bannerStyle = {
-      height: "400px",
       width: "100%",
       backgroundPosition: "center",
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundImage: `url(${bgSrc})`,
     };
-    return <div style={bannerStyle}></div>;
+    return <div style={bannerStyle} className="h-300"></div>;
   }
   return (
     <div className="banner">
