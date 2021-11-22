@@ -227,7 +227,7 @@ const index = ({
           />
           <button
             type="submit"
-            className="btn-no-size-color px-6 py-3 bg-black mt-3 lg:mt-0"
+            className="btn-no-size-color px-6 py-3 bg-green-900 mt-3 lg:mt-0"
           >
             Apply
           </button>
@@ -323,7 +323,7 @@ const index = ({
           className={`btn-no-size-color px-12 py-3 ${
             chargeDetails.total == 0 || !stripe
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-green-600"
+              : "bg-green-900"
           } mt-6`}
           type="submit"
           disabled={chargeDetails.total == 0 || !stripe}

@@ -177,12 +177,6 @@ const Page = ({
                       continue.
                     </li>
                   </ul>
-                  <p className="font-bold">
-                    Note: We aim to be as transparent as possible. The platform
-                    is currently free, but in the future we plan to implement a
-                    small monthly fee to help us cover our costs. We will work
-                    with our vendors to make sure it's an appropriate amount.
-                  </p>
                   <div className="mt-3">
                     <Checkbox
                       onChange={(e) => setAgreedTerms(!agreedTerms)}
@@ -194,7 +188,7 @@ const Page = ({
                     onClick={() => setShowTerms(false)}
                     className={`${
                       agreedTerms
-                        ? "bg-black"
+                        ? "bg-green-900"
                         : "bg-gray-400 cursor-not-allowed"
                     } btn-no-size-color px-6 py-2 my-3 mt-6`}
                   >
@@ -274,7 +268,10 @@ const Page = ({
                     content={"You are already signed up as a vendor."}
                   />
                   <div className="flex justify-center mt-4">
-                    <button className="standard-btn" type="submit">
+                    <button
+                      className="btn-no-size-color bg-green-900 px-8 py-4"
+                      type="submit"
+                    >
                       Submit
                     </button>
                   </div>

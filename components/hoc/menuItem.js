@@ -25,17 +25,17 @@ export const menuItemVariants = {
 export const MenuItem = ({ item, isOpen, asPath }) => {
   const [expand, setExpand] = useState(false);
   const activeLink = asPath == item.link;
-  let textStyle = activeLink ? "text-black" : "text-gray-600";
-  textStyle += " h-12 w-full uppercase hover:text-black";
+  let textStyle = activeLink ? "text-green-900" : "text-gray-600";
+  textStyle += " h-12 w-full uppercase hover:text-green-900";
 
   if (item.categories) {
-    let subCatStyle = "my-5 hover:text-black ";
+    let subCatStyle = "my-5 hover:text-green-900 ";
     let cats = item.categories.map((cat, index) => {
       if (cat.product_count <= 0) return null;
       let link = `/${item.title}?category=${cat.CategoryIndex}`;
       if (cat.CategoryIndex == -1) link = `/${item.title}`;
       let catStyle = subCatStyle;
-      catStyle += asPath == link ? "text-black" : "text-gray-600";
+      catStyle += asPath == link ? "text-green-900" : "text-gray-600";
       return (
         <Link key={index} href={link} passHref>
           <motion.li
@@ -59,8 +59,8 @@ export const MenuItem = ({ item, isOpen, asPath }) => {
         <div className={`uppercase w-full min-h-40 ${expand ? "py-3" : ""}`}>
           <p
             className={`${
-              asPath.includes(item.title) ? "text-black" : "text-gray-600"
-            } w-full uppercase hover:text-black`}
+              asPath.includes(item.title) ? "text-green-900" : "text-gray-600"
+            } w-full uppercase hover:text-green-900`}
           >
             {item.title}
           </p>
@@ -71,7 +71,7 @@ export const MenuItem = ({ item, isOpen, asPath }) => {
                   key={item.title}
                   className={`
                   ${subCatStyle} ${
-                    activeLink ? "text-black" : "text-gray-600"
+                    activeLink ? "text-green-900" : "text-gray-600"
                   }`}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}

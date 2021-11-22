@@ -22,7 +22,7 @@ export const CartMenuToggle = ({ toggle, isOpen, itemCount }) => (
     onClick={toggle}
     variants={variants}
   >
-    <span className="text-black text-3xl">
+    <span className="text-green-900 text-3xl">
       <span className="text-sm cart-item-count">
         {itemCount > 9 ? "9+" : itemCount}
       </span>

@@ -37,7 +37,7 @@ export const Image = ({
     >
       {isSelected ? (
         <div
-          className="h-full w-32 flex justify-center cursor-pointer"
+          className="h-full w-32 flex justify-center cursor-pointer text-black"
           onClick={() => {
             if (currentIndex != 0)
               setCurrentIndex(Math.max(0, currentIndex - 1));
@@ -53,7 +53,7 @@ export const Image = ({
       <img className="h-full no-max-width" src={imgSrc} alt="" align="center" />
       {isSelected ? (
         <div
-          className="h-full w-32 flex justify-center cursor-pointer"
+          className="h-full w-32 flex justify-center cursor-pointer text-black"
           onClick={() => {
             if (currentIndex < images.length - 1)
               setCurrentIndex(Math.min(images.length - 1, currentIndex + 1));

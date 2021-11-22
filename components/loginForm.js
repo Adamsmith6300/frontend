@@ -65,7 +65,10 @@ const LoginForm = ({ setLoading, submitLogin, formError }) => {
 
       <Message error content={formError} />
       <div className="flex justify-center">
-        <button className="standard-btn" type="submit">
+        <button
+          className="btn-no-size-color bg-green-900 px-8 py-4"
+          type="submit"
+        >
           Login
         </button>
       </div>

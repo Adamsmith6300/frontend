@@ -18,7 +18,10 @@ const index = ({ cartData, toggle }) => {
       <div className="mt-3 text-center">
         {isLoggedIn() ? (
           <Link href="/checkout">
-            <button className="standard-btn" onClick={toggle}>
+            <button
+              className="btn-no-size-color bg-green-900 px-6 py-4"
+              onClick={toggle}
+            >
               Checkout
             </button>
           </Link>
@@ -26,7 +29,10 @@ const index = ({ cartData, toggle }) => {
           <>
             <div>
               <Link href="/checkout?guest=true">
-                <button className="my-2 btn-no-size px-6 py-4" onClick={toggle}>
+                <button
+                  className="my-2 btn-no-size-color bg-green-900 px-6 py-4"
+                  onClick={toggle}
+                >
                   Guest Checkout
                 </button>
               </Link>

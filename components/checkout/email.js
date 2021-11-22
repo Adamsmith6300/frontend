@@ -26,7 +26,7 @@ const email = ({
         <span>
           {step}. Email{" "}
           {activeCheckoutStep > step ? (
-            <FcCheckmark className="inline ml-3 mb-1" />
+            <FcCheckmark className="inline ml-3 mb-1 text-green-900" />
           ) : null}
         </span>
         {activeCheckoutStep > step ? (
@@ -55,7 +55,10 @@ const email = ({
             type="email"
             onChange={handleChange}
           />
-          <button className="standard-btn" type="submit">
+          <button
+            className="btn-no-size-color bg-green-900 px-8 py-3 "
+            type="submit"
+          >
             Continue
           </button>
         </form>

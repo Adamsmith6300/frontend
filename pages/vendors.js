@@ -80,7 +80,7 @@ const Page = ({ addToCart, cartData, clearFlag, router }) => {
                           setLoadingMerchants(false);
                         });
                     }}
-                    className="btn-no-size-color px-6 py-2 bg-black"
+                    className="btn-no-size-color px-8 py-4 bg-green-900"
                   >
                     Load more
                   </button>

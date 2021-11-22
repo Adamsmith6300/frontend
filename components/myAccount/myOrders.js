@@ -66,7 +66,9 @@ const myOrders = ({ orders }) => {
             </p>
             <div className="w-full text-center">
               <Link href="/">
-                <button className="standard-btn">Shop</button>
+                <button className="btn-no-size-color bg-green-900 px-8 py-3 ">
+                  Shop
+                </button>
               </Link>
             </div>
           </div>

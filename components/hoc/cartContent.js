@@ -32,7 +32,7 @@ const index = ({ toggle, cartData, addToCart, removeFromCart }) => {
           CLOSE
         </span> */}
         <button
-          className="cursor-pointer py-4 text-2xl font-bold"
+          className="cursor-pointer pt-8 pr-4 pb-4 text-2xl font-bold"
           onClick={toggle}
         >
           <svg width="23" height="23" viewBox="0 0 23 23">
@@ -44,7 +44,7 @@ const index = ({ toggle, cartData, addToCart, removeFromCart }) => {
               d="M 3 16.5 L 17 2.5"
               fill="transparent"
               strokeWidth="2"
-              stroke="hsl(0, 100%, 1%)"
+              stroke="hsl(152, 42.4%, 23.1%)"
               strokeLinecap="round"
             />
             <path
@@ -55,7 +55,7 @@ const index = ({ toggle, cartData, addToCart, removeFromCart }) => {
               d="M 3 2.5 L 17 16.346"
               fill="transparent"
               strokeWidth="2"
-              stroke="hsl(0, 100%, 1%)"
+              stroke="hsl(152, 42.4%, 23.1%)"
               strokeLinecap="round"
             />
           </svg>
