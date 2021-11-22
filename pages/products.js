@@ -92,7 +92,7 @@ const Page = ({ categories, addToCart, cartData, clearFlag }) => {
                           setLoadingProducts(false);
                         });
                     }}
-                    className="btn-no-size-color px-6 py-2 bg-black"
+                    className="btn-no-size-color px-8 py-4 bg-green-900"
                   >
                     Load more
                   </button>

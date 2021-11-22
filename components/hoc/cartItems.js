@@ -21,7 +21,7 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
     return (
       <div key={entry[0]} className="flex justify-start w-full my-6">
         <div className="w-1/3 overflow-x-hidden mr-4 flex justify-center">
-          <img src={mainImageUrl} className="h-100" />
+          <img src={mainImageUrl} className="h-100 max-w-none" />
         </div>
         <div className="w-2/3 text-left">
           <p className="text-lg">
@@ -45,14 +45,14 @@ const cartItems = ({ cartData, addToCart, removeFromCart }) => {
           ) : null}
           <p className="text-base text-grey-300 mb-1">${visiblePrice}</p>
           <button
-            className="btn-no-size p-2 px-5"
+            className="btn-no-size-color bg-green-900 p-2 px-5"
             onClick={() => removeFromCart(item, cartData, 1)}
           >
             -
           </button>
           <span className="p-2 px-4">{item.qty}</span>
           <button
-            className="btn-no-size p-2 px-4"
+            className="btn-no-size-color bg-green-900 p-2 px-4"
             onClick={() => addToCart(item, cartData, 1)}
           >
             +

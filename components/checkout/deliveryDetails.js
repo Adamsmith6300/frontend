@@ -49,7 +49,7 @@ const deliveryDetails = ({
         <span>
           {step}. Delivery Details
           {activeCheckoutStep > step ? (
-            <FcCheckmark className="inline ml-3 mb-1" />
+            <FcCheckmark className="inline ml-3 mb-1 text-green-900" />
           ) : null}
         </span>
         {activeCheckoutStep > step ? (
@@ -169,7 +169,10 @@ const deliveryDetails = ({
             <Message error header="Invalid Address!" content={error} />
           ) : null}
           <div className="w-full text-center mt-3">
-            <button className="standard-btn" type="submit">
+            <button
+              className="btn-no-size-color bg-green-900 px-8 py-3 "
+              type="submit"
+            >
               Continue
             </button>
           </div>

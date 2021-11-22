@@ -31,7 +31,7 @@ const billingDetails = ({
         <span>
           {step}. Billing Details
           {activeCheckoutStep > step ? (
-            <FcCheckmark className="inline ml-3 mb-1" />
+            <FcCheckmark className="inline ml-3 mb-1 text-green-900" />
           ) : null}
         </span>
         {activeCheckoutStep > step ? (
@@ -148,7 +148,10 @@ const billingDetails = ({
             </>
           ) : null}
           <div className="w-full text-center">
-            <button className="standard-btn" type="submit">
+            <button
+              className="btn-no-size-color bg-green-900 px-8 py-3 "
+              type="submit"
+            >
               Continue
             </button>
           </div>

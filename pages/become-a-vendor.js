@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "next/router";
 import Link from "next/link";
 import { Form, Checkbox, Message } from "semantic-ui-react";
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle, FcCheckmark } from "react-icons/fc";
 import { AiFillFacebook } from "react-icons/ai";
 import Head from "next/head";
 import actions from "../store/actions";
@@ -171,12 +171,6 @@ const Page = ({
                       continue.
                     </li>
                   </ul>
-                  <p className="font-bold">
-                    Note: We aim to be as transparent as possible. The platform
-                    is currently free, but in the future we plan to implement a
-                    small monthly fee to help us cover our costs. We will work
-                    with our vendors to make sure it's an appropriate amount.
-                  </p>
                   <div className="mt-3">
                     <Checkbox
                       onChange={(e) => setAgreedTerms(!agreedTerms)}
@@ -188,7 +182,7 @@ const Page = ({
                     onClick={() => setShowTerms(false)}
                     className={`${
                       agreedTerms
-                        ? "bg-black"
+                        ? "bg-green-900"
                         : "bg-gray-400 cursor-not-allowed"
                     } btn-no-size-color px-6 py-2 my-3 mt-6`}
                   >
@@ -268,7 +262,10 @@ const Page = ({
                     content={"You are already signed up as a vendor."}
                   />
                   <div className="flex justify-center mt-4">
-                    <button className="standard-btn" type="submit">
+                    <button
+                      className="btn-no-size-color bg-green-900 px-8 py-4"
+                      type="submit"
+                    >
                       Submit
                     </button>
                   </div>
@@ -281,6 +278,20 @@ const Page = ({
                 Create an account before applying to be a vendor. Vendor terms
                 will be on the next page.
               </p>
+              <div className="py-6">
+                <p>
+                  <FcCheckmark className="inline mr-3 mb-1" />
+                  No commissions
+                </p>
+                <p>
+                  <FcCheckmark className="inline mr-3 mb-1" />
+                  No monthly fees
+                </p>
+                <p>
+                  <FcCheckmark className="inline mr-3 mb-1" />
+                  Pickup + delivery included
+                </p>
+              </div>
               {/* <div className="w-full flex flex-wrap mt-6">
                 <a
                   className="social-btn w-full py-4 text-center my-3 text-xl"

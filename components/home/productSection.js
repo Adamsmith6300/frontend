@@ -49,7 +49,7 @@ const productSection = ({
       {heading != "Featured Products" ? (
         <div className="text-center">
           <Link href={link}>
-            <button className="standard-btn">
+            <button className="btn-no-size-color px-8 py-3 bg-green-900">
               {link == "/products" ? "All Products" : "View All"}
             </button>
           </Link>

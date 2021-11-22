@@ -16,11 +16,12 @@ const Page = ({}) => {
       <Head>
         <title>Contact - Loma</title>
       </Head>
+      <Banner bgSrc={"/bc-forest.jpg"} empty />
       <div className="text-center my-24 px-8">
         <h2>Contact Us</h2>
         <p className="mt-4 mb-8 max-w-500 mx-auto">
-          We'd be excited to hear from you! Email us with any questions or
-          feedback and we'll get back to you as soon as we can.
+          We're eager to hear from you! Email us with any questions or feedback
+          and we'll get back to you as soon as we can.
         </p>
         <p>
           <a href="mailto:contact@shoploma.ca" className="hover:text-black">
@@ -45,7 +46,6 @@ const Page = ({}) => {
           </a>
         </div>
       </div>
-      <Banner bgSrc={"/passion.jpg"} empty />
     </Layout>
   );
 };

@@ -38,6 +38,7 @@ const Page = ({
         console.log("Error fetching person info", err);
       }
     };
+    if (Object.values(cartData.items).length <= 0) router.push("/marketplace");
     if ("guest" in router.query && router.query["guest"]) {
       //login as guest
       const loginGuest = async () => {

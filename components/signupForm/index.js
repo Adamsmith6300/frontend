@@ -18,7 +18,10 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
     return (
       <div className="policy-modal grid grid-cols-1 place-items-center border shadow-lg">
         {modal == "privacy" ? <Privacy /> : <Terms />}
-        <button onClick={() => setModal(null)} className="standard-btn my-3">
+        <button
+          onClick={() => setModal(null)}
+          className="btn-no-size-color bg-green-900 px-8 py-4 my-3"
+        >
           CLOSE
         </button>
       </div>
@@ -228,7 +231,10 @@ const index = ({ submitSignup, setLoading, formError, setFormError }) => {
         </Form.Field>
         <Message error content={formError} />
         <div className="flex justify-center">
-          <button className="standard-btn" type="submit">
+          <button
+            className="btn-no-size-color bg-green-900 px-8 py-4"
+            type="submit"
+          >
             Submit
           </button>
         </div>

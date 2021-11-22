@@ -159,7 +159,7 @@ export const ContentPlaceholder = memo(
                 <div className="flex justify-between w-150 mx-auto my-2">
                   <>
                     <button
-                      className="btn-no-size p-2 px-5"
+                      className="btn-no-size-color bg-green-900 p-2 px-5"
                       onClick={() => setQty(Math.max(1, qty - 1))}
                     >
                       -
@@ -167,10 +167,10 @@ export const ContentPlaceholder = memo(
                     <span className="leading-loose mx-3 text-2xl">{qty}</span>
                     <button
                       disabled={qty + 1 > inventory}
-                      className={`btn-no-size-color p-2 px-4 ${
+                      className={`btn-no-size-color bg-green-900 p-2 px-4 ${
                         qty + 1 > inventory
                           ? "bg-gray-300 cursor-not-allowed"
-                          : "bg-black"
+                          : "bg-green-900"
                       }`}
                       onClick={() => {
                         setQty(
@@ -187,7 +187,7 @@ export const ContentPlaceholder = memo(
                 </div>
                 <div className="w-full text-center">
                   <button
-                    className="standard-btn my-2"
+                    className="btn-no-size-color py-4 px-5 bg-green-900 my-2"
                     onClick={async () => {
                       setLoading(true);
                       setTimeout(() => {

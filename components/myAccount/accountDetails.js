@@ -109,7 +109,7 @@ const index = ({
         <div className="w-full flex flex-wrap justify-between text-center">
           {Object.keys(formData).length > 0 ? (
             <button
-              className="btn-no-size-color px-12 py-3 bg-green-600"
+              className="btn-no-size-color px-12 py-3 bg-green-900"
               onClick={() => {
                 // if (isMerchant) {
                 //   handleSubmit(updateStoreDetails, callFetchMerchData);
@@ -133,7 +133,7 @@ const index = ({
         </div>
       ) : (
         <button
-          className="btn-no-size-color px-8 py-3 bg-black"
+          className="btn-no-size-color px-8 py-3 bg-green-900"
           onClick={() => {
             setEdit(true);
             updateFormData({});

@@ -48,7 +48,10 @@ const MailingListSignup = ({}) => {
         }}
       />
       <div className="flex justify-start">
-        <button className="standard-btn" type="submit">
+        <button
+          className="btn-no-size-color px-8 py-3 bg-green-900"
+          type="submit"
+        >
           Submit
         </button>
       </div>

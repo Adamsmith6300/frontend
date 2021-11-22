@@ -30,6 +30,7 @@ body {
   --divider: #343434;
   font-weight: 300;
   font-size: 1.2rem;
+  /* color: rgb(34, 84, 61); */
 }
 
 * {
@@ -584,7 +585,7 @@ button:focus {
   height: 20px;
   border-radius: 100%;
   color: white;
-  background-color: black;
+  background-color: rgb(34, 84, 61);
   right: 5px;
   top: 5px;
 }
