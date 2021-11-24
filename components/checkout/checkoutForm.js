@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import {
   CardCvcElement,
-  CardElement,
   CardExpiryElement,
   CardNumberElement,
+  CardElement,
 } from "@stripe/react-stripe-js";
 import { Form, Message, Input } from "semantic-ui-react";
 import axios from "axios";
@@ -270,7 +270,8 @@ const index = ({
         }}
         className="w-full mx-auto pt-6"
       >
-        <CardNumberElement
+        <CardElement />
+        {/* <CardNumberElement
           options={{
             style: {
               base: {
@@ -317,7 +318,7 @@ const index = ({
               },
             },
           }}
-        />
+        /> */}
         <Message error content={formError} />
         <button
           className={`btn-no-size-color px-12 py-3 ${
