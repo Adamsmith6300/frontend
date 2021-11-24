@@ -62,8 +62,8 @@ const footer = ({ isAuthed, isGuest }) => {
           </div>
           <p>
             We respectfully acknowledge that we operate on the traditional and
-            unceded territories of the šxʷməθkʷəy̓əmaɁɬ təməxʷ (Musqueam) and
-            səl̓ilwətaɁɬ təməxʷ (Tsleil-Waututh) Coast Salish people.
+            unceded territories of the xʷməθkʷəy̓əm (Musqueam), Sḵwx̱wú7mesh
+            (Squamish), and Sel̓íl̓witulh (Tsleil-Waututh) people.
           </p>
           <p className="text-base mt-4">
             <AiOutlineCopyrightCircle className="inline ml-1" />
