@@ -151,10 +151,10 @@ const index = ({
       }
     );
     if (resp.status == 200) {
-      const cardNumberElement = elements.getElement(CardNumberElement);
+      const cardElement = elements.getElement(CardNumberElement);
       const result = await stripe.confirmCardPayment(resp.data.client_secret, {
         payment_method: {
-          card: cardNumberElement,
+          card: cardElement,
         },
       });
       if (result.error) {
@@ -270,8 +270,23 @@ const index = ({
         }}
         className="w-full mx-auto pt-6"
       >
-        <CardElement />
-        {/* <CardNumberElement
+        {/* <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "18px",
+                color: "#424770",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#9e2146",
+              },
+            },
+          }}
+        /> */}
+        <CardNumberElement
           options={{
             style: {
               base: {
@@ -318,7 +333,7 @@ const index = ({
               },
             },
           }}
-        /> */}
+        />
         <Message error content={formError} />
         <button
           className={`btn-no-size-color px-12 py-3 ${
