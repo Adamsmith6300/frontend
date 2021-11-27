@@ -35,7 +35,7 @@ const index = ({}) => {
             <span className="font-bold">Talia</span> - grew up on the
             sunshine-coast of BC. She is a passionate environmentalist and
             animal lover. She is an MBB graduate from SFU and current graduate
-            student in Resource and Environmental Managment at SFU, with a focus
+            student in Resource and Environmental Management at SFU, with a focus
             on environmental toxicology. Talia believes that sustainable
             businesses are an important vehicle to drive sustainable change, now
             more than ever.
