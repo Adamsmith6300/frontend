@@ -38,7 +38,6 @@ const MailingListSignup = ({}) => {
       className="w-300 text-left mx-auto"
     >
       <Form.Input
-        label="Email"
         placeholder="Please enter your email"
         name="email"
         required
@@ -48,10 +47,7 @@ const MailingListSignup = ({}) => {
         }}
       />
       <div className="flex justify-start">
-        <button
-          className="btn-no-size-color px-8 py-3 bg-green-900"
-          type="submit"
-        >
+        <button className="btn-no-size-color px-8 py-3 bg-black" type="submit">
           Submit
         </button>
       </div>
