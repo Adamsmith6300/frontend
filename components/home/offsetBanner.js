@@ -17,10 +17,13 @@ const banner = ({ bgSrc, heading, content, link, left }) => {
   return (
     <div className="flex flex-wrap">
       <Image mobile />
-      <div className="py-1 lg:hidden w-full">
-        <h2 className="text-center text-xl py-6 px-2 shadow-lg border border-1">
-          Free delivery on your first order! Use code FIRSTFREE at checkout.
+      <div className="lg:hidden w-full text-center py-6 pb-3 px-2 shadow-lg border border-1">
+        <h2 className="text-xl ">
+          Free delivery on your first order! Use code FIRSTFREE
         </h2>
+        <p className="text-lg">
+          (no minimum order, expires December 31st, 2021)
+        </p>
       </div>
       <div className="text-center w-full py-10 lg:py-16 px-8 sm:w-1/2 grid grid-cols-1 place-items-center">
         <div>

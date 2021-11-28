@@ -14,6 +14,11 @@ const Page = ({}) => {
         "We charge $7 per order plus there is a service fee of 5% of your subtotal to cover processing fees.",
     },
     {
+      question: "Where do you deliver?",
+      answer:
+        "We currently deliver to most cities throughout Greater Vancouver (Vancouver, North Vancouver, West Vancouver, Burnaby, Richmond, New Westminster, Coquitlam, Port Coquitlam and Surrey). Let us know via email (contact@shoploma.ca) if you'd like us to add one of the neighboring cities in the future!",
+    },
+    {
       question: "What are the benefits of signing up?",
       answer:
         "When you create an account, you are able to track and manage your current and previous orders. You can also save your delivery details for your future orders.",

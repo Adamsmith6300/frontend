@@ -44,10 +44,13 @@ const Page = ({
       <Head>
         <title>Home - Loma</title>
       </Head>
-      <div className="py-1 hidden lg:block w-full">
-        <h2 className="text-center text-3xl py-6 px-2 shadow-lg border border-1">
-          Free delivery on your first order! Use code FIRSTFREE at checkout.
+      <div className="pt-6 pb-3 px-2 shadow-lg border border-1 hidden lg:block w-full text-center">
+        <h2 className="text-3xl">
+          Free delivery on your first order! Use code FIRSTFREE
         </h2>
+        <p className="text-lg">
+          (no minimum order, expires December 31st, 2021)
+        </p>
       </div>
       <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
@@ -66,6 +69,12 @@ const Page = ({
       />
       <SmallAboutSection />
       <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
+      <div className="w-full py-16 text-white text-center bg-green-900">
+        <p className="font-bold text-3xl px-6 pb-6 w-full md:w-300 mx-auto">
+          Subscribe to hear about new vendors, special products and updates!
+        </p>
+        <MailingListSignup />
+      </div>
       <Banner
         bgSrc={"/secondBanner.jpg"}
         heading={"A Sustainable Solution"}
@@ -91,12 +100,6 @@ const Page = ({
       ) : (
         <LargeLoader />
       )}
-      <div className="w-full mt-24 text-center">
-        <p className="font-bold text-3xl px-6 pb-6 w-full md:w-300 mx-auto">
-          Subscribe to hear about special updates from Loma!
-        </p>
-        <MailingListSignup />
-      </div>
     </Layout>
   );
 };
