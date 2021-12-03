@@ -23,7 +23,7 @@ const merchantSection = ({ heading, link }) => {
 
   return (
     <div className="p-8 pb-16">
-      <h2 className="max-w-1250 mx-auto text-center">
+      <h2 className="max-w-1250 mx-auto text-center mb-8">
         <span className="text-4xl">{heading}</span>
       </h2>
       <div className="flex flex-wrap justify-center max-w-1040 mx-auto">

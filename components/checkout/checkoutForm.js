@@ -25,7 +25,7 @@ const calcFees = (cart, discount = null) => {
     if (discount["discountValueType"] == "freeDelivery")
       discountDollars = fees["deliveryFee"];
     if (discount["discountValueType"] == "percentage")
-      discountDollars = subtotal * discount["discountValue"];
+      discountDollars = fees["subtotal"] * discount["discountValue"];
     if (discount["discountValueType"] == "dollars")
       discountDollars = discount["discountValue"];
   }
@@ -107,7 +107,7 @@ const index = ({
         setChargeDetails(calcFees(cartData, resp.data));
         setDiscount(resp.data);
       } catch (err) {
-        console.log("err:", err.response.data);
+        console.log("err:", err);
         setDiscountError(err.response.data);
         setChargeDetails(calcFees(cartData));
       }
