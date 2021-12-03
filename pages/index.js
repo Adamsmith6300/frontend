@@ -46,7 +46,7 @@ const Page = ({
       </Head>
       <div className="pt-6 pb-3 px-2 shadow-lg border border-1 hidden lg:block w-full text-center">
         <h2 className="text-3xl">
-          Free delivery on your first order! Use code FIRSTFREE
+          Free delivery on your first order! Use code: FIRSTFREE
         </h2>
         <p className="text-lg">
           (no minimum order, expires December 31st, 2021)
@@ -67,14 +67,16 @@ const Page = ({
         addToCart={addToCart}
         cartData={cartData}
       />
-      <SmallAboutSection />
-      <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
       <div className="w-full py-16 text-white text-center bg-green-900">
-        <p className="font-bold text-3xl px-6 pb-6 w-full md:w-300 mx-auto">
-          Subscribe to hear about new vendors, special products and updates!
+        <p className="text-3xl px-6 pb-6 w-full md:w-300 mx-auto">
+          Subscribe to our newsletter and receive{" "}
+          <span className="font-medium">20% off</span> your next order!
         </p>
         <MailingListSignup />
       </div>
+      <SmallAboutSection />
+      <MerchantSection heading={"Featured Vendors"} link={"/vendors"} />
+
       <Banner
         bgSrc={"/secondBanner.jpg"}
         heading={"A Sustainable Solution"}

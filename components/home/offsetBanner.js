@@ -19,7 +19,7 @@ const banner = ({ bgSrc, heading, content, link, left }) => {
       <Image mobile />
       <div className="lg:hidden w-full text-center py-6 pb-3 px-2 shadow-lg border border-1">
         <h2 className="text-xl ">
-          Free delivery on your first order! Use code FIRSTFREE
+          Free delivery on your first order! Use code: FIRSTFREE
         </h2>
         <p className="text-lg">
           (no minimum order, expires December 31st, 2021)

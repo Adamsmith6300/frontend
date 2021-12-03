@@ -39,6 +39,23 @@
   }
 }
 @media only screen and (max-width: 600px) {
+  .merchantCard--home {
+    width: 500px;
+    max-width: 100vw;
+    height: 320px;
+    overflow: hidden;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+
+  .merchantCard--image {
+    height: 220px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #bbbdbd;
+  }
   .card {
     flex: 1 0 100%;
     max-width: 100%;
