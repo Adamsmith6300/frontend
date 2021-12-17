@@ -104,6 +104,18 @@ export const checkMerchant = () => {
   return false;
 };
 
+export const checkAllPower = () => {
+  const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+  if (authRes != null) {
+    const user = jwt(authRes["IdToken"]);
+    return (
+      "cognito:groups" in user &&
+      user["cognito:groups"].includes("all-power-group")
+    );
+  }
+  return false;
+};
+
 export const checkGuest = () => {
   const authRes = JSON.parse(localStorage.getItem("AuthResults"));
   if (authRes != null) {
