@@ -3,7 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
 import { Loader } from "semantic-ui-react";
-import { Accordion, Icon, Button } from "semantic-ui-react";
+import { Accordion, Icon, Dropdown } from "semantic-ui-react";
 
 import Layout from "../components/hoc/layout";
 import { LargeLoader } from "../components/loaders";
@@ -13,6 +13,8 @@ import { isLoggedIn, checkAllPower } from "../store/helpers";
 const Page = ({}) => {
   const [orders, setOrders] = useState(null);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [editOrderStatus, setEditOrderStatus] = useState(null);
+  const [editMOrderStatus, setEditMOrderStatus] = useState(null);
 
   const [startKey, setStartKey] = useState(null);
   const [moreOrders, setMoreOrders] = useState(true);
@@ -58,6 +60,44 @@ const Page = ({}) => {
       });
   }, [path]);
 
+  const isEditingMOrder = (m) => {
+    return (
+      editMOrderStatus != null &&
+      editMOrderStatus["MerchantId"] == m["MerchantId"] &&
+      editMOrderStatus["OrderId"] == m["OrderId"]
+    );
+  };
+
+  const mOrderStatuses = [
+    {
+      key: "picked_up",
+      text: "picked_up",
+      value: "picked_up",
+    },
+    {
+      key: "ready_for_pickup",
+      text: "ready_for_pickup",
+      value: "ready_for_pickup",
+    },
+    {
+      key: "ordered",
+      text: "ordered",
+      value: "ordered",
+    },
+  ];
+  const orderStatuses = [
+    {
+      key: "out_for_delivery",
+      text: "out_for_delivery",
+      value: "out_for_delivery",
+    },
+    {
+      key: "delivered",
+      text: "delivered",
+      value: "delivered",
+    },
+  ];
+
   return (
     <Layout loading={orders == null}>
       <Head>
@@ -66,45 +106,146 @@ const Page = ({}) => {
       <div className="flex flex-wrap justify-center xl:justify-start max-w-1250 mx-auto">
         {orders != null ? (
           <>
-            <h3 className="text-3xl">All Order</h3>
+            <h3 className="text-3xl">All Orders</h3>
             <Accordion id="account-details" fluid styled>
-              <Accordion.Title
-                active={activeIndex === 0}
-                index={0}
-                onClick={() => setActiveIndex(activeIndex === 0 ? -1 : 0)}
-              >
-                <Icon name="dropdown" />
-                Account Details
-              </Accordion.Title>
-              <Accordion.Content active={activeIndex === 0}>
-                <AccountDetails
-                  info={info}
-                  isMerchant={isMerchant}
-                  mId={mId}
-                  callFetchMerchData={callFetchMerchData}
-                  callFetchAccountData={callFetchAccountData}
-                  setLoading={setLoading}
-                />
-              </Accordion.Content>
-              <Accordion.Title
-                active={activeIndex === 1}
-                index={1}
-                onClick={() => setActiveIndex(activeIndex === 1 ? -1 : 1)}
-              >
-                <Icon name="dropdown" />
-                Orders
-              </Accordion.Title>
-              <Accordion.Content active={activeIndex === 1}>
-                <MyOrders orders={accountData.orders} />
-              </Accordion.Content>
+              {orders.map((order, i) => {
+                return (
+                  <>
+                    <Accordion.Title
+                      key={order.OrderId}
+                      active={activeIndex === i}
+                      index={i}
+                      onClick={() => setActiveIndex(activeIndex === i ? -1 : i)}
+                    >
+                      <p className="flex justify-between">
+                        <span>
+                          <Icon name="dropdown" />
+                          Order ID:{" "}
+                          {order.OrderId.substring(order.OrderId.length - 8)}
+                        </span>
+                        <span className="font-bold ml-3">
+                          {order.created_at}
+                        </span>
+                      </p>
+                    </Accordion.Title>
+                    <Accordion.Content active={activeIndex === i}>
+                      <p>
+                        <span className="font-bold">Deliver To: </span>
+                        {JSON.stringify(order.deliveryInfo)}
+                      </p>
+                      <p>
+                        <span className="font-bold">Email: </span>
+                        {order.email}
+                      </p>
+                      <p>
+                        <span className="font-bold">Charge Details: </span>
+                        {JSON.stringify(order.chargeDetails)}
+                      </p>
+                      <p className="my-3">
+                        <span className="font-bold">
+                          Order Status: {order.orderStatus}
+                        </span>
+                        <button className="btn-no-size-color bg-red-600 px-4 py-2 ml-5">
+                          Update
+                        </button>
+                      </p>
+                      <p className="font-bold">Items:</p>
+                      {order.merchantOrders.map((m, index) => {
+                        let storename = m["items"][0]["storename"];
+                        let editing = isEditingMOrder(m);
+                        let items = m["items"].map((item, ind) => {
+                          return (
+                            <li className="flex">
+                              <img
+                                className="h-100"
+                                src={item["images"][0]["src"]}
+                              />
+                              <div className="ml-3">
+                                <p>{item["title"]}</p>
+                                {"chosenVariant" in item &&
+                                item["chosenVariant"] != null ? (
+                                  <p>
+                                    {item["chosenVariant"]["optionValues"].map(
+                                      (val, e) => {
+                                        return (
+                                          <span className="border rounded-3xl bg-gray-300 p-1 px-3 mr-1 my-1 inline h-10">
+                                            {val["value"]}
+                                          </span>
+                                        );
+                                      }
+                                    )}
+                                  </p>
+                                ) : null}
+                                <p>Quantity: {item["qty"]}</p>
+                              </div>
+                            </li>
+                          );
+                        });
+                        return (
+                          <div className="my-5">
+                            <p className="font-bold">{storename}</p>
+                            <p className="my-3">
+                              Status: {m["orderStatus"]}
+                              {editing ? (
+                                <>
+                                  <button
+                                    onClick={() => {
+                                      setEditMOrderStatus(null);
+                                    }}
+                                    className="btn-no-size-color bg-black px-4 py-2 ml-5"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      console.log("updating...");
+                                      console.log(editMOrderStatus);
+                                    }}
+                                    className="btn-no-size-color bg-green-500 px-4 py-2 ml-5"
+                                  >
+                                    Save
+                                  </button>
+                                </>
+                              ) : (
+                                <button
+                                  onClick={() => {
+                                    setEditMOrderStatus({
+                                      MerchantId: m["MerchantId"],
+                                      OrderId: m["OrderId"],
+                                    });
+                                  }}
+                                  className="btn-no-size-color bg-black px-4 py-2 ml-5"
+                                >
+                                  Update
+                                </button>
+                              )}
+                            </p>
+                            {editing ? (
+                              <Dropdown
+                                className="w-full my-3"
+                                selection
+                                placeholder="Select new status"
+                                options={mOrderStatuses}
+                                onChange={(e, { value }) => {
+                                  console.log(value);
+                                  // updateFormData({
+                                  //   ...formData,
+                                  //   category: value,
+                                  // });
+                                }}
+                                // value={formData["category"]}
+                              />
+                            ) : null}
+                            <ul>{items}</ul>
+                          </div>
+                        );
+                      })}
+                    </Accordion.Content>
+                  </>
+                );
+              })}
             </Accordion>
-            {orders.map((order, i) => {
-              return (
-                <div key={order.OrderId}>
-                  <p>{order.OrderId}</p>
-                </div>
-              );
-            })}
+
             {moreOrders ? (
               <div className="w-full text-center py-12">
                 {loadingOrders ? (
