@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
@@ -6,7 +6,7 @@ import { Loader } from "semantic-ui-react";
 import { Accordion, Icon, Dropdown } from "semantic-ui-react";
 
 import Layout from "../components/hoc/layout";
-// import { MiniLoader } from "../components/loaders";
+import MerchantsContact from "../components/dashboard/merchantsContact";
 import Head from "next/head";
 import { isLoggedIn, checkAllPower } from "../store/helpers";
 
@@ -19,10 +19,12 @@ const Page = ({}) => {
   const [mOrderStatusVal, setMOrderStatusVal] = useState(null);
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
-
   const [startKey, setStartKey] = useState(null);
   const [moreOrders, setMoreOrders] = useState(true);
   const [loadingOrders, setLoadingOrders] = useState(false);
+
+  const [vendors, setVendors] = useState(null);
+
   const router = useRouter();
   let path = router.asPath;
   const lim = 25;
@@ -40,6 +42,16 @@ const Page = ({}) => {
     });
   };
 
+  const getVendors = async () => {
+    const authRes = JSON.parse(localStorage.getItem("AuthResults"));
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/people/merchants`;
+    return await axios.get(url, {
+      headers: {
+        Authorization: authRes["IdToken"],
+      },
+    });
+  };
+
   useEffect(() => {
     let l = isLoggedIn();
     let p = checkAllPower();
@@ -49,6 +61,13 @@ const Page = ({}) => {
     }
     setOrders(null);
     refreshOrders();
+    getVendors()
+      .then((resp) => {
+        setVendors(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [path]);
 
   const refreshOrders = () => {
@@ -174,7 +193,7 @@ const Page = ({}) => {
   };
 
   return (
-    <Layout loading={orders == null}>
+    <Layout loading={orders == null || vendors == null}>
       <Head>
         <title>Dashboard - Loma</title>
       </Head>
@@ -193,7 +212,7 @@ const Page = ({}) => {
                 }
                 let editing = isEditingOrder(order.OrderId);
                 return (
-                  <>
+                  <Fragment key={order.OrderId}>
                     <Accordion.Title
                       key={order.OrderId}
                       active={activeIndex === i}
@@ -203,18 +222,20 @@ const Page = ({}) => {
                         setActiveIndex(activeIndex === i ? -1 : i);
                       }}
                     >
-                      <div>
-                        <p>
-                          <Icon name="dropdown" />
-                          Order ID:{" "}
-                          {order.OrderId.substring(order.OrderId.length - 8)}
-                        </p>
+                      <div className="flex justify-between">
+                        <div>
+                          <p>
+                            <Icon name="dropdown" />
+                            Order ID:{" "}
+                            {order.OrderId.substring(order.OrderId.length - 8)}
+                          </p>
+                          <p className="font-bold ml-3">{order.created_at}</p>
+                        </div>
                         <p
                           className={`border rounded-3xl p-1 px-3 mr-1 my-1 inline h-10 ${statusBubbleClass}`}
                         >
                           {order.orderStatus}
                         </p>
-                        <p className="font-bold ml-3">{order.created_at}</p>
                       </div>
                     </Accordion.Title>
                     <Accordion.Content active={activeIndex === i}>
@@ -223,7 +244,7 @@ const Page = ({}) => {
                         <ul>
                           {Object.entries(order.deliveryInfo).map((e, i) => {
                             return (
-                              <li>
+                              <li key={e[1]}>
                                 {e[0]}:{e[1]}
                               </li>
                             );
@@ -239,7 +260,7 @@ const Page = ({}) => {
                         <ul>
                           {Object.entries(order.chargeDetails).map((e, i) => {
                             return (
-                              <li>
+                              <li key={e[1]}>
                                 {e[0]}:{e[1]}
                               </li>
                             );
@@ -308,7 +329,10 @@ const Page = ({}) => {
                         let editing = isEditingMOrder(m);
                         let items = m["items"].map((item, ind) => {
                           return (
-                            <li className="flex">
+                            <li
+                              className="flex"
+                              key={item["ProductId"] + m["OrderId"] + ind}
+                            >
                               <img
                                 className="h-100"
                                 src={item["images"][0]["src"]}
@@ -321,7 +345,10 @@ const Page = ({}) => {
                                     {item["chosenVariant"]["optionValues"].map(
                                       (val, e) => {
                                         return (
-                                          <span className="border rounded-3xl bg-gray-300 p-1 px-3 mr-1 my-1 inline h-10">
+                                          <span
+                                            key={val["value"]}
+                                            className="border rounded-3xl bg-gray-300 p-1 px-3 mr-1 my-1 inline h-10"
+                                          >
                                             {val["value"]}
                                           </span>
                                         );
@@ -335,7 +362,10 @@ const Page = ({}) => {
                           );
                         });
                         return (
-                          <div className="my-5">
+                          <div
+                            className="my-5"
+                            key={m["MerchantId"] + m["OrderId"]}
+                          >
                             <p className="font-bold">{storename}</p>
                             <div className="my-3">
                               <span className="mr-5">
@@ -397,7 +427,7 @@ const Page = ({}) => {
                         );
                       })}
                     </Accordion.Content>
-                  </>
+                  </Fragment>
                 );
               })}
             </Accordion>
@@ -434,6 +464,7 @@ const Page = ({}) => {
             ) : null}
           </>
         ) : null}
+        {vendors != null ? <MerchantsContact vendors={vendors} /> : null}
       </div>
     </Layout>
   );
