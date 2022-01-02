@@ -44,14 +44,14 @@ const Page = ({
       <Head>
         <title>Home - Loma</title>
       </Head>
-      <div className="pt-6 pb-3 px-2 shadow-lg border border-1 hidden lg:block w-full text-center">
+      {/* <div className="pt-6 pb-3 px-2 shadow-lg border border-1 hidden lg:block w-full text-center">
         <h2 className="text-3xl">
           Free delivery on your first order! Use code: FIRSTFREE
         </h2>
         <p className="text-lg">
           (no minimum order, expires December 31st, 2021)
         </p>
-      </div>
+      </div> */}
       <OffsetBanner
         bgSrc={"/firstBanner.jpg"}
         heading={"Local Shopping, Sustainable Delivery"}

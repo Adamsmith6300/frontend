@@ -12,9 +12,9 @@ const index = ({ cartData, toggle }) => {
       <p className="text-base">
         Taxes and delivery fees calculated at checkout.
       </p>
-      <p className="text-base font-bold text-center">
+      {/* <p className="text-base font-bold text-center">
         Remember to use FIRSTFREE for free delivery on your first order!
-      </p>
+      </p> */}
       <div className="mt-3 text-center">
         {isLoggedIn() ? (
           <Link href="/checkout">
